@@ -1,0 +1,23 @@
+//////////////////////////////////////////////////////////////////
+////               MODDED GTA SA CLASSES                      ////
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//// Description: This file lists all GTA SA base classes     ////
+////              which have been modified.                   ////
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////                           
+
+
+ -- CMenuManager --
+ ..Added a new implementation of the menu vtable.
+ ..Changed appearance of the main menu
+ (D4Dj, 02.08.16)
+
+ -- CStreaming --
+ ..own implementation of Copstream functions
+ ..enables all cops in all citites
+ (D4Dj, 03.09.16)
+
+  -- CObject --
+ ..fix for dynmaic object to find the middle (masspoint)
+ (D4Dj, 28.02.17)
