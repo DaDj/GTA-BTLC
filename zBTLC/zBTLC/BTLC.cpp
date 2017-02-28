@@ -54,27 +54,13 @@ void Main()
 	MemoryVP::Patch(0x74877D, 0);
 	////check game version
 	check_gameversion();
+
+
+	//START BTLC STUFF
 	Function_starter();
 
 
 
-	//MemoryVP::Patch<int>(0x74877D,0);
-	//WINDOWMODE HOOKS
-	//MemoryVP::Patch(0x74888F + 1, 0x10000000);
-	//MemoryVP::Patch(0x7488B6 + 1, 0x10000000);
-	//MemoryVP::Patch(0x7F89AC + 1, 0x10000000);
-	//MemoryVP::Patch(0x745570 + 1, 0x10000000); //0x10000000
-	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
-	MemoryVP::InjectHook(0x619D10, &psSelectDevice);
-	MemoryVP::InjectHook(0x619BA6, &psSelectDevice);
-	MemoryVP::InjectHook(0x6194B0, &psSelectDevice);
-	MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
-	////MemoryVP::InjectHook(0x748C1C, &changeresu);
-	MemoryVP::InjectHook(0x748A1B, &changeresu);
-	MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
 }
 
 
@@ -137,6 +123,29 @@ void btlc_init()
 
 	//Disabled Diving
 	MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
+
+
+
+
+
+	//WINDOWPATCHES
+	//MemoryVP::Patch<int>(0x74877D,0);
+	//WINDOWMODE HOOKS
+	//MemoryVP::Patch(0x74888F + 1, 0x10000000);
+	//MemoryVP::Patch(0x7488B6 + 1, 0x10000000);
+	//MemoryVP::Patch(0x7F89AC + 1, 0x10000000);
+	//MemoryVP::Patch(0x745570 + 1, 0x10000000); //0x10000000
+	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
+	MemoryVP::InjectHook(0x619D10, &psSelectDevice);
+	MemoryVP::InjectHook(0x619BA6, &psSelectDevice);
+	MemoryVP::InjectHook(0x6194B0, &psSelectDevice);
+	MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
+	////MemoryVP::InjectHook(0x748C1C, &changeresu);
+	MemoryVP::InjectHook(0x748A1B, &changeresu);
+	MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
 }
 
 void debug_console()

@@ -1157,7 +1157,6 @@
     <Text Include="game_sa\STATUS_GTA_classes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="game_sa\rw\errcom.def" />
     <None Include="game_sa\rw\errcore.def" />
   </ItemGroup>

@@ -2972,6 +2972,5 @@
     <None Include="game_sa\rw\errcore.def">
       <Filter>game_sa\rw</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
