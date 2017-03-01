@@ -2,7 +2,7 @@
 
 #include "plbase/PluginBase_SA.h"
 #include "CTask.h"
-
+#include "CEventGroup.h"
 class CTaskManager {
 public:
     CTask *m_aPrimaryTasks[5];

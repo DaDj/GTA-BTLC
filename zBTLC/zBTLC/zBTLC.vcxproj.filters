@@ -2956,6 +2956,9 @@
     <ClInclude Include="BTLC_BASE\fast_load.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
+    <ClInclude Include="BTLC_BASE\other_shared.h">
+      <Filter>BTLC_BASE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="changed_classes.txt">

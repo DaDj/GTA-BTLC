@@ -626,6 +626,7 @@
     <ClInclude Include="BTLC_BASE\fast_load.h" />
     <ClInclude Include="BTLC_BASE\fixes.h" />
     <ClInclude Include="BTLC_BASE\limits.h" />
+    <ClInclude Include="BTLC_BASE\other_shared.h" />
     <ClInclude Include="BTLC_BASE\visuals.h" />
     <ClInclude Include="BTLC_BASE\weather.h" />
     <ClInclude Include="BTLC_BASE\windowmode.h" />

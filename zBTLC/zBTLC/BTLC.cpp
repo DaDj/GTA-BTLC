@@ -28,6 +28,7 @@ float VERSION = 0.20f;
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
 #include "game_sa\CObject.h"
+#include "game_sa\CHud.h"
 
 //#include "game_sa/CStreaming.h"
 
@@ -49,24 +50,20 @@ void Main()
 	std::cout << "Version: " << VERSION << " >DEBUG" << std::endl;
 	std::cout << "COMPILED: " << __TIMESTAMP__ << std::endl << std::endl;
 #endif // DEBUG
+
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
 	////check game version
 	check_gameversion();
 
-
 	//START BTLC STUFF
 	Function_starter();
-
-
-
 }
 
 
 void Function_starter()
 {
-
 	btlc_init();			////INIT OF BTLC
 	fastload::Init();		//Fast loader
 	BUGFIX::various();		////Fixes of some small GTA Bugs
@@ -74,6 +71,9 @@ void Function_starter()
 	visuals::pickup_appearence();////Changes behaviour of Pickups
 	visuals::init();		////VISUAL CHANGES init
 	limits::IMG_LIMIT();	//Limit adjusting
+
+	MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
+	
 
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
@@ -85,10 +85,8 @@ void Function_starter()
 	MemoryVP::InjectHook(0x407C00, &CStreaming::GetDefaultCopModel, PATCH_JUMP);
 	MemoryVP::InjectHook(0x407C50, &CStreaming::GetDefaultCopCarModel, PATCH_JUMP);
 
-
 	//New Masspoints for dynamic Objects
 	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);
-
 }
 
 
@@ -118,17 +116,12 @@ void btlc_init()
 	MemoryVP::Patch<WORD>(0x6633C0, 0xE990);
 	MemoryVP::Patch<BYTE>(0x663E4D, 0xEB);
 
-	// Fix vehicle back lights both using light state 3 (SA bug)
-	*(BYTE *)0x6E1D4F = 2;
-
 	//Disabled Diving
 	MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
 
 
-
-
-
 	//WINDOWPATCHES
+
 	//MemoryVP::Patch<int>(0x74877D,0);
 	//WINDOWMODE HOOKS
 	//MemoryVP::Patch(0x74888F + 1, 0x10000000);
