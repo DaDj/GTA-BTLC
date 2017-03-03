@@ -3,6 +3,7 @@
 bool& CTimer::m_CodePause = *(bool *)0xB7CB48;
 bool& CTimer::m_UserPause = *(bool *)0xB7CB49;
 unsigned __int32& CTimer::m_FrameCounter = *(unsigned __int32 *)0xB7CB4C;
+float& CTimer::ms_gameFPS = *(float *)0xB7CB50;
 float& CTimer::ms_fTimeStepOld = *(float *)0xB7CB54;
 float& CTimer::ms_fTimeStepNonClipped = *(float *)0xB7CB58;
 float& CTimer::ms_fTimeStep = *(float *)0xB7CB5C;

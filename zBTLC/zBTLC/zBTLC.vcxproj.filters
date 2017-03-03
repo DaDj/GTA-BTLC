@@ -26,6 +26,12 @@
     <Filter Include="game_sa\rw">
       <UniqueIdentifier>{9ee5a81e-12d6-41a1-aa29-d55460d0dd48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Events_Sa">
+      <UniqueIdentifier>{d45878e4-6151-4f2b-8f72-341cafd7eac3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patching\gvm">
+      <UniqueIdentifier>{6e4d9b1a-3231-4e6f-9aea-388051fdfa0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1366,11 +1372,14 @@
     <ClCompile Include="game_sa\CObjectinfo.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="BTLC_BASE\GPS.cpp">
+      <Filter>BTLC_BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="Events_SA\Events_SA.cpp">
+      <Filter>Events_Sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Patch\Injector.h">
-      <Filter>Patching</Filter>
-    </ClInclude>
     <ClInclude Include="Patch\MemoryMgr.h">
       <Filter>Patching</Filter>
     </ClInclude>
@@ -2958,6 +2967,27 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\other_shared.h">
       <Filter>BTLC_BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\GPS.h">
+      <Filter>BTLC_BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="Events_SA\Events_SA.h">
+      <Filter>Events_Sa</Filter>
+    </ClInclude>
+    <ClInclude Include="Events_SA\EventList.h">
+      <Filter>Events_Sa</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\hooking.hpp">
+      <Filter>Patching</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\injector.hpp">
+      <Filter>Patching</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\gvm\gvm.hpp">
+      <Filter>Patching\gvm</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\gvm\translator.hpp">
+      <Filter>Patching\gvm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,18 +1,11 @@
-/********************************plugin-sdk source file*************************************/
-/* File creator: DK22Pac                                                                   */
-/* File editors: DK22Pac                                                                   */
-/* File descrip: RenderWare structures/enumerations/functions/defines are represented here.*/
-/* File created: 17.04.2013                                                                */
-/* File last ed: 12.06.2016                                                                */
-/*******************************************************************************************/
 #pragma once
-
+#define _D3D_INCLUDE
 #ifdef _D3D_INCLUDE
 #include <d3d9.h>
 #endif
 
 // TODO: Clean up RW headers
-#include <Windows.h>
+
 #include "rw\rwcore.h"
 #include "rw\rphanim.h"
 #include "rw\rpuvanim.h"
@@ -20,50 +13,12 @@
 #include "rw\rpmatfx.h"
 #include "rw\skeleton.h"
 
-typedef struct PsGlobalType PsGlobalType;
-struct PsGlobalType
-{
-	HWND	window;
-	HWND	instance;
-	int		fullscreen;
-	float	lastMousePos_X;
-	DWORD	lastMousePos_Y;
-	int		unk;
-	DWORD	diInterface;
-	DWORD	diMouse;
-	void*	diDevice1;
-	void*	diDevice2;
-};
-
-
-typedef struct RsGlobalType RsGlobalType;
-struct RsGlobalType
-{
-	const RwChar *appName;
-	RwInt32 maximumWidth;
-	RwInt32 maximumHeight;
-	unsigned int	frameLimit;
-	RwBool  quit;
-	PsGlobalType   *ps; /* platform specific data */
-	RsInputDevice keyboard;
-	RsInputDevice mouse;
-	RsInputDevice pad;
-};
-
-
 extern RwGlobals *&RwEngineInstance;
-
-
-
 
 /* macro used to access global data structure (the root type is RwGlobals) */
 #define RWSRCGLOBAL(variable) (RwEngineInstance->variable)
 
 extern RsGlobalType &RsGlobal;
-
-
-
-
 
 extern RwPluginRegistry &geometryTKList;
 
@@ -150,7 +105,10 @@ void* _rwSListGetNewEntry(RwSList* sList, RwUInt32 hint); // 0x809240
 RwInt32 _rwSListGetNumEntries(const RwSList* sList); // 0x8094B0
 void* _rwSListGetBegin(RwSList* sList); // 0x809530
 void* _rwSListGetEnd(RwSList* sList); // 0x809540
-RwBool RwIm2DRenderLine(RwIm2DVertex* vertices, RwInt32 numVertices, RwInt32 vert1, RwInt32 vert2); // 0x734EC0
+RwBool RwIm2DRenderPrimitive(RwPrimitiveType primType, RwIm2DVertex* vertices, RwInt32 numVertices);
+RwBool RwIm2DRenderIndexedPrimitive(RwPrimitiveType primType, RwIm2DVertex* vertices, RwInt32 numVertices, RwImVertexIndex* indices, RwInt32 numIndices);
+RwBool RwIm2DRenderTriangle(RwIm2DVertex* vertices, RwInt32 numVertices, RwInt32 vert1, RwInt32 vert2, RwInt32 vert3);
+RwBool RwIm2DRenderLine(RwIm2DVertex* vertices, RwInt32 numVertices, RwInt32 vert1, RwInt32 vert2);
 RwUInt32 RwEngineGetVersion(void); // 0x7F2BA0
 RwBool RwEngineInit(const RwMemoryFunctions* memFuncs, RwUInt32 initFlags, RwUInt32 resArenaSize); // 0x7F3170
 RwInt32 RwEngineRegisterPlugin(RwInt32 size, RwUInt32 pluginID, RwPluginObjectConstructor initCB, RwPluginObjectDestructor termCB); // 0x7F2BB0
@@ -193,7 +151,7 @@ RwStream* RwStreamReadInt32(RwStream* stream, RwInt32* ints, RwUInt32 numBytes);
 RwStream* RwStreamReadInt16(RwStream* stream, RwInt16* ints, RwUInt32 numBytes); // 0x7ED4A0
 RwStream* RwStreamReadChunkHeaderInfo(RwStream* stream, RwChunkHeaderInfo* chunkHeaderInfo); // 0x7ED590
 
-/* rwcore.h */
+																							 /* rwcore.h */
 
 RxHeap* RxHeapCreate(RwUInt32 size); // 0x809F90
 void RxHeapDestroy(RxHeap* heap); // 0x809F30
@@ -479,7 +437,7 @@ RwCamera* RwCameraStreamRead(RwStream* stream); // 0x808DE0
 const RwCamera* RwCameraStreamWrite(const RwCamera* camera, RwStream* stream); // 0x808D00
 RwCameraChunkInfo* RwCameraChunkInfoRead(RwStream* stream, RwCameraChunkInfo* cameraChunkInfo, RwInt32* bytesRead); // 0x808EF0
 
-/* rpworld.h */
+																													/* rpworld.h */
 
 void _rwD3D9VSSetActiveWorldMatrix(const RwMatrix* worldMatrix); // 0x764650
 void _rwD3D9VSGetComposedTransformMatrix(void); // 0x7646E0
@@ -767,7 +725,7 @@ RpWorldSectorChunkInfo* _rpWorldSectorChunkInfoRead(RwStream* stream, RpWorldSec
 RpPlaneSectorChunkInfo* _rpPlaneSectorChunkInfoRead(RwStream* stream, RpPlaneSectorChunkInfo* planeSectorChunkInfo, RwInt32* bytesRead); // 0x763620
 RpWorldChunkInfo* _rpWorldChunkInfoRead(RwStream* stream, RpWorldChunkInfo* worldChunkInfo, RwInt32* bytesRead); // 0x763690
 
-/* rtquat.h */
+																												 /* rtquat.h */
 
 RwBool RtQuatConvertFromMatrix(RtQuat * const qpQuat, const RwMatrix * const mpMatrix); // 0x7EB5C0
 RtQuat* RtQuatRotate(RtQuat* quat, const RwV3d* axis, RwReal angle, RwOpCombineType combineOp); // 0x7EB7C0
@@ -775,7 +733,7 @@ const RtQuat* RtQuatQueryRotate(const RtQuat* quat, RwV3d* unitAxis, RwReal* ang
 RwV3d* RtQuatTransformVectors(RwV3d* vectorsOut, const RwV3d* vectorsIn, const RwInt32 numPoints, const RtQuat* quat); // 0x7EBBB0
 RwReal RtQuatModulus(RtQuat* q); // 0x7EBD10
 
-/* rtanim.h */
+								 /* rtanim.h */
 
 void RtAnimAnimationFreeListCreateParams(RwInt32 blockSize, RwInt32 numBlocksToPrealloc); // 0x7CCC80
 RwBool RtAnimInitialize(void); // 0x7CCCA0
@@ -806,7 +764,7 @@ RtAnimInterpolator* RtAnimInterpolatorCreateSubInterpolator(RtAnimInterpolator* 
 RwBool RtAnimInterpolatorBlendSubInterpolator(RtAnimInterpolator* outAnim, RtAnimInterpolator* inAnim1, RtAnimInterpolator* inAnim2, RwReal alpha); // 0x7CDCF0
 RwBool RtAnimInterpolatorAddSubInterpolator(RtAnimInterpolator* outAnim, RtAnimInterpolator* mainAnim, RtAnimInterpolator* subAnim); // 0x7CDEF0
 
-/* rphanim.h */
+																																	 /* rphanim.h */
 
 void RpHAnimHierarchySetFreeListCreateParams(RwInt32 blockSize, RwInt32 numBlocksToPrealloc); // 0x7C45E0
 RpHAnimHierarchy* RpHAnimHierarchyCreate(RwInt32 numNodes, RwUInt32* nodeFlags, RwInt32* nodeIDs, RpHAnimHierarchyFlag flags, RwInt32 maxInterpKeyFrameSize); // 0x7C4C30
@@ -834,7 +792,7 @@ RwInt32 RpHAnimKeyFrameStreamGetSize(const RtAnimAnimation* animation); // 0x7C6
 RwBool RpHAnimFrameSetID(RwFrame* frame, RwInt32 id); // 0x7C5170
 RwInt32 RpHAnimFrameGetID(RwFrame* frame); // 0x7C5190
 
-/* rpuvanim.h */
+										   /* rpuvanim.h */
 
 _rpUVAnimCustomData* _rpUVAnimCustomDataStreamRead(RwStream* stream); // 0x7CBF70
 const _rpUVAnimCustomData* _rpUVAnimCustomDataStreamWrite(const _rpUVAnimCustomData* customData, RwStream* stream); // 0x7CBFD0
@@ -865,7 +823,7 @@ RpMaterial* RpMaterialUVAnimAddAnimTime(RpMaterial* material, RwReal deltaTime);
 RpMaterial* RpMaterialUVAnimSubAnimTime(RpMaterial* material, RwReal deltaTime); // 0x7CC4F0
 RwBool RpMaterialUVAnimExists(const RpMaterial* material); // 0x7CC530
 
-/* rpskin.h */
+														   /* rpskin.h */
 
 void RpSkinSetFreeListCreateParams(RwInt32 blockSize, RwInt32 numBlocksToPrealloc); // 0x7C67F0
 RwBool RpSkinPluginAttach(void); // 0x7C6820
@@ -891,7 +849,7 @@ RpSkin* _rpSkinSplitDataCreate(RpSkin* skin, RwUInt32 boneLimit, RwUInt32 numMat
 RwBool _rpSkinSplitDataDestroy(RpSkin* skin); // 0x7C8B10
 RxNodeDefinition* RxNodeDefinitionGetD3D9SkinAtomicAllInOne(void); // 0x7CB2A0
 
-/* rtdict.h */
+																   /* rtdict.h */
 
 RtDictSchema* RtDictSchemaInit(RtDictSchema* schema); // 0x7CED40
 RwBool RtDictSchemaDestruct(RtDictSchema* schema); // 0x7CED70
@@ -912,7 +870,7 @@ RwUInt32 RtDictStreamGetSize(const RtDict* dictionary); // 0x7CF1F0
 RtDict* _rtDictSchemaInitDict(RtDictSchema* schema, RtDict* dictionary); // 0x7CEF00
 RwBool _rtDictDestruct(RtDict* dictionary); // 0x7CEF60
 
-/* rpmatfx.h */
+											/* rpmatfx.h */
 
 void RpMatFXMaterialDataSetFreeListCreateParams(RwInt32 blockSize, RwInt32 numBlocksToPrealloc); // 0x810700
 RwBool RpMatFXPluginAttach(void); // 0x810AA0
@@ -948,22 +906,37 @@ RpMaterial* RpMatFXMaterialSetUVTransformMatrices(RpMaterial* material, RwMatrix
 const RpMaterial* RpMatFXMaterialGetUVTransformMatrices(const RpMaterial* material, RwMatrix* baseTransform, RwMatrix* dualTransform); // 0x812A50
 RxPipeline* RpMatFXGetD3D9Pipeline(RpMatFXD3D9Pipeline d3d9Pipeline); // 0x8162F0
 
-/* rpanisot.h */
+																	  /* rpanisot.h */
 
 RwInt8 RpAnisotGetMaxSupportedMaxAnisotropy(void); // 0x748F20
 RwTexture* RpAnisotTextureSetMaxAnisotropy(RwTexture* tex, RwInt8 val); // 0x748F30
 RwInt8 RpAnisotTextureGetMaxAnisotropy(RwTexture* tex); // 0x748F50
 RwBool RpAnisotPluginAttach(void); // 0x748F70
 
-/* rtbmp.h */
+								   /* rtbmp.h */
 
 RwImage* RtBMPImageWrite(RwImage* image, const RwChar* imageName); // 0x7CE990
 RwImage* RtBMPImageRead(const RwChar* imageName); // 0x7CDF60
 
-/* rtpng.h */
+												  /* rtpng.h */
 
 RwImage* RtPNGImageWrite(RwImage* image, const RwChar* imageName); // 0x7CF600
 RwImage* RtPNGImageRead(const RwChar* imageName); // 0x7CF9B0
 
 
 void _rpMaterialSetDefaultSurfaceProperties(RwSurfaceProperties *surfProps);
+
+
+#define RwRenderStateGetMacro(_state, _value)   \
+    (RWSRCGLOBAL(dOpenDevice).fpRenderStateGet(_state, _value))
+
+#define RwRenderStateSetMacro(_state, _value)   \
+    (RWSRCGLOBAL(dOpenDevice).fpRenderStateSet(_state, _value))
+
+#define RwRenderStateGet(_state, _value) \
+        RwRenderStateGetMacro(_state, _value)
+
+#define RwRenderStateSet(_state, _value) \
+        RwRenderStateSetMacro(_state, _value)
+
+#define RWRSTATE(a) (reinterpret_cast<void *>(a))

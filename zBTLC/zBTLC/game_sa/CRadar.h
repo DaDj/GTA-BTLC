@@ -120,23 +120,23 @@ enum eRadarTraceHeight : unsigned char {
 #pragma pack(push, 4)
 struct tRadarTrace
 {
-	uint32_t  m_dwColour; // see eBlipColour
-	uint32_t  m_dwEntityHandle;
-	CVector   m_vPosition;
-	uint16_t  m_wIndex;
-	float     m_fSphereRadius;
-	uint16_t  m_dwBlipSize;
+	unsigned int   m_dwColour; // see eBlipColour
+	unsigned int   m_dwEntityHandle;
+	CVector        m_vPosition;
+	unsigned short m_nCounter;
+	float          m_fSphereRadius;
+	unsigned short m_nBlipSize;
 	class CEntryExit *m_pEntryExit;
-	uint8_t   m_nBlipSprite; // see eRadarSprite
-	uint8_t   m_bBright : 1; // It makes use of bright colors. Always set.
-    uint8_t   m_bTrackingBlip : 1; // It is available.
-    uint8_t   m_bShortRange : 1; // It doesn't show permanently on the radar.
-    uint8_t   m_bFriendly : 1; // It is affected by BLIP_COLOUR_THREAT.   
-    uint8_t   m_bBlipRemain : 1; // It has the priority over the entity (it will still appear after the entity's deletion).
-    uint8_t   m_bBlipFade : 1; // Possibly a leftover. Always unset (unused).
-    uint8_t   m_nCoordBlipAppearance : 2; // see eBlipAppearance
-    uint8_t   m_nBlipDisplayFlag : 2; // see eBlipDisplay
-    uint8_t   m_nBlipType : 4; // see eBlipType
+	unsigned char  m_nBlipSprite; // see eRadarSprite
+	unsigned char  m_bBright : 1; // It makes use of bright colors. Always set.
+	unsigned char  m_bTrackingBlip : 1; // It is available.
+	unsigned char  m_bShortRange : 1; // It doesn't show permanently on the radar.
+	unsigned char  m_bFriendly : 1; // It is affected by BLIP_COLOUR_THREAT.   
+	unsigned char  m_bBlipRemain : 1; // It has the priority over the entity (it will still appear after the entity's deletion).
+	unsigned char  m_bBlipFade : 1; // Possibly a leftover. Always unset (unused).
+	unsigned char  m_nCoordBlipAppearance : 2; // see eBlipAppearance
+	unsigned char  m_nBlipDisplayFlag : 2; // see eBlipDisplay
+	unsigned char  m_nBlipType : 4; // see eBlipType
 };
 #pragma pack(pop)
 

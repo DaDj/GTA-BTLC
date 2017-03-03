@@ -3131,13 +3131,8 @@ struct RwMatrixTag
     RwUInt32            pad3;
 };
 
-
-/*
- * RwMatrix & RwMatrixTag must be different otherwise the alignment
- * directive is ignored when compiling under C++ on Visual C
- */
-//typedef struct RwMatrixTag RWALIGN(RwMatrix, rwMATRIXALIGNMENT);
 typedef RwMatrixTag RwMatrix;
+
 #else
 
 /*
@@ -3152,8 +3147,7 @@ typedef RwMatrixTag RwMatrix;
  * This should be considered an opaque type.
  * Use the RwMatrix API functions to access.
  */
-//typedef struct RwMatrix RWALIGN(RwMatrix, rwMATRIXALIGNMENT);
-#endif /* (!defined(DOXYGEN)) */ 
+#endif /* (!defined(DOXYGEN)) */
 
 typedef void (RWASMCALL * rwMatrixMultFn) (RwMatrix * dstMat,
                                            const RwMatrix * matA,

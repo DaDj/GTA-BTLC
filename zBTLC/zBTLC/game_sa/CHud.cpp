@@ -14,21 +14,6 @@ void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, b
     ((void(__cdecl *)(char const *, bool, bool, bool))0x588BE0)(text, quickMessage, permanent, addToBrief);
 }
 
-
-void CHud::DrawPlayerInfo()
-{
-	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
-
-	/*CFont::SetColor(CRGBA::CRGBA(0,120,12,255));
-	sprintf(string, "%02f", player->m_fHealth);
-	CFont::SetFontStyle(FONT_PRICEDOWN);
-	CFont::SetAlignment(ALIGN_CENTER);
-	CFont::SetOutlinePosition(1);
-	CFont::SetScale(width_fac*0.3f, height_fac*0.6f);
-	CFont::PrintString(width_fac*540.0f, height_fac*10.0f, string);*/
-	CHud::DrawPlayerhealthandarmor(player);
-}
-
 float CHud::x_fac(float x)
 {
 	float width_fac = RsGlobal.maximumWidth / 640.0f;
@@ -41,6 +26,26 @@ float CHud::y_fac(float y)
 	float height_fac = RsGlobal.maximumHeight / 480.0f;
 	return y * height_fac;
 }
+
+
+
+
+void CHud::DrawPlayerInfo()
+{
+	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
+
+	char string[40];
+
+	CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
+	sprintf(string, "%d", (int)CTimer::ms_gameFPS);
+	CFont::SetFontStyle(FONT_PRICEDOWN);
+	CFont::SetAlignment(ALIGN_CENTER);
+	CFont::SetOutlinePosition(1);
+	CFont::SetScale(CHud::x_fac(0.4f), CHud::y_fac(0.4f));
+	CFont::PrintString(CHud::x_fac(540.0f),CHud::y_fac(10.0f), string);
+	CHud::DrawPlayerhealthandarmor(player);
+}
+
 
 void CHud::DrawPlayerhealthandarmor(CPed *player)
 {

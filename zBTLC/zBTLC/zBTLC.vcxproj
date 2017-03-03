@@ -162,6 +162,7 @@
     <ClCompile Include="BTLC_BASE\debug_console.cpp" />
     <ClCompile Include="BTLC_BASE\fast_load.cpp" />
     <ClCompile Include="BTLC_BASE\fixes.cpp" />
+    <ClCompile Include="BTLC_BASE\GPS.cpp" />
     <ClCompile Include="BTLC_BASE\limits.cpp" />
     <ClCompile Include="BTLC_BASE\visuals.cpp" />
     <ClCompile Include="BTLC_BASE\weather.cpp" />
@@ -180,6 +181,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Events_SA\Events_SA.cpp" />
     <ClCompile Include="game_sa\CAEAudioEntity.cpp" />
     <ClCompile Include="game_sa\CAERadioTrackManager.cpp" />
     <ClCompile Include="game_sa\CAESound.cpp" />
@@ -625,11 +627,14 @@
     <ClInclude Include="BTLC_BASE\CVideomodemanager.h" />
     <ClInclude Include="BTLC_BASE\fast_load.h" />
     <ClInclude Include="BTLC_BASE\fixes.h" />
+    <ClInclude Include="BTLC_BASE\GPS.h" />
     <ClInclude Include="BTLC_BASE\limits.h" />
     <ClInclude Include="BTLC_BASE\other_shared.h" />
     <ClInclude Include="BTLC_BASE\visuals.h" />
     <ClInclude Include="BTLC_BASE\weather.h" />
     <ClInclude Include="BTLC_BASE\windowmode.h" />
+    <ClInclude Include="Events_SA\EventList.h" />
+    <ClInclude Include="Events_SA\Events_SA.h" />
     <ClInclude Include="game_sa\AnimBlendFrameData.h" />
     <ClInclude Include="game_sa\C2dEffect.h" />
     <ClInclude Include="game_sa\CAEAudioEntity.h" />
@@ -1148,7 +1153,10 @@
     <ClInclude Include="game_sa\tHandlingData.h" />
     <ClInclude Include="game_sa\tTransmissionGear.h" />
     <ClInclude Include="BTLC.h" />
-    <ClInclude Include="Patch\Injector.h" />
+    <ClInclude Include="Patch\gvm\gvm.hpp" />
+    <ClInclude Include="Patch\gvm\translator.hpp" />
+    <ClInclude Include="Patch\hooking.hpp" />
+    <ClInclude Include="Patch\injector.hpp" />
     <ClInclude Include="Patch\MemoryMgr.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />

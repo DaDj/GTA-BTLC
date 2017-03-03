@@ -106,10 +106,36 @@ struct RsInputDevice
     RsInputEventHandler inputEventHandler;
 };
 
+typedef struct PsGlobalType PsGlobalType;
+struct PsGlobalType
+{
+	HWND	window;
+	HWND	instance;
+	int		fullscreen;
+	float	lastMousePos_X;
+	DWORD	lastMousePos_Y;
+	int		unk;
+	DWORD	diInterface;
+	DWORD	diMouse;
+	void*	diDevice1;
+	void*	diDevice2;
+};
 
+typedef struct RsGlobalType RsGlobalType;
+struct RsGlobalType
+{
+    const RwChar *appName;
+    RwInt32 maximumWidth;
+    RwInt32 maximumHeight;
+	unsigned int	frameLimit;
+    RwBool  quit;
 
+	PsGlobalType   *ps; /* platform specific data */
 
-
+    RsInputDevice keyboard;
+    RsInputDevice mouse;
+    RsInputDevice pad;
+};
 
 typedef struct RsMouseStatus RsMouseStatus;
 struct RsMouseStatus
@@ -264,6 +290,3 @@ enum RsPrintMargin
     rsPRINTMARGINFORCENUMSIZEINT = 0x7FFFFFFF
 };
 typedef enum RsPrintMargin RsPrintMargin;
-
-
-

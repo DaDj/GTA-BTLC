@@ -10,9 +10,11 @@ public:
 	static bool& m_CodePause;
 	static bool& m_UserPause;
 	static unsigned __int32& m_FrameCounter;
+	static float& ms_gameFPS;
 	static float& ms_fTimeStepOld;
 	static float& ms_fTimeStepNonClipped;
 	static float& ms_fTimeStep;
+
 	// game speed
 	static float& ms_fTimeScale;
 	static unsigned __int32& m_snPreviousTimeInMilliseconds;
