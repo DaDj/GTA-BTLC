@@ -31,5 +31,15 @@ namespace BUGFIX
 		MemoryVP::Patch<char>(0x60B4DA + 2, 0x08);
 		MemoryVP::Patch<char>(0x60B4DA + 3, 0xEB);
 		MemoryVP::Patch<char>(0x60B4DA + 4, 0x21);
+
+
+		//DISABLE TASK::ROADCROSSLOOKAROUN
+		//(HOTFIX FOR PATHS)
+		MemoryVP::Nop(0x671CF0, 5);
+		MemoryVP::Nop(0x671CF0, 5);
+		MemoryVP::Patch<BYTE>(0x67448F, 0xEB);
+		MemoryVP::Patch<BYTE>(0x6744A4, 0xEB);
+
+
 	}
 }

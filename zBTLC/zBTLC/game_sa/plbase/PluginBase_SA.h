@@ -2,6 +2,7 @@
 #pragma once
 #include <cstddef>
 #include <cstdint>
+#include "../../BTLC_BASE/other_shared.h"
 
 
 

@@ -81,3 +81,18 @@ char *MakeUpperCase(char *dest, char *src)
 {
 	return ((char *(__cdecl *)(char *, char *))0x7186E0)(dest, src);
 }
+
+
+
+float x_fac(float x)
+{
+	float width_fac = RsGlobal.maximumWidth / 640.0f;
+	return x * width_fac;
+}
+
+
+float y_fac(float y)
+{
+	float height_fac = RsGlobal.maximumHeight / 480.0f;
+	return y * height_fac;
+}

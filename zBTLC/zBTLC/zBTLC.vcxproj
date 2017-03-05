@@ -164,6 +164,7 @@
     <ClCompile Include="BTLC_BASE\fixes.cpp" />
     <ClCompile Include="BTLC_BASE\GPS.cpp" />
     <ClCompile Include="BTLC_BASE\limits.cpp" />
+    <ClCompile Include="BTLC_BASE\Feat_Player_WallHitreaction.cpp" />
     <ClCompile Include="BTLC_BASE\visuals.cpp" />
     <ClCompile Include="BTLC_BASE\weather.cpp" />
     <ClCompile Include="BTLC_BASE\windowmode.cpp" />

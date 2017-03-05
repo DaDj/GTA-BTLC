@@ -18,6 +18,10 @@ public:
 	static Bool ProcessLineOfSight(CVector  const& origin, CVector  const& target, CColPoint &colPoint, 
 		CEntity *&colEntity, bool buildings, bool vehicles, bool peds, bool objects, bool dummies, 
 		bool seeThrough, bool cameraObjects, bool shootThrough);
+
+	static bool CWorld::GetIsLineOfSightClear(CVector  const& origin, CVector  const& target, bool solid,
+		bool bSolid, bool bCar, bool bActor, bool bObject, bool bParticle, bool a8);
+
 	static float FindGroundZForCoord(float x, float y);
 
     static bool ProcessVerticalLine(CVector const& origin, float distance, CColPoint &colPoint, CEntity *&colEntity,

@@ -41,3 +41,7 @@ extern uint32_t &ClumpOffset;
 AnimBlendFrameData *RpAnimBlendClumpFindFrame(RpClump *clump, char *name);
 
 char *MakeUpperCase(char *dest, char *src);
+
+
+ float x_fac(float x);
+ float y_fac(float y);

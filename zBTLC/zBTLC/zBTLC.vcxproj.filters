@@ -32,6 +32,9 @@
     <Filter Include="Patching\gvm">
       <UniqueIdentifier>{6e4d9b1a-3231-4e6f-9aea-388051fdfa0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BTLC_BASE\features">
+      <UniqueIdentifier>{d124aa0b-a246-4a88-ad11-e9ae220b7768}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1372,11 +1375,14 @@
     <ClCompile Include="game_sa\CObjectinfo.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\GPS.cpp">
-      <Filter>BTLC_BASE</Filter>
-    </ClCompile>
     <ClCompile Include="Events_SA\Events_SA.cpp">
       <Filter>Events_Sa</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\GPS.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\Feat_Player_WallHitreaction.cpp">
+      <Filter>BTLC_BASE\features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2968,9 +2974,6 @@
     <ClInclude Include="BTLC_BASE\other_shared.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\GPS.h">
-      <Filter>BTLC_BASE</Filter>
-    </ClInclude>
     <ClInclude Include="Events_SA\Events_SA.h">
       <Filter>Events_Sa</Filter>
     </ClInclude>
@@ -2988,6 +2991,9 @@
     </ClInclude>
     <ClInclude Include="Patch\gvm\translator.hpp">
       <Filter>Patching\gvm</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\GPS.h">
+      <Filter>BTLC_BASE\features</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

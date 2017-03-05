@@ -7,7 +7,7 @@ class CTaskSimpleHitWall : public CTaskSimpleRunAnim {
 protected:
     CTaskSimpleHitWall(plugin::dummy_func_t a) : CTaskSimpleRunAnim(a) {}
 public:
-    
+	CTaskSimpleHitWall();
 };
 
 //VALIDATE_SIZE(CTaskSimpleHitWall, 0x);

@@ -5,6 +5,7 @@
 #include "RenderWare.h"
 #include "CSprite2d.h"
 #include "CTimer.h"
+#include "../Patch/MemoryMgr.h"
 #include "../BTLC_BASE/other_shared.h"
 
 char (*CHud::m_BigMessage)[128] = (char (*)[128])0xBAACC0;
@@ -27,6 +28,10 @@ float CHud::y_fac(float y)
 	return y * height_fac;
 }
 
+void CHud::Init()
+{
+	MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
+}
 
 
 
@@ -37,12 +42,14 @@ void CHud::DrawPlayerInfo()
 	char string[40];
 
 	CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
-	sprintf(string, "%d", (int)CTimer::ms_gameFPS);
+	sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
 	CFont::SetFontStyle(FONT_PRICEDOWN);
 	CFont::SetAlignment(ALIGN_CENTER);
 	CFont::SetOutlinePosition(1);
 	CFont::SetScale(CHud::x_fac(0.4f), CHud::y_fac(0.4f));
 	CFont::PrintString(CHud::x_fac(540.0f),CHud::y_fac(10.0f), string);
+
+
 	CHud::DrawPlayerhealthandarmor(player);
 }
 

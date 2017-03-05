@@ -71,18 +71,8 @@ void Function_starter()
 	visuals::pickup_appearence();////Changes behaviour of Pickups
 	visuals::init();		////VISUAL CHANGES init
 	limits::IMG_LIMIT();	//Limit adjusting
+	CHud::Init();			//New HUD init
 
-
-	//DISABLE TASK::ROADCROSSLOOKAROUN
-	//(HOTFIX FOR PATHS)
-	MemoryVP::Nop(0x671CF0,5);
-	MemoryVP::Nop(0x671CF0,5);
-	MemoryVP::Patch<BYTE>(0x67448F, 0xEB);
-	MemoryVP::Patch<BYTE>(0x6744A4, 0xEB);
-
-
-	//TEMPORARY!!
-	MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
 
 
 	//Trafficlight changes

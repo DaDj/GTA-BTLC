@@ -33,3 +33,11 @@ void CWorld::Add(CEntity *entity) {
 void CWorld::Remove(CEntity *entity) {
     ((void(__cdecl *)(CEntity *))0x563280)(entity);
 }
+
+bool CWorld::GetIsLineOfSightClear(CVector  const& origin, CVector   const& target,bool solid,
+	bool bSolid,bool bCar, bool bActor, bool bObject, bool bParticle, bool a8)
+{
+	return ((bool(__cdecl *)(CVector  const&, CVector  const&, bool ,
+		bool, bool , bool , bool , bool, bool))0x56A490)(origin, target,solid,
+			bSolid, bCar, bActor, bObject, bParticle,  a8);
+}
