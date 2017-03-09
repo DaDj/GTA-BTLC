@@ -3,6 +3,9 @@
 #include <cstddef>
 #include <cstdint>
 #include "../../BTLC_BASE/other_shared.h"
+#include "../../Patch/MemoryMgr.h"
+#include "../../Patch/calling.hpp"
+#include "../../Patch/hooking.hpp"
 
 
 

@@ -78,13 +78,13 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(0.0f), CHud::y_fac(0.0f), CHud::x_fac(640.0f), CHud::y_fac(480.0f)), CRGBA::CRGBA(30, 30, 30, 40));
 	}
 
-	if (CTimer::m_snTimeInMilliseconds < (lastdamagetaken + 4000) || KeyPressed(VK_TAB))
+	if (!CTimer::m_snTimeInMilliseconds < (lastdamagetaken + 4000) || KeyPressed(VK_TAB))
 	{
 
-		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(29.0f), CHud::y_fac(454.0f), CHud::x_fac(98.0f), CHud::y_fac(455.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
-		CSprite2d::DrawBarChart(CHud::x_fac(30.0f), CHud::y_fac(455.0f), CHud::x_fac(66.0), CHud::y_fac(7.0), percentage_health, 0, 0, 0, color_health, CRGBA::CRGBA(0, 100, 0, 255));
+		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(10.0f), CHud::y_fac(459.0f), CHud::x_fac(100.0f), CHud::y_fac(477.0f)), CRGBA::CRGBA(30, 30, 30, 180));
+		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(461.0f), CHud::x_fac(88.0f), CHud::y_fac(6.0f), percentage_health, 0, 0, 0, color_health, CRGBA::CRGBA(0, 100, 0, 255));
 
-		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(29.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
-		CSprite2d::DrawBarChart(CHud::x_fac(30.0f), CHud::y_fac(465.0f), CHud::x_fac(66.0f), CHud::y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, CRGBA::CRGBA(0, 100, 0, 255));
+		//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
+		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(469.0f), CHud::x_fac(88.0f), CHud::y_fac(6.0f), percentage_armor, 0, 0, 0, color_armor, CRGBA::CRGBA(10, 100, 10, 255));
 	}
 }

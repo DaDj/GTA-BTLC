@@ -180,26 +180,29 @@ bool IsObjectPointerValid(CObject* object) {
 }
 
 
+//modified Setobjectdata - changes masspoint to the middle of the boundingbox
+//TODO: load file for exception objects( modelindex, flag (1= set new masspoint,0 = keep original), x_offset, y_offset, z_offset )
 void CObject::SetObjectdata(int modelindex, CObject* object)
 {
+	//Call standard Object data function
 	((void(__cdecl *)(int, CObject*))0x5A2D00)(modelindex, object);
 
 
-
-	//CObjectInfo *v3 =  &CObjectdata::ms_aObjectInfo[v2] ;
-	//int v6 = v3->m_nSpecialColResponseCase;
+	//Get boundingbox coords
 	float bound_zmax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.z;
 	float bound_zmin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.z;
-	float massz = bound_zmax + bound_zmin / 2;
+	float massz = bound_zmax + bound_zmin / 2; //middle
 
 	float bound_xmax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.x;
 	float bound_xmin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.x;
-	float massx = bound_xmax + bound_xmin / 2;
+	float massx = bound_xmax + bound_xmin / 2; //middle
 
 	float bound_ymax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.y;
 	float bound_ymin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.y;
-	float massy = bound_ymax + bound_ymin / 2;
+	float massy = bound_ymax + bound_ymin / 2; //middle
 
+
+	//get the special response type of the object
 	int response = object->m_pObjectInfo->m_nSpecialColResponseCase;
 	switch (response)
 	{
@@ -208,6 +211,7 @@ void CObject::SetObjectdata(int modelindex, CObject* object)
 	case 2:
 	case 3:
 	case 4:
+		//If it is a dynamic object -> set masspoint to the middle
 		object->m_vecCentreOfMass.x = massx;
 		object->m_vecCentreOfMass.y = massy;
 		object->m_vecCentreOfMass.z = massz;

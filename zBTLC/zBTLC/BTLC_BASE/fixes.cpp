@@ -10,6 +10,7 @@
 
 #include <Windows.h>
 #include "../Patch/MemoryMgr.h"
+#include <iostream>
 
 namespace BUGFIX
 {
@@ -40,6 +41,14 @@ namespace BUGFIX
 		MemoryVP::Patch<BYTE>(0x67448F, 0xEB);
 		MemoryVP::Patch<BYTE>(0x6744A4, 0xEB);
 
+		char* ExploredTerritoriesArray = (char*)0xBA3730;
 
+		for (ExploredTerritoriesArray;  ExploredTerritoriesArray <= (char*)0xBA3793; ExploredTerritoriesArray++)
+			*ExploredTerritoriesArray = 1;
+
+		MemoryVP::Nop(0x53C590, 14);
+		MemoryVP::Nop(0x5726B5, 14);
+		MemoryVP::Nop(0x572111, 14);
+	
 	}
 }

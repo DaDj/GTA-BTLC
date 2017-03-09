@@ -10,6 +10,9 @@
 //////////////////////////////////////////////////////////////////
 
 #include "../Patch/MemoryMgr.h"
+#include "../Patch/injector.hpp"
+#include "../game_sa/CVector2D.h"
+#include <math.h>
 namespace visuals
 {
 	void pickup_appearence()
@@ -35,8 +38,12 @@ namespace visuals
 
 	}
 
+
+
 	void init()
 	{
+
+		
 		// No Heat Haze <-move to visuals
 		MemoryVP::Patch<BYTE>(0x72C1B7, 0xEB);
 		// Render the static shadow at every fxquality

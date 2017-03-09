@@ -29,15 +29,15 @@ float VERSION = 0.20f;
 #include "BTLC_BASE\CTrafficlights.h"
 #include "game_sa\CObject.h"
 #include "game_sa\CHud.h"
+#include "BTLC_BASE\CHud_Hooks.h"
 
-//#include "game_sa/CStreaming.h"
+
 
 void debug_console();
 void btlc_init(); //BTLC INIT
 void check_gameversion();
 void ParseCommandlineArgument(int thing, char* pArg);
 void Function_starter();
-
 
 
 void Main()
@@ -71,7 +71,7 @@ void Function_starter()
 	visuals::pickup_appearence();////Changes behaviour of Pickups
 	visuals::init();		////VISUAL CHANGES init
 	limits::IMG_LIMIT();	//Limit adjusting
-	CHud::Init();			//New HUD init
+	CHud_Hook::Init();			//New HUD init
 
 
 
@@ -88,6 +88,7 @@ void Function_starter()
 	//New Masspoints for dynamic Objects
 	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);
 }
+
 
 
 //BTLC INIT
@@ -118,6 +119,7 @@ void btlc_init()
 
 	//Disabled Diving
 	MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
+
 
 
 	//WINDOWPATCHES

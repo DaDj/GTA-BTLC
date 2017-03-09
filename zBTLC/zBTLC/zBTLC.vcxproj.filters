@@ -1384,6 +1384,15 @@
     <ClCompile Include="BTLC_BASE\Feat_Player_WallHitreaction.cpp">
       <Filter>BTLC_BASE\features</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CCullZone.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\CHud_Hooks.cpp">
+      <Filter>BTLC_BASE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -2994,6 +3003,15 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\GPS.h">
       <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\calling.hpp">
+      <Filter>Patching</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CCullZone.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\CHud_Hooks.h">
+      <Filter>BTLC_BASE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

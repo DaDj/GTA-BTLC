@@ -8,13 +8,13 @@
 #include "../game_sa/RenderWare.h"
 #include "../game_sa/CFont.h"
 
-#define MAX_NODE_POINTS 3000
-#define GPS_LINE_WIDTH  3.5f
+#define MAX_NODE_POINTS 30000
+#define GPS_LINE_WIDTH  2.5f
 #define GPS_LINE_R  10
 #define GPS_LINE_G  110
 #define GPS_LINE_B  10
-#define GPS_LINE_A  255
-#define MAX_TARGET_DISTANCE 50.0f
+#define GPS_LINE_A  200
+#define MAX_TARGET_DISTANCE 30.0f
 
 using namespace plugin;
 
@@ -27,8 +27,13 @@ public:
 		static CVector2D nodePoints[MAX_NODE_POINTS];
 		static RwIm2DVertex lineVerts[MAX_NODE_POINTS * 4];
 
+		MemoryVP::Patch<float>(0x450ACE, 1500.0); //increase pathnodeload
+		MemoryVP::Patch<float>(0x450B01, 1500.0);
+		MemoryVP::Patch<float>(0x450B92, 1500.0);
+
 
 		Events::gameProcessEvent += []() {
+			MemoryVP::Patch<float>(0x8D2530, 4.0);
 			if (FrontEndMenuManager.m_nTargetBlipIndex
 				&& CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_nCounter == HIWORD(FrontEndMenuManager.m_nTargetBlipIndex)
 				&& CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_nBlipDisplayFlag
@@ -43,7 +48,7 @@ public:
 
 		Events::drawRadarOverlayEvent += []() {
 			gpsShown = false;
-			CPed *playa = FindPlayerPed(0);
+			CPed *playa = FindPlayerPed();
 			if (playa
 				&& playa->m_pVehicle
 				&& playa->m_bInVehicle
@@ -60,7 +65,7 @@ public:
 				short nodesCount = 0;
 
 				ThePaths.DoPathSearch(0, FindPlayerCoors(0), CNodeAddress(), destPosn, resultNodes, &nodesCount, MAX_NODE_POINTS, &gpsDistance,
-					999999.0f, NULL, 999999.0f, false, CNodeAddress(), false, playa->m_pVehicle->m_dwVehicleSubClass == VEHICLE_BOAT);
+					999999.0f, NULL, 999999.0f, true, CNodeAddress(), false, playa->m_pVehicle->m_dwVehicleSubClass == VEHICLE_BOAT);
 
 				if (nodesCount > 0) {
 					for (short i = 0; i < nodesCount; i++) {
