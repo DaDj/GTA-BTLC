@@ -52,7 +52,7 @@ float CRadar::LimitRadarPoint(CVector2D& point2)
 	//return ((float(__cdecl *)(CVector2D&))0x5832F0)(point2);
 	CVector2D* point = (CVector2D*)&point2;
 
-	long double result = sqrt(point->x * point->x + point->y * point->y);
+	float result = sqrt(point->x * point->x + point->y * point->y);
 	if (result > sqrt(2.f) / 2.0)
 	{
 		point->x /= result * 1 / sqrt(2.f);
@@ -87,7 +87,7 @@ void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 {
 	//((void(__cdecl *)(CVector2D&, CVector2D const&))0x583480)(out, in);
 
-	long double result; // fst7@2
+	float result; // fst7@2
 	float radar_width = 90.0;
 	float radar_height = 65.0;
 	float radar_posX = 10.0;
@@ -107,7 +107,7 @@ void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 			+ CHud::x_fac(radar_posX)
 			+ CHud::x_fac(radar_width  * 0.5) * a2->x ;
 
-		result = (long double)RsGlobal.maximumHeight;
+		result = (float)RsGlobal.maximumHeight;
 		a1->y = result -  CHud::x_fac(radar_posY)
 			+ CHud::x_fac(radar_height * 0.5)
 			- CHud::x_fac(radar_height * 0.5) * a2->y ;

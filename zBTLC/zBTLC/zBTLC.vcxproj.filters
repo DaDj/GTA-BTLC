@@ -3013,6 +3013,9 @@
     <ClInclude Include="BTLC_BASE\CHud_Hooks.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
+    <ClInclude Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="changed_classes.txt">

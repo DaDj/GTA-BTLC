@@ -81,6 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>E:\GTA Modding\Rockstar Games\IV to SA Reborn V4\modloader\Back to LC\Base\plugins\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -635,6 +636,7 @@
     <ClInclude Include="BTLC_BASE\GPS.h" />
     <ClInclude Include="BTLC_BASE\limits.h" />
     <ClInclude Include="BTLC_BASE\other_shared.h" />
+    <ClInclude Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.h" />
     <ClInclude Include="BTLC_BASE\visuals.h" />
     <ClInclude Include="BTLC_BASE\weather.h" />
     <ClInclude Include="BTLC_BASE\windowmode.h" />

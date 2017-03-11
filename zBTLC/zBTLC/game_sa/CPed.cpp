@@ -71,9 +71,9 @@ void CPed::Initialise()
 }
 
 // Converted from thiscall void CPed::SetPedStats(ePedStats statsType) 0x5DEBC0
-void CPed::SetPedStats(ePedStats statsType)
+void CPed::SetPedStats(ePedState statsType)
 {
-	((void (__thiscall *)(CPed*, ePedStats))0x5DEBC0)(this, statsType);
+	((void (__thiscall *)(CPed*, ePedState))0x5DEBC0)(this, statsType);
 }
 
 // Converted from thiscall void CPed::Update(void) 0x5DEBE0

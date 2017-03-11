@@ -17,9 +17,9 @@
 #include "ePedState.h"
 #include "CAnimBlendAssociation.h"
 
-enum ePedStats {
-
-};
+//enum ePedStats {
+//
+//};
 
 enum eMoveState {
 
@@ -257,7 +257,7 @@ public:
 	void CreateDeadPedPickupCoors(float* pX, float* pY, float* pZ);
 	void CreateDeadPedWeaponPickups();
 	static void Initialise();
-	void SetPedStats(ePedStats statsType);
+	void SetPedStats(ePedState statsType);
 	void Update();
 	void SetMoveState(eMoveState moveState);
 	void SetMoveAnimSpeed(CAnimBlendAssociation* association);

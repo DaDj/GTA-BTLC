@@ -30,6 +30,7 @@ float VERSION = 0.20f;
 #include "game_sa\CObject.h"
 #include "game_sa\CHud.h"
 #include "BTLC_BASE\CHud_Hooks.h"
+#include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
 
 
 
@@ -72,7 +73,7 @@ void Function_starter()
 	visuals::init();		////VISUAL CHANGES init
 	limits::IMG_LIMIT();	//Limit adjusting
 	CHud_Hook::Init();			//New HUD init
-
+	Feat_PlayerWeaponReload::init(); //Add Reload with "R" fucntions.
 
 
 	//Trafficlight changes
@@ -104,26 +105,10 @@ void btlc_init()
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
 	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
 
-	//Disable "To stop Carl..." message.
-	MemoryVP::Patch<char>(0x63E8DF, 0xEB);
-	// No hunger
-	MemoryVP::Nop(0x5700F0, 5);
-	//No Tab stats
-	MemoryVP::Patch<char>(0x58FC2C, 0xEB);
-	// No gang gestures
-	MemoryVP::Patch<BYTE>(0x6601D7, 0xEB);
-	MemoryVP::Patch<WORD>(0x660967, 0xE990);
-	MemoryVP::Patch<BYTE>(0x66298F, 0xEB);
-	MemoryVP::Patch<WORD>(0x6633C0, 0xE990);
-	MemoryVP::Patch<BYTE>(0x663E4D, 0xEB);
-
-	//Disabled Diving
-	MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
 
 
 
 	//WINDOWPATCHES
-
 	//MemoryVP::Patch<int>(0x74877D,0);
 	//WINDOWMODE HOOKS
 	//MemoryVP::Patch(0x74888F + 1, 0x10000000);

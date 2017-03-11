@@ -12,6 +12,8 @@
 //////////////////////////////////////////////////////////////////
 #pragma warning(disable:4067) 
 #pragma warning(disable:4996) 
+#pragma warning(disable:4244) 
+#pragma warning(disable:4309) 
 
 #include "stdafx.h"
 #include "BTLC.h"
