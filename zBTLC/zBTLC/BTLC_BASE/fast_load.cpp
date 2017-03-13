@@ -56,7 +56,7 @@ namespace fastload
 		if (SKIP_LOADSCREEN == 1)
 		{
 			// Disable loading bar rendering
-			//MemoryVP::Nop(0x5905B4, 5);
+			MemoryVP::Nop(0x5905B4, 5);
 			// Disable audio tune from loading screen
 			MemoryVP::Nop(0x748CF6, 5);  
 			// Disable loading screen rendering

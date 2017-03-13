@@ -3,14 +3,14 @@
 //////////////////////////////////////////////////////////////////
 //// Author: D4DJ                                             ////
 //////////////////////////////////////////////////////////////////
-//// DATE: 31.07.2016                                         ////
+//// DATE:                                                    ////
 //////////////////////////////////////////////////////////////////
 //// CHANGES: -included almost all classses ever needed       ////
 ////          -recreated the whole source code                ////
 ////          -disabled new weather effects for now           ////
 //////////////////////////////////////////////////////////////////
 //// Description:                                             ////
-//// This file will initiate the BTLC modiffications.         ////
+//// This file will initiate the BTLC modifications.         ////
 //// SOME general modification are done in the main function. ////
 //// Please keep the main function clean and use new functions////
 //// instead.                                                 ////
@@ -28,7 +28,6 @@ float VERSION = 0.20f;
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
 #include "game_sa\CObject.h"
-#include "game_sa\CHud.h"
 #include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
 
@@ -65,15 +64,16 @@ void Main()
 
 void Function_starter()
 {
-	btlc_init();			////INIT OF BTLC
+	btlc_init();			//INIT OF BTLC
 	fastload::Init();		//Fast loader
-	BUGFIX::various();		////Fixes of some small GTA Bugs
-	weather::init();		////Changes the weather effects.
-	visuals::pickup_appearence();////Changes behaviour of Pickups
-	visuals::init();		////VISUAL CHANGES init
+	BUGFIX::init();			//Fixes of some small GTA Bugs
+	weather::init();		//Changes the weather effects.
 	limits::IMG_LIMIT();	//Limit adjusting
-	CHud_Hook::Init();			//New HUD init
-	Feat_PlayerWeaponReload::init(); //Add Reload with "R" fucntions.
+	visuals::init();		//VISUAL CHANGES init
+
+	CHud_Hook::Init();					//New HUD init
+	Feat_PlayerWeaponReload::init();	//Add Reload with "R" fucntions.
+
 
 
 	//Trafficlight changes
@@ -88,6 +88,7 @@ void Function_starter()
 
 	//New Masspoints for dynamic Objects
 	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);
+
 }
 
 
@@ -104,8 +105,6 @@ void btlc_init()
 	MemoryVP::Patch<void*>(0x57C672, &settingsfile);
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
 	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
-
-
 
 
 	//WINDOWPATCHES

@@ -28,12 +28,6 @@ float CHud::y_fac(float y)
 	return y * height_fac;
 }
 
-void CHud::Init()
-{
-	MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
-}
-
-
 
 void CHud::DrawPlayerInfo()
 {
@@ -48,7 +42,6 @@ void CHud::DrawPlayerInfo()
 	CFont::SetOutlinePosition(1);
 	CFont::SetScale(CHud::x_fac(0.4f), CHud::y_fac(0.4f));
 	CFont::PrintString(CHud::x_fac(540.0f),CHud::y_fac(10.0f), string);
-
 
 	CHud::DrawPlayerhealthandarmor(player);
 }

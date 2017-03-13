@@ -8,7 +8,7 @@
 #include "../game_sa/RenderWare.h"
 #include "../game_sa/CFont.h"
 
-#define MAX_NODE_POINTS 30000
+#define MAX_NODE_POINTS 3000
 #define GPS_LINE_WIDTH  2.5f
 #define GPS_LINE_R  10
 #define GPS_LINE_G  110
@@ -33,7 +33,7 @@ public:
 
 
 		Events::gameProcessEvent += []() {
-			MemoryVP::Patch<float>(0x8D2530, 4.0);
+		//	MemoryVP::Patch<float>(0x8D2530, 4.0); //4 times people on the street
 			if (FrontEndMenuManager.m_nTargetBlipIndex
 				&& CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_nCounter == HIWORD(FrontEndMenuManager.m_nTargetBlipIndex)
 				&& CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_nBlipDisplayFlag

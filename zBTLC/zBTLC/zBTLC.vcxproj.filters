@@ -5,26 +5,14 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="game_sa">
-      <UniqueIdentifier>{793a7e51-a752-4741-9db1-86b90b2649f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_sa\CTask">
-      <UniqueIdentifier>{f75a0319-a445-4f7b-8be3-d04b09cf9f95}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Patching">
       <UniqueIdentifier>{87c72dff-8f6e-40aa-830a-d0a5be3aac71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_sa\plbase">
-      <UniqueIdentifier>{89febd88-cadc-4bb4-a5b2-320e4413d1eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="BTLC_BASE">
       <UniqueIdentifier>{669fcbd3-bd0a-4f0e-bf23-5ae340706ea9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Doc">
       <UniqueIdentifier>{68aff35e-20e6-4b6a-b382-c576d9b8474d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="game_sa\rw">
-      <UniqueIdentifier>{9ee5a81e-12d6-41a1-aa29-d55460d0dd48}</UniqueIdentifier>
     </Filter>
     <Filter Include="Events_Sa">
       <UniqueIdentifier>{d45878e4-6151-4f2b-8f72-341cafd7eac3}</UniqueIdentifier>
@@ -34,6 +22,21 @@
     </Filter>
     <Filter Include="BTLC_BASE\features">
       <UniqueIdentifier>{d124aa0b-a246-4a88-ad11-e9ae220b7768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa">
+      <UniqueIdentifier>{793a7e51-a752-4741-9db1-86b90b2649f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa\CTask">
+      <UniqueIdentifier>{f75a0319-a445-4f7b-8be3-d04b09cf9f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa\plbase">
+      <UniqueIdentifier>{89febd88-cadc-4bb4-a5b2-320e4413d1eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa\rw">
+      <UniqueIdentifier>{9ee5a81e-12d6-41a1-aa29-d55460d0dd48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patching\Paths">
+      <UniqueIdentifier>{856890ab-2ff3-4d47-b265-c8a3399c4fd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1392,6 +1395,9 @@
     </ClCompile>
     <ClCompile Include="BTLC_BASE\CHud_Hooks.cpp">
       <Filter>BTLC_BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patch\paths\Paths.cpp">
+      <Filter>Patching\Paths</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3015,6 +3021,12 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.h">
       <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\paths\Error.h">
+      <Filter>Patching\Paths</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\paths\Paths.h">
+      <Filter>Patching\Paths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

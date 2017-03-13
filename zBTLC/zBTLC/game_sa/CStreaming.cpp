@@ -191,7 +191,6 @@ void   CStreaming::StreamCopModels(signed int townID)
 	if (!CGame::currArea)
 	{
 		//ID = townID;
-	
 		COP_ID = copModel_curr = rand() % copModel_count;
 		COPCAR_ID = copCarModel_curr = rand() % copCarModel_count;
 
@@ -202,7 +201,7 @@ void   CStreaming::StreamCopModels(signed int townID)
 		{
 			if (*Time_Copbike_refresh < CTimer::m_snTimeInMilliseconds)
 			{
-			*bCopBikeLoaded = !(*bCopBikeLoaded);
+				*bCopBikeLoaded = !(*bCopBikeLoaded);
 				*Time_Copbike_refresh = CTimer::m_snTimeInMilliseconds + rand() %  20000 + 30000;
 			}
 

@@ -14,13 +14,11 @@ namespace CHud_Hook
 
 	void Rectangular_radar()
 	{
-
 		//newradartoscreenspace
 		MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
 
 		//replace original 
 		MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
-
 
 		//injector::MakeNOP(0x58AA25, 5);
 		MemoryVP::Patch<float>(0x585719, 0.0f); // -1.0
@@ -33,7 +31,6 @@ namespace CHud_Hook
 		MemoryVP::Patch<float>(0x585751, 0.0f); // -1.0
 
 		int alpha = 160;
-
 		MemoryVP::Patch<int>(0x586432 + 1, alpha);
 		MemoryVP::Patch<int>(0x58647B + 1, alpha);
 		MemoryVP::Patch<int>(0x5864BC + 1, alpha);

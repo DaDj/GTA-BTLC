@@ -4,6 +4,18 @@
 #include "CPhysical.h"
 #include "CObjectInfo.h"
 
+struct structObject_masspoint
+{
+	char Modelname[32];
+	int Modelindex;
+	int Flag;
+	float x;
+	float y;
+	float z;
+};
+
+
+
 enum eObjectType {
     OBJECT_MISSION = 2,
     OBJECT_TEMPORARY = 3,
@@ -114,6 +126,7 @@ public:
     static void DeleteAllTempObjectsInArea(CVector point, float radius);
 
 	static void SetObjectdata(int modelindex, CObject* object);
+	static void ReadMasspoints(structObject_masspoint Result[]);
 };
 #pragma pack(pop)
 

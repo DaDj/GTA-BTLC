@@ -17,7 +17,6 @@ public:
 
 	static float x_fac(float x);
 	static float y_fac(float y);
-	static void Init();
 	static void DrawPlayerInfo();
 	static void DrawPlayerhealthandarmor(CPed *player);
 };

@@ -1,6 +1,12 @@
 #include "CObject.h"
 #include "CModelInfo.h"
-
+#include "CFileMgr.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include "../stdafx.h"
+#include "../Patch/paths/Paths.h"
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 // Converted from thiscall void CObject::ProcessGarageDoorBehaviour(void) 0x44A4D0
 void CObject::ProcessGarageDoorBehaviour() {
     ((void(__thiscall *)(CObject*))0x44A4D0)(this);
@@ -181,43 +187,116 @@ bool IsObjectPointerValid(CObject* object) {
 
 
 //modified Setobjectdata - changes masspoint to the middle of the boundingbox
-//TODO: load file for exception objects( modelindex, flag (1= set new masspoint,0 = keep original), x_offset, y_offset, z_offset )
+//TODO: load file for exception objects( modelindex, flag (2 = masspoitn from file, 1= set new middle masspoint,0 = keep original), x_offset, y_offset, z_offset )
 void CObject::SetObjectdata(int modelindex, CObject* object)
 {
+	static  structObject_masspoint ChangedObjects[5000];
 	//Call standard Object data function
 	((void(__cdecl *)(int, CObject*))0x5A2D00)(modelindex, object);
 
 
-	//Get boundingbox coords
-	float bound_zmax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.z;
-	float bound_zmin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.z;
-	float massz = bound_zmax + bound_zmin / 2; //middle
-
-	float bound_xmax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.x;
-	float bound_xmin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.x;
-	float massx = bound_xmax + bound_xmin / 2; //middle
-
-	float bound_ymax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.y;
-	float bound_ymin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.y;
-	float massy = bound_ymax + bound_ymin / 2; //middle
-
-
-	//get the special response type of the object
-	int response = object->m_pObjectInfo->m_nSpecialColResponseCase;
-	switch (response)
+	static int once = 0;
+	if (!once)
 	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		//If it is a dynamic object -> set masspoint to the middle
-		object->m_vecCentreOfMass.x = massx;
-		object->m_vecCentreOfMass.y = massy;
-		object->m_vecCentreOfMass.z = massz;
-		break;
-
-	default:
-		break;
+		once = 1;
+		CObject::ReadMasspoints(ChangedObjects);
 	}
+
+	int flag = 0;
+	float x, y, z;
+
+	if (ChangedObjects)
+	{
+		for (int i = 0; i < 5000; i++)
+		{
+			if (ChangedObjects[i].Modelindex == modelindex)
+			{
+				flag = ChangedObjects[i].Flag;
+				x = ChangedObjects[i].x;
+				y = ChangedObjects[i].y;
+				z = ChangedObjects[i].z;
+				//std::cout << modelindex << "  " << ChangedObjects[i].Modelname << std::endl;
+				break;
+			}
+		}
+	}
+
+	if (flag != 0)
+	{
+		//Get boundingbox coords
+		float bound_zmax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.z;
+		float bound_zmin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.z;
+		float massz = bound_zmax + bound_zmin / 2; //middle
+
+		float bound_xmax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.x;
+		float bound_xmin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.x;
+		float massx = bound_xmax + bound_xmin / 2; //middle
+
+		float bound_ymax = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_max.y;
+		float bound_ymin = CModelInfo::ms_modelInfoPtrs[modelindex]->m_pColModel->m_boundBox.m_min.y;
+		float massy = bound_ymax + bound_ymin / 2; //middle
+		if (flag == 2)
+		{
+			massx = x;
+			massy = y;
+			massz = z;
+		}
+		//get the special response type of the object
+		int response = object->m_pObjectInfo->m_nSpecialColResponseCase;
+		switch (response)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			//If it is a dynamic object -> set masspoint to the middle
+			object->m_vecCentreOfMass.x = massx;
+			object->m_vecCentreOfMass.y = massy;
+			object->m_vecCentreOfMass.z = massz;
+			break;
+
+		default:
+			break;
+		}
+	}
+
+}
+
+void CObject::ReadMasspoints(structObject_masspoint Result[])
+{
+	using namespace std;
+	string Line;
+	ifstream myfile;
+	int i = 0;
+	char line2[500] = "";
+
+	char* FILEPath = plugin::paths::GetPluginDirPathA();
+	strcat(FILEPath, "..\\data\\masspoints.dat");
+	std::cout << FILEPath << std::endl;
+	myfile.open(FILEPath);
+
+	if (!myfile.is_open())
+	{
+		myfile.open(FILEPath);
+		if (!myfile.is_open())
+		{
+			cout << " Opening Masspoints.dat FAILED!" << endl;
+			return;
+		}
+	}
+
+	while (getline(myfile, Line))
+	{
+		strcpy(line2, Line.c_str());
+		if (line2[0] != ';')
+		{
+			sscanf(line2, "%d, %s %d, %f, %f, %f", &Result[i].Modelindex, &Result[i].Modelname, &Result[i].Flag, &Result[i].x, &Result[i].y, &Result[i].z);
+			//std::cout << i << "  " << Result[i].Modelindex << " " << Result[i].Modelname << "  " << Result[i].Flag << Result[i].x << Result[i].y << Result[i].z << std::endl;
+		}
+		i++;
+	}
+	myfile.close();
+	return;
+
 }

@@ -12,6 +12,13 @@
 
 //SA things
 #include "Patch\MemoryMgr.h"
+#include "Patch\calling.hpp"
+#include "Patch\hooking.hpp"
+#include "Patch\injector.hpp"
+#include "Events_SA\EventList.h"
+#include "Events_SA\Events_SA.h"
+#pragma warning(disable:4244) 
+#pragma warning(disable:4309) 
 
 //RENDERWARE
 //#include "game_sa\rw\rphanim.h"
