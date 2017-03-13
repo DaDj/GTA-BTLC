@@ -3,8 +3,6 @@
 //////////////////////////////////////////////////////////////////
 //// Author: D4DJ                                             ////
 //////////////////////////////////////////////////////////////////
-//// DATE:                                                    ////
-//////////////////////////////////////////////////////////////////
 //// CHANGES: -included almost all classses ever needed       ////
 ////          -recreated the whole source code                ////
 ////          -disabled new weather effects for now           ////
@@ -15,10 +13,18 @@
 //// Please keep the main function clean and use new functions////
 //// instead.                                                 ////
 //////////////////////////////////////////////////////////////////
+//// CREDITS:                                                 ////
+//// DK22PAC : SOME CLASSES/EVENTHANDLER/GPS                  ////
+//// THIRTEENAG:WIDESCREENFIX; WINDOWMODE                     ////
+//// AAP: SKYGFX                                              ////
+//// SILENT: SILENTSPATCH                                     ////
+//// LINK: MODLOADER                                          ////
+//////////////////////////////////////////////////////////////////
+//// SPECIAL THANKS TO: iFARBOD FOR HELP                      ////
 //////////////////////////////////////////////////////////////////
 
 #define DEBUG 
-float VERSION = 0.20f;
+float VERSION = 0.32f;
 
 #include "BTLC_BASE\fixes.h"
 #include "BTLC_BASE\weather.h"
@@ -30,7 +36,7 @@ float VERSION = 0.20f;
 #include "game_sa\CObject.h"
 #include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
-
+#include "game_sa\CPlayerPed.h"
 
 
 void debug_console();
@@ -43,12 +49,13 @@ void Function_starter();
 void Main()
 {
 #ifdef DEBUG
-	debug_console();	//debug console
+	debug_console();
 	std::cout << std::endl;
 	std::cout << "GTA:BACK TO LIBERTY CITY" << std::endl;
 	std::cout << "developed by: D4DJ,  Majorapplepie" << std::endl << std::endl;
 	std::cout << "Version: " << VERSION << " >DEBUG" << std::endl;
 	std::cout << "COMPILED: " << __TIMESTAMP__ << std::endl << std::endl;
+
 #endif // DEBUG
 
 	//COMMANDLINE READER
@@ -76,6 +83,7 @@ void Function_starter()
 
 
 
+
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
@@ -88,6 +96,9 @@ void Function_starter()
 
 	//New Masspoints for dynamic Objects
 	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);
+
+	//static Crosshair Hook
+	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
 
 }
 
@@ -105,26 +116,6 @@ void btlc_init()
 	MemoryVP::Patch<void*>(0x57C672, &settingsfile);
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
 	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
-
-
-	//WINDOWPATCHES
-	//MemoryVP::Patch<int>(0x74877D,0);
-	//WINDOWMODE HOOKS
-	//MemoryVP::Patch(0x74888F + 1, 0x10000000);
-	//MemoryVP::Patch(0x7488B6 + 1, 0x10000000);
-	//MemoryVP::Patch(0x7F89AC + 1, 0x10000000);
-	//MemoryVP::Patch(0x745570 + 1, 0x10000000); //0x10000000
-	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
-	MemoryVP::InjectHook(0x619D10, &psSelectDevice);
-	MemoryVP::InjectHook(0x619BA6, &psSelectDevice);
-	MemoryVP::InjectHook(0x6194B0, &psSelectDevice);
-	MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
-	////MemoryVP::InjectHook(0x748C1C, &changeresu);
-	MemoryVP::InjectHook(0x748A1B, &changeresu);
-	MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
 }
 
 void debug_console()
@@ -241,12 +232,27 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{
+			//WINDOWPATCHES
+			//WINDOWMODE HOOKS
+			MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
+			MemoryVP::InjectHook(0x619D10, &psSelectDevice);
+			MemoryVP::InjectHook(0x619BA6, &psSelectDevice);
+			MemoryVP::InjectHook(0x6194B0, &psSelectDevice);
+			MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
+			MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
+			MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
+			MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
+			////MemoryVP::InjectHook(0x748C1C, &changeresu);
+			MemoryVP::InjectHook(0x748A1B, &changeresu);
+			MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
+			std::cout << "windowmode" << std::endl;
 			return;
 		}
 
 		//DEV enables the debug_consoles and outputs
 		if (!_stricmp(pArg, "-DEV"))
 		{
+			debug_console();	//debug console
 			return;
 		}
 	}

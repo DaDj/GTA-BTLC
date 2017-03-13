@@ -3028,6 +3028,9 @@
     <ClInclude Include="Patch\paths\Paths.h">
       <Filter>Patching\Paths</Filter>
     </ClInclude>
+    <ClInclude Include="game_sa\eSprintType.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="changed_classes.txt">

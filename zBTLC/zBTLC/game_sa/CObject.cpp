@@ -191,10 +191,11 @@ bool IsObjectPointerValid(CObject* object) {
 void CObject::SetObjectdata(int modelindex, CObject* object)
 {
 	static  structObject_masspoint ChangedObjects[5000];
+
 	//Call standard Object data function
 	((void(__cdecl *)(int, CObject*))0x5A2D00)(modelindex, object);
 
-
+	//Read custom masspoint
 	static int once = 0;
 	if (!once)
 	{
@@ -202,9 +203,9 @@ void CObject::SetObjectdata(int modelindex, CObject* object)
 		CObject::ReadMasspoints(ChangedObjects);
 	}
 
+	//check if the object is in the new masspoint array
 	int flag = 0;
 	float x, y, z;
-
 	if (ChangedObjects)
 	{
 		for (int i = 0; i < 5000; i++)
@@ -255,12 +256,10 @@ void CObject::SetObjectdata(int modelindex, CObject* object)
 			object->m_vecCentreOfMass.y = massy;
 			object->m_vecCentreOfMass.z = massz;
 			break;
-
 		default:
 			break;
 		}
 	}
-
 }
 
 void CObject::ReadMasspoints(structObject_masspoint Result[])
@@ -273,7 +272,7 @@ void CObject::ReadMasspoints(structObject_masspoint Result[])
 
 	char* FILEPath = plugin::paths::GetPluginDirPathA();
 	strcat(FILEPath, "..\\data\\masspoints.dat");
-	std::cout << FILEPath << std::endl;
+	//std::cout << FILEPath << std::endl;
 	myfile.open(FILEPath);
 
 	if (!myfile.is_open())

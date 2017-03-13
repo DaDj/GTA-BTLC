@@ -1123,6 +1123,7 @@
     <ClInclude Include="game_sa\ePedState.h" />
     <ClInclude Include="game_sa\ePedType.h" />
     <ClInclude Include="game_sa\ePickupType.h" />
+    <ClInclude Include="game_sa\eSprintType.h" />
     <ClInclude Include="game_sa\eTaskType.h" />
     <ClInclude Include="game_sa\eVehicleHandlingFlags.h" />
     <ClInclude Include="game_sa\eVehicleHandlingModelFlags.h" />
