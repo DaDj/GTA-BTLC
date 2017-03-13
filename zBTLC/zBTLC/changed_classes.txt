@@ -21,3 +21,7 @@
   -- CObject --
  ..fix for dynmaic object to find the middle (masspoint)
  (D4Dj, 28.02.17)
+ 
+ -- CHud --
+ ..implementation of custom HUD stuff.
+ (D4Dj, 5.03.17)
