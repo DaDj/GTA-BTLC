@@ -37,7 +37,8 @@ float VERSION = 0.32f;
 #include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
 #include "game_sa\CPlayerPed.h"
-
+#include "BTLC_BASE\windowmode\dxhandler.h"
+	
 
 void debug_console();
 void btlc_init(); //BTLC INIT
@@ -55,13 +56,16 @@ void Main()
 	std::cout << "developed by: D4DJ,  Majorapplepie" << std::endl << std::endl;
 	std::cout << "Version: " << VERSION << " >DEBUG" << std::endl;
 	std::cout << "COMPILED: " << __TIMESTAMP__ << std::endl << std::endl;
-
 #endif // DEBUG
+
+	//Windowmode INIT
+	CDxHandler::btogglereq_btlc = true;
+	CDxHandler::WindowMode_Hook();
 
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
-	////check game version
+	//check game version
 	check_gameversion();
 
 	//START BTLC STUFF
@@ -78,9 +82,9 @@ void Function_starter()
 	limits::IMG_LIMIT();	//Limit adjusting
 	visuals::init();		//VISUAL CHANGES init
 
+
 	CHud_Hook::Init();					//New HUD init
 	Feat_PlayerWeaponReload::init();	//Add Reload with "R" fucntions.
-
 
 
 
@@ -100,6 +104,8 @@ void Function_starter()
 	//static Crosshair Hook
 	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
 
+	//set numMonitor to only give back one
+	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
 }
 
 
@@ -217,10 +223,10 @@ void check_gameversion()
 
 void ParseCommandlineArgument(int thing, char* pArg)
 {
-	LPWSTR TEST = GetCommandLine();
+	LPSTR TEST = GetCommandLine();
 
 	//Close game if it isn't launched via launcher
-	if (!wcsstr(TEST, L"-launch"))
+	if (!strstr(TEST, "-launch"))
 	{
 		MessageBoxA(0, "Please use the GTA_BTLC Launcher to start this game.(GTA_BTLC.exe)", "BTLC - Launch", MB_ICONEXCLAMATION);
 		exit(0);
@@ -229,22 +235,18 @@ void ParseCommandlineArgument(int thing, char* pArg)
 
 	if (pArg)
 	{
+		//DEV enables the debug_consoles and outputs
+		if (!_stricmp(pArg, "-launch"))
+		{
+			debug_console();	//debug console
+			return;
+		}
+
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{
-			//WINDOWPATCHES
-			//WINDOWMODE HOOKS
-			MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
-			MemoryVP::InjectHook(0x619D10, &psSelectDevice);
-			MemoryVP::InjectHook(0x619BA6, &psSelectDevice);
-			MemoryVP::InjectHook(0x6194B0, &psSelectDevice);
-			MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
-			MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
-			MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
-			MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
-			////MemoryVP::InjectHook(0x748C1C, &changeresu);
-			MemoryVP::InjectHook(0x748A1B, &changeresu);
-			MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
+			CDxHandler::btogglereq_btlc = false;
+			//CDxHandler::ToggleFullScreen();
 			std::cout << "windowmode" << std::endl;
 			return;
 		}

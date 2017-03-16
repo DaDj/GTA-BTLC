@@ -47,26 +47,19 @@ void CRadar::DrawLegend(int x, int y, int blipType)
 }
 
 // Converted from cdecl float CRadar::LimitRadarPoint(CVector2D &point) 0x5832F0
-float CRadar::LimitRadarPoint(CVector2D& point2)
+float CRadar::LimitRadarPoint(CVector2D& point)
 {
 	//return ((float(__cdecl *)(CVector2D&))0x5832F0)(point2);
-	CVector2D* point = (CVector2D*)&point2;
 
-	float result = sqrt(point->x * point->x + point->y * point->y);
-	if (result > sqrt(2.f) / 2.0)
+
+	float result = sqrt( point.x * point.x + point.y * point.y);
+	if (result > sqrt(2.f) / 2)
 	{
-		point->x /= result * 1 / sqrt(2.f);
-		point->y /= result * 1 / sqrt(2.f);
+		point.x /= result / sqrt(2.f);
+		point.y /= result / sqrt(2.f);
 	}
-	if (point->x  > 1.0f)
-		point->x = 1.0f;
-	else if (-1.0f > point->x)
-		point->x = -1.0f;
-	if (point->y > 1.0f)
-		point->y = 1.0f;
-	else if (-1.0f >point->y)
-		point->y = -1.0f;
-
+	point.y = max(-1.0f, min(0.6f, point.y));
+	point.x = max(-1.0f, min(1.0f, point.x));
 	return result;
 }
 
@@ -87,33 +80,38 @@ void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 {
 	//((void(__cdecl *)(CVector2D&, CVector2D const&))0x583480)(out, in);
 
-	float result; // fst7@2
-	float radar_width = 90.0;
-	float radar_height = 65.0;
-	float radar_posX = 10.0;
-	float radar_posY = 20.0 +  radar_height;
 
-	CVector2D* a1 = (CVector2D*)&out;
-	CVector2D* a2 = (CVector2D*)&in;
+	float radar_width = 90.0f;
+	float radar_height = 90.0f;
+	float radar_posX = 10.0f;
+	float radar_posY = 23.0f ;
+
 	if (FrontEndMenuManager.drawRadarOrMap)
 	{
-		a1->x = FrontEndMenuManager.m_fMapZoom * a2->x + FrontEndMenuManager.m_fMapBaseX;
-		result = FrontEndMenuManager.m_fMapBaseY- FrontEndMenuManager.m_fMapZoom * a2->y;
-		a1->y = result;
+		out.x = FrontEndMenuManager.m_fMapZoom * in.x + FrontEndMenuManager.m_fMapBaseX;
+		out.y = FrontEndMenuManager.m_fMapBaseY- FrontEndMenuManager.m_fMapZoom * in.y;
+		
 	}
 	else
 	{
-		a1->x = CHud::x_fac(radar_width * 0.5)
-			+ CHud::x_fac(radar_posX)
-			+ CHud::x_fac(radar_width  * 0.5) * a2->x ;
+		
 
-		result = (float)RsGlobal.maximumHeight;
-		a1->y = result -  CHud::x_fac(radar_posY)
-			+ CHud::x_fac(radar_height * 0.5)
-			- CHud::x_fac(radar_height * 0.5) * a2->y ;
+		out.x = (CHud::x_fac(radar_posX) + CHud::x_fac(radar_width*0.5))   + CHud::x_fac(radar_width * 0.5 ) * in.x ;
+		out.y = CHud::y_fac(480.0)- (CHud::y_fac(radar_posY) + CHud::y_fac(radar_height )* 0.5) - CHud::y_fac(radar_height * 0.5)  *  in.y ;
+	/*	
+		if (out.y > CHud::y_fac(460.0))
+			out.y = CHud::y_fac(460.0);*/
+		
+
+		//if (out.y < CHud::y_fac(480.0 - 90.0))
+		//	out.y = CHud::y_fac(480.0 - 90.0);
+
+		return;
 	}
-
+	
 }
+
+
 
 // Converted from cdecl void CRadar::TransformRealWorldPointToRadarSpace(CVector2D &out,CVector2D const&in) 0x583530
 void CRadar::TransformRealWorldPointToRadarSpace(CVector2D& out, CVector2D const& in)
@@ -334,7 +332,39 @@ void CRadar::DrawAreaOnRadar(CRect const& rect, CRGBA const& color, bool inMenu)
 // Converted from cdecl void CRadar::DrawRadarMask(void) 0x585700
 void CRadar::DrawRadarMask()
 {
-	((void(__cdecl *)())0x585700)();
+	//((void(__cdecl *)())0x585700)();
+
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTURERASTER,(void*)0);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)6);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATESHADEMODE, (void*)1);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEZTESTENABLE,(void*)0);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
+	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)8);
+	
+	CVector2D test[4];
+	CVector2D test2[8];
+	test[0].x = -1.0;
+	test[0].y =  0.6;
+	test[1].x =  1.0;
+	test[1].y =  0.6;
+	test[2].x = 1.0;
+	test[2].y = 1.0;
+	test[3].x = -1.0;
+	test[3].y = 1.0;
+
+	CRadar::TransformRadarPointToScreenSpace(test2[0], test[0]);
+	CRadar::TransformRadarPointToScreenSpace(test2[1], test[1]);
+	CRadar::TransformRadarPointToScreenSpace(test2[3], test[3]);
+	CRadar::TransformRadarPointToScreenSpace(test2[2], test[2]);
+	CRadar::TransformRadarPointToScreenSpace(test2[4], test[4]);
+	CSprite2d::SetMaskVertices(4, test2,  CSprite2d::NearScreenZ + 0.0000001);
+	RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, CSprite2d::maVertices, 4);
+	 RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)5);
+	return;
 }
 
 // Converted from cdecl void CRadar::StreamRadarSections(CVector const&worldPosn) 0x5858D0

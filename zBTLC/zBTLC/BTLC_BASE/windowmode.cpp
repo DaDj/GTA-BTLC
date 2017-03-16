@@ -106,7 +106,7 @@ char** __cdecl FIND_VIDEOMODES()
 			char* v4 = (char*)calloc(100, 1);
 			Subsystems[v3] = v4;
 			//sprintf(v4, " _____%lu X %lu", modeinfo.width, modeinfo.height, modeinfo.depth);
-			sprintf(v4, " windowed");
+			//sprintf(v4, " windowed");
 			//std::cout << v3 << " " << modeinfo.width << " " << modeinfo.height << " " << modeinfo.depth << " " << modeinfo.flags << " " << std::endl;
 		}
 	}

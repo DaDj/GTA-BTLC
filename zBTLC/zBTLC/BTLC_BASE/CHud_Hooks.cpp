@@ -2,6 +2,7 @@
 #include "../game_sa/plbase/PluginBase_SA.h"
 #include "../game_sa/CHud.h"
 #include "../game_sa/CRadar.h"
+#include "../Patch/injector.hpp"
 #include "CHud_Hooks.h"
 
 namespace CHud_Hook
@@ -17,6 +18,9 @@ namespace CHud_Hook
 		//newradartoscreenspace
 		MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
 
+		MemoryVP::InjectHook(0x585700, &CRadar::DrawRadarMask, PATCH_JUMP);
+	
+
 		//replace original 
 		MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
 
@@ -29,6 +33,10 @@ namespace CHud_Hook
 		MemoryVP::Patch<float>(0x585741, 0.0f); // -1.0
 		MemoryVP::Patch<float>(0x585749, 0.0f); // -1.0
 		MemoryVP::Patch<float>(0x585751, 0.0f); // -1.0
+		
+	
+
+	
 
 		int alpha = 160;
 		MemoryVP::Patch<int>(0x586432 + 1, alpha);

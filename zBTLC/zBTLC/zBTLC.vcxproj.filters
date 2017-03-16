@@ -38,6 +38,9 @@
     <Filter Include="Patching\Paths">
       <UniqueIdentifier>{856890ab-2ff3-4d47-b265-c8a3399c4fd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BTLC_BASE\windowmode">
+      <UniqueIdentifier>{284c5093-0747-47a4-ade5-ac84c967f4bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1398,6 +1401,12 @@
     </ClCompile>
     <ClCompile Include="Patch\paths\Paths.cpp">
       <Filter>Patching\Paths</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\windowmode\dxhandler.cpp">
+      <Filter>BTLC_BASE\windowmode</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\windowmode\WindowMode_Hook.cpp">
+      <Filter>BTLC_BASE\windowmode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3030,6 +3039,15 @@
     </ClInclude>
     <ClInclude Include="game_sa\eSprintType.h">
       <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\windowmode\dxhandler.h">
+      <Filter>BTLC_BASE\windowmode</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch\assembly.hpp">
+      <Filter>Patching</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h">
+      <Filter>BTLC_BASE\windowmode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

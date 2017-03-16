@@ -28,15 +28,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140_xp</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -80,8 +79,9 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>E:\GTA Modding\Rockstar Games\IV to SA Reborn V4\modloader\Back to LC\Base\plugins\</OutDir>
+    <TargetExt>.asi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -98,6 +98,7 @@
       <MinimalRebuild>true</MinimalRebuild>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <EnablePREfast>false</EnablePREfast>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -125,12 +126,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ZBTLC_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,6 +177,8 @@
     <ClCompile Include="BTLC_BASE\visuals.cpp" />
     <ClCompile Include="BTLC_BASE\weather.cpp" />
     <ClCompile Include="BTLC_BASE\windowmode.cpp" />
+    <ClCompile Include="BTLC_BASE\windowmode\dxhandler.cpp" />
+    <ClCompile Include="BTLC_BASE\windowmode\WindowMode_Hook.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -641,6 +649,8 @@
     <ClInclude Include="BTLC_BASE\visuals.h" />
     <ClInclude Include="BTLC_BASE\weather.h" />
     <ClInclude Include="BTLC_BASE\windowmode.h" />
+    <ClInclude Include="BTLC_BASE\windowmode\dxhandler.h" />
+    <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h" />
     <ClInclude Include="Events_SA\EventList.h" />
     <ClInclude Include="Events_SA\Events_SA.h" />
     <ClInclude Include="game_sa\AnimBlendFrameData.h" />
@@ -1163,6 +1173,7 @@
     <ClInclude Include="game_sa\tHandlingData.h" />
     <ClInclude Include="game_sa\tTransmissionGear.h" />
     <ClInclude Include="BTLC.h" />
+    <ClInclude Include="Patch\assembly.hpp" />
     <ClInclude Include="Patch\calling.hpp" />
     <ClInclude Include="Patch\gvm\gvm.hpp" />
     <ClInclude Include="Patch\gvm\translator.hpp" />

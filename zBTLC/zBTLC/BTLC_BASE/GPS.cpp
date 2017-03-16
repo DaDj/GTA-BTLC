@@ -32,6 +32,8 @@ public:
 		MemoryVP::Patch<float>(0x450B92, 1500.0);
 
 
+	
+	
 		Events::gameProcessEvent += []() {
 		//	MemoryVP::Patch<float>(0x8D2530, 4.0); //4 times people on the street
 			if (FrontEndMenuManager.m_nTargetBlipIndex

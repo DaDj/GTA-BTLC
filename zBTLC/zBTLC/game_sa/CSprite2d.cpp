@@ -134,9 +134,9 @@ void CSprite2d::SetVertices(int numVerts, float *posn, CRGBA *color)
 	((void (__cdecl *)(int, float *, CRGBA *))0x727920)(numVerts, posn, color);
 }
 
-void CSprite2d::SetMaskVertices(int numVerts, float *posn, float depth)
+void CSprite2d::SetMaskVertices(int numVerts, CVector2D *posn, float depth)
 {
-	((void (__cdecl *)(int, float *, float))0x7279B0)(numVerts, posn, depth);
+	((void (__cdecl *)(int, CVector2D *, float))0x7279B0)(numVerts, posn, depth);
 }
 
 void CSprite2d::SetVertices(RwD3D9Vertex *vertices, CRect  const& posn, CRGBA  const& color1, CRGBA  const& color2, CRGBA  const& color3, CRGBA  const& color4, float u1, float v1, float u2, float v2, float u3, float v3, float u4, float v4)

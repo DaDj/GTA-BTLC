@@ -7,6 +7,7 @@
 #include "CTimer.h"
 #include "../Patch/MemoryMgr.h"
 #include "../BTLC_BASE/other_shared.h"
+#include "CRadar.h"
 
 char (*CHud::m_BigMessage)[128] = (char (*)[128])0xBAACC0;
 Bool &CHud::bScriptForceDisplayWithCounters = *(Bool *)0xBAA3FA;
@@ -51,6 +52,8 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 {
 	static unsigned int lastdamagetaken;
 
+
+	
 
 	float percentage_health = (player->m_fHealth / player->m_fMaxHealth) * 100;
 	CRGBA color_health = CRGBA::CRGBA(0, 90, 0, 240);

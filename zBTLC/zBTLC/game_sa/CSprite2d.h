@@ -52,7 +52,7 @@ public:
 	static void SetVertices(CRect  const& posn, CRGBA  const& color1, CRGBA  const& color2, CRGBA  const& color3, CRGBA  const& color4, float u1, float v1, float u2, float v2, float u3, float v3, float u4, float v4);
 	static void SetVertices(int numVerts, float *posn, float *texCoors, CRGBA  const& color);
 	static void SetVertices(int numVerts, float *posn, CRGBA *color);
-	static void SetMaskVertices(int numVerts, float *posn, float depth);
+	static void SetMaskVertices(int numVerts, CVector2D *posn, float depth);
 	static void SetVertices(RwD3D9Vertex *vertices, CRect  const& posn, CRGBA  const& color1, CRGBA  const& color2, CRGBA  const& color3, CRGBA  const& color4, float u1, float v1, float u2, float v2, float u3, float v3, float u4, float v4);
 	// draws non-textured rectangle
 	static void DrawRect(CRect  const& posn, CRGBA  const& color);

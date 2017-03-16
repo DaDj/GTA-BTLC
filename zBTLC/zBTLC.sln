@@ -21,6 +21,7 @@ Global
 		{193D6C24-0279-4741-9A65-76CFAF2EB419}.Release|x64.Build.0 = Release|x64
 		{193D6C24-0279-4741-9A65-76CFAF2EB419}.Release|x86.ActiveCfg = Release|Win32
 		{193D6C24-0279-4741-9A65-76CFAF2EB419}.Release|x86.Build.0 = Release|Win32
+		{193D6C24-0279-4741-9A65-76CFAF2EB419}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

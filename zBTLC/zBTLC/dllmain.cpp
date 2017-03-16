@@ -17,6 +17,7 @@
 
 #include "stdafx.h"
 #include "BTLC.h"
+#include "BTLC_BASE\windowmode\dxhandler.h"
 //#include <math.h>
 //#include <ctime>
 //#include "game_sa/RenderWare.h"
@@ -29,6 +30,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 	if (fdwReason == DLL_PROCESS_ATTACH)
 	{
 		Main(); // START BTLC FUNCTIONS
+	}
+	if (fdwReason == DLL_PROCESS_DETACH)
+	{
+		if (CDxHandler::ShExecInfo.hProcess != nullptr)
+			TerminateProcess(CDxHandler::ShExecInfo.hProcess, 0);
 	}
 	return TRUE;
 }

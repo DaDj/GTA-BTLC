@@ -277,12 +277,8 @@ void CObject::ReadMasspoints(structObject_masspoint Result[])
 
 	if (!myfile.is_open())
 	{
-		myfile.open(FILEPath);
-		if (!myfile.is_open())
-		{
 			cout << " Opening Masspoints.dat FAILED!" << endl;
 			return;
-		}
 	}
 
 	while (getline(myfile, Line))
@@ -297,5 +293,4 @@ void CObject::ReadMasspoints(structObject_masspoint Result[])
 	}
 	myfile.close();
 	return;
-
 }
