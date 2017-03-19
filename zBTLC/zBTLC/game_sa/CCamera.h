@@ -289,6 +289,8 @@ public:
 
 	static float& m_fMouseAccelVertical;
 	static float& m_fMouseAccelHorzntl;
+	char GetFading();
+	int GetFadeStage();
 };
 #pragma pack(pop)
 

@@ -93,7 +93,7 @@ void CDxHandler::AdjustPresentParams(D3D_TYPE* pParams)
 	bool bOldRecursion = bStopRecursion;
 	pParams->Windowed = TRUE;
 
-//	pParams->FullScreen_PresentationInterval = 0;
+	pParams->PresentationInterval = 0;
 	pParams->FullScreen_RefreshRateInHz = 0;
 	pParams->EnableAutoDepthStencil = TRUE;
 	pParams->BackBufferFormat = D3DFMT_X8R8G8B8;

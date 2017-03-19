@@ -30,6 +30,8 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 	if (fdwReason == DLL_PROCESS_ATTACH)
 	{
 		Main(); // START BTLC FUNCTIONS
+		CDxHandler::WindowMode_Hook();
+
 	}
 	if (fdwReason == DLL_PROCESS_DETACH)
 	{

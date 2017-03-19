@@ -144,28 +144,31 @@ public:
 			}
 		};
 
-		/*Events::drawHudEvent += [] {
+		Events::drawHudEvent += [] {
 			if (gpsShown) {
-				CFont::SetAlignment(ALIGN_CENTER);
-				CFont::SetColor(CRGBA(200, 200, 200, 255));
+				CFont::SetAlignment(ALIGN_LEFT);
+				CFont::SetColor(CRGBA(200, 200, 200, 250));
 				CFont::SetBackground(false, false);
-				CFont::SetWrapx(500.0f);
-				CFont::SetScale(0.4f * static_cast<float>(RsGlobal.maximumWidth) / 640.0f,
-					0.8f * static_cast<float>(RsGlobal.maximumHeight) / 448.0f);
+				//CFont::SetWrapx(500.0f);
+				CFont::SetScale(x_fac(0.25f) ,y_fac(0.45f) );
 				CFont::SetFontStyle(FONT_SUBTITLES);
 				CFont::SetProp(true);
 				CFont::SetDropShadowPosition(1);
-				CFont::SetDropColor(CRGBA(0, 0, 0, 255));
+				CFont::SetDropColor(CRGBA(0, 0, 0, 250));
 				CVector2D radarBottom;
-				CRadar::TransformRadarPointToScreenSpace(radarBottom, CVector2D(0.0f, -1.0f));
+				CVector2D position;
+				position.x = -0.7f;
+				position.y = -0.5f;
+				//CRadar::LimitRadarPoint(position);
+				CRadar::TransformRadarPointToScreenSpace(radarBottom, position);
 				char text[16];
 				if (gpsDistance > 1000.0f)
 					sprintf(text, "%.2fkm", gpsDistance / 1000.0f);
 				else
 					sprintf(text, "%dm", static_cast<int>(gpsDistance));
-				CFont::PrintString(radarBottom.x, radarBottom.y + 8.0f * static_cast<float>(RsGlobal.maximumHeight) / 448.0f, text);
+				CFont::PrintString(radarBottom.x, radarBottom.y, text);
 			}
-		};*/
+		};
 	}
 
 	static void Setup2dVertex(RwIm2DVertex &vertex, float x, float y) {

@@ -8,7 +8,7 @@
 ////          -disabled new weather effects for now           ////
 //////////////////////////////////////////////////////////////////
 //// Description:                                             ////
-//// This file will initiate the BTLC modifications.         ////
+//// This file will initiate the BTLC modifications.          ////
 //// SOME general modification are done in the main function. ////
 //// Please keep the main function clean and use new functions////
 //// instead.                                                 ////
@@ -39,7 +39,6 @@ float VERSION = 0.32f;
 #include "game_sa\CPlayerPed.h"
 #include "BTLC_BASE\windowmode\dxhandler.h"
 	
-
 void debug_console();
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -60,7 +59,6 @@ void Main()
 
 	//Windowmode INIT
 	CDxHandler::btogglereq_btlc = true;
-	CDxHandler::WindowMode_Hook();
 
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
@@ -82,10 +80,8 @@ void Function_starter()
 	limits::IMG_LIMIT();	//Limit adjusting
 	visuals::init();		//VISUAL CHANGES init
 
-
 	CHud_Hook::Init();					//New HUD init
-	Feat_PlayerWeaponReload::init();	//Add Reload with "R" fucntions.
-
+	Feat_PlayerWeaponReload::init();	//Add Reload with "R" functions.
 
 
 	//Trafficlight changes

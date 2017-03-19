@@ -9,18 +9,18 @@ namespace CHud_Hook
 {
 	void Init()
 	{
-		MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
 		Rectangular_radar();
+		MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
+		MemoryVP::InjectHook(0x58AA50, &CHud::DrawZoneText, PATCH_JUMP);
+		MemoryVP::InjectHook(0x58AEA0, &CHud::DrawCarName, PATCH_JUMP);
 	}
 
 	void Rectangular_radar()
 	{
 		//newradartoscreenspace
 		MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
-
+		//Draw radar mask
 		MemoryVP::InjectHook(0x585700, &CRadar::DrawRadarMask, PATCH_JUMP);
-	
-
 		//replace original 
 		MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
 
@@ -34,10 +34,6 @@ namespace CHud_Hook
 		MemoryVP::Patch<float>(0x585749, 0.0f); // -1.0
 		MemoryVP::Patch<float>(0x585751, 0.0f); // -1.0
 		
-	
-
-	
-
 		int alpha = 160;
 		MemoryVP::Patch<int>(0x586432 + 1, alpha);
 		MemoryVP::Patch<int>(0x58647B + 1, alpha);

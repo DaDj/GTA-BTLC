@@ -93,6 +93,6 @@ float x_fac(float x)
 
 float y_fac(float y)
 {
-	float height_fac = RsGlobal.maximumHeight / 480.0f;
+	float height_fac = RsGlobal.maximumHeight / 448.0f;
 	return y * height_fac;
 }

@@ -62,7 +62,7 @@ typedef struct _D3DPRESENT_PARAMETERS_D3D9_
 	D3DFORMAT           AutoDepthStencilFormat;
 	DWORD               Flags;
 	UINT                FullScreen_RefreshRateInHz;
-	UINT                FullScreen_PresentationInterval;
+	UINT                PresentationInterval;
 } D3DPRESENT_PARAMETERS_D3D9;
 
 struct IDirectInputDeviceA;

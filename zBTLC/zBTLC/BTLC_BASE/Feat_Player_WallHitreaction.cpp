@@ -28,7 +28,7 @@ public:
 			static int time_last_hit = 0;
 			int time_check;
 
-			if (FindPlayerPed() && !FindPlayerPed()->m_bInVehicle)
+			if (FindPlayerPed() && !FindPlayerPed()->m_bInVehicle && FindPlayerPed()->IsAlive())
 			{	
 				CVector Position = FindPlayerPed()->TransformFromObjectSpace(CVector(0.0f, 0.6f, 0.6f));
 				CVector PlayerPosition = FindPlayerCoors(-1);

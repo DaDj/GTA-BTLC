@@ -184,6 +184,12 @@ public:
 	// blip handle
 	static int &airstrip_blip;
 
+	static float CRadar::Radar_Height;
+	static float CRadar::Radar_Width;
+	static float CRadar::Radar_Posx;
+	static float CRadar::Radar_Posy;
+	static float CRadar::Radar_Cut_Width;
+
 	static void LoadTextures();
 	static int GetNewUniqueBlipIndex(int blipArrId);
 	static int GetActualBlipArrayIndex(int blipIndex);
