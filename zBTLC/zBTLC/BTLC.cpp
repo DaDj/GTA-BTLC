@@ -33,18 +33,17 @@ float VERSION = 0.32f;
 #include "BTLC_BASE\windowmode.h"
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
-#include "game_sa\CObject.h"
 #include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
-#include "game_sa\CPlayerPed.h"
 #include "BTLC_BASE\windowmode\dxhandler.h"
+#include "game_sa\CObject.h"
+#include "game_sa\CPlayerPed.h"
 	
 void debug_console();
 void btlc_init(); //BTLC INIT
 void check_gameversion();
 void ParseCommandlineArgument(int thing, char* pArg);
 void Function_starter();
-
 
 void Main()
 {
@@ -83,7 +82,6 @@ void Function_starter()
 	CHud_Hook::Init();					//New HUD init
 	Feat_PlayerWeaponReload::init();	//Add Reload with "R" functions.
 
-
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
@@ -102,19 +100,21 @@ void Function_starter()
 
 	//set numMonitor to only give back one
 	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
+	MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
 }
-
-
 
 //BTLC INIT
 void btlc_init()
 {
 	////DECLARATION OF GENERAL CHANGES
-	static  char	AppName[18] = "GTA:BTLC"; //new name of the GTA window.
+	static  char	AppName[18] = "GTA:BTLC";		//name of the GTA window.
 	MemoryVP::Patch<void*>(0x619602 + 6, &AppName);
-	static char  Userfiles[28] = "\\GTA BTLC User Files"; //new USER folder
+	static char  Userfiles[28] = "\\GTA BTLC User Files";//new USER folder
 	MemoryVP::Patch<void*>(0x74503F, &Userfiles);
-	static  char  settingsfile[13] = "gta_btlc.set"; //new settings file
+	static  char  settingsfile[13] = "gta_btlc.set";//new settings file
 	MemoryVP::Patch<void*>(0x57C672, &settingsfile);
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
 	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
@@ -123,7 +123,6 @@ void btlc_init()
 void debug_console()
 {
 	MemoryVP::InjectHook(0x821982, printf, PATCH_JUMP);
-
 	AllocConsole();
 	AttachConsole(GetCurrentProcessId());
 	freopen("CON", "w", stdout);
@@ -138,12 +137,10 @@ void debug_console()
 		HWND hConsole = GetConsoleWindow();
 		RECT rect;
 		GetWindowRect(hConsole, &rect);
-
 		// Desktop
 		HWND hDesktop = GetDesktopWindow();
 		RECT rDesktopRect;
 		GetWindowRect(hDesktop, &rDesktopRect);
-
 		// Update Position
 		SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
 	}
@@ -220,7 +217,6 @@ void check_gameversion()
 void ParseCommandlineArgument(int thing, char* pArg)
 {
 	LPSTR TEST = GetCommandLine();
-
 	//Close game if it isn't launched via launcher
 	if (!strstr(TEST, "-launch"))
 	{
@@ -231,22 +227,19 @@ void ParseCommandlineArgument(int thing, char* pArg)
 
 	if (pArg)
 	{
-		//DEV enables the debug_consoles and outputs
-		if (!_stricmp(pArg, "-launch"))
-		{
-			debug_console();	//debug console
-			return;
-		}
-
+		////DEV enables the debug_consoles and outputs
+		//if (!_stricmp(pArg, "-launch"))
+		//{
+		//	debug_console();	//debug console
+		//	return;
+		//}
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{
 			CDxHandler::btogglereq_btlc = false;
-			//CDxHandler::ToggleFullScreen();
 			std::cout << "windowmode" << std::endl;
 			return;
 		}
-
 		//DEV enables the debug_consoles and outputs
 		if (!_stricmp(pArg, "-DEV"))
 		{

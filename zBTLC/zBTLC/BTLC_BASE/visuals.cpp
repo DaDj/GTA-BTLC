@@ -35,7 +35,13 @@ namespace visuals
 
 	void vehicle_headlights()
 	{
+		static float
+			HeadlightCoronaDistance = 200.0f;
 
+		MemoryVP::Patch<int>(0x6E0DEE, 110);//HeadlightCoronaAlpha
+		MemoryVP::Patch<int>(0x6E0CF8, 110);//HeadlightCoronaAlpha
+		MemoryVP::Patch<float>(0x6E0CA6, 0.5); //HeadlightCoronaSize
+		MemoryVP::Patch<void*>(0x6E0C62 + 2, &HeadlightCoronaDistance); //HeadlightCoronaDistance
 	}
 
 
@@ -43,8 +49,7 @@ namespace visuals
 	void init()
 	{
 		pickup_appearence();
-		
-
+		vehicle_headlights();
 
 		// No Heat Haze <-move to visuals
 		MemoryVP::Patch<BYTE>(0x72C1B7, 0xEB);

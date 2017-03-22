@@ -699,42 +699,7 @@ int CDxHandler::ProcessMouseState(void)
 
 	return 1;
 }
-//
-//void __declspec(naked) CDxHandler::HookDirect3DDeviceReplacer(void)
-//{
-//	static HRESULT hRes;
-//	static bool bOldRecursion;
-//	static bool bOldLocked;
-//
-//	_asm pushad
-//
-//	bOldRecursion =  bStopRecursion;
-//	bStopRecursion = true;
-//
-//	InjectWindowProc();
-//	AdjustPresentParams((D3DPRESENT_PARAMETERS*) HookParams);
-//
-//	bOldLocked =  bChangingLocked;
-//	if(!bOldLocked)  StoreRestoreWindowInfo(false);
-//	RemoveWindowProc();
-//	bChangingLocked = true;
-//	
-//	_asm popad
-//	_asm call [ecx+3Ch]
-//	_asm mov hRes, eax
-//	_asm pushad
-//
-//	bChangingLocked = bOldLocked;
-//	InjectWindowProc();
-//	if(!bOldLocked)  StoreRestoreWindowInfo(true);
-//
-//	Direct3DDeviceReplace();
-//	bStopRecursion = bOldRecursion;
-//
-//	_asm popad
-//	_asm cmp eax, ebp
-//	_asm jmp HookDirect3DDeviceReplacerJmp
-//}
+
 
 void __declspec(naked) CDxHandler::HookDirect3DDeviceReplacerSA(void) 
 {
