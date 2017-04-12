@@ -1408,6 +1408,9 @@
     <ClCompile Include="BTLC_BASE\windowmode\WindowMode_Hook.cpp">
       <Filter>BTLC_BASE\windowmode</Filter>
     </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_CCam.cpp">
+      <Filter>BTLC_BASE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3048,6 +3051,9 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h">
       <Filter>BTLC_BASE\windowmode</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_CCam.h">
+      <Filter>BTLC_BASE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

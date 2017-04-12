@@ -36,6 +36,7 @@ float VERSION = 0.32f;
 #include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
 #include "BTLC_BASE\windowmode\dxhandler.h"
+#include "BTLC_BASE\My_CCam.h"
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
 	
@@ -81,6 +82,7 @@ void Function_starter()
 
 	CHud_Hook::Init();					//New HUD init
 	Feat_PlayerWeaponReload::init();	//Add Reload with "R" functions.
+	My_CCam::INIT(); // IV Styled AIM CAM
 
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);

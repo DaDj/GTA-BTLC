@@ -17,18 +17,18 @@ char (*CHud::m_BigMessage)[128] = (char (*)[128])0xBAACC0;
 Bool &CHud::bScriptForceDisplayWithCounters = *(Bool *)0xBAA3FA;
 
 char &CHud::Message = *(char*)0xBAB040; //wrong should be an array(this is only the first entry
-char* &CHud::LastZoneName = *(char **)0xBAB1D4;
-char* &CHud::ZonetoPrint_glb = *(char **)0xBAB1D8;
-char* &CHud::ZonetoPrint = *(char **)0xBAB1D0;
-int &CHud::ZoneState = *(int *)0xBAA930;
-int &CHud::ZoneFadeTimer = *(int *)0xBAA934;
-int &CHud::ZoneNameTimer = *(int *)0xBAA938;
+char* &CHud::m_LastZoneName = *(char **)0xBAB1D4;
+char* &CHud::m_ZonetoPrint_glb = *(char **)0xBAB1D8;
+char* &CHud::m_ZonetoPrint = *(char **)0xBAB1D0;
+int &CHud::m_ZoneState = *(int *)0xBAA930;
+int &CHud::m_ZoneFadeTimer = *(int *)0xBAA934;
+int &CHud::m_ZoneNameTimer = *(int *)0xBAA938;
 
-char* &CHud::VehicleName = *(char **)0xBAA458;
-char* &CHud::LastVehicleName = *(char **)0xBAA454;
-int &CHud::VehicleState = *(int *)0xBAA448;
-int &CHud::VehicleNameTimer = *(int *)0xBAA450;
-int &CHud::VehicleFadeTimer = *(int *)0xBAA44C;
+char* &CHud::m_VehicleName = *(char **)0xBAA458;
+char* &CHud::m_LastVehicleName = *(char **)0xBAA454;
+int &CHud::m_VehicleState = *(int *)0xBAA448;
+int &CHud::m_VehicleNameTimer = *(int *)0xBAA450;
+int &CHud::m_VehicleFadeTimer = *(int *)0xBAA44C;
 
 void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) {
     ((void(__cdecl *)(char const *, bool, bool, bool))0x588BE0)(text, quickMessage, permanent, addToBrief);
@@ -112,92 +112,92 @@ void CHud::DrawZoneText()
 {
 
 	float Fontalpha = 255.0;
-	if (ZonetoPrint_glb)
+	if (m_ZonetoPrint_glb)
 	{
-		if (ZonetoPrint_glb != LastZoneName)
+		if (m_ZonetoPrint_glb != m_LastZoneName)
 		{
-			switch (ZoneState)
+			switch (m_ZoneState)
 			{
 			case 0:
 				if (!CTheScripts::PlayerisOffMap && CTheScripts::DisplayHud )
 				{
-					ZoneState = 2;
-					ZoneNameTimer = 0;
-					ZoneFadeTimer = 0;
-					ZonetoPrint = ZonetoPrint_glb;
-				/*	if (VehicleState == 2 || VehicleState == 1)
-						VehicleState = 3;*/
+					m_ZoneState = 2;
+					m_ZoneNameTimer = 0;
+					m_ZoneFadeTimer = 0;
+					m_ZonetoPrint = m_ZonetoPrint_glb;
+				/*	if (m_VehicleState == 2 || m_VehicleState == 1)
+						m_VehicleState = 3;*/
 				}
 				break;
 			case 1:
 			case 2:
 			case 3:
-				ZoneState = 4;
+				m_ZoneState = 4;
 			case 4:
-				ZoneNameTimer = 0;
+				m_ZoneNameTimer = 0;
 				break;
 			default:
 				break;
 			}
 		}
-		LastZoneName = ZonetoPrint;
+		m_LastZoneName = m_ZonetoPrint;
 
 	}
 
 
 
-	if (ZoneState)
+	if (m_ZoneState)
 	{
-		switch (ZoneState)
+		switch (m_ZoneState)
 		{
 		case 1:
 			Fontalpha = 255.0;
-			ZoneFadeTimer = 1000;
-			if (ZoneNameTimer > 3000.0)
-				ZoneState = 3;
+			m_ZoneFadeTimer = 1000;
+			if (m_ZoneNameTimer > 3000.0)
+				m_ZoneState = 3;
 			break;
 		case 2:
 			if (!TheCamera.GetFading() && TheCamera.GetFadeStage() != 2)
-				ZoneFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
-			if (ZoneFadeTimer > 1000.0)
+				m_ZoneFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+			if (m_ZoneFadeTimer > 1000.0)
 			{
-				ZoneFadeTimer = 1000;
-				ZoneState = 1;
+				m_ZoneFadeTimer = 1000;
+				m_ZoneState = 1;
 			}
 			if (TheCamera.GetFadeStage() != 2)
 			{
-				Fontalpha = ZoneFadeTimer * 0.001 * 255.0;
+				Fontalpha = m_ZoneFadeTimer * 0.001 * 255.0;
 				break;
 			}
 			Fontalpha = 255.0;
-			CHud::ZoneState = 3;
-			CHud::ZoneFadeTimer = 1000;
+			m_ZoneState = 3;
+			m_ZoneFadeTimer = 1000;
 			break;
 		case 3:
 			if (!TheCamera.GetFading() && TheCamera.GetFadeStage() != 2)
-				ZoneFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-			if (ZoneFadeTimer < 0.0)
+				m_ZoneFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+			if (m_ZoneFadeTimer < 0.0)
 			{
-				ZoneFadeTimer = 0;
-				ZoneState = 0;
+				m_ZoneFadeTimer = 0;
+				m_ZoneState = 0;
 			}
 			if (TheCamera.GetFadeStage() != 2)
 			{
-				Fontalpha = ZoneFadeTimer * 0.001 * 255.0;
+				Fontalpha = m_ZoneFadeTimer * 0.001 * 255.0;
 				break;
 			}
-			ZoneFadeTimer = 1000;
+			m_ZoneFadeTimer = 1000;
 			Fontalpha = 255.0;
 			break;
 		case 4:
-			ZoneFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-			if (ZoneFadeTimer < 0.0)
+			m_ZoneFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+			if (m_ZoneFadeTimer < 0.0)
 			{
-				ZoneFadeTimer = 0;
-				ZoneState = 2;
-				ZonetoPrint = ZonetoPrint_glb;
+				m_ZoneFadeTimer = 0;
+				m_ZoneState = 2;
+				m_ZonetoPrint = m_ZonetoPrint_glb;
 			}
-			Fontalpha = ZoneFadeTimer * 0.001 * 255.0;
+			Fontalpha = m_ZoneFadeTimer * 0.001 * 255.0;
 			break;
 		default:
 			break;
@@ -209,11 +209,11 @@ void CHud::DrawZoneText()
 
 		if (Message ||  unknownA != 0.0f || unknownB != 0.0)
 		{
-			ZoneState = 3;
+			m_ZoneState = 3;
 		}
 		else
 		{
-			CHud::ZoneNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+			CHud::m_ZoneNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
 			CFont::SetAlignment(ALIGN_RIGHT);
 			CFont::SetProp(true);
 			CFont::SetBackground(false,false);
@@ -222,7 +222,7 @@ void CHud::DrawZoneText()
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
 			CFont::SetFontStyle(2);
 			CFont::SetColor(CRGBA::CRGBA(180, 180, 180, Fontalpha));
-			CFont::PrintStringFromBottom(x_fac(640.0 - 32.0), y_fac(448.0 - 20.0), ZonetoPrint_glb);
+			CFont::PrintStringFromBottom(x_fac(640.0 - 32.0), y_fac(448.0 - 20.0), m_ZonetoPrint_glb);
 
 		}
 	}
@@ -233,69 +233,69 @@ void CHud::DrawZoneText()
 void CHud::DrawCarName()
 {
 	float Fontalpha = 255.0;
-	if (VehicleName)
+	if (m_VehicleName)
 	{
-		if (VehicleName != LastVehicleName)
+		if (m_VehicleName != m_LastVehicleName)
 		{
-			if (VehicleState)
+			if (m_VehicleState)
 			{
-				if (VehicleState > 0 && VehicleState <= 4)
+				if (m_VehicleState > 0 && m_VehicleState <= 4)
 				{
-					VehicleState = 4;
-					VehicleNameTimer = 0;
+					m_VehicleState = 4;
+					m_VehicleNameTimer = 0;
 				}
 			}
 			else
 			{
-				VehicleState = 2;
-				VehicleNameTimer = 0;
-				VehicleFadeTimer = 0;
+				m_VehicleState = 2;
+				m_VehicleNameTimer = 0;
+				m_VehicleFadeTimer = 0;
 				/*if (ZoneState == 1 || ZoneState == 2)
 					ZoneState = 3;*/
 			}
-			LastVehicleName = VehicleName;
+			m_LastVehicleName = m_VehicleName;
 		}
 
 
-		if (VehicleState)
+		if (m_VehicleState)
 		{
-			switch (VehicleState)
+			switch (m_VehicleState)
 			{
 			case 2:
-				VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
-				if (VehicleFadeTimer > 1000.0)
+				m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+				if (m_VehicleFadeTimer > 1000.0)
 				{
-					VehicleFadeTimer = 1000;
-					VehicleState = 1;
+					m_VehicleFadeTimer = 1000;
+					m_VehicleState = 1;
 				}
-				Fontalpha = VehicleFadeTimer * 0.001 * 255.0;
+				Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
 				break;
 			case 3:
-				VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-				if (VehicleFadeTimer >= 0)
+				m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+				if (m_VehicleFadeTimer >= 0)
 				{
-					Fontalpha = VehicleFadeTimer * 0.001 * 255.0;
+					Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
 					break;
 				}
-				VehicleState = 0;
-				VehicleFadeTimer = 0;
-				Fontalpha = VehicleFadeTimer * 0.001 * 255.0;
+				m_VehicleState = 0;
+				m_VehicleFadeTimer = 0;
+				Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
 				break;
 			case 4:
-				VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-				if (VehicleFadeTimer < 0)
+				m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+				if (m_VehicleFadeTimer < 0)
 				{
-					VehicleNameTimer = 0;
-					VehicleState = 2;
-					VehicleFadeTimer = 0;
+					m_VehicleNameTimer = 0;
+					m_VehicleState = 2;
+					m_VehicleFadeTimer = 0;
 				}
-				Fontalpha = VehicleFadeTimer * 0.001 * 255.0;
+				Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
 				break;
 			case 1:
-				if (VehicleNameTimer > 3000.0)
+				if (m_VehicleNameTimer > 3000.0)
 				{
-					VehicleState = 3;
-					VehicleFadeTimer = 1000;
+					m_VehicleState = 3;
+					m_VehicleFadeTimer = 1000;
 				}
 				Fontalpha = 255.0;
 				break;
@@ -306,7 +306,7 @@ void CHud::DrawCarName()
 
 			if (!Message && CTheScripts::DisplayHud)
 			{
-				VehicleNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+				m_VehicleNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
 				CFont::SetAlignment(ALIGN_RIGHT);
 				CFont::SetProp(true);
 				CFont::SetBackground(false, false);
@@ -315,17 +315,17 @@ void CHud::DrawCarName()
 				CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30,max(Fontalpha -50.0,0.0f)));
 				CFont::SetFontStyle(2);
 				CFont::SetColor(CRGBA::CRGBA(140, 145, 140, Fontalpha));
-				CFont::PrintString(x_fac(640.0 - 32.0), y_fac(448.0 - 45.0), VehicleName);
+				CFont::PrintString(x_fac(640.0 - 32.0), y_fac(448.0 - 45.0), m_VehicleName);
 			}
 		}
 	}
 
 	else
 	{
-		VehicleState = 0;
-		VehicleNameTimer = 0;
-		VehicleFadeTimer = 0;
-		LastVehicleName = 0;
+		m_VehicleState = 0;
+		m_VehicleNameTimer = 0;
+		m_VehicleFadeTimer = 0;
+		m_LastVehicleName = 0;
 	}
 }
 

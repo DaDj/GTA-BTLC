@@ -1,3 +1,4 @@
+#pragma once
 #include "plbase/PluginBase_SA.h"
 #include "CVector.h"
 #include "CEntity.h"

@@ -12,18 +12,18 @@ public:
 	
 	static char &Message;
 
-	static char* &LastZoneName;
-	static char* &ZonetoPrint_glb;
-	static char* &ZonetoPrint;
-	static int &ZoneState;
-	static int &ZoneNameTimer;
-	static int &ZoneFadeTimer;
+	static char* &m_LastZoneName;
+	static char* &m_ZonetoPrint_glb;
+	static char* &m_ZonetoPrint;
+	static int &m_ZoneState;
+	static int &m_ZoneNameTimer;
+	static int &m_ZoneFadeTimer;
 
-	static char* &LastVehicleName;
-	static char* &VehicleName;
-	static int &VehicleState;
-	static int &VehicleNameTimer;
-	static int &VehicleFadeTimer;
+	static char* &m_LastVehicleName;
+	static char* &m_VehicleName;
+	static int &m_VehicleState;
+	static int &m_VehicleNameTimer;
+	static int &m_VehicleFadeTimer;
 
     static void SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief);
 
