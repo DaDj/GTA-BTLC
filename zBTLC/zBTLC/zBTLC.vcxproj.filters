@@ -1411,6 +1411,9 @@
     <ClCompile Include="BTLC_BASE\My_CCam.cpp">
       <Filter>BTLC_BASE</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CWaterlevel.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3054,6 +3057,9 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\My_CCam.h">
       <Filter>BTLC_BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CWaterlevel.h">
+      <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

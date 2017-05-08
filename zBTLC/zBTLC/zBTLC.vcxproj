@@ -631,6 +631,7 @@
     <ClCompile Include="game_sa\plbase\PluginBase_SA.cpp" />
     <ClCompile Include="game_sa\RenderWare.cpp" />
     <ClCompile Include="BTLC.cpp" />
+    <ClCompile Include="game_sa\CWaterlevel.cpp" />
     <ClCompile Include="Patch\paths\Paths.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -1117,6 +1118,7 @@
     <ClInclude Include="game_sa\CVisibilityPlugins.h" />
     <ClInclude Include="game_sa\CWanted.h" />
     <ClInclude Include="game_sa\CWantedAudio.h" />
+    <ClInclude Include="game_sa\CWaterlevel.h" />
     <ClInclude Include="game_sa\CWeapon.h" />
     <ClInclude Include="game_sa\CWeaponAudio.h" />
     <ClInclude Include="game_sa\CWeaponInfo.h" />

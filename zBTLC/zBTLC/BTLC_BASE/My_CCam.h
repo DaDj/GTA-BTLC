@@ -8,6 +8,6 @@
 namespace My_CCam
 {
 	static CVector offset;
-	static void _fastcall WeaponAim(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5);
+	static void _fastcall Process_AimWeapon(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5);
 	void INIT();
 }

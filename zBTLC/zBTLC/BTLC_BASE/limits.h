@@ -5,4 +5,8 @@ namespace limits
 	//more IMG's loadable.
 	void IMG_LIMIT(); 
 	int AddImageToList(LPCSTR lpFileName, char notPlayerFile);
+	namespace Water_limit
+	{
+		void init();
+	}
 }

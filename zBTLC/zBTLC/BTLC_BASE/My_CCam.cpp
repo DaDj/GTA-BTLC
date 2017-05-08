@@ -3,7 +3,27 @@
 //TODO: Implement this for every weapon with the new weapon loader. I.e. every weapon will have an own offset section in weapon.json
 namespace My_CCam
 {
-	static void _fastcall WeaponAim(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5)
+
+	void _fastcall Process_FollowPedWithMouse(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5)
+	{
+		CPed *Player = FindPlayerPed();
+		offset.x = 0.0f;
+		offset.y = 0.2f;
+		offset.z = 0.0f;
+		plugin::CallMethod<0x50F970, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5);
+	}
+
+
+	void _fastcall Process_FollowPed(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5, char arg6)
+	{
+		CPed *Player = FindPlayerPed();
+		offset.x = 0.0f;
+		offset.y = 0.2f;
+		offset.z = 0.0f;
+		plugin::CallMethod<0x522D40, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5, arg6);
+	}
+
+	static void _fastcall Process_AimWeapon(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5)
 	{
 		CPed *Player = FindPlayerPed();
 		if (Player && !Player->m_bInVehicle)
@@ -24,7 +44,7 @@ namespace My_CCam
 				case WEAPON_ROCKET:
 				case WEAPON_ROCKET_HS:
 				case WEAPON_FTHROWER:
-					offset.x = 0.26f;
+					offset.x = 0.38f;
 					offset.y = 0.2f;
 					offset.z = 0.0f;
 					plugin::CallMethod<0x521500, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5);
@@ -40,11 +60,13 @@ namespace My_CCam
 
 	void INIT()
 	{
-	MemoryVP::InjectHook(0x527A95, WeaponAim, PATCH_CALL);
+	MemoryVP::InjectHook(0x527A95, Process_AimWeapon, PATCH_CALL);
+	//MemoryVP::InjectHook(0x5279E5, Process_FollowPedWithMouse, PATCH_CALL);
+	//MemoryVP::InjectHook(0x527A09, Process_FollowPed, PATCH_CALL);
 
-	float AIMWEAPON_RIFLE1_ZOOM = 40.0f;
-	float AIMWEAPON_RIFLE2_ZOOM = 40.0f;
-	float AIMWEAPON_DEFAULT_ZOOM = 40.0f;
+	float AIMWEAPON_RIFLE1_ZOOM = 50.0f;
+	float AIMWEAPON_RIFLE2_ZOOM = 50.0f;
+	float AIMWEAPON_DEFAULT_ZOOM = 50.0f;
 	float AIMWEAPON_DRIVE_CLOSE_ENOUGH = 0.17453f;
 	float AIMWEAPON_DRIVE_SENS_MULT = 0.25f;
 	float AIMWEAPON_FREETARGET_SENS = 0.1f;

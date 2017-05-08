@@ -78,11 +78,12 @@ void Function_starter()
 	BUGFIX::init();			//Fixes of some small GTA Bugs
 	weather::init();		//Changes the weather effects.
 	limits::IMG_LIMIT();	//Limit adjusting
+	limits::Water_limit::init(); //waterlimit
 	visuals::init();		//VISUAL CHANGES init
 
 	CHud_Hook::Init();					//New HUD init
 	Feat_PlayerWeaponReload::init();	//Add Reload with "R" functions.
-	My_CCam::INIT(); // IV Styled AIM CAM
+	My_CCam::INIT();					// IV Styled AIM CAM
 
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
