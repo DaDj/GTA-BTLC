@@ -170,9 +170,9 @@
     <ClCompile Include="BTLC_BASE\debug_console.cpp" />
     <ClCompile Include="BTLC_BASE\fast_load.cpp" />
     <ClCompile Include="BTLC_BASE\fixes.cpp" />
-    <ClCompile Include="BTLC_BASE\GPS.cpp" />
+    <ClCompile Include="BTLC_BASE\My_GPS.cpp" />
     <ClCompile Include="BTLC_BASE\limits.cpp" />
-    <ClCompile Include="BTLC_BASE\Feat_Player_WallHitreaction.cpp" />
+    <ClCompile Include="BTLC_BASE\My_PlayerWallHitreaction.cpp" />
     <ClCompile Include="BTLC_BASE\My_CCam.cpp" />
     <ClCompile Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.cpp" />
     <ClCompile Include="BTLC_BASE\visuals.cpp" />
@@ -644,9 +644,10 @@
     <ClInclude Include="BTLC_BASE\CVideomodemanager.h" />
     <ClInclude Include="BTLC_BASE\fast_load.h" />
     <ClInclude Include="BTLC_BASE\fixes.h" />
-    <ClInclude Include="BTLC_BASE\GPS.h" />
+    <ClInclude Include="BTLC_BASE\My_GPS.h" />
     <ClInclude Include="BTLC_BASE\limits.h" />
     <ClInclude Include="BTLC_BASE\My_CCam.h" />
+    <ClInclude Include="BTLC_BASE\My_PlayerWallHitreaction.h" />
     <ClInclude Include="BTLC_BASE\other_shared.h" />
     <ClInclude Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.h" />
     <ClInclude Include="BTLC_BASE\visuals.h" />

@@ -1384,12 +1384,6 @@
     <ClCompile Include="Events_SA\Events_SA.cpp">
       <Filter>Events_Sa</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\GPS.cpp">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClCompile>
-    <ClCompile Include="BTLC_BASE\Feat_Player_WallHitreaction.cpp">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClCompile>
     <ClCompile Include="game_sa\CCullZone.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
@@ -1408,11 +1402,17 @@
     <ClCompile Include="BTLC_BASE\windowmode\WindowMode_Hook.cpp">
       <Filter>BTLC_BASE\windowmode</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\My_CCam.cpp">
-      <Filter>BTLC_BASE</Filter>
-    </ClCompile>
     <ClCompile Include="game_sa\CWaterlevel.cpp">
       <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_PlayerWallHitreaction.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_CCam.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_GPS.cpp">
+      <Filter>BTLC_BASE\features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3022,9 +3022,6 @@
     <ClInclude Include="Patch\gvm\translator.hpp">
       <Filter>Patching\gvm</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\GPS.h">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClInclude>
     <ClInclude Include="Patch\calling.hpp">
       <Filter>Patching</Filter>
     </ClInclude>
@@ -3055,11 +3052,17 @@
     <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h">
       <Filter>BTLC_BASE\windowmode</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\My_CCam.h">
-      <Filter>BTLC_BASE</Filter>
-    </ClInclude>
     <ClInclude Include="game_sa\CWaterlevel.h">
       <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_PlayerWallHitreaction.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_CCam.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_GPS.h">
+      <Filter>BTLC_BASE\features</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -34,9 +34,13 @@ float VERSION = 0.32f;
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
 #include "BTLC_BASE\CHud_Hooks.h"
-#include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
 #include "BTLC_BASE\windowmode\dxhandler.h"
 #include "BTLC_BASE\My_CCam.h"
+#include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
+#include "BTLC_BASE\My_PlayerWallHitreaction.h"
+#include "BTLC_BASE\My_GPS.h"
+
+
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
 	
@@ -82,8 +86,12 @@ void Function_starter()
 	visuals::init();		//VISUAL CHANGES init
 
 	CHud_Hook::Init();					//New HUD init
+
 	Feat_PlayerWeaponReload::init();	//Add Reload with "R" functions.
+	My_PlayerWallhitreactions::init();
+	My_GPS::init();
 	My_CCam::INIT();					// IV Styled AIM CAM
+
 
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
