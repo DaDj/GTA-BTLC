@@ -174,7 +174,7 @@
     <ClCompile Include="BTLC_BASE\limits.cpp" />
     <ClCompile Include="BTLC_BASE\My_PlayerWallHitreaction.cpp" />
     <ClCompile Include="BTLC_BASE\My_CCam.cpp" />
-    <ClCompile Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.cpp" />
+    <ClCompile Include="BTLC_BASE\My_PlayerWeaponReload.cpp" />
     <ClCompile Include="BTLC_BASE\visuals.cpp" />
     <ClCompile Include="BTLC_BASE\weather.cpp" />
     <ClCompile Include="BTLC_BASE\windowmode.cpp" />
@@ -642,6 +642,7 @@
     <ClInclude Include="BTLC_BASE\CHud_Hooks.h" />
     <ClInclude Include="BTLC_BASE\CTrafficlights.h" />
     <ClInclude Include="BTLC_BASE\CVideomodemanager.h" />
+    <ClInclude Include="BTLC_BASE\debug_console.h" />
     <ClInclude Include="BTLC_BASE\fast_load.h" />
     <ClInclude Include="BTLC_BASE\fixes.h" />
     <ClInclude Include="BTLC_BASE\My_GPS.h" />
@@ -649,7 +650,7 @@
     <ClInclude Include="BTLC_BASE\My_CCam.h" />
     <ClInclude Include="BTLC_BASE\My_PlayerWallHitreaction.h" />
     <ClInclude Include="BTLC_BASE\other_shared.h" />
-    <ClInclude Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.h" />
+    <ClInclude Include="BTLC_BASE\My_PlayerWeaponReload.h" />
     <ClInclude Include="BTLC_BASE\visuals.h" />
     <ClInclude Include="BTLC_BASE\weather.h" />
     <ClInclude Include="BTLC_BASE\windowmode.h" />

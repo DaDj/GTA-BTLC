@@ -1387,9 +1387,6 @@
     <ClCompile Include="game_sa\CCullZone.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.cpp">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClCompile>
     <ClCompile Include="BTLC_BASE\CHud_Hooks.cpp">
       <Filter>BTLC_BASE</Filter>
     </ClCompile>
@@ -1412,6 +1409,9 @@
       <Filter>BTLC_BASE\features</Filter>
     </ClCompile>
     <ClCompile Include="BTLC_BASE\My_GPS.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_PlayerWeaponReload.cpp">
       <Filter>BTLC_BASE\features</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3031,9 +3031,6 @@
     <ClInclude Include="BTLC_BASE\CHud_Hooks.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\tasks\Feat_PlayerWeaponReload.h">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClInclude>
     <ClInclude Include="Patch\paths\Error.h">
       <Filter>Patching\Paths</Filter>
     </ClInclude>
@@ -3063,6 +3060,12 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\My_GPS.h">
       <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_PlayerWeaponReload.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\debug_console.h">
+      <Filter>BTLC_BASE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

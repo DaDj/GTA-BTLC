@@ -22,10 +22,10 @@
 //////////////////////////////////////////////////////////////////
 //// SPECIAL THANKS TO: iFARBOD FOR HELP                      ////
 //////////////////////////////////////////////////////////////////
-
 #define DEBUG 
 float VERSION = 0.32f;
 
+#include "BTLC_BASE\debug_console.h"
 #include "BTLC_BASE\fixes.h"
 #include "BTLC_BASE\weather.h"
 #include "BTLC_BASE\visuals.h"
@@ -36,15 +36,13 @@ float VERSION = 0.32f;
 #include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\windowmode\dxhandler.h"
 #include "BTLC_BASE\My_CCam.h"
-#include "BTLC_BASE\tasks\Feat_PlayerWeaponReload.h"
+#include "BTLC_BASE\My_PlayerWeaponReload.h"
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"
-
 
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
 	
-void debug_console();
 void btlc_init(); //BTLC INIT
 void check_gameversion();
 void ParseCommandlineArgument(int thing, char* pArg);
@@ -84,10 +82,9 @@ void Function_starter()
 	limits::IMG_LIMIT();	//Limit adjusting
 	limits::Water_limit::init(); //waterlimit
 	visuals::init();		//VISUAL CHANGES init
+	CHud_Hook::Init();		//New HUD init
 
-	CHud_Hook::Init();					//New HUD init
-
-	Feat_PlayerWeaponReload::init();	//Add Reload with "R" functions.
+	My_PlayerWeaponReload::init();	//Add Reload with "R" functions.
 	My_PlayerWallhitreactions::init();
 	My_GPS::init();
 	My_CCam::INIT();					// IV Styled AIM CAM
@@ -131,31 +128,7 @@ void btlc_init()
 	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
 }
 
-void debug_console()
-{
-	MemoryVP::InjectHook(0x821982, printf, PATCH_JUMP);
-	AllocConsole();
-	AttachConsole(GetCurrentProcessId());
-	freopen("CON", "w", stdout);
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stderr);
-	int process = GetCurrentProcessId();
-	// Screens
-	// If you have multiple screens, this will automatically move the console to the 2nd
-	if (GetSystemMetrics(SM_CMONITORS) > 1)
-	{
-		// Console Window
-		HWND hConsole = GetConsoleWindow();
-		RECT rect;
-		GetWindowRect(hConsole, &rect);
-		// Desktop
-		HWND hDesktop = GetDesktopWindow();
-		RECT rDesktopRect;
-		GetWindowRect(hDesktop, &rDesktopRect);
-		// Update Position
-		SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
-	}
-}
+
 
 void check_gameversion()
 {

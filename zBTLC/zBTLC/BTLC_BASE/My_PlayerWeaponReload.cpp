@@ -1,9 +1,13 @@
-#include "Feat_PlayerWeaponReload.h"
-#include "../../game_sa/CWeaponInfo.h"
+#include "My_PlayerWeaponReload.h"
+#include "../game_sa/CWeaponInfo.h"
+#include "../Events_SA/Events_SA.h"
+#include "../game_sa/CPed.h"
+#include "../game_sa/CPad.h"
+#include "../game_sa/common.h"
+#include "../BTLC_BASE/other_shared.h"
 
-namespace Feat_PlayerWeaponReload
+namespace My_PlayerWeaponReload
 {
-
 	void init()
 	{
 		//FIXES/disables automatic weapon reload
@@ -17,7 +21,6 @@ namespace Feat_PlayerWeaponReload
 		{
 			Reloadweapon();
 		};
-	
 	}
 
 	void Reloadweapon()
