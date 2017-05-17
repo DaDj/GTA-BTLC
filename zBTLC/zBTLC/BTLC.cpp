@@ -3,10 +3,6 @@
 //////////////////////////////////////////////////////////////////
 //// Author: D4DJ                                             ////
 //////////////////////////////////////////////////////////////////
-//// CHANGES: -included almost all classses ever needed       ////
-////          -recreated the whole source code                ////
-////          -disabled new weather effects for now           ////
-//////////////////////////////////////////////////////////////////
 //// Description:                                             ////
 //// This file will initiate the BTLC modifications.          ////
 //// SOME general modification are done in the main function. ////
@@ -25,7 +21,7 @@
 #define DEBUG 
 float VERSION = 0.32f;
 
-#include "BTLC_BASE\debug_console.h"
+#include "BTLC_BASE\debug.h"
 #include "BTLC_BASE\fixes.h"
 #include "BTLC_BASE\weather.h"
 #include "BTLC_BASE\visuals.h"
@@ -51,7 +47,7 @@ void Function_starter();
 void Main()
 {
 #ifdef DEBUG
-	debug_console();
+	debug::init();
 	std::cout << std::endl;
 	std::cout << "GTA:BACK TO LIBERTY CITY" << std::endl;
 	std::cout << "developed by: D4DJ,  Majorapplepie" << std::endl << std::endl;
@@ -71,7 +67,6 @@ void Main()
 	//START BTLC STUFF
 	Function_starter();
 }
-
 
 void Function_starter()
 {
@@ -227,7 +222,7 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//DEV enables the debug_consoles and outputs
 		if (!_stricmp(pArg, "-DEV"))
 		{
-			debug_console();	//debug console
+			debug::init();	//debug console
 			return;
 		}
 	}
