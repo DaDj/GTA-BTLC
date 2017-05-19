@@ -65,7 +65,7 @@ namespace BUGFIX
 		//// DISABLE CHEATS
 		//MemoryVP::Patch<BYTE>(0x439AF0, 0xC3);
 		//MemoryVP::Patch<BYTE>(0x438370, 0xC3);
-
+		
 
 		// Disable CStats::IncrementStat (returns at start of function)
 		MemoryVP::Patch<BYTE>(0x55C180, 0xC3);
@@ -83,6 +83,10 @@ namespace BUGFIX
 		//// Disable player vehicle damage when flipped
 		MemoryVP::Patch(0x570E7F, 0xD8DD);
 		MemoryVP::Nop(0x570E81, 4);
+
+		////Lower Gunflash show time
+		MemoryVP::Patch<BYTE>(0x8D2E88, 20);
+		MemoryVP::Patch<BYTE>(0x8D2E90, 20);
 	}
 
 

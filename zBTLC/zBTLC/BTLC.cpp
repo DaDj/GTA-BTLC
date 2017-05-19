@@ -19,7 +19,7 @@
 //// SPECIAL THANKS TO: iFARBOD FOR HELP                      ////
 //////////////////////////////////////////////////////////////////
 #define DEBUG 
-float VERSION = 0.32f;
+float VERSION = 0.42f;
 
 #include "BTLC_BASE\debug.h"
 #include "BTLC_BASE\fixes.h"
@@ -27,14 +27,14 @@ float VERSION = 0.32f;
 #include "BTLC_BASE\visuals.h"
 #include "BTLC_BASE\limits.h"
 #include "BTLC_BASE\windowmode.h"
+#include "BTLC_BASE\windowmode\dxhandler.h"
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
 #include "BTLC_BASE\CHud_Hooks.h"
-#include "BTLC_BASE\windowmode\dxhandler.h"
-#include "BTLC_BASE\My_CCam.h"
 #include "BTLC_BASE\My_PlayerWeaponReload.h"
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"
+#include "BTLC_BASE\My_CCam.h"
 
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
@@ -106,7 +106,7 @@ void Function_starter()
 	MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
+	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);	
 }
 
 //BTLC INIT
@@ -120,7 +120,7 @@ void btlc_init()
 	static  char  settingsfile[13] = "gta_btlc.set";//new settings file
 	MemoryVP::Patch<void*>(0x57C672, &settingsfile);
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
-	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
+	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);	
 }
 
 
