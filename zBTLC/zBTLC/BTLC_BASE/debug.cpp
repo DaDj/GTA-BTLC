@@ -35,5 +35,16 @@ namespace debug
 			SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
 		}
 	}
+
+	void draw_current_Modelname()
+	{
+
+	}
+
+	void create_IDE_LIST()
+	{
+
+	}
+
 }
 

@@ -13,24 +13,77 @@
 #include "CCamera.h"
 #include "CSprite.h"
 
-char (*CHud::m_BigMessage)[128] = (char (*)[128])0xBAACC0;
-Bool &CHud::bScriptForceDisplayWithCounters = *(Bool *)0xBAA3FA;
-
-char &CHud::Message = *(char*)0xBAB040; //wrong should be an array(this is only the first entry
-char* &CHud::m_LastZoneName = *(char **)0xBAB1D4;
-char* &CHud::m_ZonetoPrint_glb = *(char **)0xBAB1D8;
-char* &CHud::m_ZonetoPrint = *(char **)0xBAB1D0;
-int &CHud::m_ZoneState = *(int *)0xBAA930;
-int &CHud::m_ZoneFadeTimer = *(int *)0xBAA934;
-int &CHud::m_ZoneNameTimer = *(int *)0xBAA938;
-
+char(*CHud::m_BigMessage)[128] = (char(*)[128])0xBAACC0;
+bool &CHud::bScriptDontDisplayAreaName = *(bool *)0xBAA3F8;
+bool &CHud::bScriptDontDisplayVehicleName = *(bool *)0xBAA3F9;
+bool &CHud::bScriptForceDisplayWithCounters = *(bool *)0xBAA3FA;
+bool &CHud::bScriptDontDisplayRadar = *(bool *)0xBAA3FB;
+int &CHud::m_LastBreathTime = *(int *)0xBAA3FC;
+Bool &CHud::bDrawClock = *(Bool *)0xBAA400;
+int &CHud::m_WeaponState = *(int *)0xBAA404;
+int &CHud::m_WeaponFadeTimer = *(int *)0xBAA408;
+int &CHud::m_WeaponTimer = *(int *)0xBAA40C;
+int &CHud::m_LastWeapon = *(int *)0xBAA410;
+int &CHud::m_WantedState = *(int *)0xBAA414;
+int &CHud::m_WantedFadeTimer = *(int *)0xBAA418;
+int &CHud::m_WantedTimer = *(int *)0xBAA41C;
+int &CHud::m_LastWanted = *(int *)0xBAA420;
+int &CHud::m_DisplayScoreState = *(int *)0xBAA424;
+int &CHud::m_DisplayScoreFadeTimer = *(int *)0xBAA428;
+int &CHud::m_DisplayScoreTimer = *(int *)0xBAA42C;
+int &CHud::m_LastDisplayScore = *(int *)0xBAA430;
+int &CHud::m_EnergyLostState = *(int *)0xBAA434;
+int &CHud::m_EnergyLostFadeTimer = *(int *)0xBAA438;
+int &CHud::m_EnergyLostTimer = *(int *)0xBAA43C;
+int &CHud::m_LastTimeEnergyLost = *(int *)0xBAA440;
 char* &CHud::m_VehicleName = *(char **)0xBAA458;
 char* &CHud::m_LastVehicleName = *(char **)0xBAA454;
 int &CHud::m_VehicleState = *(int *)0xBAA448;
 int &CHud::m_VehicleNameTimer = *(int *)0xBAA450;
 int &CHud::m_VehicleFadeTimer = *(int *)0xBAA44C;
+bool &CHud::m_bDraw3dMarkers = *(bool *)0xBAA45C;
+bool &CHud::m_Wants_To_Draw_Hud = *(bool *)0xBAA45D;
+float &CHud::m_fHelpMessageTime = *(float *)0xBAA460;
+float &CHud::m_fHelpMessageBoxWidth = *(float *)0x8D0934;
+bool &CHud::m_bHelpMessagePermanent = *(bool *)0xBAA464;
+float &CHud::m_fHelpMessageStatUpdateValue = *(float *)0xBAA468;
+unsigned short &CHud::m_nHelpMessageMaxStatValue = *(unsigned short *)0xBAA46C;
+unsigned short &CHud::m_nHelpMessageStatId = *(unsigned short *)0xBAA470;
+bool &CHud::m_bHelpMessageQuick = *(bool *)0xBAA472;
+int &CHud::m_nHelpMessageState = *(int *)0xBAA474;
+int &CHud::m_nHelpMessageFadeTimer = *(int *)0xBAA478;
+int &CHud::m_nHelpMessageTimer = *(int *)0xBAA47C;
+char *CHud::m_pHelpMessageToPrint = (char *)0xBAA480;
+char *CHud::m_pLastHelpMessage = (char *)0xBAA610;
+char *CHud::m_pHelpMessage = (char *)0xBAA7A0;
+char &CHud::m_Message = *(char*)0xBAB040; //wrong should be an array(this is only the first entry
+char* &CHud::m_LastZoneName = *(char **)0xBAB1D4;
+char* &CHud::m_ZoneName = *(char **)0xBAB1D8;
+char* &CHud::m_ZonetoPrint = *(char **)0xBAB1D0;
+int &CHud::m_ZoneState = *(int *)0xBAA930;
+int &CHud::m_ZoneFadeTimer = *(int *)0xBAA934;
+int &CHud::m_ZoneNameTimer = *(int *)0xBAA938;
+short &CHud::m_ItemToFlash = *(short *)0xBAB1DC;
+bool &CHud::bDrawingVitalStats = *(bool *)0xBAB1DE;
+CSprite2d *CHud::Sprites = (CSprite2d *)0xBAB1FC;
 
-void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) {
+short &TimerMainCounterHideState = *(short *)0xBAA388;
+bool &TimerMainCounterWasDisplayed = *(bool *)0xBAA38A;
+short *TimerCounterHideState = (short *)0xBAA38C;
+short *TimerCounterWasDisplayed = (short *)0xBAA394;
+int &OddJob2OffTimer = *(int *)0xBAA398;
+float &OddJob2XOffset = *(float *)0xBAA39C;
+int &OddJob2Timer = *(int *)0xBAA3A0;
+float *BigMessageAlpha = (float *)0xBAA3A4;
+float *BigMessageInUse = (float *)0xBAA3C0;
+float *BigMessageX = (float *)0xBAA3DC;
+char *LastBigMessage = (char *)0xBAABC0;
+unsigned short &OddJob2On = *(unsigned short *)0xBAB1E0;
+float &PagerXOffset = *(float *)0x8D0938;
+
+
+void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) 
+{
     ((void(__cdecl *)(char const *, bool, bool, bool))0x588BE0)(text, quickMessage, permanent, addToBrief);
 }
 
@@ -81,7 +134,7 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(29.0f), CHud::y_fac(400.0f), CHud::x_fac(99.0f), CHud::y_fac(455.0f + 8.0)), CRGBA::CRGBA(30, 30, 30, 180));
 	if (CTimer::m_snTimeInMilliseconds < (lastdamagetaken + 100))
 	{
-		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(0.0f), CHud::y_fac(0.0f), CHud::x_fac(640.0f), CHud::y_fac(448.0f)), CRGBA::CRGBA(30, 30, 30, 40));
+		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(0.0f), CHud::y_fac(0.0f), CHud::x_fac(640.0f), CHud::y_fac(448.0f)), CRGBA::CRGBA(80, 30, 30, 40));
 	}
 
 	if (!KeyPressed(VK_TAB))
@@ -112,9 +165,9 @@ void CHud::DrawZoneText()
 {
 
 	float Fontalpha = 255.0;
-	if (m_ZonetoPrint_glb)
+	if (m_ZoneName)
 	{
-		if (m_ZonetoPrint_glb != m_LastZoneName)
+		if (m_ZoneName != m_LastZoneName)
 		{
 			switch (m_ZoneState)
 			{
@@ -124,7 +177,7 @@ void CHud::DrawZoneText()
 					m_ZoneState = 2;
 					m_ZoneNameTimer = 0;
 					m_ZoneFadeTimer = 0;
-					m_ZonetoPrint = m_ZonetoPrint_glb;
+					m_ZonetoPrint = m_ZoneName;
 				/*	if (m_VehicleState == 2 || m_VehicleState == 1)
 						m_VehicleState = 3;*/
 				}
@@ -195,7 +248,7 @@ void CHud::DrawZoneText()
 			{
 				m_ZoneFadeTimer = 0;
 				m_ZoneState = 2;
-				m_ZonetoPrint = m_ZonetoPrint_glb;
+				m_ZonetoPrint = m_ZoneName;
 			}
 			Fontalpha = m_ZoneFadeTimer * 0.001 * 255.0;
 			break;
@@ -207,7 +260,7 @@ void CHud::DrawZoneText()
 		float &unknownB = *(float*)0xBAA3E4;
 
 
-		if (Message ||  unknownA != 0.0f || unknownB != 0.0)
+		if (m_Message ||  unknownA != 0.0f || unknownB != 0.0)
 		{
 			m_ZoneState = 3;
 		}
@@ -222,7 +275,7 @@ void CHud::DrawZoneText()
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
 			CFont::SetFontStyle(2);
 			CFont::SetColor(CRGBA::CRGBA(180, 180, 180, Fontalpha));
-			CFont::PrintStringFromBottom(x_fac(640.0 - 32.0), y_fac(448.0 - 20.0), m_ZonetoPrint_glb);
+			CFont::PrintStringFromBottom(x_fac(640.0 - 32.0), y_fac(448.0 - 20.0), m_ZoneName);
 
 		}
 	}
@@ -304,7 +357,7 @@ void CHud::DrawCarName()
 			}
 
 
-			if (!Message && CTheScripts::DisplayHud)
+			if (!m_Message && CTheScripts::DisplayHud)
 			{
 				m_VehicleNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
 				CFont::SetAlignment(ALIGN_RIGHT);

@@ -84,7 +84,6 @@ void Function_starter()
 	My_GPS::init();
 	My_CCam::INIT();					// IV Styled AIM CAM
 
-
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
