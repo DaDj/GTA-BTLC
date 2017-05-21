@@ -49,6 +49,7 @@ namespace My_PlayerWallhitreactions
 				Playa->m_pIntelligence->m_TaskMgr.ClearTaskEventResponse();
 
 			if (!Wall_inway_test && !CPad::GetPad(0)->GetJump() && activetask != TASK_SIMPLE_USE_GUN
+				&& !Playa->m_bIsInTheAir && activetask != TASK_SIMPLE_JETPACK
 				&& activetask != TASK_COMPLEX_FALL_AND_GET_UP && activetask != TASK_COMPLEX_FALL_AND_STAY_DOWN
 				&& activetask != TASK_COMPLEX_CLIMB && activetask != TASK_SIMPLE_CLIMB && activetask != TASK_COMPLEX_JUMP
 				&& activetask != TASK_SIMPLE_JUMP && activetask != TASK_SIMPLE_DUCK && activetask != TASK_SIMPLE_FALL)

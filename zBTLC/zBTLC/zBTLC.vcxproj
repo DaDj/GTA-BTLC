@@ -230,6 +230,7 @@
     <ClCompile Include="game_sa\CDummyPed.cpp" />
     <ClCompile Include="game_sa\CEmergencyPed.cpp" />
     <ClCompile Include="game_sa\CEntity.cpp" />
+    <ClCompile Include="game_sa\CFileLoader.cpp" />
     <ClCompile Include="game_sa\CFileMgr.cpp" />
     <ClCompile Include="game_sa\CFont.cpp" />
     <ClCompile Include="game_sa\CGame.cpp" />
@@ -712,6 +713,7 @@
     <ClInclude Include="game_sa\CEventHandler.h" />
     <ClInclude Include="game_sa\CEventScanner.h" />
     <ClInclude Include="game_sa\CExplosion.h" />
+    <ClInclude Include="game_sa\CFileLoader.h" />
     <ClInclude Include="game_sa\CFileMgr.h" />
     <ClInclude Include="game_sa\CFont.h" />
     <ClInclude Include="game_sa\CGame.h" />

@@ -1414,6 +1414,9 @@
     <ClCompile Include="BTLC_BASE\debug.cpp">
       <Filter>BTLC_BASE</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CFileLoader.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3066,6 +3069,9 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\debug.h">
       <Filter>BTLC_BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CFileLoader.h">
+      <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
