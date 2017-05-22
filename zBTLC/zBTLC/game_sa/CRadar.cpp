@@ -4,7 +4,7 @@
 #include "CHud.h"
 
 float CRadar::Radar_Height = 65.0f;
-float CRadar::Radar_Width = 90.0f;
+float CRadar::Radar_Width = 100.0f;
 float CRadar::Radar_Posx = 10.0f;
 float CRadar::Radar_Posy = 23.0f;
 float CRadar::Radar_Cut_Width = 0.1f;

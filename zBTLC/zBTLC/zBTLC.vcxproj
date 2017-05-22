@@ -241,6 +241,7 @@
     <ClCompile Include="game_sa\CHandObject.cpp" />
     <ClCompile Include="game_sa\CHud.cpp" />
     <ClCompile Include="game_sa\CHudColours.cpp" />
+    <ClCompile Include="game_sa\CKeyGen.cpp" />
     <ClCompile Include="game_sa\CLoadedCarGroup.cpp" />
     <ClCompile Include="game_sa\CMatrix.cpp" />
     <ClCompile Include="game_sa\CMatrixLink.cpp" />
@@ -724,6 +725,7 @@
     <ClInclude Include="game_sa\CHandObject.h" />
     <ClInclude Include="game_sa\CHud.h" />
     <ClInclude Include="game_sa\CHudColours.h" />
+    <ClInclude Include="game_sa\CKeyGen.h" />
     <ClInclude Include="game_sa\CLoadedCarGroup.h" />
     <ClInclude Include="game_sa\CMatrix.h" />
     <ClInclude Include="game_sa\CMatrixLink.h" />

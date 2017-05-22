@@ -12,6 +12,14 @@
 #include "CTimer.h"
 #include "CCamera.h"
 #include "CSprite.h"
+#include "CBaseModelInfo.h"
+#include "CWeaponInfo.h"
+#include "CModelInfo.h"
+#include "CTxdStore.h"
+#include "common.h"
+#include "CKeyGen.h"
+#include "CTask.h"
+#include "CCamera.h"
 
 char(*CHud::m_BigMessage)[128] = (char(*)[128])0xBAACC0;
 bool &CHud::bScriptDontDisplayAreaName = *(bool *)0xBAA3F8;
@@ -81,6 +89,14 @@ char *LastBigMessage = (char *)0xBAABC0;
 unsigned short &OddJob2On = *(unsigned short *)0xBAB1E0;
 float &PagerXOffset = *(float *)0x8D0938;
 
+enum eHudState
+{
+	STATE_OFF,
+	STATE_FADE_ON,
+	STATE_ON,
+	STATE_FADE_OFF
+};
+
 
 void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) 
 {
@@ -89,8 +105,11 @@ void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, b
 
 float CHud::x_fac(float x)
 {
-	float width_fac = RsGlobal.maximumWidth / 640.0f;
+	float width_fac = RsGlobal.maximumHeight / 448.0f;
 	return x * width_fac;
+
+	//float base = RsGlobal.maximumWidth > RsGlobal.maximumHeight ? RsGlobal.maximumHeight : RsGlobal.maximumWidth;
+	//return static_cast<int>(x * base / 1080.0f);
 }
 
 
@@ -98,13 +117,20 @@ float CHud::y_fac(float y)
 {
 	float height_fac = RsGlobal.maximumHeight / 448.0f;
 	return y * height_fac;
+
+	//float base = RsGlobal.maximumWidth > RsGlobal.maximumHeight ? RsGlobal.maximumHeight : RsGlobal.maximumWidth;
+	//return static_cast<int>(y * base / 1080.0f);
 }
 
 void CHud::DrawPlayerInfo()
 {
+	float alpha = 255;
+	int cammode = 0;
 	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
-	char string[40];
-
+	
+	
+	
+	//char string[40];
 	//CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
 	//sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
 	//CFont::SetFontStyle(FONT_PRICEDOWN);
@@ -114,6 +140,60 @@ void CHud::DrawPlayerInfo()
 	//CFont::PrintString(CHud::x_fac(600.0f),CHud::y_fac(10.0f), string);
 
 	CHud::DrawPlayerhealthandarmor(player);
+
+
+	eTaskType activetask = player->m_pIntelligence->m_TaskMgr.GetActiveTask()->GetId();
+		switch (m_WeaponState)
+		{
+		case STATE_OFF:
+			alpha = 0;
+			cammode = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode;
+			if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type 
+				|| activetask == TASK_SIMPLE_USE_GUN
+				|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwState == 1
+				|| cammode == MODE_AIMWEAPON || KeyPressed(VK_TAB))
+			{
+				m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
+				m_WeaponTimer = 0;
+				m_WeaponState = STATE_FADE_ON;
+			}
+			break;
+
+		case STATE_FADE_ON:
+			alpha = 255;
+			m_WeaponState = STATE_ON;
+			break;
+		case 5:
+		case STATE_ON:
+			if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type)
+			{
+				m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
+				m_WeaponTimer = 0;
+			}
+			m_WeaponTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+
+			if (m_WeaponTimer > 5000)
+			{
+				m_WeaponState = STATE_FADE_OFF;
+				m_WeaponFadeTimer = 500;
+			}
+				
+			alpha = 255;
+			break;
+
+		case STATE_FADE_OFF:
+			m_WeaponFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+			if (m_WeaponFadeTimer < 0.0)
+			{
+				m_WeaponFadeTimer = 0;
+				m_WeaponState = STATE_OFF;
+			}
+			alpha  = m_WeaponFadeTimer * 0.001 * 255.0;
+			break;
+		default:
+			break;
+		}
+	DrawWeaponIcon(player, alpha);
 }
 
 void CHud::DrawPlayerhealthandarmor(CPed *player)
@@ -126,7 +206,7 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		color_health = CRGBA::CRGBA(90, 0, 0, 255);
 
 	float percentage_armor = player->m_fArmour ;
-	CRGBA color_armor = CRGBA::CRGBA(200, 200, 230, 245);
+	CRGBA color_armor = CRGBA::CRGBA(80, 120, 180, 245);
 	if(percentage_armor <= 1.0f)
 	      color_armor = CRGBA::CRGBA(200, 200, 230, 90);
 
@@ -137,26 +217,51 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(0.0f), CHud::y_fac(0.0f), CHud::x_fac(640.0f), CHud::y_fac(448.0f)), CRGBA::CRGBA(80, 30, 30, 40));
 	}
 
-	if (!KeyPressed(VK_TAB))
-	{
-		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(10.0f), CHud::y_fac(448.0f-21.0f), CHud::x_fac(99.0f), CHud::y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
-		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(448.0f - 20.0f), CHud::x_fac(87.0f), CHud::y_fac(7.0f), percentage_health, 0, 0, 0, color_health, color_health);
+		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(10.0f), CHud::y_fac(448.0f-21.0f), CHud::x_fac(110.0f), CHud::y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
+		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(448.0f - 20.0f), CHud::x_fac(98.0f), CHud::y_fac(7.0f), percentage_health, 0, 0, 0, color_health, color_health);
 		//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
-		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(448.0f - 12.0f), CHud::x_fac(87.0f), CHud::y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
+		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(448.0f - 12.0f), CHud::x_fac(98.0f), CHud::y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
+
+}
+
+void CHud::DrawWeaponIcon(CPed *player, float alpha)
+{
+	
+	RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
+
+	int weapModel = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type, 1)->m_dwModelId1;
+	if (weapModel <= 0)
+	{
+		CRect Icon = CRect(RsGlobal.maximumWidth -  x_fac(120.0f), y_fac(40.0f), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + 50.0f));
+		CHud::Sprites[0].Draw(Icon, CRGBA(255, 255, 255, alpha));
+	}
+	else {
+		CModelInfo::GetModelInfo(weapModel);
+
+		CBaseModelInfo *model = CModelInfo::GetModelInfo(weapModel);
+		CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(model->m_wTxdIndex);
+		if (txd && txd->m_pRwDictionary) {
+			RwTexture *iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
+			if (iconTex) {
+				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+				RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE,(void*) 1);
+				RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)8);
+				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
+				CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f/2),
+					y_fac(40.0f + 50.0f/2), 1.0f, x_fac(100.0f / 2),
+					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);
+				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+			}
+		}
 	}
 }
 
-void CHud::DrawWeaponIcon()
+void CHud::DrawWeaponAmmo(CPed *player, float alpha)
 {
 
 }
 
-void CHud::DrawWeaponAmmo()
-{
-
-}
-
-void CHud::DrawWantedLevel()
+void CHud::DrawWantedLevel(CPed *player)
 {
 
 }

@@ -75,10 +75,10 @@ namespace debug
 			CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
 			sprintf(string, " Model: %s" ,CFileLoader::Objectnamelist[entity->m_wModelIndex].mName);
 			CFont::SetFontStyle(FONT_SUBTITLES);
-			CFont::SetAlignment(ALIGN_RIGHT);
+			CFont::SetAlignment(ALIGN_LEFT);
 			CFont::SetOutlinePosition(1);
 			CFont::SetScale(CHud::x_fac(0.4f), CHud::y_fac(0.8f));
-			CFont::PrintString(CHud::x_fac(635.0f), CHud::y_fac(5.0f), string);
+			CFont::PrintString(CHud::x_fac(15.0f), CHud::y_fac(5.0f), string);
 		}
 	}
 

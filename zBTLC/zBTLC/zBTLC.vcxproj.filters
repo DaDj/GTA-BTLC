@@ -1417,6 +1417,9 @@
     <ClCompile Include="game_sa\CFileLoader.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CKeyGen.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3071,6 +3074,9 @@
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CFileLoader.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CKeyGen.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>

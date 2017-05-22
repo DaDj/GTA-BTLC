@@ -62,6 +62,8 @@ public:
 	static bool &bDrawingVitalStats;
 	static CSprite2d *Sprites; // static CSprite2d Sprites[6]
 
+
+
     static void SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief);
 	static int Enableclock;
 
@@ -70,9 +72,9 @@ public:
 
 	static void DrawPlayerInfo();
 	static void DrawPlayerhealthandarmor(CPed *player);
-	static void DrawWeaponIcon();
-	static void DrawWeaponAmmo();
-	static void DrawWantedLevel();
+	static void DrawWeaponIcon(CPed *player, float alpha);
+	static void DrawWeaponAmmo(CPed *player, float alpha);
+	static void DrawWantedLevel(CPed *player);
 	static void DrawZoneText();
 	static void DrawCarName();
 	static void DrawWastedArrested();
