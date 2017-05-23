@@ -11,8 +11,10 @@ namespace CHud_Hook
 	{
 		Rectangular_radar();
 		MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
+		MemoryVP::InjectHook(0x58FBDB, &CHud::DrawWantedLevel, PATCH_CALL);
 		MemoryVP::InjectHook(0x58AA50, &CHud::DrawZoneText, PATCH_JUMP);
 		MemoryVP::InjectHook(0x58AEA0, &CHud::DrawCarName, PATCH_JUMP);
+		
 	}
 
 	void Rectangular_radar()

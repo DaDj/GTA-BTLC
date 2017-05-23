@@ -72,9 +72,11 @@ public:
 
 	static void DrawPlayerInfo();
 	static void DrawPlayerhealthandarmor(CPed *player);
+	static void DrawWeaponInfo(CPed * player);
 	static void DrawWeaponIcon(CPed *player, float alpha);
 	static void DrawWeaponAmmo(CPed *player, float alpha);
 	static void DrawWantedLevel(CPed *player);
+	static void DrawMoneyInfo(CPed * player);
 	static void DrawZoneText();
 	static void DrawCarName();
 	static void DrawWastedArrested();

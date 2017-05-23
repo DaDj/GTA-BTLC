@@ -20,6 +20,7 @@
 #include "CKeyGen.h"
 #include "CTask.h"
 #include "CCamera.h"
+#include "CMenuManager.h"
 
 char(*CHud::m_BigMessage)[128] = (char(*)[128])0xBAACC0;
 bool &CHud::bScriptDontDisplayAreaName = *(bool *)0xBAA3F8;
@@ -124,12 +125,7 @@ float CHud::y_fac(float y)
 
 void CHud::DrawPlayerInfo()
 {
-	float alpha = 255;
-	int cammode = 0;
-	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
-	
-	
-	
+
 	//char string[40];
 	//CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
 	//sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
@@ -139,61 +135,14 @@ void CHud::DrawPlayerInfo()
 	//CFont::SetScale(CHud::x_fac(0.3f), CHud::y_fac(0.45f));
 	//CFont::PrintString(CHud::x_fac(600.0f),CHud::y_fac(10.0f), string);
 
+	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
+
+	CHud::DrawMoneyInfo(player);
 	CHud::DrawPlayerhealthandarmor(player);
+	CHud::DrawWeaponInfo(player);
 
 
-	eTaskType activetask = player->m_pIntelligence->m_TaskMgr.GetActiveTask()->GetId();
-		switch (m_WeaponState)
-		{
-		case STATE_OFF:
-			alpha = 0;
-			cammode = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode;
-			if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type 
-				|| activetask == TASK_SIMPLE_USE_GUN
-				|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwState == 1
-				|| cammode == MODE_AIMWEAPON || KeyPressed(VK_TAB))
-			{
-				m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
-				m_WeaponTimer = 0;
-				m_WeaponState = STATE_FADE_ON;
-			}
-			break;
 
-		case STATE_FADE_ON:
-			alpha = 255;
-			m_WeaponState = STATE_ON;
-			break;
-		case 5:
-		case STATE_ON:
-			if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type)
-			{
-				m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
-				m_WeaponTimer = 0;
-			}
-			m_WeaponTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
-
-			if (m_WeaponTimer > 5000)
-			{
-				m_WeaponState = STATE_FADE_OFF;
-				m_WeaponFadeTimer = 500;
-			}
-				
-			alpha = 255;
-			break;
-
-		case STATE_FADE_OFF:
-			m_WeaponFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-			if (m_WeaponFadeTimer < 0.0)
-			{
-				m_WeaponFadeTimer = 0;
-				m_WeaponState = STATE_OFF;
-			}
-			alpha  = m_WeaponFadeTimer * 0.001 * 255.0;
-			break;
-		default:
-			break;
-		}
-	DrawWeaponIcon(player, alpha);
 }
 
 void CHud::DrawPlayerhealthandarmor(CPed *player)
@@ -214,7 +163,7 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(29.0f), CHud::y_fac(400.0f), CHud::x_fac(99.0f), CHud::y_fac(455.0f + 8.0)), CRGBA::CRGBA(30, 30, 30, 180));
 	if (CTimer::m_snTimeInMilliseconds < (lastdamagetaken + 100))
 	{
-		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(0.0f), CHud::y_fac(0.0f), CHud::x_fac(640.0f), CHud::y_fac(448.0f)), CRGBA::CRGBA(80, 30, 30, 40));
+		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(0.0f), CHud::y_fac(0.0f), RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(80, 30, 30, 40));
 	}
 
 		CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(10.0f), CHud::y_fac(448.0f-21.0f), CHud::x_fac(110.0f), CHud::y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
@@ -222,6 +171,70 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
 		CSprite2d::DrawBarChart(CHud::x_fac(11.0f), CHud::y_fac(448.0f - 12.0f), CHud::x_fac(98.0f), CHud::y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
 
+}
+
+void CHud::DrawWeaponInfo(CPed *player)
+{
+	float alpha = 0;
+	static int l_lastammo;
+	eTaskType activetask = player->m_pIntelligence->m_TaskMgr.GetActiveTask()->GetId();
+	int cammode = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode;
+
+	if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type || activetask == TASK_SIMPLE_USE_GUN
+		|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwState == 1 || cammode == MODE_AIMWEAPON || KeyPressed(VK_TAB)
+		|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo != l_lastammo)
+	{
+		l_lastammo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo;
+		m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
+		m_WeaponTimer = 0;
+		if (m_WeaponState == STATE_ON)
+			m_WeaponState = STATE_ON;
+		else
+			m_WeaponState = STATE_FADE_ON;
+	}
+
+	switch (m_WeaponState)
+	{
+	case STATE_OFF:
+		alpha = 0;
+		break;
+	case STATE_FADE_ON:
+		m_WeaponFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+		alpha = m_WeaponFadeTimer / 400.0f * 255.0f;
+		if (m_WeaponFadeTimer > 400)
+		{
+			m_WeaponFadeTimer = 0;
+			m_WeaponState = STATE_ON;
+			alpha = 255;
+		}
+		break;
+	case 5:
+	case STATE_ON:
+		m_WeaponTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+
+		if (m_WeaponTimer > 5000)
+		{
+			m_WeaponState = STATE_FADE_OFF;
+			m_WeaponFadeTimer = 600;
+		}
+
+		alpha = 255;
+		break;
+	case STATE_FADE_OFF:
+		//alpha = 255;
+		m_WeaponFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+		if (m_WeaponFadeTimer < 0.0)
+		{
+			m_WeaponFadeTimer = 0;
+			m_WeaponState = STATE_OFF;
+		}
+		alpha = m_WeaponFadeTimer / 600.0f * 255.0f;
+		break;
+	default:
+		break;
+	}
+	DrawWeaponIcon(player, alpha);
+	DrawWeaponAmmo(player, alpha);
 }
 
 void CHud::DrawWeaponIcon(CPed *player, float alpha)
@@ -244,13 +257,12 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha)
 			RwTexture *iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
 			if (iconTex) {
 				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
-				RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE,(void*) 1);
-				RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)8);
 				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
 				CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f/2),
 					y_fac(40.0f + 50.0f/2), 1.0f, x_fac(100.0f / 2),
 					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);
-				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+		RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+			
 			}
 		}
 	}
@@ -258,12 +270,145 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha)
 
 void CHud::DrawWeaponAmmo(CPed *player, float alpha)
 {
+	int weap = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
+	int weap_AmmoInClip = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwAmmoInClip;
+	int weap_totalAmmo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo - weap_AmmoInClip;
 
+	if (weap < 15 || weap == WEAPON_PARACHUTE || weap == WEAPON_NIGHTVISION
+		|| weap == WEAPON_DETONATOR || weap == WEAPON_INFRARED)
+		return;
+
+	char string[40];
+
+	CFont::SetProp(true);
+	CFont::SetBackground(false, false);
+	CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, alpha));
+	CFont::SetFontStyle(FONT_PRICEDOWN);
+	CFont::SetAlignment(ALIGN_RIGHT);
+	CFont::SetOutlinePosition(1);
+	CFont::SetScale(CHud::x_fac(0.3f), CHud::y_fac(0.6f));
+
+	CFont::SetColor(CRGBA::CRGBA(100, 100, 100, alpha));
+	sprintf(string, "%d", weap_AmmoInClip);
+	CFont::PrintString(RsGlobal.maximumWidth - x_fac( 35.0f), y_fac(30.0f), string);
+
+
+	CFont::SetColor(CRGBA::CRGBA(200, 200, 200, alpha));
+	sprintf(string, "%d", weap_totalAmmo);
+	CFont::PrintString(RsGlobal.maximumWidth - x_fac( 60.0f), y_fac(30.0f), string);
 }
 
 void CHud::DrawWantedLevel(CPed *player)
 {
+	static int m_Blinkstate = 0;
+	static int m_WantedChange = 0;
+	static int m_WantedDelta = 0;
+	bool show = 0;
+	static int counter = 0;
+	int WantedLevel = FindPlayerWanted(-1)->m_dwWantedLevel;
+	CWanted *pWanted = FindPlayerWanted(-1);
+	float alphavalue = 255.0;
+	int  WantedLevelBeforeParole = pWanted->m_dwWantedLevelBeforeParole;
+	char WantedText[5] ;
+	char Stringshow[5];
+	WantedText[0] = 93;
+	WantedText[1] = 0;
 
+	enum eBlinkstate
+	{
+		NO_BLINK,
+		BLINK
+
+	};
+	if (m_LastWanted != WantedLevel)
+	{
+		if (m_Blinkstate == NO_BLINK)
+			m_WantedFadeTimer = 0;
+
+		if (m_LastWanted > WantedLevel)
+			counter = WantedLevel;
+		else if (WantedLevel > m_LastWanted)
+			counter = m_LastWanted;
+		m_WantedDelta = abs(m_LastWanted - WantedLevel);
+		m_Blinkstate = BLINK;
+	}
+
+	if (m_Blinkstate == BLINK)
+	{
+		m_WantedFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+		if (m_WantedFadeTimer > 2000)
+		{
+			m_LastWanted = WantedLevel;
+			m_Blinkstate = NO_BLINK;
+			counter = WantedLevel;
+		}
+	}
+	if (WantedLevel > 0 || m_Blinkstate == BLINK)
+	{
+		CFont::SetProp(true);
+		CFont::SetBackground(false, false);
+		CFont::SetFontStyle(FONT_GOTHIC);
+		CFont::SetAlignment(ALIGN_CENTER);
+		CFont::SetOutlinePosition(0);
+
+		//DRAW WANTEDSTARS BACKGROUND
+		CFont::SetScale(CHud::x_fac(0.4f), CHud::y_fac(0.8f));
+		CFont::SetColor(CRGBA::CRGBA(0, 0, 0, 140));
+		CFont::SetDropColor(CRGBA::CRGBA(10, 10, 10, 160));
+		float posx = 38.0f;
+		for (int i = 0; i < 5; i++)
+		{
+			AsciiToGxtChar(WantedText, Stringshow);
+			CFont::PrintString(RsGlobal.maximumWidth - x_fac(posx), y_fac(13.3f), Stringshow);
+			posx += 12.0f;
+		}
+
+		//DRAW WANTEDSTARS
+		CFont::SetScale(CHud::x_fac(0.3f), CHud::y_fac(0.6f));
+		CFont::SetColor(CRGBA::CRGBA(255, 255, 255, alphavalue));
+		CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, alphavalue));
+		posx = 38.0f;
+		for (int i = 0; i < counter; i++)
+		{
+			AsciiToGxtChar(WantedText, Stringshow);
+			CFont::PrintString(RsGlobal.maximumWidth - x_fac(posx), y_fac(15.0f), Stringshow);
+			posx += 12.0f;
+		}
+
+		if (m_Blinkstate == BLINK)
+		{
+			float test = m_WantedFadeTimer / 2000.0f;
+			if (test > 0.15 && test < 0.3 || test > 0.45 && test < 0.60 || test > 0.75 && test < 0.90)
+			{
+				for (int i = 0; i < m_WantedDelta; i++)
+				{
+					AsciiToGxtChar(WantedText, Stringshow);
+					CFont::PrintString(RsGlobal.maximumWidth - x_fac(posx), y_fac(15.0f), Stringshow);
+					posx += 12.0f;
+				}
+			}
+		}
+	}
+}
+
+void CHud::DrawMoneyInfo(CPed *player)
+{
+	float alpha = 255.0f;
+	char string[40];
+	int l_Money = CWorld::Players[CWorld::PlayerInFocus].m_dwMoney;
+
+
+	CFont::SetProp(true);
+	CFont::SetBackground(false, false);
+	CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, alpha));
+	CFont::SetFontStyle(FONT_PRICEDOWN);
+	CFont::SetAlignment(ALIGN_RIGHT);
+	CFont::SetOutlinePosition(1);
+	CFont::SetScale(CHud::x_fac(0.3f), CHud::y_fac(0.6f));
+
+	CFont::SetColor(CRGBA::CRGBA(200, 200, 200, alpha));
+	sprintf(string, "$%d", l_Money);
+	CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(5.0f), string);
 }
 
 void CHud::DrawZoneText()
@@ -380,7 +525,7 @@ void CHud::DrawZoneText()
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
 			CFont::SetFontStyle(2);
 			CFont::SetColor(CRGBA::CRGBA(180, 180, 180, Fontalpha));
-			CFont::PrintStringFromBottom(x_fac(640.0 - 32.0), y_fac(448.0 - 20.0), m_ZoneName);
+			CFont::PrintStringFromBottom(RsGlobal.maximumWidth - x_fac(30.0), RsGlobal.maximumHeight - y_fac(20.0), m_ZoneName);
 
 		}
 	}
@@ -473,7 +618,7 @@ void CHud::DrawCarName()
 				CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30,max(Fontalpha -50.0,0.0f)));
 				CFont::SetFontStyle(2);
 				CFont::SetColor(CRGBA::CRGBA(140, 145, 140, Fontalpha));
-				CFont::PrintString(x_fac(640.0 - 32.0), y_fac(448.0 - 45.0), m_VehicleName);
+				CFont::PrintString(RsGlobal.maximumWidth - x_fac(30.0), RsGlobal.maximumHeight - y_fac(45.0), m_VehicleName);
 			}
 		}
 	}
