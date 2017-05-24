@@ -1,6 +1,6 @@
 
 #include "windowmode.h"
-#include "../Patch/MemoryMgr.h"
+#include "../../Patch/MemoryMgr.h"
 #define DEBUG_WND
 #define HIDWORD(_qw)    ((DWORD)(((_qw) >> 32) & 0xffffffff))
 static int* GcurSelVM = (int*)0x8D6220;
