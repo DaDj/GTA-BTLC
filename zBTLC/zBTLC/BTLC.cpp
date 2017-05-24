@@ -26,11 +26,10 @@ float VERSION = 0.42f;
 #include "BTLC_BASE\weather.h"
 #include "BTLC_BASE\visuals.h"
 #include "BTLC_BASE\limits.h"
-#include "BTLC_BASE\windowmode.h"
+#include "BTLC_BASE\windowmode\windowmode.h"
 #include "BTLC_BASE\windowmode\dxhandler.h"
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
-#include "BTLC_BASE\CHud_Hooks.h"
 #include "BTLC_BASE\My_PlayerWeaponReload.h"
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"
@@ -38,6 +37,9 @@ float VERSION = 0.42f;
 
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
+#include "game_sa\CHud.h"
+#include "game_sa\CRadar.h"
+#include "game_sa\CVideomodemanager.h"
 	
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -77,7 +79,8 @@ void Function_starter()
 	limits::IMG_LIMIT();	//Limit adjusting
 	limits::Water_limit::init(); //waterlimit
 	visuals::init();		//VISUAL CHANGES init
-	CHud_Hook::Init();		//New HUD init
+	CHud::My_Init();
+	CRadar::My_Init();
 
 	My_PlayerWeaponReload::init();	//Add Reload with "R" functions.
 	My_PlayerWallhitreactions::init();

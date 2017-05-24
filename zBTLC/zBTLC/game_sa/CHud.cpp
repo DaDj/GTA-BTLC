@@ -98,6 +98,13 @@ enum eHudState
 	STATE_FADE_OFF
 };
 
+void CHud::My_Init()
+{
+	MemoryVP::InjectHook(0x58FBD6, &CHud::DrawPlayerInfo, PATCH_CALL);
+	MemoryVP::InjectHook(0x58FBDB, &CHud::DrawWantedLevel, PATCH_CALL);
+	MemoryVP::InjectHook(0x58AA50, &CHud::DrawZoneText, PATCH_JUMP);
+	MemoryVP::InjectHook(0x58AEA0, &CHud::DrawCarName, PATCH_JUMP);
+}
 
 void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) 
 {
@@ -112,7 +119,6 @@ float CHud::x_fac(float x)
 	//float base = RsGlobal.maximumWidth > RsGlobal.maximumHeight ? RsGlobal.maximumHeight : RsGlobal.maximumWidth;
 	//return static_cast<int>(x * base / 1080.0f);
 }
-
 
 float CHud::y_fac(float y)
 {

@@ -28,6 +28,36 @@ int &CRadar::airstrip_blip = *(int *)0xBA8304;
 airstrip_info *airstrip_table = (airstrip_info *)0x8D06E0;
 int *gRadarTextures = (int *)0xBA8478;
 
+
+void CRadar::My_Init()
+{
+	//newradartoscreenspace
+	MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
+	//Draw radar mask
+	MemoryVP::InjectHook(0x585700, &CRadar::DrawRadarMask, PATCH_JUMP);
+	//replace original 
+	MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
+
+	//injector::MakeNOP(0x58AA25, 5);
+	MemoryVP::Patch<float>(0x585719, 0.0f); // -1.0
+	MemoryVP::Patch<float>(0x585721, 0.0f); // 1.0
+	MemoryVP::Patch<float>(0x585729, 0.0f); // 1.0
+	MemoryVP::Patch<float>(0x585731, 0.0f); // 1.0
+	MemoryVP::Patch<float>(0x585739, 0.0f); // 1.0
+	MemoryVP::Patch<float>(0x585741, 0.0f); // -1.0
+	MemoryVP::Patch<float>(0x585749, 0.0f); // -1.0
+	MemoryVP::Patch<float>(0x585751, 0.0f); // -1.0
+
+	int alpha = 160;
+	MemoryVP::Patch<int>(0x586432 + 1, alpha);
+	MemoryVP::Patch<int>(0x58647B + 1, alpha);
+	MemoryVP::Patch<int>(0x5864BC + 1, alpha);
+
+	injector::MakeJMP(0x58A782, 0x58AA2A); //don't draw the borderthingy
+	MemoryVP::Patch<BYTE>(0x58694E + 1, 1); //renderstatetexturalpha
+											//MemoryVP::Patch<void*>(0x5834C0 + 2, &radar_width);
+}
+
 // Converted from cdecl void CRadar::LoadTextures(void) 0x5827D0
 void CRadar::LoadTextures()
 {

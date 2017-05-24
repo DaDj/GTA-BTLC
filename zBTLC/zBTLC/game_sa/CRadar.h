@@ -190,6 +190,8 @@ public:
 	static float CRadar::Radar_Posy;
 	static float CRadar::Radar_Cut_Width;
 
+	static void My_Init();
+
 	static void LoadTextures();
 	static int GetNewUniqueBlipIndex(int blipArrId);
 	static int GetActualBlipArrayIndex(int blipIndex);

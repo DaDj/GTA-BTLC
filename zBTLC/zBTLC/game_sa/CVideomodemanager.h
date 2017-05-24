@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../game_sa/RenderWare.h"
+#include "RenderWare.h"
 class CVideomodemanager
 {
 public:

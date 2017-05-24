@@ -64,7 +64,9 @@ public:
 
 
 
-    static void SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief);
+	static void My_Init();
+
+	static void SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief);
 	static int Enableclock;
 
 	static float x_fac(float x);

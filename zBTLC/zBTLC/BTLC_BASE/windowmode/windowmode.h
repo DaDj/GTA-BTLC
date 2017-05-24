@@ -1,8 +1,8 @@
 #pragma once
 #include <Windows.h>
-#include "CVideomodemanager.h"
-#include "../game_sa/CMenuManager.h"
-#include "../game_sa/RenderWare.h"
+#include "../../game_sa/CVideomodemanager.h"
+#include "../../game_sa/CMenuManager.h"
+#include "../../game_sa/RenderWare.h"
 #include <iostream>
 
 void changeresu();
