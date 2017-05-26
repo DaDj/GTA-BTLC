@@ -85,8 +85,8 @@ namespace BUGFIX
 		MemoryVP::Nop(0x570E81, 4);
 
 		////Lower Gunflash show time
-		MemoryVP::Patch<BYTE>(0x8D2E88, 10);
-		MemoryVP::Patch<BYTE>(0x8D2E90, 10);
+		MemoryVP::Patch<BYTE>(0x8D2E88, 1);
+		MemoryVP::Patch<BYTE>(0x8D2E90, 1);
 	}
 
 

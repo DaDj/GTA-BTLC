@@ -131,7 +131,6 @@ float CHud::y_fac(float y)
 
 void CHud::DrawPlayerInfo()
 {
-
 	//char string[40];
 	//CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
 	//sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
@@ -146,15 +145,11 @@ void CHud::DrawPlayerInfo()
 	float moneypos = CHud::DrawMoneyInfo(player);
 	CHud::DrawPlayerhealthandarmor(player);
 	CHud::DrawWeaponInfo(player,  moneypos);
-
-
-
 }
 
 void CHud::DrawPlayerhealthandarmor(CPed *player)
 {
 	static unsigned int lastdamagetaken;
-
 	float percentage_health = (player->m_fHealth / player->m_fMaxHealth) * 100;
 	CRGBA color_health = CRGBA::CRGBA(10, 110, 10, 255);
 	if (percentage_health < 30)
@@ -166,17 +161,13 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	      color_armor = CRGBA::CRGBA(200, 200, 230, 90);
 
 	lastdamagetaken = CWorld::Players[CWorld::PlayerInFocus].m_dwLastTimeEnergyLost;
-	//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(29.0f), CHud::y_fac(400.0f), CHud::x_fac(99.0f), CHud::y_fac(455.0f + 8.0)), CRGBA::CRGBA(30, 30, 30, 180));
 	if (CTimer::m_snTimeInMilliseconds < (lastdamagetaken + 60))
-	{
 		CSprite2d::DrawRect(CRect::CRect(x_fac(0.0f), y_fac(0.0f), RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(80, 30, 30, 40));
-	}
 
 		CSprite2d::DrawRect(CRect::CRect(x_fac(10.0f), y_fac(448.0f-21.0f), x_fac(110.0f), y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
 		CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 20.0f), x_fac(98.0f), y_fac(7.0f), percentage_health, 0, 0, 0, color_health, color_health);
 		//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
 		CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 12.0f), x_fac(98.0f), y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
-
 }
 
 void CHud::DrawWeaponInfo(CPed *player , float y_off)
@@ -243,20 +234,17 @@ void CHud::DrawWeaponInfo(CPed *player , float y_off)
 	DrawWeaponAmmo(player, alpha, y_off);
 }
 
-void CHud::DrawWeaponIcon(CPed *player, float alpha,float y_off)
+void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 {
-	
 	RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
-
 	int weapModel = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type, 1)->m_dwModelId1;
 	if (weapModel <= 0)
 	{
-		CRect Icon = CRect(RsGlobal.maximumWidth -  x_fac(120.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + 50.0f));
+		CRect Icon = CRect(RsGlobal.maximumWidth - x_fac(120.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
 		CHud::Sprites[0].Draw(Icon, CRGBA(255, 255, 255, alpha));
 	}
 	else {
 		CModelInfo::GetModelInfo(weapModel);
-
 		CBaseModelInfo *model = CModelInfo::GetModelInfo(weapModel);
 		CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(model->m_wTxdIndex);
 		if (txd && txd->m_pRwDictionary) {
@@ -264,11 +252,10 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha,float y_off)
 			if (iconTex) {
 				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
 				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
-				CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f/2),
-					y_fac(40.0f + 50.0f/2 + y_off), 1.0f, x_fac(100.0f / 2),
+				CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f / 2),
+					y_fac(40.0f + 50.0f / 2 + y_off), 1.0f, x_fac(100.0f / 2),
 					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);
-		RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
-			
+				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
 			}
 		}
 	}
@@ -279,13 +266,12 @@ void CHud::DrawWeaponAmmo(CPed *player, float alpha, float y_off)
 	int weap = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
 	int weap_AmmoInClip = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwAmmoInClip;
 	int weap_totalAmmo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo - weap_AmmoInClip;
-
+	int max_weapammo = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type, 1)->m_wAmmoClip;
 	if (weap < 15 || weap == WEAPON_PARACHUTE || weap == WEAPON_NIGHTVISION
 		|| weap == WEAPON_DETONATOR || weap == WEAPON_INFRARED)
 		return;
 
 	char string[40];
-
 	CFont::SetProp(true);
 	CFont::SetBackground(false, false);
 	CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, alpha));
@@ -293,15 +279,22 @@ void CHud::DrawWeaponAmmo(CPed *player, float alpha, float y_off)
 	CFont::SetAlignment(ALIGN_RIGHT);
 	CFont::SetOutlinePosition(1);
 	CFont::SetScale(CHud::x_fac(0.3f), CHud::y_fac(0.6f));
-
-	CFont::SetColor(CRGBA::CRGBA(100, 100, 100, alpha));
-	sprintf(string, "%d", weap_AmmoInClip);
-	CFont::PrintString(RsGlobal.maximumWidth - x_fac( 35.0f), y_fac(30.0f + y_off), string);
-
-
-	CFont::SetColor(CRGBA::CRGBA(200, 200, 200, alpha));
-	sprintf(string, "%d", weap_totalAmmo);
-	CFont::PrintString(RsGlobal.maximumWidth - x_fac( 60.0f), y_fac(30.0f + y_off), string);
+	if (max_weapammo > 1 && weap_AmmoInClip < 1000)
+	{
+		CFont::SetColor(CRGBA::CRGBA(100, 100, 100, alpha));
+   		sprintf(string, "%d", weap_AmmoInClip);
+		CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(30.0f + y_off), string);
+		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, alpha));
+		sprintf(string, "%d", weap_totalAmmo);
+		CFont::PrintString(RsGlobal.maximumWidth - x_fac(60.0f), y_fac(30.0f + y_off), string);
+	}
+	else
+	{
+		CFont::SetColor(CRGBA::CRGBA(100, 100, 100, alpha));
+		sprintf(string, "%d", weap_totalAmmo);
+		CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(30.0f + y_off), string);
+	}
+	
 }
 
 void CHud::DrawWantedLevel(CPed *player)
@@ -319,13 +312,13 @@ void CHud::DrawWantedLevel(CPed *player)
 	char Stringshow[5];
 	WantedText[0] = 93;
 	WantedText[1] = 0;
-
 	enum eBlinkstate
 	{
 		NO_BLINK,
 		BLINK
 
 	};
+
 	if (m_LastWanted != WantedLevel)
 	{
 		if (m_Blinkstate == NO_BLINK)
@@ -413,19 +406,21 @@ float CHud::DrawMoneyInfo(CPed *player)
 	static int m_MoneyTimer = 0;
 	static int m_MoneyFadeTimer = 0;
 	static int m_MoneyMoveTimer = 0;
-	static int m_moneypos = 0;
+	static int m_MoneyDelta = 0;
 	float alpha = 255.0f;
 	char string[40];
 	int m_Money = CWorld::Players[CWorld::PlayerInFocus].m_dwMoney;
-	float posy = 10.0f;
+	float posy = 15.0f;
 	float posy_money_change = 15.0f;
 
 	if (m_Money != m_Lastmoney || KeyPressed(VK_TAB))
 	{
+	
+		if (m_Money != m_Lastmoney)
+			m_MoneyDelta = m_Money - m_Lastmoney;
+
 		if (m_Moneystate == ON)
-		{
 			m_MoneyTimer = 0;		
-		}
 		else
 		{
 			m_Moneystate = Move_posy;
@@ -460,6 +455,8 @@ float CHud::DrawMoneyInfo(CPed *player)
 			m_MoneyFadeTimer = 600;
 			m_MoneyMoveTimer = 200;
 		}
+		if (m_MoneyTimer > 4000)
+			m_MoneyDelta = 0;
 		posy = posy_money_change;
 		alpha = 255;
 		break;
@@ -492,46 +489,50 @@ float CHud::DrawMoneyInfo(CPed *player)
 	CFont::SetColor(CRGBA::CRGBA(200, 200, 200, alpha));
 	sprintf(string, "$%d", m_Money);
 	CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(30.0f), string);
+
+	if (m_MoneyDelta != 0)
+	{
+		posy += 15.0f;
+		if (m_MoneyDelta > 0)
+			sprintf(string, " + $%d", m_MoneyDelta);
+		else
+			sprintf(string, " - $%d", abs(m_MoneyDelta));
+
+		CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(42.0f), string);
+	}
 	return posy;
 }
 
 void CHud::DrawZoneText()
 {
-
 	float Fontalpha = 255.0;
-	if (m_ZoneName)
+	if (m_ZoneName && m_ZoneName != m_LastZoneName)
 	{
-		if (m_ZoneName != m_LastZoneName)
+		switch (m_ZoneState)
 		{
-			switch (m_ZoneState)
+		case 0:
+			if (!CTheScripts::PlayerisOffMap && CTheScripts::DisplayHud)
 			{
-			case 0:
-				if (!CTheScripts::PlayerisOffMap && CTheScripts::DisplayHud )
-				{
-					m_ZoneState = 2;
-					m_ZoneNameTimer = 0;
-					m_ZoneFadeTimer = 0;
-					m_ZonetoPrint = m_ZoneName;
+				m_ZoneState = 2;
+				m_ZoneNameTimer = 0;
+				m_ZoneFadeTimer = 0;
+				m_ZonetoPrint = m_ZoneName;
 				/*	if (m_VehicleState == 2 || m_VehicleState == 1)
 						m_VehicleState = 3;*/
-				}
-				break;
-			case 1:
-			case 2:
-			case 3:
-				m_ZoneState = 4;
-			case 4:
-				m_ZoneNameTimer = 0;
-				break;
-			default:
-				break;
 			}
+			break;
+		case 1:
+		case 2:
+		case 3:
+			m_ZoneState = 4;
+		case 4:
+			m_ZoneNameTimer = 0;
+			break;
+		default:
+			break;
 		}
 		m_LastZoneName = m_ZonetoPrint;
-
 	}
-
-
 
 	if (m_ZoneState)
 	{
@@ -620,99 +621,77 @@ void CHud::DrawZoneText()
 void CHud::DrawCarName()
 {
 	float Fontalpha = 255.0;
-	if (m_VehicleName)
-	{
-		if (m_VehicleName != m_LastVehicleName)
-		{
-			if (m_VehicleState)
-			{
-				if (m_VehicleState > 0 && m_VehicleState <= 4)
-				{
-					m_VehicleState = 4;
-					m_VehicleNameTimer = 0;
-				}
-			}
-			else
-			{
-				m_VehicleState = 2;
-				m_VehicleNameTimer = 0;
-				m_VehicleFadeTimer = 0;
-				/*if (ZoneState == 1 || ZoneState == 2)
-					ZoneState = 3;*/
-			}
-			m_LastVehicleName = m_VehicleName;
-		}
-
-
-		if (m_VehicleState)
-		{
-			switch (m_VehicleState)
-			{
-			case 2:
-				m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
-				if (m_VehicleFadeTimer > 1000.0)
-				{
-					m_VehicleFadeTimer = 1000;
-					m_VehicleState = 1;
-				}
-				Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
-				break;
-			case 3:
-				m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-				if (m_VehicleFadeTimer >= 0)
-				{
-					Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
-					break;
-				}
-				m_VehicleState = 0;
-				m_VehicleFadeTimer = 0;
-				Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
-				break;
-			case 4:
-				m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
-				if (m_VehicleFadeTimer < 0)
-				{
-					m_VehicleNameTimer = 0;
-					m_VehicleState = 2;
-					m_VehicleFadeTimer = 0;
-				}
-				Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
-				break;
-			case 1:
-				if (m_VehicleNameTimer > 3000.0)
-				{
-					m_VehicleState = 3;
-					m_VehicleFadeTimer = 1000;
-				}
-				Fontalpha = 255.0;
-				break;
-			default:
-				break;
-			}
-
-
-			if (!m_Message && CTheScripts::DisplayHud)
-			{
-				m_VehicleNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
-				CFont::SetAlignment(ALIGN_RIGHT);
-				CFont::SetProp(true);
-				CFont::SetBackground(false, false);
-				CFont::SetScale(x_fac(0.3f), y_fac(0.6f));
-				CFont::SetOutlinePosition(1);
-				CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30,max(Fontalpha -50.0,0.0f)));
-				CFont::SetFontStyle(2);
-				CFont::SetColor(CRGBA::CRGBA(140, 145, 140, Fontalpha));
-				CFont::PrintString(RsGlobal.maximumWidth - x_fac(30.0), RsGlobal.maximumHeight - y_fac(45.0), m_VehicleName);
-			}
-		}
-	}
-
-	else
+	if (!m_VehicleName)
 	{
 		m_VehicleState = 0;
 		m_VehicleNameTimer = 0;
 		m_VehicleFadeTimer = 0;
 		m_LastVehicleName = 0;
+		return;
+	}
+
+	if (m_VehicleName != m_LastVehicleName)
+	{
+		if (m_VehicleState == STATE_ON)
+			m_VehicleNameTimer = 0;
+		else
+		{
+			m_VehicleState = STATE_FADE_ON;
+			m_VehicleNameTimer = 0;
+			m_VehicleFadeTimer = 0;
+		}
+		m_LastVehicleName = m_VehicleName;
+	}
+
+	switch (m_VehicleState)
+	{
+	case STATE_OFF:
+		Fontalpha = 0;
+		break;
+	case STATE_FADE_ON:
+		m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+		if (m_VehicleFadeTimer > 1000.0)
+		{
+			m_VehicleFadeTimer = 1000;
+			m_VehicleState = STATE_ON;
+		}
+		Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
+		break;
+
+	case STATE_ON:
+		if (m_VehicleNameTimer > 3000.0)
+		{
+			m_VehicleState = STATE_FADE_OFF;
+			m_VehicleFadeTimer = 1000;
+		}
+		Fontalpha = 255.0;
+		break;
+	case STATE_FADE_OFF:
+		m_VehicleFadeTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
+		if (m_VehicleFadeTimer < 0)
+		{
+			m_VehicleNameTimer = 0;
+			m_VehicleState = STATE_OFF;
+			m_VehicleFadeTimer = 0;
+		}
+		Fontalpha = m_VehicleFadeTimer * 0.001 * 255.0;
+		break;
+	default:
+		break;
+	}
+
+	if (!m_Message && CTheScripts::DisplayHud)
+	{
+		m_VehicleNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
+		CFont::SetAlignment(ALIGN_RIGHT);
+		CFont::SetProp(true);
+		CFont::SetBackground(false, false);
+		CFont::SetScale(x_fac(0.3f), y_fac(0.6f));
+		CFont::SetOutlinePosition(1);
+		CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, max(Fontalpha, 0.0f)));
+		CFont::SetFontStyle(2);
+		CFont::SetColor(CRGBA::CRGBA(100, 100, 100, Fontalpha));
+		CFont::PrintString(RsGlobal.maximumWidth - x_fac(30.0), RsGlobal.maximumHeight - y_fac(45.0), m_VehicleName);
 	}
 }
 
