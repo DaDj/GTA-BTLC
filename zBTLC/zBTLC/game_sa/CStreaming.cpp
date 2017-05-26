@@ -22,6 +22,15 @@ eModelID CStreaming::copCarModelByTown[4] = { MODEL_COPCARRU, MODEL_COPCARLA, MO
 int CStreaming::copModel_curr = 1;
 int CStreaming::copCarModel_curr = 1;
 
+
+void CStreaming::My_Init()
+{
+	//Copbikes are disabled cause they are annoying,duh.
+	MemoryVP::InjectHook(0x40A150, &CStreaming::StreamCopModels, PATCH_JUMP);
+	MemoryVP::InjectHook(0x407C00, &CStreaming::GetDefaultCopModel, PATCH_JUMP);
+	MemoryVP::InjectHook(0x407C50, &CStreaming::GetDefaultCopCarModel, PATCH_JUMP);
+}
+
 void CStreaming::ImGonnaUseStreamingMemory()
 {
 	((void(__cdecl *)())0x407BE0)();

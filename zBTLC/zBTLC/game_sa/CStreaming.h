@@ -24,6 +24,7 @@ public:
     static unsigned int &ms_numModelsRequested;
     static bool &ms_disableStreaming;
 	static CStreamingInfo *ms_aInfoForModel;
+	static void My_Init();
 	static void ImGonnaUseStreamingMemory();
 	static void IHaveUsedStreamingMemory();
 	static void MakeSpaceFor(unsigned int size);

@@ -12,11 +12,18 @@
 #include "../game_sa/CWaterlevel.h"
 #include "../Patch/MemoryMgr.h"
 #include <iostream>
+#include "limits.h"
 
 
 
 namespace limits
 {
+	void Init()
+	{
+		limits::IMG_LIMIT();	//Limit adjusting
+		Water_limit::init(); //waterlimit
+	}
+
 	int AddImageToList(LPCSTR lpFileName, char notPlayerFile)
 	{
 		//((void(__cdecl *)())0x4083C0)();
@@ -42,7 +49,6 @@ namespace limits
 		std::cout << "IMG loaded ->" << CStreaming::IMG_FILES[v2].name  << std::endl;
 		return v2;
 	}
-
 	//increase possible IMG FILES
 	void IMG_LIMIT()
 	{

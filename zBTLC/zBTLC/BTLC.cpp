@@ -76,32 +76,28 @@ void Function_starter()
 	fastload::Init();		//Fast loader
 	BUGFIX::init();			//Fixes of some small GTA Bugs
 	weather::init();		//Changes the weather effects.
-	limits::IMG_LIMIT();	//Limit adjusting
-	limits::Water_limit::init(); //waterlimit
+	limits::Init();
 	visuals::init();		//VISUAL CHANGES init
-	CHud::My_Init();
-	CRadar::My_Init();
 
 	My_PlayerWeaponReload::init();	//Add Reload with "R" functions.
 	My_PlayerWallhitreactions::init();
 	My_GPS::init();
 	My_CCam::INIT();					// IV Styled AIM CAM
-
+	
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
 
-	//New COP stream functions - ALL cops&copcars in all cities 
-	//Copbikes are disabled cause they are annoying,duh.
-	MemoryVP::InjectHook(0x40A150, &CStreaming::StreamCopModels, PATCH_JUMP);
-	MemoryVP::InjectHook(0x407C00, &CStreaming::GetDefaultCopModel, PATCH_JUMP);
-	MemoryVP::InjectHook(0x407C50, &CStreaming::GetDefaultCopCarModel, PATCH_JUMP);
+	
+	CHud::My_Init();	//New HuD
+	CRadar::My_Init();	//New Radar
+	CStreaming::My_Init();//New COP stream functions - ALL cops&copcars in all cities 
+
+	 //static Crosshair Hook
+	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
 
 	//New Masspoints for dynamic Objects
 	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);
-
-	//static Crosshair Hook
-	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
 
 	//set numMonitor to only give back one
 	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
