@@ -247,8 +247,13 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 		CModelInfo::GetModelInfo(weapModel);
 		CBaseModelInfo *model = CModelInfo::GetModelInfo(weapModel);
 		CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(model->m_wTxdIndex);
-		if (txd && txd->m_pRwDictionary) {
-			RwTexture *iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
+		if (txd && txd->m_pRwDictionary) 
+		{
+
+			RwTexture *iconTex = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "icon");
+			if(!iconTex)
+			iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
+
 			if (iconTex) {
 				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
 				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);

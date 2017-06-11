@@ -40,6 +40,7 @@ float VERSION = 0.42f;
 #include "game_sa\CHud.h"
 #include "game_sa\CRadar.h"
 #include "game_sa\CVideomodemanager.h"
+#include "game_sa\CAnimationManager.h"
 	
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -92,6 +93,7 @@ void Function_starter()
 	CHud::My_Init();	//New HuD
 	CRadar::My_Init();	//New Radar
 	CStreaming::My_Init();//New COP stream functions - ALL cops&copcars in all cities 
+	CAnimationStyleDescriptor::My_init();
 
 	 //static Crosshair Hook
 	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
