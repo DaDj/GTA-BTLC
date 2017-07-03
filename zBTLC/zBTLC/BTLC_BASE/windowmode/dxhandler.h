@@ -1,5 +1,6 @@
 #pragma once
 #include "wnd_misc.h"
+#include "../../DXSDK/8.0/include/d3d8.h"
 
 class CDxHandler 
 {
@@ -22,9 +23,9 @@ public:
 	static int ProcessMouseState(void);
 	static void HookDirect3DDeviceReplacerSA(void);
 	static void WindowMode_Hook(void);
-	static void ProcessIni(void);
-	static HRESULT(__stdcall *oldReset)(LPDIRECT3DDEVICE9 pDevice, void* pPresentationParameters);
-	static HRESULT(__stdcall *oldSetViewport)(LPDIRECT3DDEVICE9 pDevice, CONST D3DVIEWPORT9* pViewport);
+	//static void ProcessIni(void);
+	static HRESULT(__stdcall *oldReset)(LPDIRECT3DDEVICE8 pDevice, void* pPresentationParameters);
+	static HRESULT(__stdcall *oldSetViewport)(LPDIRECT3DDEVICE8 pDevice, CONST D3DVIEWPORT8* pViewport);
 
 	static bool bIsInputExclusive;
 	static bool bCursorStatus;
@@ -40,8 +41,8 @@ public:
 	static bool bChangingLocked;
 	static bool bSizingLoop;
 
-	static IDirect3D9** pIntDirect3DMain;
-	static IDirect3DDevice9** pDirect3DDevice;
+	static IDirect3D8** pIntDirect3DMain;
+	static IDirect3DDevice8** pDirect3DDevice;
 	static GameDxInput** pInputData;
 	static bool* bMenuVisible;
 	static HWND* hGameWnd;

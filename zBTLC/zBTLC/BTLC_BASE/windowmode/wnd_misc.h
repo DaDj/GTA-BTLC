@@ -1,7 +1,10 @@
+
+
+
 #pragma once
 #include <stdint.h>
-//#include "d3d8/d3d8.h"
-#include "d3d8/dinput.h"
+#include "../../DXSDK/8.0/include/d3d8.h"
+#include "../../DXSDK/8.0/dinput.h"
 #include "../../game_sa/RenderWare.h"
 class Interval
 {
@@ -62,7 +65,7 @@ typedef struct _D3DPRESENT_PARAMETERS_D3D9_
 	D3DFORMAT           AutoDepthStencilFormat;
 	DWORD               Flags;
 	UINT                FullScreen_RefreshRateInHz;
-	UINT                PresentationInterval;
+	UINT                FullScreen_PresentationInterval;
 } D3DPRESENT_PARAMETERS_D3D9;
 
 struct IDirectInputDeviceA;

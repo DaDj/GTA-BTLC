@@ -18,8 +18,8 @@ void CDxHandler::WindowMode_Hook(void)
 	RwRasterCreate = (RwRaster*(*)(int32_t, int32_t, int32_t, int32_t))0x7FB230;
 
 	pRenderCamera = (RwCamera**)0xC1703C;
-	pIntDirect3DMain = (IDirect3D9**)0xC97C20;
-	pDirect3DDevice = (IDirect3DDevice9**)0xC97C28;
+	pIntDirect3DMain = (IDirect3D8**)0xC97C20;
+	pDirect3DDevice = (IDirect3DDevice8**)0xC97C28;
 	pInputData = (GameDxInput**)0xC17054;
 	bMenuVisible = (bool*)0xBA67A4;
 	hGameWnd = (HWND*)0xC97C1C;

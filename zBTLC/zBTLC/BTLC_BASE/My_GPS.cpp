@@ -8,6 +8,7 @@
 #include "../game_sa/RenderWare.h"
 #include "../game_sa/CFont.h"
 #include "../BTLC_BASE/My_GPS.h"
+#include "../DXSDK/9.0c/Include/d3d9.h"
 
 #define MAX_NODE_POINTS 3000
 #define GPS_LINE_WIDTH  2.5f
@@ -18,7 +19,7 @@
 #define MAX_TARGET_DISTANCE 30.0f
 
 using namespace plugin;
-
+#ifdef _D3D9_H_
 namespace My_GPS
 {
 	static bool gpsShown;
@@ -121,8 +122,8 @@ namespace My_GPS
 					rect.left = posn.x + 2.0f; rect.bottom = posn.y - 2.0f;
 					CRadar::TransformRadarPointToScreenSpace(posn, CVector2D(1.0f, 1.0f));
 					rect.right = posn.x - 2.0f; rect.top = posn.y + 2.0f;
-					_RwD3DDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
-					_RwD3DDevice->SetScissorRect(&rect);
+					GetD3DDevice()->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+					GetD3DDevice()->SetScissorRect(&rect);
 				}
 
 				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
@@ -162,7 +163,7 @@ namespace My_GPS
 				if (!FrontEndMenuManager.drawRadarOrMap
 					&& reinterpret_cast<D3DCAPS9 const*>(RwD3D9GetCaps())->RasterCaps & D3DPRASTERCAPS_SCISSORTEST)
 				{
-					_RwD3DDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+					GetD3DDevice()->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
 				}
 
 				gpsDistance += DistanceBetweenPoints(FindPlayerCoors(0), ThePaths.GetPathNode(resultNodes[0])->GetNodeCoors());
@@ -198,3 +199,4 @@ namespace My_GPS
 		}
 	}
 }
+#endif

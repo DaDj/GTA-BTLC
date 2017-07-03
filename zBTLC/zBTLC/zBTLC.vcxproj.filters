@@ -41,6 +41,15 @@
     <Filter Include="BTLC_BASE\windowmode">
       <UniqueIdentifier>{284c5093-0747-47a4-ade5-ac84c967f4bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DXSDK">
+      <UniqueIdentifier>{ac72be8d-9be3-4d13-9249-bb63314f191c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DXSDK\DX8">
+      <UniqueIdentifier>{9f6a628f-7b60-4fa9-8376-c5c4a1a1b5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DXSDK\DX9">
+      <UniqueIdentifier>{2b6c5367-0093-4e1c-bcc0-75eafe280744}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -2937,7 +2946,6 @@
     <ClInclude Include="BTLC_BASE\CTrafficlights.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="BTLC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -3079,6 +3087,22 @@
     <ClInclude Include="game_sa\CAnimationManager.h">
       <Filter>game_sa</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="DXSDK\8.0\include\d3dx8.h">
+      <Filter>DXSDK\DX8</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSDK\8.0\include\d3d8.h">
+      <Filter>DXSDK\DX8</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSDK\9.0c\Include\d3d9.h">
+      <Filter>DXSDK\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSDK\9.0c\Include\d3dx9.h">
+      <Filter>DXSDK\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSDK\8.0\dinput.h">
+      <Filter>DXSDK\DX8</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="changed_classes.txt">
@@ -3095,5 +3119,8 @@
     <None Include="game_sa\rw\errcore.def">
       <Filter>game_sa\rw</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="zBTLC.rc" />
   </ItemGroup>
 </Project>
