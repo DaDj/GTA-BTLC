@@ -373,25 +373,6 @@ LRESULT APIENTRY CDxHandler::MvlWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
 			};
 
 			EnumWindows(cb, 0);
-
-			//if (!bIsCMopen)
-			//{
-			//	char* szFilePath = iniReader.GetIniPath();
-			//	*strrchr(szFilePath, '\\') = '\0';
-			//	strcat(szFilePath, "\\III.VC.SA.CoordsManager.exe");
-
-			//	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-			//	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-			//	ShExecInfo.hwnd = NULL;
-			//	ShExecInfo.lpVerb = NULL;
-			//	ShExecInfo.lpFile = szFilePath;
-			//	ShExecInfo.lpParameters = "";
-			//	ShExecInfo.lpDirectory = NULL;
-			//	ShExecInfo.nShow = SW_SHOWNORMAL;
-			//	ShExecInfo.hInstApp = NULL;
-			//	ShellExecuteEx(&ShExecInfo);
-			//	//WaitForSingleObject(ShExecInfo.hProcess, INFINITE);
-			//}
 		}
 		break;
 	case WM_LBUTTONUP:
@@ -447,10 +428,6 @@ LRESULT APIENTRY CDxHandler::MvlWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
 }
 
 HRESULT __stdcall ResetSA(LPDIRECT3DDEVICE8 pDevice, D3DPRESENT_PARAMETERS_D3D9* pPresentationParameters) {
-	return CDxHandler::HandleReset(pPresentationParameters, nullptr);
-}
-
-HRESULT __stdcall Reset(LPDIRECT3DDEVICE8 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters) {
 	return CDxHandler::HandleReset(pPresentationParameters, nullptr);
 }
 
@@ -624,7 +601,7 @@ int CDxHandler::ProcessMouseState(void)
 			bUseMenus = !bUseMenus;
 
 		bUseBorder = true;
-		SetMenu(*hGameWnd, bUseMenus ? hMenuWindows : NULL);
+	//	SetMenu(*hGameWnd, bUseMenus ? hMenuWindows : NULL);
 		//iniReader.WriteInteger("MAIN", "ShowMenu", bUseMenus);
 	}
 	else
@@ -650,7 +627,7 @@ int CDxHandler::ProcessMouseState(void)
 	bShiftEnterLastState = bShiftEnterCurState;
 	bCtrlEnterLastState = bCtrlEnterCurState;
 
-	if((!bAltEnterLastState && bAltEnterCurState) ||btogglereq_btlc) 
+	if((!bAltEnterLastState && bAltEnterCurState)) 
 	{
 		ToggleFullScreen();
 	}

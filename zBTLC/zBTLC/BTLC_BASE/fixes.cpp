@@ -48,7 +48,7 @@ namespace BUGFIX
 		MemoryVP::Patch<BYTE>(0x663E4D, 0xEB);
 
 		//Disabled Diving
-		MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
+		//MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
 
 		//DISABLE TASK::ROADCROSSLOOKAROUN
 		//(HOTFIX FOR PATHS)

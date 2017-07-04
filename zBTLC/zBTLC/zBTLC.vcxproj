@@ -165,6 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
+    <ClCompile Include="BTLC_BASE\My_Soundsystem.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
     <ClCompile Include="BTLC_BASE\debug.cpp" />
@@ -642,11 +643,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BTLC_BASE\CTrafficlights.h" />
+    <ClInclude Include="BTLC_BASE\My_Soundsystem.h" />
     <ClInclude Include="DXSDK\8.0\dinput.h" />
     <ClInclude Include="DXSDK\8.0\include\d3d8.h" />
     <ClInclude Include="DXSDK\8.0\include\d3dx8.h" />
     <ClInclude Include="DXSDK\9.0c\Include\d3d9.h" />
     <ClInclude Include="DXSDK\9.0c\Include\d3dx9.h" />
+    <ClInclude Include="game_sa\CAEAudioChannel.h" />
+    <ClInclude Include="game_sa\CAEStaticChannel.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />
     <ClInclude Include="BTLC_BASE\debug.h" />
@@ -1136,6 +1140,7 @@
     <ClInclude Include="game_sa\CWeaponModelInfo.h" />
     <ClInclude Include="game_sa\CWorld.h" />
     <ClInclude Include="game_sa\CZone.h" />
+    <ClInclude Include="game_sa\eax4.h" />
     <ClInclude Include="game_sa\eCamMode.h" />
     <ClInclude Include="game_sa\eCommandName.h" />
     <ClInclude Include="game_sa\eCopType.h" />

@@ -34,6 +34,7 @@ float VERSION = 0.42f;
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"
 #include "BTLC_BASE\My_CCam.h"
+#include "BTLC_BASE\My_Soundsystem.h"
 
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
@@ -84,12 +85,12 @@ void Function_starter()
 	My_PlayerWallhitreactions::init();
 	My_GPS::init();
 	My_CCam::INIT();					// IV Styled AIM CAM
+	//My_Soundsystem::init();
 	
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
 
-	
 	CHud::My_Init();	//New HuD
 	CRadar::My_Init();	//New Radar
 	CStreaming::My_Init();//New COP stream functions - ALL cops&copcars in all cities 
@@ -214,8 +215,8 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//}
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
-		{
-			CDxHandler::btogglereq_btlc = false;
+		{	
+			CDxHandler::WindowMode_Hook();
 			std::cout << "windowmode" << std::endl;
 			return;
 		}

@@ -1423,11 +1423,14 @@
     <ClCompile Include="game_sa\CVideomodemanager.cpp">
       <Filter>BTLC_BASE</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\windowmode\windowmode.cpp">
-      <Filter>BTLC_BASE</Filter>
-    </ClCompile>
     <ClCompile Include="game_sa\CAnimationManager.cpp">
       <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\windowmode\windowmode.cpp">
+      <Filter>BTLC_BASE\windowmode</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_Soundsystem.cpp">
+      <Filter>BTLC_BASE\features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3081,9 +3084,6 @@
     <ClInclude Include="game_sa\CVideomodemanager.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\windowmode\windowmode.h">
-      <Filter>BTLC_BASE</Filter>
-    </ClInclude>
     <ClInclude Include="game_sa\CAnimationManager.h">
       <Filter>game_sa</Filter>
     </ClInclude>
@@ -3102,6 +3102,21 @@
     </ClInclude>
     <ClInclude Include="DXSDK\8.0\dinput.h">
       <Filter>DXSDK\DX8</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\windowmode\windowmode.h">
+      <Filter>BTLC_BASE\windowmode</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_Soundsystem.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEAudioChannel.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEStaticChannel.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\eax4.h">
+      <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
