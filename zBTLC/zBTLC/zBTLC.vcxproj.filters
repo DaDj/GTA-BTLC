@@ -1429,9 +1429,6 @@
     <ClCompile Include="BTLC_BASE\windowmode\windowmode.cpp">
       <Filter>BTLC_BASE\windowmode</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\My_Soundsystem.cpp">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3105,9 +3102,6 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\windowmode\windowmode.h">
       <Filter>BTLC_BASE\windowmode</Filter>
-    </ClInclude>
-    <ClInclude Include="BTLC_BASE\My_Soundsystem.h">
-      <Filter>BTLC_BASE\features</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CAEAudioChannel.h">
       <Filter>game_sa</Filter>

@@ -34,7 +34,7 @@ float VERSION = 0.42f;
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"
 #include "BTLC_BASE\My_CCam.h"
-#include "BTLC_BASE\My_Soundsystem.h"
+
 
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
@@ -60,7 +60,7 @@ void Main()
 #endif // DEBUG
 
 	//Windowmode INIT
-	CDxHandler::btogglereq_btlc = true;
+	//CDxHandler::btogglereq_btlc = true;
 
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
@@ -85,7 +85,6 @@ void Function_starter()
 	My_PlayerWallhitreactions::init();
 	My_GPS::init();
 	My_CCam::INIT();					// IV Styled AIM CAM
-	//My_Soundsystem::init();
 	
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);

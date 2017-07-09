@@ -615,7 +615,7 @@ void CHud::DrawZoneText()
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
 			CFont::SetFontStyle(2);
 			CFont::SetColor(CRGBA::CRGBA(180, 180, 180, Fontalpha));
-			CFont::PrintStringFromBottom(RsGlobal.maximumWidth - x_fac(30.0), RsGlobal.maximumHeight - y_fac(20.0), m_ZoneName);
+			CFont::PrintStringFromBottom(RsGlobal.maximumWidth - x_fac(30.0), RsGlobal.maximumHeight - y_fac(20.0), m_ZonetoPrint);
 
 		}
 	}

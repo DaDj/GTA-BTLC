@@ -165,7 +165,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
-    <ClCompile Include="BTLC_BASE\My_Soundsystem.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
     <ClCompile Include="BTLC_BASE\debug.cpp" />
@@ -643,7 +642,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BTLC_BASE\CTrafficlights.h" />
-    <ClInclude Include="BTLC_BASE\My_Soundsystem.h" />
     <ClInclude Include="DXSDK\8.0\dinput.h" />
     <ClInclude Include="DXSDK\8.0\include\d3d8.h" />
     <ClInclude Include="DXSDK\8.0\include\d3dx8.h" />
