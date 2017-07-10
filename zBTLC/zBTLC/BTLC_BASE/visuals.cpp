@@ -63,6 +63,10 @@ namespace visuals
 		//Corona shadow distance
 		MemoryVP::Patch<float>(0x6FD3A6, 70.0); 
 
+		//Traffic/Lampost shadow distance
+			MemoryVP::Patch<float>(0x70C89C, 20.0);
+			MemoryVP::Patch<float>(0x70C88B, 80.0);
+
 		//Shadow distances////////////////////////////
 		static float
 			DD_shdw_veh = 200.0,

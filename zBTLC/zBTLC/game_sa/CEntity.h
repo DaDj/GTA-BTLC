@@ -11,6 +11,9 @@
 #pragma pack(push, 4)
 class CEntity : public CPlaceable {
 public:
+
+	static void My_Init();
+	static void MyPreRender_Shadow(CEntity *Entity);
 	union {
 		struct RwObject *m_pRwObject;
 		struct RpClump *m_pRwClump;
@@ -63,7 +66,8 @@ public:
     unsigned __int8 m_nType : 3;
     unsigned __int8 m_nStatus : 5;
     
-    // originally virtual functions
+
+	// originally virtual functions
     void Add(CRect &rect);
     void Add(); // similar to previous, but with entity bound rect
     void Remove();
@@ -80,6 +84,7 @@ public:
     void Teleport(CVector destination, bool resetRotation);
     void SpecialEntityPreCollisionStuff(class CEntity *colEntity, bool unk1, unsigned char *unk2, unsigned char *unk3, unsigned char *unk4, unsigned char *unk5);
     void SpecialEntityCalcCollisionSteps(unsigned char *unk1, unsigned char *unk2);
+	
     void PreRender();
     void Render();
     bool SetupLighting();

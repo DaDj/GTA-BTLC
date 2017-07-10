@@ -1,7 +1,69 @@
 #include "CEntity.h"
+#include "CShadows.h"
+#include "CVector.h"
+#include "CCamera.h"
 
 // vtable functions
 
+void CEntity::My_Init()
+{
+	MemoryVP::InjectHook(0x536977,0x536A67,PATCH_JUMP);
+	MemoryVP::InjectHook(0x536A68, &MyPreRender_Shadow, PATCH_CALL);
+	
+
+}
+
+void CEntity::PreRender()
+{
+	((void(__thiscall *)(CEntity *))(*(void ***)this)[17])(this);
+}
+
+
+
+
+void CEntity::MyPreRender_Shadow(CEntity *Entity)
+{
+	if (Entity == NULL)
+		return;
+	int Model_ID = Entity->m_wModelIndex;
+	
+	if(Model_ID == 0)
+		return;
+
+
+	static int TrafficL_Models[60] = { 4986,4987,6377,4989,4990,4991,4992,4993,5104,4995,5103,4997,4998,4999 };
+	static int Lamp_Models[60] = { 1326,1347,1371,1573,1699,6401,5101, 5102,5105, 5380,5083,5351,5084,5350,5086,6389,6400,6402,6403,6404,6405,6406,6407,6408 };
+	static int Bin_Models[60] = { 793, 794, 795, 796,797,798,799, 699,999, 5088,5089,5090,5091, 5092,5093,5094,5095,5096 };
+	
+	for (int  i = 0; i < 60; i++)
+	{
+	
+		
+		if (Model_ID == TrafficL_Models[i])
+		{
+			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
+			break;
+		}
+
+		if (Model_ID == Lamp_Models[i])
+		{
+			CVector Pos = Entity->m_placement.m_vPosn;
+			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
+			break;
+		}
+
+	/*	if (Model_ID == Bin_Models[i])
+		{
+			CVector Pos = Entity->GetMatrix()->pos;
+			CShadows::StoreShadowToBeRendered(1, gpShadowPedTex, &Pos, 2.0, 2.0, -2.0, -2.0, 255, 200, 200, 200, 10.2, 0, 2.0,0,0);
+			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
+			break;
+		}*/
+	}
+
+	((void(_cdecl*)(CEntity *))0x49DAB0)(Entity);
+}
+ 
 void CEntity::Add(CRect &rect)
 {
 	((void (__thiscall *)(CEntity *, CRect &))(unsigned int)(*(void ***)this)[1])(this, rect);
@@ -82,10 +144,7 @@ void CEntity::SpecialEntityCalcCollisionSteps(unsigned char *unk1, unsigned char
 	((void (__thiscall *)(CEntity *, unsigned char *, unsigned char *))(*(void ***)this)[16])(this, unk1, unk2);
 }
 
-void CEntity::PreRender()
-{
-	((void (__thiscall *)(CEntity *))(*(void ***)this)[17])(this);
-}
+
 
 void CEntity::Render()
 {

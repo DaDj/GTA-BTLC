@@ -1429,6 +1429,9 @@
     <ClCompile Include="BTLC_BASE\windowmode\windowmode.cpp">
       <Filter>BTLC_BASE\windowmode</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CPolyBunch.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3110,6 +3113,9 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\eax4.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPolyBunch.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>

@@ -87,6 +87,12 @@ namespace BUGFIX
 		////Lower Gunflash show time
 		MemoryVP::Patch<BYTE>(0x8D2E88, 1);
 		MemoryVP::Patch<BYTE>(0x8D2E90, 1);
+
+		////Smooth Heahdlighttexure movement
+		MemoryVP::Patch<float>(0x70C6A8 + 1, 0.0);
+		////Smooth carshadow movement
+		MemoryVP::Patch<float>(0x70C2D5 + 1, 0.0);
+		
 	}
 
 
