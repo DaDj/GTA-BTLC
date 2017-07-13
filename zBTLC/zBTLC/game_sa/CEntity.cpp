@@ -36,20 +36,18 @@ void CEntity::MyPreRender_Shadow(CEntity *Entity)
 	static int Bin_Models[60] = { 793, 794, 795, 796,797,798,799, 699,999, 5088,5089,5090,5091, 5092,5093,5094,5095,5096 };
 	
 	for (int  i = 0; i < 60; i++)
-	{
-	
-		
+	{	
 		if (Model_ID == TrafficL_Models[i])
 		{
 			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
-			break;
+			((void(_cdecl*)(CEntity *))0x49DAB0)(Entity);
+			return;
 		}
 
 		if (Model_ID == Lamp_Models[i])
 		{
-			CVector Pos = Entity->m_placement.m_vPosn;
 			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
-			break;
+			return;
 		}
 
 	/*	if (Model_ID == Bin_Models[i])
@@ -61,7 +59,7 @@ void CEntity::MyPreRender_Shadow(CEntity *Entity)
 		}*/
 	}
 
-	((void(_cdecl*)(CEntity *))0x49DAB0)(Entity);
+	
 }
  
 void CEntity::Add(CRect &rect)
