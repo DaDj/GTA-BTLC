@@ -131,14 +131,7 @@ float CHud::y_fac(float y)
 
 void CHud::DrawPlayerInfo()
 {
-	//char string[40];
-	//CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
-	//sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
-	//CFont::SetFontStyle(FONT_PRICEDOWN);
-	//CFont::SetAlignment(ALIGN_CENTER);
-	//CFont::SetOutlinePosition(1);
-	//CFont::SetScale(CHud::x_fac(0.3f), CHud::y_fac(0.45f));
-	//CFont::PrintString(CHud::x_fac(600.0f),CHud::y_fac(10.0f), string);
+
 
 	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
 

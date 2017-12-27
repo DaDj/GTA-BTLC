@@ -167,6 +167,7 @@
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CPolyBunch.cpp" />
+    <ClCompile Include="game_sa\CProcObjectMan.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
     <ClCompile Include="BTLC_BASE\debug.cpp" />
     <ClCompile Include="BTLC_BASE\fast_load.cpp" />
@@ -631,6 +632,8 @@
     <ClCompile Include="game_sa\FxManager_c.cpp" />
     <ClCompile Include="game_sa\FxMemoryPool_c.cpp" />
     <ClCompile Include="game_sa\Fx_c.cpp" />
+    <ClCompile Include="game_sa\ListItem_c.cpp" />
+    <ClCompile Include="game_sa\List_c.cpp" />
     <ClCompile Include="game_sa\plbase\PluginBase_SA.cpp" />
     <ClCompile Include="game_sa\RenderWare.cpp" />
     <ClCompile Include="BTLC.cpp" />
@@ -652,6 +655,7 @@
     <ClInclude Include="game_sa\CAEStaticChannel.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />
     <ClInclude Include="game_sa\CPolyBunch.h" />
+    <ClInclude Include="game_sa\CProcObjectMan.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />
     <ClInclude Include="BTLC_BASE\debug.h" />
     <ClInclude Include="BTLC_BASE\fast_load.h" />

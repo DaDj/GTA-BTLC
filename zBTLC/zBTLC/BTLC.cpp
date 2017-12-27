@@ -43,11 +43,15 @@ float VERSION = 0.42f;
 #include "game_sa\CVideomodemanager.h"
 #include "game_sa\CAnimationManager.h"
 #include "game_sa\CEntity.h"
+#include "game_sa\List_c.h"
+#include "game_sa\CProcObjectMan.h"
 	
 void btlc_init(); //BTLC INIT
 void check_gameversion();
 void ParseCommandlineArgument(int thing, char* pArg);
 void Function_starter();
+
+
 
 void Main()
 {
@@ -109,7 +113,11 @@ void Function_starter()
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);	
+
+
 }
+
+
 
 //BTLC INIT
 void btlc_init()
@@ -123,6 +131,17 @@ void btlc_init()
 	MemoryVP::Patch<void*>(0x57C672, &settingsfile);
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
 	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);	
+	
+	//MemoryVP::Patch<BYTE>(0x5A3353, 0xFF);
+	//MemoryVP::Nop(0x5A332A, 2);
+	//MemoryVP::Nop(0x5A3355, 2);
+	MemoryVP::Patch<int>(0x5A3327, 5000);
+	MemoryVP::Patch<int>(0x5A335D + 1,8000);
+	//MemoryVP::Patch<int>(0x5A3EB2  + 1, 2000);
+
+
+
+
 }
 
 

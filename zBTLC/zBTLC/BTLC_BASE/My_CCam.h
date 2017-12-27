@@ -5,9 +5,13 @@
 #include "../Patch/calling.hpp"
 #include "other_shared.h"
 #include "../Patch/MemoryMgr.h"
+#include "../game_sa/CWorld.h"
+#include "../game_sa/CFont.h"
+
 namespace My_CCam
 {
 	static CVector offset;
 	static void _fastcall Process_AimWeapon(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5);
 	void INIT();
+	bool Switch_side();
 }
