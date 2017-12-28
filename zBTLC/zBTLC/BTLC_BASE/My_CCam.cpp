@@ -7,10 +7,10 @@ namespace My_CCam
 	void _fastcall Process_FollowPedWithMouse(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5)
 	{
 		CPed *Player = FindPlayerPed();
-		if (Switch_side())
+	/*	if (Switch_side())
 			offset.x =0.0f;
-		else
-			offset.x = 0.44f;
+		else*/
+			offset.x = 0.34f;
 
 		offset.y = 0.1f;
 		offset.z = -0.1f;
@@ -21,10 +21,10 @@ namespace My_CCam
 	void _fastcall Process_FollowPed(CCam *cam, int, CVector const &vec, float arg3, float arg4, float arg5, char arg6)
 	{
 		CPed *Player = FindPlayerPed();
-		if (Switch_side())
+		/*if (Switch_side())
 			offset.x = -0.0f;
-		else
-			offset.x = 0.44f;
+		else*/
+			offset.x = 0.34f;
 		offset.y = 0.1f;
 		offset.z = -0.1f;
 		plugin::CallMethod<0x522D40, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5, arg6);

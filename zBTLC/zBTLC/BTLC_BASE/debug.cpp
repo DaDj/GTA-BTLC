@@ -34,6 +34,7 @@ namespace debug
 		{
 			draw_current_Modelname();
 			draw_FPS();
+			draw_graphics_info();
 		};
 	}
 	
@@ -88,14 +89,22 @@ namespace debug
 		CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
 		sprintf(string, "FPS : %d", (int)floor(CTimer::ms_gameFPS));
 		CFont::SetFontStyle(FONT_SUBTITLES);
-		CFont::SetAlignment(ALIGN_CENTER);
+		CFont::SetAlignment(ALIGN_LEFT);
 		CFont::SetOutlinePosition(1);
 		CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
 		CFont::PrintString(CHud::x_fac(200.0f),CHud::y_fac(5.0f), string);
 	}
 
-	void create_IDE_LIST()
+	void draw_graphics_info()
 	{
+		char string[40];
+		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
+		sprintf(string, "max Anistropy : %d", (int)RpAnisotGetMaxSupportedMaxAnisotropy());
+		CFont::SetFontStyle(FONT_SUBTITLES);
+		CFont::SetAlignment(ALIGN_LEFT);
+		CFont::SetOutlinePosition(1);
+		CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
+		CFont::PrintString(CHud::x_fac(15.0f), CHud::y_fac(15.0f), string);
 	}
 
 
