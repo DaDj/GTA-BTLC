@@ -11,40 +11,40 @@
 #pragma pack(push, 4)
 class CPhysical : public CEntity {
 public:
-    __int32 field_38;
-    unsigned __int32 m_dwLastCollisionTime;
-    unsigned __int32 b0x01 : 1;
-    unsigned __int32 m_bApplyGravity : 1;
-    unsigned __int32 m_bDisableCollisionForce : 1;
-    unsigned __int32 m_bCollidable : 1; 
-    unsigned __int32 m_bDisableTurnForce : 1;
-    unsigned __int32 m_bDisableMoveForce : 1;
-    unsigned __int32 m_bInfiniteMass : 1;
-    unsigned __int32 m_bDisableZ : 1;
-    unsigned __int32 m_bSubmergedInWater : 1;
-    unsigned __int32 m_bOnSolidSurface : 1;
-    unsigned __int32 m_bBroken : 1;
-    unsigned __int32 b0x800 : 1; // ref @ 0x6F5CF0
-    unsigned __int32 b0x1000 : 1;
-    unsigned __int32 m_bDontApplySpeed : 1;
-    unsigned __int32 b0x4000 : 1;
-    unsigned __int32 b0x8000 : 1;
-    unsigned __int32 b0x10000 : 1;
-    unsigned __int32 b0x20000 : 1; // ref @ CPhysical::ProcessCollision
-    unsigned __int32 m_bBulletProof : 1;
-    unsigned __int32 m_bFireProof : 1;
-    unsigned __int32 m_bCollisionProof : 1;
-    unsigned __int32 m_bMeeleProof : 1;
-    unsigned __int32 m_bInvulnerable : 1;
-    unsigned __int32 m_bExplosionProof : 1;
-    unsigned __int32 b0x1000000 : 1;
-    unsigned __int32 m_bAttachedToEntity : 1;
-    unsigned __int32 b0x4000000 : 1;
-    unsigned __int32 m_bTouchingWater : 1;
-    unsigned __int32 m_bCanBeCollidedWith : 1;
-    unsigned __int32 m_bDestroyed : 1;
-    unsigned __int32 b0x40000000 : 1;
-    unsigned __int32 b0x80000000 : 1;
+    int field_38;
+    unsigned int m_dwLastCollisionTime;
+    unsigned int b0x01 : 1;
+    unsigned int m_bApplyGravity : 1;
+    unsigned int m_bDisableCollisionForce : 1;
+    unsigned int m_bCollidable : 1; 
+    unsigned int m_bDisableTurnForce : 1;
+    unsigned int m_bDisableMoveForce : 1;
+    unsigned int m_bInfiniteMass : 1;
+    unsigned int m_bDisableZ : 1;
+    unsigned int m_bSubmergedInWater : 1;
+    unsigned int m_bOnSolidSurface : 1;
+    unsigned int m_bBroken : 1;
+    unsigned int b0x800 : 1; // ref @ 0x6F5CF0
+    unsigned int b0x1000 : 1;
+    unsigned int m_bDontApplySpeed : 1;
+    unsigned int b0x4000 : 1;
+    unsigned int b0x8000 : 1;
+    unsigned int b0x10000 : 1;
+    unsigned int b0x20000 : 1; // ref @ CPhysical::ProcessCollision
+    unsigned int m_bBulletProof : 1;
+    unsigned int m_bFireProof : 1;
+    unsigned int m_bCollisionProof : 1;
+    unsigned int m_bMeeleProof : 1;
+    unsigned int m_bInvulnerable : 1;
+    unsigned int m_bExplosionProof : 1;
+    unsigned int b0x1000000 : 1;
+    unsigned int m_bAttachedToEntity : 1;
+    unsigned int b0x4000000 : 1;
+    unsigned int m_bTouchingWater : 1;
+    unsigned int m_bCanBeCollidedWith : 1;
+    unsigned int m_bDestroyed : 1;
+    unsigned int b0x40000000 : 1;
+    unsigned int b0x80000000 : 1;
 	CVector          m_vecMoveForce;
 	CVector          m_vecTurnForce;
 	CVector          m_vecFrictionMoveForce;
@@ -60,25 +60,25 @@ public:
 	CVector          m_vecCentreOfMass;
     void            *m_pCollisionList;
     void            *m_pMovingList;
-    __int8 field_B8;
-    unsigned __int8  m_nNumEntitiesCollided;
-    unsigned __int8  m_nContactSurface;
-    __int8 field_BB;
+    char field_B8;
+    unsigned char  m_nNumEntitiesCollided;
+    unsigned char  m_nContactSurface;
+    char field_BB;
     CEntity         *m_apCollidedEntities[6];
-    __int32 field_D4;
+    int field_D4;
     float            m_fDamageIntensity;
     CEntity         *m_pDamageEntity;
 	CVector          m_vecLastCollisionImpactVelocity;
 	CVector          m_vecLastCollisionPosn;
-    unsigned __int16 m_wPieceType;
-    __int16 field_FA;
+    unsigned short m_wPieceType;
+    short field_FA;
     class CPhysical *m_pAttachedTo;
 	CVector          m_vecAttachOffset;
 	CVector          m_vecAttachedEntityPosn;
     CQuaternion      m_qAttachedEntityRotation;
     CEntity         *m_pEntityIgnoredCollision;
     float            m_fContactSurfaceBrightness;
-    __int32 field_130;
+    int field_130;
     CRealTimeShadow *m_pShadowData;
     
     // originally virtual functions

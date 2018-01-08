@@ -13,7 +13,7 @@ public:
 	float m_fSlopePitchLimitMult;
 	float m_fSlopeRoll;
 	float m_fBodyRoll;
-	unsigned __int32 m_dwFlags;
+	unsigned int m_dwFlags;
 };
 #pragma pack(pop)
 

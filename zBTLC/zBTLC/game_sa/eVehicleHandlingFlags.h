@@ -1,6 +1,6 @@
 #pragma once
 
-enum eVehicleHandlingFlags : unsigned __int32
+enum eVehicleHandlingFlags : unsigned int
 {
 	VEHICLE_HANDLING_1G_BOOST = 0x1,
 	VEHICLE_HANDLING_2G_BOOST = 0x2,

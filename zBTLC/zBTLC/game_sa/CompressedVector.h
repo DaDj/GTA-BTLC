@@ -6,8 +6,8 @@
 class CompressedVector
 {
 public:
-	signed __int16 x;
-	signed __int16 y;
-	signed __int16 z;
+	signed short x;
+	signed short y;
+	signed short z;
 };
 #pragma pack(pop)

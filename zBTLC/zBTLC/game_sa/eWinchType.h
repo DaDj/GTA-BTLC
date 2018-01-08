@@ -1,6 +1,6 @@
 #pragma once
 
-enum eWinchType : unsigned __int32
+enum eWinchType : unsigned int
 {
 	WINCH_NONE = 0x0,
 	WINCH_BIG_MAGNET = 0x1,

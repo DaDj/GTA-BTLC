@@ -281,6 +281,7 @@ void CObject::ReadMasspoints(structObject_masspoint Result[])
 			return;
 	}
 
+	cout << "loaded  ...\\data\\masspoints.dat " << endl;
 	while (getline(myfile, Line))
 	{
 		strcpy(line2, Line.c_str());

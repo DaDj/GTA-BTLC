@@ -44,7 +44,7 @@ namespace limits
 		}
 		v5 = v2;
 		strcpy(CStreaming::IMG_FILES[v2].name, lpFileName);
-		CStreaming::IMG_FILES[v5].streamHandle = ((int(__cdecl *)(LPCSTR, unsigned __int8))0x4067B0)(lpFileName, 0); //CDStreamOpen
+		CStreaming::IMG_FILES[v5].streamHandle = ((int(__cdecl *)(LPCSTR, unsigned char))0x4067B0)(lpFileName, 0); //CDStreamOpen
 		CStreaming::IMG_FILES[v5].isNotPlayerImg = notPlayerFile;
 		std::cout << "IMG loaded ->" << CStreaming::IMG_FILES[v2].name  << std::endl;
 		return v2;

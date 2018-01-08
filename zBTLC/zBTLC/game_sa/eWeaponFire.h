@@ -1,6 +1,6 @@
 #pragma once
 
-enum eWeaponFire : unsigned __int32
+enum eWeaponFire : unsigned int
 {
 	WEAPON_FIRE_MELEE,
 	WEAPON_FIRE_INSTANT_HIT,

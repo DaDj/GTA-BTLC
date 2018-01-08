@@ -66,7 +66,7 @@
 #define FUNC_CRunningScript__ProcessCommands_2500To2599 0x47A760
 #define FUNC_CRunningScript__ProcessCommands_2600To2699 0x479DA0
 
-enum eArgumentDataTypesFormat_GTA_III_VC_SA : __int8
+enum eArgumentDataTypesFormat_GTA_III_VC_SA : char
 {
 	SCM_ARGUMENT_TYPE_END_OF_ARGUMENTS,
 	SCM_ARGUMENT_TYPE_STATIC_INT_32BITS,
@@ -99,8 +99,8 @@ enum eArgumentDataTypesFormat_GTA_III_VC_SA : __int8
 
 union tScriptVarValue 
 {
-	unsigned __int32	dwParam;
-	__int32			nParam;
+	unsigned int	dwParam;
+	int			nParam;
 	float			fParam;
 	void		*pParam;
 	char		*szParam;
@@ -161,31 +161,31 @@ public:
 	/////// USED HEAVILY IN COMMANDS //////
 
 	// Reads array offset and value from array index variable.
-	void GetArrayOffsetAndValueOfIndexVariable(__int16 *pOffset, __int32 *pIdx);
+	void GetArrayOffsetAndValueOfIndexVariable(short *pOffset, int *pIdx);
 
 	// Returns offset of global variable
-	__int16 GetOffsetOfGlobalVariable();
+	short GetOffsetOfGlobalVariable();
 
 	// Returns pointer to script variable of any type.
-	tScriptVarValue* GetPointerToScriptVariable(unsigned __int8 variableType);
+	tScriptVarValue* GetPointerToScriptVariable(unsigned char variableType);
 
 	// Collects parameters
-	void CollectParameters(__int16 count);
+	void CollectParameters(short count);
 
 	// Collects parameter and returns it.
 	tScriptVarValue CollectNextParameterWithoutIncreasingPC();
 
 	// Collects string parameter
-	void CollectStringParameter(char *pBuffer, unsigned __int8 nBufferLength);
+	void CollectStringParameter(char *pBuffer, unsigned char nBufferLength);
 
 	// Stores parameters
-	void StoreParameters(__int16 count);
+	void StoreParameters(short count);
 
 	// Collects parameters and puts them to local variables of new script
 	void CollectParametersToNewScript(CRunningScript* pNewScript);
 
 	// Sets instruction pointer, used in GOTO-like commands
-	void SetIntructionPointer(__int32 newIP);
+	void SetIntructionPointer(int newIP);
 
 	// Updates comparement flag, used in conditional commands
 	void UpdateCompareFlag(bool state);
@@ -199,7 +199,7 @@ public:
 	bool GetConditionResult();
 
 	// Returns pointer to local variable pointed by offset and array index as well as multiplier.
-	void GetPointerLocalVariableByArrayIndex(__int16 off, __int16 idx, unsigned __int8 mul);
+	void GetPointerLocalVariableByArrayIndex(short off, short idx, unsigned char mul);
 
 	// Adds script to list
 	void AddScriptToList(CRunningScript ** list);

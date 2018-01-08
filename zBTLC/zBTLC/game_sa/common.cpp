@@ -88,19 +88,19 @@ CWanted * FindPlayerWanted(int playerId)
 }
 
 
-float x_fac(float x)
-{
-	float width_fac = RsGlobal.maximumHeight / 448.0f;
-	return x * width_fac;
-}
+//float x_fac(float x)
+//{
+//	float width_fac = RsGlobal.maximumHeight / 448.0f;
+//	return x * width_fac;
+//}
 
 
-float y_fac(float y)
-{
-	float height_fac = RsGlobal.maximumHeight / 448.0f;
-	return y * height_fac;
-
-}
+//float y_fac(float y)
+//{
+//	float height_fac = RsGlobal.maximumHeight / 448.0f;
+//	return y * height_fac;
+//
+//}
 
 // Converted from cdecl void CreateDebugFont(void) 0x734610
 void CreateDebugFont() {

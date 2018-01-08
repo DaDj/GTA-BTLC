@@ -10,7 +10,7 @@ public:
 	uint32_t m_dwVarId;
 	char   m_acDescriptionTextKey[10];
 	char   m_acDisplayedText[42]; // possibly 2b padding?
-	Bool   m_bEnabled;
+	bool   m_bEnabled;
 	uint8_t  m_nTimerDirection;
 	uint32_t m_dwClockBeepCountdownSecs;
 };
@@ -25,8 +25,8 @@ public:
 	char   m_acDescriptionTextKey[10];
 	uint16_t m_nType; // 0 - counter (%), 1 - line, 2 - conter counter (%/%)
 	char   m_acDisplayedText[42]; // possibly 2b padding?
-	Bool   m_bEnabled;
-	Bool   m_bFlashWhenFirstDisplayed;
+	bool   m_bEnabled;
+	bool   m_bFlashWhenFirstDisplayed;
 	uint8_t  m_nColourId; // color index from HudColours
 };
 
@@ -37,8 +37,8 @@ class COnscreenTimer
 public:
 	COnscreenTimerEntry m_Clock;
 	COnscreenCounterEntry m_aCounters[4];
-	Bool m_bDisplay;
-	Bool m_bPaused;
+	bool m_bDisplay;
+	bool m_bPaused;
 };
 
 VALIDATE_SIZE(COnscreenTimer, 0x154);

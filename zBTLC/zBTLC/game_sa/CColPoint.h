@@ -12,12 +12,12 @@ public:
 	float field_C;
 	CVector         m_vNormal;
 	float field_1C;
-	unsigned __int8 m_nSurfaceTypeA;
-	unsigned __int8 m_nPieceTypeA;
-	unsigned __int8 m_nLightingA;
-	unsigned __int8 m_nSurfaceTypeB;
-	unsigned __int8 m_nPieceTypeB;
-	unsigned __int8 m_nLightingB;
+	unsigned char m_nSurfaceTypeA;
+	unsigned char m_nPieceTypeA;
+	unsigned char m_nLightingA;
+	unsigned char m_nSurfaceTypeB;
+	unsigned char m_nPieceTypeB;
+	unsigned char m_nLightingB;
 	float           m_fDepth;
 
 	void operator=(CColPoint const& right);

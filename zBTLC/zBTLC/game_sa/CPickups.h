@@ -13,9 +13,9 @@ public:
 	int m_dwAmmo;
 	int m_dwRegenerationTime;
 	CompressedVector m_vPos;
-	__int16 m_wMoneyPerDay;
-	__int16 m_wModelId;
-	__int16 m_wReferenceIndex;
+	short m_wMoneyPerDay;
+	short m_wModelId;
+	short m_wReferenceIndex;
 	ePickupType m_ePickupType;
 	char m_nFlags;
 	char _pad[2];

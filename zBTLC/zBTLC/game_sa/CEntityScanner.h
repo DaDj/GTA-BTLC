@@ -9,7 +9,7 @@ protected:
     void *vtable;
 public:
     int field_4;
-    unsigned __int32 m_dwCount;
+    unsigned int m_dwCount;
     class CEntity *m_apEntities[16];
     int field_4C;
 };

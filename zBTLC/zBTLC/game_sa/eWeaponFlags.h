@@ -1,6 +1,6 @@
 #pragma once
 
-enum eWeaponFlags : unsigned __int32
+enum eWeaponFlags : unsigned int
 {
 	WEAPON_CANAIM = 0x1,
 	WEAPON_AIMWITHARM = 0x2,

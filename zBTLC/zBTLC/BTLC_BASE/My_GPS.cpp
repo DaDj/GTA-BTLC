@@ -9,6 +9,7 @@
 #include "../game_sa/CFont.h"
 #include "../BTLC_BASE/My_GPS.h"
 #include "../DXSDK/9.0c/Include/d3d9.h"
+#include "../game_sa/CHud.h"
 
 #define MAX_NODE_POINTS 3000
 #define GPS_LINE_WIDTH  2.5f
@@ -179,7 +180,7 @@ namespace My_GPS
 			CFont::SetColor(CRGBA(200, 200, 200, 250));
 			CFont::SetBackground(false, false);
 			//CFont::SetWrapx(500.0f);
-			CFont::SetScale(x_fac(0.25f), y_fac(0.45f));
+			CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.45f));
 			CFont::SetFontStyle(FONT_SUBTITLES);
 			CFont::SetProp(true);
 			CFont::SetDropShadowPosition(1);

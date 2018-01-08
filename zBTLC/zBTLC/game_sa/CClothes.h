@@ -6,8 +6,8 @@
 class CClothes
 {
 public:
-	unsigned __int32 m_adwModelKeys[10];
-	unsigned __int32 m_adwTextureKeys[18];
+	unsigned int m_adwModelKeys[10];
+	unsigned int m_adwTextureKeys[18];
 	float m_fFatStat;
 	float m_fMuscleStat;
 };

@@ -7,7 +7,7 @@
 class CStoredCollPoly
 {
 	CVector m_aMeshVertices[3]; // triangle vertices
-	Bool    m_bIsActual;
+	bool    m_bIsActual;
 	uint32_t  m_dwLighting;
 };
 #pragma pack(pop)

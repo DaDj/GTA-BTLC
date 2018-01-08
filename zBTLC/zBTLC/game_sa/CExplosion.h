@@ -3,7 +3,7 @@
 #include "plbase/PluginBase_SA.h"
 #include "CVector.h"
 
-enum eExplosionType : unsigned __int32
+enum eExplosionType : unsigned int
 {
 	EXPLOSION_GRENADE,
 	EXPLOSION_MOLOTOV,
@@ -30,16 +30,16 @@ public:
 	float             m_fPropagationRate;
 	class CEntity    *m_pCreator;
 	class CEntity    *m_pVictim;
-	unsigned __int32  m_dwExpireTime;
+	unsigned int  m_dwExpireTime;
 	float             m_fDamagePercentage;
 	bool              m_bIsActive;
-	unsigned __int8   m_bActiveCounter;
+	unsigned char   m_bActiveCounter;
 	bool              m_bMakeSound;
-	unsigned __int32  m_dwCreatedTime;
-	unsigned __int32  m_dwParticlesExpireTime;
+	unsigned int  m_dwCreatedTime;
+	unsigned int  m_dwParticlesExpireTime;
 	float             m_fVisibleDistance;
 	float             m_fGroundZ;
-	unsigned __int32  m_dwFuelTimer; // goes down
+	unsigned int  m_dwFuelTimer; // goes down
 	CVector           m_vFuelDirection[3];
 	float             m_fFuelOffsetDistance[3];
 	float             m_fFuelSpeed[3];

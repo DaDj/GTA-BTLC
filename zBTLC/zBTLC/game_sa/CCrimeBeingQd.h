@@ -7,12 +7,12 @@
 class CCrimeBeingQd
 {
 public:
-    unsigned __int32 m_dwCrimeType;
-    unsigned __int32 m_dwCrimeId;
-    unsigned __int32 m_dwStartTime;
+    unsigned int m_dwCrimeType;
+    unsigned int m_dwCrimeId;
+    unsigned int m_dwStartTime;
     CVector m_vCoors;
-    unsigned __int8 m_bAlreadyReported;
-    unsigned __int8 m_bPoliceDontReallyCare;
+    unsigned char m_bAlreadyReported;
+    unsigned char m_bPoliceDontReallyCare;
 };
 #pragma pack(pop)
 

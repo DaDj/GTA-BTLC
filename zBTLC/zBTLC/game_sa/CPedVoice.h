@@ -8,29 +8,29 @@
 class CPedVoice : public CAEAudioEntity
 {
 public:
-	__int8 field_7C[20];
-	__int8 field_90;
-	__int8 field_91;
-	__int16 m_wVoiceType;
-	__int16 m_wVoiceID;
-	__int16 m_wVoiceGender;
-	__int8 field_98;
-	__int8 m_bEnableVocalType;
-	__int8 m_bMuted;
-	__int8 m_nVocalEnableFlag;
-	__int8 field_9C;
-	__int8 field_9D;
-	__int8 field_9E;
-	__int8 field_9F;
+	char field_7C[20];
+	char field_90;
+	char field_91;
+	short m_wVoiceType;
+	short m_wVoiceID;
+	short m_wVoiceGender;
+	char field_98;
+	char m_bEnableVocalType;
+	char m_bMuted;
+	char m_nVocalEnableFlag;
+	char field_9C;
+	char field_9D;
+	char field_9E;
+	char field_9F;
 	CAESound *m_pSound;
-	__int16 field_A4;
-	__int16 field_A6;
-	__int16 field_A8;
-	__int16 field_AA;
+	short field_A4;
+	short field_A6;
+	short field_A8;
+	short field_AA;
 	float m_fVoiceVolume1;
-	__int16 m_wVoiceVolume2;
-	__int16 field_B2;
-	__int32 field_B4[19];
+	short m_wVoiceVolume2;
+	short field_B2;
+	int field_B4[19];
 };
 #pragma pack(pop)
 

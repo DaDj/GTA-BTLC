@@ -28,7 +28,7 @@ bool &CHud::bScriptDontDisplayVehicleName = *(bool *)0xBAA3F9;
 bool &CHud::bScriptForceDisplayWithCounters = *(bool *)0xBAA3FA;
 bool &CHud::bScriptDontDisplayRadar = *(bool *)0xBAA3FB;
 int &CHud::m_LastBreathTime = *(int *)0xBAA3FC;
-Bool &CHud::bDrawClock = *(Bool *)0xBAA400;
+bool &CHud::bDrawClock = *(bool *)0xBAA400;
 int &CHud::m_WeaponState = *(int *)0xBAA404;
 int &CHud::m_WeaponFadeTimer = *(int *)0xBAA408;
 int &CHud::m_WeaponTimer = *(int *)0xBAA40C;
@@ -603,7 +603,7 @@ void CHud::DrawZoneText()
 			CFont::SetAlignment(ALIGN_RIGHT);
 			CFont::SetProp(true);
 			CFont::SetBackground(false,false);
-			CFont::SetScale(x_fac(0.3f), y_fac(0.6f));
+			CFont::SetScale(x_fac(0.4f), y_fac(0.6f));
 			CFont::SetOutlinePosition(1);
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
 			CFont::SetFontStyle(2);
@@ -684,7 +684,7 @@ void CHud::DrawCarName()
 		CFont::SetAlignment(ALIGN_RIGHT);
 		CFont::SetProp(true);
 		CFont::SetBackground(false, false);
-		CFont::SetScale(x_fac(0.3f), y_fac(0.6f));
+		CFont::SetScale(x_fac(0.4f), y_fac(0.6f));
 		CFont::SetOutlinePosition(1);
 		CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, max(Fontalpha, 0.0f)));
 		CFont::SetFontStyle(2);

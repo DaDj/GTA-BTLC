@@ -8,11 +8,11 @@ class  CBulletTrace
 public:
 	CVector m_vStart;
 	CVector m_vEnd;
-	unsigned __int8 m_bExist;
-	unsigned __int32 m_dwCreationTime;
-	unsigned __int32 m_dwLifeTime;
+	unsigned char m_bExist;
+	unsigned int m_dwCreationTime;
+	unsigned int m_dwLifeTime;
 	float m_fRadius;
-	unsigned __int8 m_nTransparency;
+	unsigned char m_nTransparency;
 };
 #pragma pack(pop)
 

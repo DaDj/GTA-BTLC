@@ -1,14 +1,14 @@
 #pragma once
-#define __int8 char
-#define __int16 short
-#define __int32 int
+#define char char
+#define short short
+#define int int
 #define __int64 long long
 
 /* 580 */
 struct CWaterVertex
 {
-	__int16 posX;
-	__int16 posY;
+	short posX;
+	short posY;
 	float posZ;
 	int tU;
 	int tV;
@@ -21,20 +21,20 @@ struct CWaterVertex
 /* 581 */
 struct CWaterTriangle
 {
-	__int16 field_0;
-	__int16 field_2;
-	__int16 field_4;
-	unsigned __int16 field_6;
+	short field_0;
+	short field_2;
+	short field_4;
+	unsigned short field_6;
 };
 
 /* 582 */
 struct CWaterQuad
 {
-	__int16 field_0;
-	__int16 field_2;
-	__int16 field_4;
-	__int16 field_6;
-	__int16 m_flags;
+	short field_0;
+	short field_2;
+	short field_4;
+	short field_6;
+	short m_flags;
 };
 
 
@@ -44,6 +44,6 @@ public:
 	static CWaterVertex Vertices[2021];
 	static CWaterQuad Quads[601];
 	static CWaterTriangle Triangles[12];
-	static __int16 QuadsandTrianglesList[801];
+	static short QuadsandTrianglesList[801];
 };
 

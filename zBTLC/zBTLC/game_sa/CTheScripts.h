@@ -16,8 +16,8 @@ public:
 	// Script space, where main.scm MAIN section is loaded.
 	// Size: 200000 bytes
 	static char* ScriptSpace;
-	static Bool &DisplayHud;
-	static Bool &PlayerisOffMap;
+	static bool &DisplayHud;
+	static bool &PlayerisOffMap;
 	static tScriptParam *ScriptParams;
     
     static CRunningScript *&pIdleScripts;

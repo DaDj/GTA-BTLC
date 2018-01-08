@@ -19,10 +19,10 @@ public:
 	CEntity *m_pAttachedEntity;
 	float m_fRopeSegmentLength;
 	unsigned int m_dwTime;
-	__int8 m_nNumSegments;
-	__int8 m_nRopeType;
-	__int8 m_nFlags1;
-	__int8 m_nFlags2;
+	char m_nNumSegments;
+	char m_nRopeType;
+	char m_nFlags1;
+	char m_nFlags2;
 
 
 	void CreateHookObjectForRope();

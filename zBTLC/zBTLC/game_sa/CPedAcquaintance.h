@@ -6,11 +6,11 @@
 class CPedAcquaintance
 {
 public:
-	unsigned __int32 m_dwRespect;
-	unsigned __int32 m_dwLike;
-	unsigned __int32 field_8;
-	unsigned __int32 m_dwDislike;
-	unsigned __int32 m_dwHate;
+	unsigned int m_dwRespect;
+	unsigned int m_dwLike;
+	unsigned int field_8;
+	unsigned int m_dwDislike;
+	unsigned int m_dwHate;
 };
 #pragma pack(pop)
 

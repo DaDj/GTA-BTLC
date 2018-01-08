@@ -8,14 +8,14 @@ class CWeapon
 {
 public:
 	eWeaponType m_Type;
-	unsigned __int32 m_dwState;
-	unsigned __int32 m_dwAmmoInClip;
-	unsigned __int32 m_dwTotalAmmo;
-	unsigned __int32 m_dwTimeForNextShot;
-	unsigned __int8 field_14;
-	unsigned __int8 field_15;
-	unsigned __int8 field_16;
-	unsigned __int8 field_17;
+	unsigned int m_dwState;
+	unsigned int m_dwAmmoInClip;
+	unsigned int m_dwTotalAmmo;
+	unsigned int m_dwTimeForNextShot;
+	unsigned char field_14;
+	unsigned char field_15;
+	unsigned char field_16;
+	unsigned char field_17;
 	void *m_pParticle; // CParticle *
 
 	bool HasWeaponAmmoToBeUsed();

@@ -1,6 +1,6 @@
 #pragma once
 
-enum ePedType : __int32
+enum ePedType : int
 {
 	PED_TYPE_PLAYER1,
 	PED_TYPE_PLAYER2,

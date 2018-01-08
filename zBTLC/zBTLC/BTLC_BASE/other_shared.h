@@ -16,24 +16,24 @@ inline bool KeyPressed(unsigned int keyCode) {
 //VALIDATE_SIZE(float, 4);
 
 // Basic types for structures describing
-typedef unsigned __int8 Bool;
-typedef __int32 Bool32;
-typedef __int8 Int8;
-typedef unsigned __int8 UInt8;
-typedef signed __int8 SInt8;
-typedef __int16 Int16;
-typedef unsigned __int16 UInt16;
-typedef signed __int16 SInt16;
-typedef __int32 Int32;
-typedef unsigned __int32 UInt32;
-typedef signed __int32 SInt32;
-typedef __int64 Int64;
-typedef unsigned __int64 UInt64;
-typedef signed __int64 SInt64;
-typedef float Float;
-typedef float Float32;
-typedef double Float64;
-typedef double Double;
+//typedef unsigned char bool;
+//typedef int Bool32;
+//typedef char Int8;
+//typedef unsigned char UInt8;
+//typedef signed char SInt8;
+//typedef short Int16;
+//typedef unsigned short UInt16;
+//typedef signed short SInt16;
+//typedef int Int32;
+//typedef unsigned int UInt32;
+//typedef signed int SInt32;
+//typedef __int64 Int64;
+//typedef unsigned __int64 UInt64;
+//typedef signed __int64 SInt64;
+//typedef float Float;
+//typedef float Float32;
+//typedef double Float64;
+//typedef double Double;
 
 #define _IGNORED_
 #define _CAN_BE_NULL_

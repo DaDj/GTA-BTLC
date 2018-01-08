@@ -13,7 +13,7 @@ namespace My_CCam
 			offset.x = 0.34f;
 
 		offset.y = 0.1f;
-		offset.z = -0.1f;
+		offset.z = -0.11f;
 		plugin::CallMethod<0x50F970, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5);
 	}
 
@@ -26,7 +26,7 @@ namespace My_CCam
 		else*/
 			offset.x = 0.34f;
 		offset.y = 0.1f;
-		offset.z = -0.1f;
+		offset.z = -0.11f;
 		plugin::CallMethod<0x522D40, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5, arg6);
 	}
 
@@ -57,7 +57,7 @@ namespace My_CCam
 						offset.x = 0.44f;
 					//offset.x = 0.44f;
 					offset.y = 0.4f;
-					offset.z = -0.1f;
+					offset.z = -0.13f;
 					plugin::CallMethod<0x521500, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5);
 					break;
 				default:

@@ -1,6 +1,6 @@
 #pragma once
 
-enum eCamMode : unsigned __int16
+enum eCamMode : unsigned short
 {
 	MODE_NONE = 0x0,
 	MODE_TOPDOWN = 0x1,

@@ -31,6 +31,8 @@ namespace visuals
 		MemoryVP::Patch<void*>(0x458A17 + 2, &pickup_z_off_money);	//z_offset money
 		MemoryVP::Patch<char>(0x4568E4 + 1, 1);
 		MemoryVP::Patch<float>(0x4568DD + 1, 0.0f);
+
+
 	}
 
 	void vehicle_headlights()

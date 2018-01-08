@@ -12,6 +12,8 @@
 #include "../Patch/MemoryMgr.h"
 #include <iostream>
 #include "fixes.h"
+#include "../game_sa/RenderWare.h"
+#include "d3d9.h"
 
 namespace BUGFIX
 {
@@ -65,7 +67,7 @@ namespace BUGFIX
 		//// DISABLE CHEATS
 		//MemoryVP::Patch<BYTE>(0x439AF0, 0xC3);
 		//MemoryVP::Patch<BYTE>(0x438370, 0xC3);
-		
+
 
 		// Disable CStats::IncrementStat (returns at start of function)
 		MemoryVP::Patch<BYTE>(0x55C180, 0xC3);
@@ -92,7 +94,11 @@ namespace BUGFIX
 		MemoryVP::Patch<float>(0x70C6A8 + 1, 0.0);
 		////Smooth carshadow movement
 		MemoryVP::Patch<float>(0x70C2D5 + 1, 0.0);
+
+		////PEDS stay in car at Death  --BUGGY (Autopilot doesnt recognize dead driver)
+		//MemoryVP::Patch<int>(0x5E832C + 1, 0x21080);
 		
+			
 	}
 
 
@@ -107,5 +113,5 @@ namespace BUGFIX
 		MemoryVP::Nop(0x5726B5, 14);
 		MemoryVP::Nop(0x572111, 14);
 	}
-
 }
+

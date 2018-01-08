@@ -16,9 +16,9 @@ public:
     float m_fColorGreen;
     float m_fColorBlue;
     class CEntity *m_pEntityToLight;
-    unsigned __int8 m_nType;
-    unsigned __int8 m_nFogType;
-    unsigned __int8 m_bGenerateShadows;
+    unsigned char m_nType;
+    unsigned char m_nFogType;
+    unsigned char m_bGenerateShadows;
 };
 #pragma pack(pop)
 
@@ -30,7 +30,7 @@ public:
 	// static variables
 
 	// num of registered lights in frame
-	static unsigned __int32& NumLights;
+	static unsigned int& NumLights;
 	// lights array. Count: MAX_POINTLIGHTS (32)
 	static tPointLight *aLights;
 

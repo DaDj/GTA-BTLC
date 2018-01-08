@@ -12,11 +12,11 @@
 class CColData
 {
 public:
-    unsigned __int16   m_wNumSpheres;
-    unsigned __int16   m_wNumBoxes;
-    unsigned __int16   m_wNumTriangles;
-    unsigned __int8    m_bNumLines;
-    unsigned __int8    m_bFlags;
+    unsigned short   m_wNumSpheres;
+    unsigned short   m_wNumBoxes;
+    unsigned short   m_wNumTriangles;
+    unsigned char    m_bNumLines;
+    unsigned char    m_bFlags;
     CColSphere        *m_pSpheres;
     CColBox           *m_pBoxes;
 	/* possibly was the union with some unknown yet collision model which was used for CMtruck only.
@@ -29,8 +29,8 @@ public:
     CompressedVector  *m_pVertices;
     CColTriangle      *m_pTriangles;
     CColTrianglePlane *m_pTrianglePlanes;
-    unsigned __int32   m_dwNumShadowTriangles;
-    unsigned __int32   m_dwNumShadowVertices;
+    unsigned int   m_dwNumShadowTriangles;
+    unsigned int   m_dwNumShadowVertices;
     CompressedVector  *m_pShadowVertices;
     CColTriangle      *m_pShadowTriangles;
 };

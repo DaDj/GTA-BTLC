@@ -191,11 +191,11 @@ void   CStreaming::StreamCopModels(signed int townID)
 	signed int i; 
 	//char* bCopBikeLoaded = (char*)0x9654BE;
 	//char* disablePoliceBikes = (char*)0x9654BF;
-	signed int* Time_Copbike_refresh = (int*)0x9654C0;
+	int* Time_Copbike_refresh = (int*)0x9654C0;
 	int copModel_count = sizeof(copModelByTown) / 4;
 	int copCarModel_count = sizeof(copCarModelByTown) / 4;
-	signed int COP_ID;
-	signed int COPCAR_ID; 
+	int COP_ID;
+	int COPCAR_ID; 
 
 	if (!CGame::currArea)
 	{

@@ -29,7 +29,7 @@ void CCarCtrl::TellOccupantsToLeaveCar(CVehicle* veh)
 
 bool CCarCtrl::CreatePoliceChase(CVehicle* veh, int a1, CNodeAddress unused)
 {
-	// char __cdecl CCarCtrl__CreatePoliceChase(CVehicle *veh, signed int a3, __int16 arg8) arg8 = CNodeAddress, a3 from 14-23
+	// char __cdecl CCarCtrl__CreatePoliceChase(CVehicle *veh, signed int a3, short arg8) arg8 = CNodeAddress, a3 from 14-23
 	return ((bool(__cdecl *)(CVehicle*, int, CNodeAddress))0x42C2B0)(veh, a1, unused);
 }
 

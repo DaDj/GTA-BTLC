@@ -47,7 +47,7 @@ public:
 	/**
 	* Get N-th item from list head/tail
 	*/
-	ListItem_c * GetItemOffset(Bool bFromHead, Int32 iOffset);
+	ListItem_c * GetItemOffset(bool bFromHead, int iOffset);
 };
 
 VALIDATE_SIZE(List_c, 0xC);

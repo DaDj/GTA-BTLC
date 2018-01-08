@@ -8,21 +8,21 @@
 class CWeaponAudio : public CAEAudioEntity
 {
 public:
-	__int8 field_7C;
-	__int8 field_7D;
-	__int8 field_7E;
-	__int8 field_7F;
-	__int8 field_80;
-	__int8 field_81[3];
-	__int32 field_84;
-	__int32 field_88;
-	__int32 field_8C;
-	__int32 field_90;
-	__int32 m_dwTimeChainsaw;
-	__int32 m_dwTimeLastFired;
+	char field_7C;
+	char field_7D;
+	char field_7E;
+	char field_7F;
+	char field_80;
+	char field_81[3];
+	int field_84;
+	int field_88;
+	int field_8C;
+	int field_90;
+	int m_dwTimeChainsaw;
+	int m_dwTimeLastFired;
 	CAESound *m_pSounds;
-	__int8 m_bActive;
-	__int8 field_A1[3];
+	char m_bActive;
+	char field_A1[3];
 	class CPed *m_pPed;
 };
 #pragma pack(pop)

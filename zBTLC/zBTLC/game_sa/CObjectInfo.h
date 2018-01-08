@@ -15,18 +15,18 @@ public:
 	float            m_fBuoyancyConstant;
 	float            m_fUprootLimit;
 	float            m_fColDamageMultiplier;
-	unsigned __int8  m_nColDamageEffect;
-	unsigned __int8  m_nSpecialColResponseCase;
-	unsigned __int8  m_bCameraAvoidObject;
-	unsigned __int8  m_bCausesExplosion;
-	unsigned __int8  m_nFxType;
+	unsigned char  m_nColDamageEffect;
+	unsigned char  m_nSpecialColResponseCase;
+	unsigned char  m_bCameraAvoidObject;
+	unsigned char  m_bCausesExplosion;
+	unsigned char  m_nFxType;
 	CVector          m_vFxOffset;
 	void            *m_pFxSystem; // CFxSystem *
 	float            m_fSmashMultiplier;
 	CVector          m_vBreakVelocity;
 	float            m_fBreakVelocityRand;
-	unsigned __int32 m_dwGunBreakMode;
-	unsigned __int32 m_dwSparksOnImpact;
+	unsigned int m_dwGunBreakMode;
+	unsigned int m_dwSparksOnImpact;
 };
 
 class CObjectdata

@@ -18,7 +18,7 @@ public:
     unsigned int pad3;
     
 	RwMatrix *m_pAttachMatrix;
-	unsigned __int8 m_bAttachMatrixTemporary; // do we need to delete attaching matrix at detaching
+	unsigned char m_bAttachMatrixTemporary; // do we need to delete attaching matrix at detaching
 
 	CMatrix();
 	CMatrix(CMatrix const& matrix);

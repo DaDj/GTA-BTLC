@@ -47,8 +47,8 @@ AnimBlendFrameData *RpAnimBlendClumpFindFrame(RpClump *clump, char *name);
 char *MakeUpperCase(char *dest, char *src);
 
 
- float x_fac(float x);
- float y_fac(float y);
+ //float x_fac(float x);
+ //float y_fac(float y);
 
 
  // dummy function

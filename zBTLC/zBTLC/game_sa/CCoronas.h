@@ -12,15 +12,15 @@ public:
 	static float& SunScreenX;
 	static float& SunScreenY;
 	// are there any obstacles between sun and camera
-	static unsigned __int8& SunBlockedByClouds;
+	static unsigned char& SunBlockedByClouds;
 	// change coronas brightness immediately
 	static bool& bChangeBrightnessImmediately;
 	// num of registered coronas in frame
-	static unsigned __int32& NumRegisteredCoronas;
+	static unsigned int& NumRegisteredCoronas;
 	// coronas intensity multiplier
 	static float& LightsMult;
 	// this is used to control moon size when you shooting it with sniper
-	static unsigned __int32& MoonSize;
+	static unsigned int& MoonSize;
 	// Coronas array. count: MAX_NUM_CORONAS (64)
 	static CRegisteredCorona *aCoronas;
 

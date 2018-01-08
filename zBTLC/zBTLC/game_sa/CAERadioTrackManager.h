@@ -18,7 +18,7 @@ public:
 	int8_t field_4;
 	int8_t field_5;
 	int8_t field_6;
-	Bool m_bRadioAutoSelect;
+	bool m_bRadioAutoSelect;
 	int8_t field_8[14];
 	uint8_t m_nMonthDay;
 	uint8_t m_nClockHours;
@@ -58,7 +58,7 @@ public:
 	int8_t field_DE[10];
 	int8_t field_E8;
 	int8_t m_nRadioStationState;
-	Bool m_bStereoActive;
+	bool m_bStereoActive;
 	int8_t field_EB;
 	int32_t field_EC;
 	int8_t field_F0;
@@ -75,7 +75,7 @@ public:
 	int8_t field_36C;
 	int8_t field_36D[3];
 
-	Bool IsVehicleRadioActive();
+	bool IsVehicleRadioActive();
 	char *GetRadioStationName(signed char id);
 
 	// 11 structures

@@ -39,14 +39,14 @@ void CEntity::MyPreRender_Shadow(CEntity *Entity)
 	{	
 		if (Model_ID == TrafficL_Models[i])
 		{
-			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
+			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2f, 16.0f, 0.5f, 0);
 			((void(_cdecl*)(CEntity *))0x49DAB0)(Entity);
 			return;
 		}
 
 		if (Model_ID == Lamp_Models[i])
 		{
-			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2, 16.0, 0.5, 0);
+			CShadows::StoreShadowForPole(Entity, 0, 0.0, 0.2f, 16.0f, 0.5f, 0);
 			return;
 		}
 

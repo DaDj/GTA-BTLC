@@ -6,7 +6,7 @@
 #pragma pack(push, 4)
 struct tBoatHandlingData
 {
-	__int32 m_dwVehicleId;
+	int m_dwVehicleId;
 	float   m_fThrustY;
 	float   m_fThrustZ;
 	float   m_fThrustAppZ;

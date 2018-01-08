@@ -17,35 +17,35 @@ public:
 	float m_fMoveBlendRatio;
 	float m_fTimeCanRun;
 	float m_fSprintEnergy;
-	unsigned __int8 m_nChosenWeapon;
-	unsigned __int8 m_nCarDangerCounter;
-	__int8 _pad0[2];
-	unsigned __int32 m_dwStandStillTimer;
-	unsigned __int32 m_dwHitAnimDelayTimer;
+	unsigned char m_nChosenWeapon;
+	unsigned char m_nCarDangerCounter;
+	char _pad0[2];
+	unsigned int m_dwStandStillTimer;
+	unsigned int m_dwHitAnimDelayTimer;
 	float m_fAttackButtonCounter;
 	void *m_pDangerCar;
-	unsigned __int32 m_bStoppedMoving : 1;
-	unsigned __int32 m_bAdrenaline : 1;
-	unsigned __int32 m_bHaveTargetSelected : 1;             // Needed to work out whether we lost target this frame
-	unsigned __int32 m_bFreeAiming : 1;
-	unsigned __int32 m_bCanBeDamaged : 1;
-	unsigned __int32 m_bAllMeleeAttackPtsBlocked : 1;       // if all of m_pMeleeAttackers[] is blocked by collision, just attack straight ahead
-	unsigned __int32 m_JustBeenSnacking : 1;                // If this bit is true we have just bought something from a vending machine
-	unsigned __int32 m_bRequireHandleBreath : 1;
-	unsigned __int32 m_GroupStuffDisabled : 1;              // if this is true the player can't recrout or give his group commands.
-	unsigned __int32 m_GroupAlwaysFollow : 1;               // The group is told to always follow the player (used for girlfriend missions)
-	unsigned __int32 m_GroupNeverFollow : 1;                // The group is told to always follow the player (used for girlfriend missions)
-	unsigned __int32 m_bInVehicleDontAllowWeaponChange : 1; // stop weapon change once driveby weapon has been given
-	unsigned __int32 m_bRenderWeapon : 1;                   // set to false during cutscenes so that knuckledusters are not rendered
-	unsigned __int32 m_dwPlayerGroup;
-	unsigned __int32 m_dwAdrenalineEndTime;
-	unsigned __int8 m_bDrunkenness;
-	unsigned __int8 m_bFadeDrunkenness;
-	unsigned __int8 m_bDrugLevel;
-	unsigned __int8 m_bScriptLimitToGangSize;
+	unsigned int m_bStoppedMoving : 1;
+	unsigned int m_bAdrenaline : 1;
+	unsigned int m_bHaveTargetSelected : 1;             // Needed to work out whether we lost target this frame
+	unsigned int m_bFreeAiming : 1;
+	unsigned int m_bCanBeDamaged : 1;
+	unsigned int m_bAllMeleeAttackPtsBlocked : 1;       // if all of m_pMeleeAttackers[] is blocked by collision, just attack straight ahead
+	unsigned int m_JustBeenSnacking : 1;                // If this bit is true we have just bought something from a vending machine
+	unsigned int m_bRequireHandleBreath : 1;
+	unsigned int m_GroupStuffDisabled : 1;              // if this is true the player can't recrout or give his group commands.
+	unsigned int m_GroupAlwaysFollow : 1;               // The group is told to always follow the player (used for girlfriend missions)
+	unsigned int m_GroupNeverFollow : 1;                // The group is told to always follow the player (used for girlfriend missions)
+	unsigned int m_bInVehicleDontAllowWeaponChange : 1; // stop weapon change once driveby weapon has been given
+	unsigned int m_bRenderWeapon : 1;                   // set to false during cutscenes so that knuckledusters are not rendered
+	unsigned int m_dwPlayerGroup;
+	unsigned int m_dwAdrenalineEndTime;
+	unsigned char m_bDrunkenness;
+	unsigned char m_bFadeDrunkenness;
+	unsigned char m_bDrugLevel;
+	unsigned char m_bScriptLimitToGangSize;
 	float m_fBreath;
-	unsigned __int32 m_dwMeleeWeaponAnimReferenced;
-	unsigned __int32 m_dwMeleeWeaponAnimReferencedExtra;
+	unsigned int m_dwMeleeWeaponAnimReferenced;
+	unsigned int m_dwMeleeWeaponAnimReferencedExtra;
 	float m_fFPSMoveHeading;
 	float m_fLookPitch;
 	float m_fSkateBoardSpeed;
@@ -53,26 +53,26 @@ public:
 	struct RpAtomic *m_pSpecialAtomic;
 	float m_fGunSpinSpeed;
 	float m_fGunSpinAngle;
-	unsigned __int32 m_dwLastTimeFiring;
-	unsigned __int32 m_dwTargetBone;
+	unsigned int m_dwLastTimeFiring;
+	unsigned int m_dwTargetBone;
 	CVector m_vTargetBoneOffset;
-	unsigned __int32 m_dwBusFaresCollected;
-	unsigned __int8 m_bPlayerSprintDisabled;
-	unsigned __int8 m_bDontAllowWeaponChange;
-	unsigned __int8 m_bForceInteriorLighting;
+	unsigned int m_dwBusFaresCollected;
+	unsigned char m_bPlayerSprintDisabled;
+	unsigned char m_bDontAllowWeaponChange;
+	unsigned char m_bForceInteriorLighting;
 	char _pad1;
-	unsigned __int16 m_wDPadDownPressedInMilliseconds;
-	unsigned __int16 m_wDPadUpPressedInMilliseconds;
-	unsigned __int8 m_bWetness;
-	unsigned __int8 m_bPlayersGangActive;
-	unsigned __int8 m_bWaterCoverPerc;
-	__int8 _pad2;
+	unsigned short m_wDPadDownPressedInMilliseconds;
+	unsigned short m_wDPadUpPressedInMilliseconds;
+	unsigned char m_bWetness;
+	unsigned char m_bPlayersGangActive;
+	unsigned char m_bWaterCoverPerc;
+	char _pad2;
 	float m_fWaterHeight;
-	unsigned __int32 m_dwFireHSMissilePressedTime;
+	unsigned int m_dwFireHSMissilePressedTime;
 	class CEntity *m_LastHSMissileTarget;
-	unsigned __int32 m_dwModelIndexOfLastBuildingShot;
-	unsigned __int32 m_dwLastHSMissileLOSTime : 31;
-	unsigned __int32 m_bLastHSMissileLOS : 1;
+	unsigned int m_dwModelIndexOfLastBuildingShot;
+	unsigned int m_dwLastHSMissileLOSTime : 31;
+	unsigned int m_bLastHSMissileLOS : 1;
 	class CPed *m_pCurrentProstitutePed;
 	class CPed *m_pLastProstituteShagged;
 };

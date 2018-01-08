@@ -129,7 +129,7 @@ int __cdecl psSelectDevice()
 	int* unk_C92118 = (int*)0xC92118;
 	bool success = false;
 //	unsigned __int64 CurrentSubSystem; //v6
-	__int32* unk_C92108 = (int*)0xC92108;
+	int* unk_C92108 = (int*)0xC92108;
 
 		v3 = RsGlobal.ps->window;
 		v2 = RsGlobal.ps->instance;

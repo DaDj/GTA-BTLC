@@ -26,8 +26,8 @@ struct  CText__TablEntry
 struct  CText__Tabl
 {
 	CText__TablEntry data[200];
-	__int16 size;
-	__int16 __pad;
+	short size;
+	short __pad;
 
 	// Constructor
 	CText__Tabl();
@@ -49,7 +49,7 @@ struct tGXT_VERSION_2_TKEY_item
 struct  CText__TKey
 {
 	tGXT_VERSION_2_TKEY_item* data;
-	__int16 size;
+	short size;
 	
 
 	// Reads TKEY block from GXT file
@@ -59,7 +59,7 @@ struct  CText__TKey
 	void patchOffsets(int PosOffsetMovement);
 
 	// Performs a binary search for a specified key and returns pointer if found, otherwise NULL.
-	tGXT_VERSION_2_TKEY_item* bsearch(unsigned int key, tGXT_VERSION_2_TKEY_item *data, signed __int16 firstIndex, __int16 lastIndex);
+	tGXT_VERSION_2_TKEY_item* bsearch(unsigned int key, tGXT_VERSION_2_TKEY_item *data, signed short firstIndex, short lastIndex);
 
 	// Returns pointer to string by GXT key name (label)
 	const char* GetTextByLabel(const char* keyName, bool* bFound);

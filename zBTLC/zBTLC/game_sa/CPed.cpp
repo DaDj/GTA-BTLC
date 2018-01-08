@@ -1,5 +1,14 @@
 #include "CPed.h"
 
+
+void CPed::My_Init()
+{
+	//TEST PED Weapon ANIMS
+	MemoryVP::InjectHook(0x5E92F4, &CPed::My_ProcessAnimGroups, PATCH_CALL);
+}
+
+
+
 // Converted from thiscall void* CPed::operator new(uint size) 0x5E4720
 void* CPed::operator new(unsigned int size) {
 	return ((void* (__cdecl *)(unsigned int))0x5E4720)(size);
@@ -9,6 +18,8 @@ void* CPed::operator new(unsigned int size) {
 void CPed::operator delete(void* data) {
 	((void (__cdecl *)(void*))0x5E4760)(data);
 }
+
+
 
 // Converted from void CPed::SetMoveAnim(void) 0x5E4A00
 void CPed::SetMoveAnim()
@@ -430,6 +441,7 @@ void CPed::UpdatePosition()
 	((void (__thiscall *)(CPed*))0x5E1B10)(this);
 }
 
+
 // Converted from thiscall void CPed::ProcessBuoyancy(void) 0x5E1FA0
 void CPed::ProcessBuoyancy()
 {
@@ -806,4 +818,37 @@ void CPed::MakeTyresMuddySectorList(CPtrList& ptrList)
 void CPed::DeadPedMakesTyresBloody()
 {
 	((void (__thiscall *)(CPed*))0x6B4200)(this);
+}
+
+
+void CPed::My_ProcessAnimGroups()
+{
+	CPed *Ped = this;
+	
+	if (!Ped->IsPlayer())
+	{
+		int animgrp = 0;
+		eWeaponType Weapon_Type = Ped->m_aWeapons[Ped->m_nActiveWeaponSlot].m_Type;
+		if (Weapon_Type == WEAPON_RLAUNCHER || Weapon_Type == WEAPON_RLAUNCHER_HS)
+			animgrp = 57;
+		if (Weapon_Type == WEAPON_BASEBALLBAT || Weapon_Type == WEAPON_SHOVEL || Weapon_Type == WEAPON_POOLCUE)
+			animgrp = 63;
+		if (Weapon_Type == WEAPON_CHAINSAW || Weapon_Type == WEAPON_FTHROWER || Weapon_Type == WEAPON_MINIGUN)
+			animgrp = 66;
+		if (Weapon_Type == WEAPON_M4
+			|| Weapon_Type == WEAPON_AK47
+			|| Weapon_Type == WEAPON_SPAS12
+			|| Weapon_Type == WEAPON_SAWNOFF
+			|| Weapon_Type == WEAPON_SNIPERRIFLE
+			|| Weapon_Type == WEAPON_COUNTRYRIFLE
+			|| Weapon_Type == WEAPON_PISTOL)
+			animgrp = 60;
+
+		if (!animgrp == 0)
+			Ped->m_dwAnimGroup = animgrp;
+		else
+			Ped->m_bResetWalkAnims = true;
+	
+	}
+	Ped->UpdatePosition();
 }

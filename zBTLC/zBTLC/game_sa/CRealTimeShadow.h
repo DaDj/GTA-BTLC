@@ -9,14 +9,14 @@ class CRealTimeShadow
 {
 public:
 	class CPhysical *m_pOwner;
-	unsigned __int8 m_bCreated;
-	unsigned __int8 m_nIntensity;
+	unsigned char m_bCreated;
+	unsigned char m_nIntensity;
 	CShadowCamera m_Camera;
-	unsigned __int8 m_bBlurred;
+	unsigned char m_bBlurred;
 	CShadowCamera m_BlurCamera;
-	unsigned __int32 m_dwBlurPasses;
-	unsigned __int8 m_bDrawMoreBlur;
-	unsigned __int32 m_dwRwObjectType;
+	unsigned int m_dwBlurPasses;
+	unsigned char m_bDrawMoreBlur;
+	unsigned int m_dwRwObjectType;
 	struct RpLight *m_pLight;
 	CSphere m_BoundingSphere;
 	CSphere m_BaseSphere;

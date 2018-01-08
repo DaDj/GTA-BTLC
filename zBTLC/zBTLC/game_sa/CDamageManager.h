@@ -74,43 +74,43 @@ enum eLights {
 class CDamageManager {
 public:
 	float           m_fWheelDamageEffect;
-	unsigned __int8 m_nEngineStatus;
+	unsigned char m_nEngineStatus;
 	union {
-		unsigned __int8 m_anWheelsStatus[4];
+		unsigned char m_anWheelsStatus[4];
 		struct {
-			unsigned __int8 m_nRightRearWheelsStatus;
-			unsigned __int8 m_nRightFrontWheelsStatus;
-			unsigned __int8 m_nLeftRearWheelsStatus;
-			unsigned __int8 m_nLeftFrontWheelsStatus;
+			unsigned char m_nRightRearWheelsStatus;
+			unsigned char m_nRightFrontWheelsStatus;
+			unsigned char m_nLeftRearWheelsStatus;
+			unsigned char m_nLeftFrontWheelsStatus;
 		};
 	};
 	union {
-		unsigned __int8 m_anDoorsStatus[6];
+		unsigned char m_anDoorsStatus[6];
 		struct {
-			unsigned __int8 m_nBonnetStatus;
-			unsigned __int8 m_nBootStatus;
-			unsigned __int8 m_nLeftFrontDoorStatus;
-			unsigned __int8 m_nRightFrontDoorStatus;
-			unsigned __int8 m_nLeftRearDoorStatus;
-			unsigned __int8 m_nRightRearDoorStatus;
+			unsigned char m_nBonnetStatus;
+			unsigned char m_nBootStatus;
+			unsigned char m_nLeftFrontDoorStatus;
+			unsigned char m_nRightFrontDoorStatus;
+			unsigned char m_nLeftRearDoorStatus;
+			unsigned char m_nRightRearDoorStatus;
 		};
 	};
 	union {
-		unsigned __int32 m_dwLightsStatus;
+		unsigned int m_dwLightsStatus;
 		struct {
-			unsigned __int32 m_nLeftFrontLightStatus : 2;
-			unsigned __int32 m_nRightFrontLightStatus : 2;
-			unsigned __int32 m_nRightRearLightStatus : 2;
-			unsigned __int32 m_nLeftRearLightStatus : 2;
+			unsigned int m_nLeftFrontLightStatus : 2;
+			unsigned int m_nRightFrontLightStatus : 2;
+			unsigned int m_nRightRearLightStatus : 2;
+			unsigned int m_nLeftRearLightStatus : 2;
 		};
 	};
 	union {
-		unsigned __int32 m_dwPanelsStatus;
+		unsigned int m_dwPanelsStatus;
 		struct {
-			unsigned __int32 m_nLeftFrontLightStatus : 4;
-			unsigned __int32 m_nRightFrontLightStatus : 4;
-			unsigned __int32 m_nRightRearLightStatus : 4;
-			unsigned __int32 m_nLeftRearLightStatus : 4;
+			unsigned int m_nLeftFrontLightStatus : 4;
+			unsigned int m_nRightFrontLightStatus : 4;
+			unsigned int m_nRightRearLightStatus : 4;
+			unsigned int m_nLeftRearLightStatus : 4;
 		};
 	};
 

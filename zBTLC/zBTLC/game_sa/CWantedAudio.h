@@ -8,9 +8,9 @@ class CWantedAudio
 protected:
 	void *vmt;
 public:
-	__int8 field_4[12];
-	__int32 field_10;
-	__int8 field_14[108];
+	char field_4[12];
+	int field_10;
+	char field_14[108];
 };
 #pragma pack(pop)
 

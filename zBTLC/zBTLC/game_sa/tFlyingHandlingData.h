@@ -6,7 +6,7 @@
 #pragma pack(push, 4)
 struct tFlyingHandlingData
 {
-	__int32 m_dwVehicleId;
+	int m_dwVehicleId;
 	float   m_fThrust;
 	float   m_fThrustFallOff;
 	float   m_fYaw;

@@ -6,10 +6,10 @@
 class CQueuedMode
 {
 public:
-	unsigned __int16 m_wMode;
+	unsigned short m_wMode;
 	float            m_fDuration;
-	unsigned __int16 m_MinZoom;
-	unsigned __int16 m_MaxZoom;
+	unsigned short m_MinZoom;
+	unsigned short m_MaxZoom;
 };
 #pragma pack(pop)
 

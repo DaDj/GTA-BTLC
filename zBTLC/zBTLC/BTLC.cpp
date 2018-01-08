@@ -100,6 +100,8 @@ void Function_starter()
 	CStreaming::My_Init();//New COP stream functions - ALL cops&copcars in all cities 
 	CAnimationStyleDescriptor::My_init();
 	CEntity::My_Init();
+	CPed::My_Init();
+	
 
 	 //static Crosshair Hook
 	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
@@ -138,6 +140,7 @@ void btlc_init()
 	MemoryVP::Patch<int>(0x5A3327, 5000);
 	MemoryVP::Patch<int>(0x5A335D + 1,8000);
 	//MemoryVP::Patch<int>(0x5A3EB2  + 1, 2000);
+
 }
 
 

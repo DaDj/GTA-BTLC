@@ -88,10 +88,10 @@ float CPlayerPed::GetWeaponRadiusOnScreen() {
 	char weapskill; 
 	long double result;
 	long double v7;
-	float Size_Factor_A = 0.4;
-	float Size_Factor_B = 15.0; //for changing radius
-	float Size_min = 0.2;
-	float Size_max = 1.0;
+	float Size_Factor_A = 0.4f;
+	float Size_Factor_B = 15.0f; //for changing radius
+	float Size_min = 0.2f;
+	float Size_max = 1.0f;
 	bool dynamic_size = false;
 	bool accucary_dependant = false;
 

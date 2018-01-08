@@ -6,7 +6,7 @@ class CPlaneTrail
 {
 public:
 	CVector m_vPosn[16];
-	unsigned __int32 m_dwTime[16];
+	unsigned int m_dwTime[16];
 
 	void Init();
 	void Render(float intensity);

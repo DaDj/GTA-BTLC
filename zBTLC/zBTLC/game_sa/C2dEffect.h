@@ -2,7 +2,7 @@
 #include "plbase/PluginBase_SA.h"
 #include "CVector.h"
 
-enum eEffectType : unsigned __int8
+enum eEffectType : unsigned char
 {
 	EFFECT_LIGHT,
 	EFFECT_PARTICLE,

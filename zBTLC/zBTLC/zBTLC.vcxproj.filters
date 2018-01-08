@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Patching">
-      <UniqueIdentifier>{87c72dff-8f6e-40aa-830a-d0a5be3aac71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BTLC_BASE">
       <UniqueIdentifier>{669fcbd3-bd0a-4f0e-bf23-5ae340706ea9}</UniqueIdentifier>
     </Filter>
@@ -16,9 +13,6 @@
     </Filter>
     <Filter Include="Events_Sa">
       <UniqueIdentifier>{d45878e4-6151-4f2b-8f72-341cafd7eac3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Patching\gvm">
-      <UniqueIdentifier>{6e4d9b1a-3231-4e6f-9aea-388051fdfa0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="BTLC_BASE\features">
       <UniqueIdentifier>{d124aa0b-a246-4a88-ad11-e9ae220b7768}</UniqueIdentifier>
@@ -35,9 +29,6 @@
     <Filter Include="game_sa\rw">
       <UniqueIdentifier>{9ee5a81e-12d6-41a1-aa29-d55460d0dd48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Patching\Paths">
-      <UniqueIdentifier>{856890ab-2ff3-4d47-b265-c8a3399c4fd3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BTLC_BASE\windowmode">
       <UniqueIdentifier>{284c5093-0747-47a4-ade5-ac84c967f4bf}</UniqueIdentifier>
     </Filter>
@@ -49,6 +40,15 @@
     </Filter>
     <Filter Include="DXSDK\DX9">
       <UniqueIdentifier>{2b6c5367-0093-4e1c-bcc0-75eafe280744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa\Patching">
+      <UniqueIdentifier>{87c72dff-8f6e-40aa-830a-d0a5be3aac71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa\Patching\gvm">
+      <UniqueIdentifier>{6e4d9b1a-3231-4e6f-9aea-388051fdfa0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game_sa\Patching\Paths">
+      <UniqueIdentifier>{856890ab-2ff3-4d47-b265-c8a3399c4fd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1388,7 +1388,7 @@
       <Filter>game_sa</Filter>
     </ClCompile>
     <ClCompile Include="Patch\paths\Paths.cpp">
-      <Filter>Patching\Paths</Filter>
+      <Filter>game_sa\Patching\Paths</Filter>
     </ClCompile>
     <ClCompile Include="BTLC_BASE\windowmode\dxhandler.cpp">
       <Filter>BTLC_BASE\windowmode</Filter>
@@ -1444,7 +1444,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
-      <Filter>Patching</Filter>
+      <Filter>game_sa\Patching</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\AnimBlendFrameData.h">
       <Filter>game_sa</Filter>
@@ -3031,28 +3031,28 @@
       <Filter>Events_Sa</Filter>
     </ClInclude>
     <ClInclude Include="Patch\hooking.hpp">
-      <Filter>Patching</Filter>
+      <Filter>game_sa\Patching</Filter>
     </ClInclude>
     <ClInclude Include="Patch\injector.hpp">
-      <Filter>Patching</Filter>
+      <Filter>game_sa\Patching</Filter>
     </ClInclude>
     <ClInclude Include="Patch\gvm\gvm.hpp">
-      <Filter>Patching\gvm</Filter>
+      <Filter>game_sa\Patching\gvm</Filter>
     </ClInclude>
     <ClInclude Include="Patch\gvm\translator.hpp">
-      <Filter>Patching\gvm</Filter>
+      <Filter>game_sa\Patching\gvm</Filter>
     </ClInclude>
     <ClInclude Include="Patch\calling.hpp">
-      <Filter>Patching</Filter>
+      <Filter>game_sa\Patching</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CCullZone.h">
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="Patch\paths\Error.h">
-      <Filter>Patching\Paths</Filter>
+      <Filter>game_sa\Patching\Paths</Filter>
     </ClInclude>
     <ClInclude Include="Patch\paths\Paths.h">
-      <Filter>Patching\Paths</Filter>
+      <Filter>game_sa\Patching\Paths</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\eSprintType.h">
       <Filter>game_sa</Filter>
@@ -3061,7 +3061,7 @@
       <Filter>BTLC_BASE\windowmode</Filter>
     </ClInclude>
     <ClInclude Include="Patch\assembly.hpp">
-      <Filter>Patching</Filter>
+      <Filter>game_sa\Patching</Filter>
     </ClInclude>
     <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h">
       <Filter>BTLC_BASE\windowmode</Filter>

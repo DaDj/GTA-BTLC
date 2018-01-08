@@ -6,7 +6,7 @@ class CGame
 {
 public:
 	// Current number of area
-	static __int32& currArea;
+	static int& currArea;
 
 	static void TidyUpMemory(bool arg1, bool arg2);
 };

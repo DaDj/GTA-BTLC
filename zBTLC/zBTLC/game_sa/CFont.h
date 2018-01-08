@@ -7,14 +7,14 @@
 #define MAX_FONT_SPRITES 2
 #define MAX_FONT_BUTTON_SPRITES 15
 
-enum eFontAlignment : unsigned __int8
+enum eFontAlignment : unsigned char
 {
 	ALIGN_CENTER,
 	ALIGN_LEFT,
 	ALIGN_RIGHT
 };
 
-enum eFontStyle : unsigned __int8
+enum eFontStyle : unsigned char
 {
 	FONT_GOTHIC,
 	FONT_SUBTITLES,
@@ -31,7 +31,7 @@ public:
 	static CSprite2d *Sprite;
 	// button textures array. Num of elements: MAX_FONT_BUTTON_SPRITES (15)
 	static CSprite2d *ButtonSprite;
-	static unsigned __int8& m_nExtraFontSymbolId;
+	static unsigned char& m_nExtraFontSymbolId;
 	static bool& m_bNewLine;
 	static CRGBA *m_Color;
 	static CVector2D *m_Scale;
@@ -44,17 +44,17 @@ public:
 	static bool& m_bEnlargeBackgroundBox;
 	static bool& m_bFontPropOn;
 	static bool& m_bFontIsBlip;
-	static unsigned __int32 m_dwFontAlpha;
+	static unsigned int m_dwFontAlpha;
 	static CRGBA *m_FontBackgroundColor;
 	static float& m_fWrapx;
 	static float& m_fFontCentreSize;
 	static float& m_fRightJustifyWrap;
-	static unsigned __int8& m_FontTextureId;
-	static unsigned __int8& m_FontStyle;
-	static unsigned __int8& m_nFontShadow;
+	static unsigned char& m_FontTextureId;
+	static unsigned char& m_FontStyle;
+	static unsigned char& m_nFontShadow;
 	static CRGBA *m_FontDropColor;
-	static unsigned __int8& m_nFontOutlineSize;
-	static unsigned __int8& m_nFontOutline;
+	static unsigned char& m_nFontOutlineSize;
+	static unsigned char& m_nFontOutline;
 
 	// static functions
 

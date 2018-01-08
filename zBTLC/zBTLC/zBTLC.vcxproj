@@ -71,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetExt>.asi</TargetExt>
-    <OutDir>E:\GTA Modding\Rockstar Games\IV to SA Reborn V4\modloader\Back to LC\Base\plugins\</OutDir>
+    <OutDir>..\..\..\..\..\..\..\Rockstar Games\IV to SA Reborn  V4- no modloader\scripts</OutDir>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>

@@ -8,14 +8,14 @@ class CTaskComplexKillPedOnFoot : public CTaskComplex {
 protected:
     CTaskComplexKillPedOnFoot(plugin::dummy_func_t a) : CTaskComplex(a) {}
 public:
-	unsigned __int8   m_nFlags;
+	unsigned char   m_nFlags;
 	class CPed       *m_pTarget;
-	unsigned __int32  m_dwAttackFlags;
-	unsigned __int32  m_dwActionDelay;
-	unsigned __int32  m_dwActionChance;
-	__int8 field_20;
-	unsigned __int32  m_dwLaunchTime;
-	signed __int32    m_dwTime;
+	unsigned int  m_dwAttackFlags;
+	unsigned int  m_dwActionDelay;
+	unsigned int  m_dwActionChance;
+	char field_20;
+	unsigned int  m_dwLaunchTime;
+	signed int    m_dwTime;
     CTaskTimer        m_taskTimer;
 
 	CTaskComplexKillPedOnFoot();

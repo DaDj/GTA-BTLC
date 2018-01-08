@@ -6,11 +6,11 @@
 class CColTriangle
 {
 public:
-	unsigned __int16 m_VertA; // vertex index in vertices array
-	unsigned __int16 m_VertB; // vertex index in vertices array
-	unsigned __int16 m_VertC; // vertex index in vertices array
-	unsigned __int8 m_nMaterial;
-	unsigned __int8 m_nLigh;
+	unsigned short m_VertA; // vertex index in vertices array
+	unsigned short m_VertB; // vertex index in vertices array
+	unsigned short m_VertC; // vertex index in vertices array
+	unsigned char m_nMaterial;
+	unsigned char m_nLigh;
 };
 #pragma pack(pop)
 

@@ -19,14 +19,14 @@ struct RwRaster;
 	static_assert(offsetof(struc, member) == offset, "The offset of " #member " in " #struc " is not " #offset "...")
 
 
-VALIDATE_SIZE(bool, 1);
-VALIDATE_SIZE(char, 1);
-VALIDATE_SIZE(short, 2);
-VALIDATE_SIZE(int, 4);
-VALIDATE_SIZE(float, 4);
+//VALIDATE_SIZE(bool, 1);
+//VALIDATE_SIZE(char, 1);
+//VALIDATE_SIZE(short, 2);
+//VALIDATE_SIZE(int, 4);
+//VALIDATE_SIZE(float, 4);
 
 // Basic types for structures describing
-typedef unsigned __int8 Bool;
+//typedef unsigned char bool;
 
 #define __parent_class_vtable__ private:\
                                  virtual void __dummy_virtual_func(){}\
@@ -38,7 +38,7 @@ namespace plugin
     // Core functionalities
 	namespace Core
 	{
-		 unsigned int GetVersion();
+		// unsigned int GetVersion();
     };
     
     // Post processing effects

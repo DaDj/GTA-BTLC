@@ -9,9 +9,9 @@ class  CTexDictionary
 public:
 	// class variables
 	RwTexDictionary *m_pRwDictionary;
-	unsigned __int16 m_dwRefsCount;
-	__int16 m_dwParentIndex;
-	unsigned __int32 hash;
+	unsigned short m_dwRefsCount;
+	short m_dwParentIndex;
+	unsigned int hash;
 };
 #pragma pack (pop)
 
