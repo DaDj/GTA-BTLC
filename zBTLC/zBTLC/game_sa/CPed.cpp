@@ -841,14 +841,20 @@ void CPed::My_ProcessAnimGroups()
 			|| Weapon_Type == WEAPON_SAWNOFF
 			|| Weapon_Type == WEAPON_SNIPERRIFLE
 			|| Weapon_Type == WEAPON_COUNTRYRIFLE
-			|| Weapon_Type == WEAPON_PISTOL)
+			)
 			animgrp = 60;
 
+		//When Ped has one of the the weapons, the animgrp won't be 0
 		if (!animgrp == 0)
 			Ped->m_dwAnimGroup = animgrp;
 		else
-			Ped->m_bResetWalkAnims = true;
-	
+		{
+			//If he has none of the above weapons, revert back to Ped standard animgroup
+			CPedModelInfo *Info = (CPedModelInfo*)CModelInfo::ms_modelInfoPtrs[Ped->m_wModelIndex];
+       		Ped->m_dwAnimGroup = Info->m_nAnimType;
+		}
 	}
+
+	//Original Animations
 	Ped->UpdatePosition();
 }

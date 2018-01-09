@@ -1441,6 +1441,9 @@
     <ClCompile Include="game_sa\ListItem_c.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CPedModelInfo.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3128,6 +3131,9 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CProcObjectMan.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPedModelInfo.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>

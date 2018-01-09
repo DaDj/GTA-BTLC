@@ -5,6 +5,7 @@
 #include "CVehicleModelInfo.h"
 #include "CWeaponModelInfo.h"
 #include "CTimeModelInfo.h"
+#include "CPedModelInfo.h"
 
 class CModelInfo
 {

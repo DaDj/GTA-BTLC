@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
+    <ClCompile Include="game_sa\CPedModelInfo.cpp" />
     <ClCompile Include="game_sa\CPolyBunch.cpp" />
     <ClCompile Include="game_sa\CProcObjectMan.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
@@ -654,6 +655,7 @@
     <ClInclude Include="game_sa\CAEAudioChannel.h" />
     <ClInclude Include="game_sa\CAEStaticChannel.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />
+    <ClInclude Include="game_sa\CPedModelInfo.h" />
     <ClInclude Include="game_sa\CPolyBunch.h" />
     <ClInclude Include="game_sa\CProcObjectMan.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />

@@ -16,6 +16,8 @@
 #include "eWeaponType.h"
 #include "ePedState.h"
 #include "CAnimBlendAssociation.h"
+#include "CModelInfo.h"
+
 
 //enum ePedStats {
 //
