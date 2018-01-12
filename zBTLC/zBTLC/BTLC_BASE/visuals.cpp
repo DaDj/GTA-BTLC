@@ -66,7 +66,7 @@ namespace visuals
 		MemoryVP::Patch<float>(0x6FD3A6, 70.0); 
 
 		//Traffic/Lampost shadow distance
-			MemoryVP::Patch<float>(0x70C89C, 20.0);
+			MemoryVP::Patch<float>(0x70C89C, 40.0);
 			MemoryVP::Patch<float>(0x70C88B, 80.0);
 
 		//Shadow distances////////////////////////////

@@ -17,7 +17,7 @@
 
 #include "stdafx.h"
 #include "BTLC.h"
-#include "BTLC_BASE\windowmode\dxhandler.h"
+//#include "BTLC_BASE\windowmode\dxhandler.h"
 //#include <math.h>
 //#include <ctime>
 //#include "game_sa/RenderWare.h"

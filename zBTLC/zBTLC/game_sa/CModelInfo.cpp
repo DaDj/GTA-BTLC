@@ -59,6 +59,18 @@ CClumpModelInfo* CModelInfo::AddClumpModel(int index)
 // Converted from stdcall CVehicleModelInfo* CModelInfo::AddVehicleModel(int index) 0x4C6770
 CVehicleModelInfo* CModelInfo::AddVehicleModel(int index)
 {
+	//struct	ModelCarsData
+	//{
+	//	int count;
+	//	CVehicleModelInfo* objects;
+	//};   
+	//	
+
+	//ModelCarsData vehicleModels = *(ModelCarsData*)0xB1F650;
+	//CVehicleModelInfo* Vehiclemodel = &vehicleModels.objects[vehicleModels.count++];
+	//Vehiclemodel->Init();
+	//CModelInfo::ms_modelInfoPtrs[index] = Vehiclemodel;
+
 	return ((CVehicleModelInfo* (__cdecl *)(int))0x4C6770)(index);
 }
 

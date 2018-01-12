@@ -26,31 +26,31 @@ namespace debug
 		MemoryVP::InjectHook(0x4062F2, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 		MemoryVP::InjectHook(0x5B892A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 
-		plugin::Events::drawMenuBackgroundEvent += []
-		{
-			
-			char string[40];
-			CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
-			sprintf(string, "FPS : %f", FrontEndMenuManager.m_fDrawDistance);
-			CFont::SetFontStyle(FONT_SUBTITLES);
-			CFont::SetAlignment(ALIGN_LEFT);
-			CFont::SetOutlinePosition(1);
-			CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
-			CFont::PrintString(CHud::x_fac(200.0f), CHud::y_fac(5.0f), string);
+		//plugin::Events::drawMenuBackgroundEvent += []
+		//{
+		//	
+		//	char string[40];
+		//	CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
+		//	sprintf(string, "FPS : %f", FrontEndMenuManager.m_fDrawDistance);
+		//	CFont::SetFontStyle(FONT_SUBTITLES);
+		//	CFont::SetAlignment(ALIGN_LEFT);
+		//	CFont::SetOutlinePosition(1);
+		//	CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
+		//	CFont::PrintString(CHud::x_fac(200.0f), CHud::y_fac(5.0f), string);
 
 
 	
-			static float test_lod = 5.0;
-			static float test_lod2 = 1/(test_lod - 0.925);
-			
-			MemoryVP::Patch<void*>(0x573592 + 2, &test_lod);
-			MemoryVP::Patch<float>(0x57359F + 3, test_lod);
-			MemoryVP::Patch<float>(0x865438, test_lod2);
-			MemoryVP::Patch<float>(0x865250, (test_lod - 0.925) / 16);
-			//float thing1 = *(float*)0x57AED6 + 2;
-			//float thing = *(float*)0x865438;
+		//	static float test_lod = 5.0;
+		//	static float test_lod2 = 1/(test_lod - 0.925);
+		//	
+		//	MemoryVP::Patch<void*>(0x573592 + 2, &test_lod);
+		//	MemoryVP::Patch<float>(0x57359F + 3, test_lod);
+		//	MemoryVP::Patch<float>(0x865438, test_lod2);
+		//	MemoryVP::Patch<float>(0x865250, (test_lod - 0.925) / 16);
+		//	//float thing1 = *(float*)0x57AED6 + 2;
+		//	//float thing = *(float*)0x865438;
 	
-		};
+		//};
 
 		plugin::Events::gameProcessEvent += []
 		{
@@ -115,7 +115,7 @@ namespace debug
 	{
 		char string[40];
 		CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
-		sprintf(string, "FPS : %d", (int)floor(CTimer::ms_gameFPS));
+		sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetAlignment(ALIGN_LEFT);
 		CFont::SetOutlinePosition(1);

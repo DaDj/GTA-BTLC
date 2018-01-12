@@ -8,8 +8,7 @@
 #include "CRGBA.h"
 #include "CPool.h"
 
-enum VehicleUpgradePosn
-{
+enum VehicleUpgradePosn {
 	UPGRADE_BONNET,
 	UPGRADE_BONNET_LEFT,
 	UPGRADE_BONNET_RIGHT,
@@ -28,63 +27,59 @@ enum VehicleUpgradePosn
 	UPGRADE_NITRO,
 };
 
-#pragma pack(push, 4)
-struct UpgradePosnDesc
-{
+struct  UpgradePosnDesc {
 	CVector m_vPosition;
 	CQuaternion m_qRotation;
-	int m_dwParentComponentId;
-	UpgradePosnDesc();
-	~UpgradePosnDesc();
+	int m_nParentComponentId;
 };
-#pragma pack(pop)
 
-#pragma pack(push, 1)
-class CVehicleModelInfo : public CClumpModelInfo {
+VALIDATE_SIZE(UpgradePosnDesc, 0x20);
+
+class  CVehicleModelInfo : public CClumpModelInfo {
 public:
-	RpMaterial *m_pPlateMaterial;
+	RpMaterial * m_pPlateMaterial;
 	char m_szPlateText[8];
 	char field_30;
 	unsigned char m_nPlateType;
 	char m_szGameName[8];
-	short pad0;
-	unsigned int m_dwType;
+private:
+	char _pad3A[2];
+public:
+	unsigned int m_nVehicleType;
 	float m_fWheelSizeFront;
 	float m_fWheelSizeRear;
-	unsigned short m_wWheelModelId;
-	unsigned short m_wHandlingIndex;
+	short m_nWheelModelIndex;
+	unsigned short m_nHandlingId;
 	unsigned char m_nNumDoors;
-	unsigned char m_nClass;
+	unsigned char m_nVehicleClass;
 	unsigned char m_nFlags;
 	unsigned char m_nWheelUpgradeClass;
 	unsigned char m_nTimesUsed;
-    char field_51;
-	unsigned short m_wFrq;
-	union{
-		unsigned int m_dwCompRules;
-		struct{
-			unsigned int m_nExtraA_comp1 : 4;
-			unsigned int m_nExtraA_comp2 : 4;
-			unsigned int m_nExtraA_comp3 : 4;
-			unsigned int m_nExtraA_rule : 4;
-			unsigned int m_nExtraB_comp1 : 4;
-			unsigned int m_nExtraB_comp2 : 4;
-			unsigned int m_nExtraB_comp3 : 4;
-			unsigned int m_nExtraB_rule : 4;
-		};
+	char field_51;
+	unsigned short m_nFrq;
+	union {
+		unsigned int m_nCompRules;
+		struct {
+			unsigned int nExtraA_comp1 : 4;
+			unsigned int nExtraA_comp2 : 4;
+			unsigned int nExtraA_comp3 : 4;
+			unsigned int nExtraA_rule : 4;
+			unsigned int nExtraB_comp1 : 4;
+			unsigned int nExtraB_comp2 : 4;
+			unsigned int nExtraB_comp3 : 4;
+			unsigned int nExtraB_rule : 4;
+		} m_nCompRulesBits;
 	};
 	float m_fBikeSteerAngle;
 
-	class CVehicleStructure{
+	class CVehicleStructure {
 	public:
-		CVector m_avDummyPosn[15];
+		CVector m_avDummyPos[15];
 		UpgradePosnDesc m_aUpgrades[18];
 		RpAtomic *m_apExtras[6];
 		unsigned char m_nNumExtras;
-		unsigned int m_dwMaskComponentsDamagable;
-		CVehicleStructure();
-		~CVehicleStructure();
-		static CPool<CVehicleModelInfo> *m_pInfoPool;
+		unsigned int m_nMaskComponentsDamagable;
+		static CPool<CVehicleModelInfo> *&m_pInfoPool;
 	} *m_pVehicleStruct;
 
 	char field_60[464];
@@ -95,19 +90,22 @@ public:
 	unsigned char m_anQuaternaryColors[8];
 	unsigned char m_nNumColorVariations;
 	unsigned char m_nLastColorVariation;
-	unsigned char m_nPrimaryColor;
-	unsigned char m_nSecondaryColor;
-	unsigned char m_nTertiaryColor;
-	unsigned char m_nQuaternaryColor;
-	short m_awUpgrades[18];
-	short m_awRemapTxds[5];
+	unsigned char m_nCurrentPrimaryColor;
+	unsigned char m_nCurrentSecondaryColor;
+	unsigned char m_nCurrentTertiaryColor;
+	unsigned char m_nCurrentQuaternaryColor;
+	short m_anUpgrades[18];
+	short m_anRemapTxds[4];
+private:
+	char _pad302[2];
+public:
 	class CAnimBlock *m_pAnimBlock;
 
-	static class CLinkedUpgradeList{
+	static class CLinkedUpgradeList {
 	public:
-		short m_wUpgrade1[30];
-		short m_wUpgrade2[30];
-		unsigned int m_dwLinksCount;
+		short m_anUpgrade1[30];
+		short m_anUpgrade2[30];
+		unsigned int m_nLinksCount;
 		// add upgrade with components upgrade1 and upgrade2
 		void AddUpgradeLink(short upgrade1, short upgrade2);
 		// find linked upgrade for this upgrade. In this case upgrade param could be upgrade1 or 
@@ -125,7 +123,7 @@ public:
 	static RwTexture *ms_pLightsTexture;
 	// vehiclelightson128 texture
 	static RwTexture *ms_pLightsOnTexture;
-	
+
 	// color of currently rendered car
 	// static unsigned char ms_currentCol[4];
 	static unsigned char *ms_currentCol;
@@ -145,6 +143,7 @@ public:
 	// extras ids for next-spawned car
 	// static char ms_compsUsed[2];
 	static char *ms_compsUsed;
+	static char *ms_compsToUse;
 
 	// vehicle colours from carcols.dat
 	// static CRGBA ms_vehicleColourTable[128];
@@ -210,11 +209,11 @@ public:
 	// reset materials settings. This one is called after vehicle rendering
 	void ResetEditableMaterials(RpClump *clump);
 	// set current vehicle colour for model
-	void SetVehicleColour(unsigned char prim, unsigned char sec, unsigned char tert, 
+	void SetVehicleColour(unsigned char prim, unsigned char sec, unsigned char tert,
 		unsigned char quat);
 	// get color for car. variationShift determines how many color variations to skip. 
 	// For example, 1 will simply give you next color variation.
-	void ChooseVehicleColour(unsigned char &prim, unsigned char &sec, unsigned char &tert, 
+	void ChooseVehicleColour(unsigned char &prim, unsigned char &sec, unsigned char &tert,
 		unsigned char &quat, int variationShift);
 	// get num remaps in this model
 	int GetNumRemaps();
@@ -267,7 +266,9 @@ public:
 	void DisableEnvMap();
 	// setup environment map intensity for model
 	void SetEnvMapCoeff(float coeff);
+	// get num doors in this model
+	int GetNumDoors();
 };
-#pragma pack(pop)
 
+VALIDATE_SIZE(CVehicleModelInfo::CVehicleStructure, 0x314);
 VALIDATE_SIZE(CVehicleModelInfo, 0x308);

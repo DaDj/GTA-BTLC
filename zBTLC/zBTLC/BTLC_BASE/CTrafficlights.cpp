@@ -30,7 +30,7 @@ void CTrafficlights::Set_Trafficlight_models()
 
 	for ( int i = 0; i < num ; i++)
 	{
-		Memory::Patch<void*>(entrys[i].adress, entrys[i].name); //Trafficlight replacement
+		MemoryVP::Patch<void*>(entrys[i].adress, entrys[i].name); //Trafficlight replacement
 	}
 	
 }

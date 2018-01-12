@@ -16,7 +16,7 @@
 //// SILENT: SILENTSPATCH                                     ////
 //// LINK: MODLOADER                                          ////
 //////////////////////////////////////////////////////////////////
-//// SPECIAL THANKS TO: iFARBOD FOR HELP                      ////
+////										                  ////
 //////////////////////////////////////////////////////////////////
 #define DEBUG 
 float VERSION = 0.42f;
@@ -101,6 +101,8 @@ void Function_starter()
 	CAnimationStyleDescriptor::My_init();
 	CEntity::My_Init();
 	CPed::My_Init();
+
+	
 	
 
 	 //static Crosshair Hook
@@ -239,11 +241,11 @@ void ParseCommandlineArgument(int thing, char* pArg)
 			std::cout << "windowmode" << std::endl;
 			return;
 		}
-		//DEV enables the debug_consoles and outputs
-		if (!_stricmp(pArg, "-DEV"))
-		{
-			debug::init();	//debug console
-			return;
-		}
+		////DEV enables the debug_consoles and outputs
+		//if (!_stricmp(pArg, "-DEV"))
+		//{
+		//	debug::init();	//debug console
+		//	return;
+		//}
 	}
 }

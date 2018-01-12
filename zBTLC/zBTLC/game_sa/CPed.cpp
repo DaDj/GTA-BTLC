@@ -1,5 +1,5 @@
 #include "CPed.h"
-
+#include <iostream>
 
 void CPed::My_Init()
 {
@@ -852,6 +852,23 @@ void CPed::My_ProcessAnimGroups()
 			//If he has none of the above weapons, revert back to Ped standard animgroup
 			CPedModelInfo *Info = (CPedModelInfo*)CModelInfo::ms_modelInfoPtrs[Ped->m_wModelIndex];
        		Ped->m_dwAnimGroup = Info->m_nAnimType;
+		
+
+
+			struct	ModelCarsData
+			{
+				short count;
+				CPedModelInfo objects[278];
+			};   
+				
+			int test = 0;
+			int testing = 0;
+			testing = (int)Info;
+			test = (testing - (0xB478F8 + 0x4)) /sizeof(CPedModelInfo);
+			ModelCarsData PedModels = *(ModelCarsData*)0xB478F8;
+
+			if(Info->m_dwKey != PedModels.objects[test].m_dwKey)
+			std::cout << Info->m_dwKey  << " WHAT THE FUCK!!!! "  << std::endl;
 		}
 	}
 
