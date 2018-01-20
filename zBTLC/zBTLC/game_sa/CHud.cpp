@@ -242,18 +242,26 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 		CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(model->m_wTxdIndex);
 		if (txd && txd->m_pRwDictionary) 
 		{
-
+		
 			RwTexture *iconTex = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "icon");
 			if(!iconTex)
 			iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
 
 			if (iconTex) {
-				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
-				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
-				CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f / 2),
+				//RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+				//RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
+				/*CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f / 2),
 					y_fac(40.0f + 50.0f / 2 + y_off), 1.0f, x_fac(100.0f / 2),
 					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);
-				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+*/				CTxdStore::PushCurrentTxd();
+				CRect Icon = CRect(RsGlobal.maximumWidth - x_fac(120.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
+				CSprite2d Test = CSprite2d::CSprite2d();
+				CTxdStore::SetCurrentTxd(model->m_wTxdIndex);
+				//Test.m_pTexture = iconTex;
+				Test.SetTexture(iconTex->name);
+				Test.Draw(Icon, CRGBA(255, 255, 255, alpha));
+				CTxdStore::PopCurrentTxd();
+				//RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
 			}
 		}
 	}

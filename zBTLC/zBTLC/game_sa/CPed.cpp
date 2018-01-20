@@ -861,14 +861,14 @@ void CPed::My_ProcessAnimGroups()
 				CPedModelInfo objects[278];
 			};   
 				
-			int test = 0;
+	/*		int test = 0;
 			int testing = 0;
 			testing = (int)Info;
 			test = (testing - (0xB478F8 + 0x4)) /sizeof(CPedModelInfo);
 			ModelCarsData PedModels = *(ModelCarsData*)0xB478F8;
 
 			if(Info->m_dwKey != PedModels.objects[test].m_dwKey)
-			std::cout << Info->m_dwKey  << " WHAT THE FUCK!!!! "  << std::endl;
+			std::cout << Info->m_dwKey  << " WHAT THE FUCK!!!! "  << std::endl;*/
 		}
 	}
 

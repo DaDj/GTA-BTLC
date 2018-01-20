@@ -38,24 +38,14 @@ void CRadar::My_Init()
 	//replace original 
 	MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
 
-	//injector::MakeNOP(0x58AA25, 5);
-	MemoryVP::Patch<float>(0x585719, 0.0f); // -1.0
-	MemoryVP::Patch<float>(0x585721, 0.0f); // 1.0
-	MemoryVP::Patch<float>(0x585729, 0.0f); // 1.0
-	MemoryVP::Patch<float>(0x585731, 0.0f); // 1.0
-	MemoryVP::Patch<float>(0x585739, 0.0f); // 1.0
-	MemoryVP::Patch<float>(0x585741, 0.0f); // -1.0
-	MemoryVP::Patch<float>(0x585749, 0.0f); // -1.0
-	MemoryVP::Patch<float>(0x585751, 0.0f); // -1.0
-
-	int alpha = 160;
+	int alpha = 200;
 	MemoryVP::Patch<int>(0x586432 + 1, alpha);
 	MemoryVP::Patch<int>(0x58647B + 1, alpha);
 	MemoryVP::Patch<int>(0x5864BC + 1, alpha);
 
 	injector::MakeJMP(0x58A782, 0x58AA2A); //don't draw the borderthingy
 	MemoryVP::Patch<BYTE>(0x58694E + 1, 1); //renderstatetexturalpha
-											//MemoryVP::Patch<void*>(0x5834C0 + 2, &radar_width);
+	//MemoryVP::Patch<void*>(0x5834C0 + 2, &radar_width);
 }
 
 // Converted from cdecl void CRadar::LoadTextures(void) 0x5827D0

@@ -48,7 +48,7 @@ namespace My_PlayerWallhitreactions
 
 
 
-			if (time_check < 20 && activetask != TASK_COMPLEX_JUMP)
+			if (time_check < 20 && activetask != TASK_COMPLEX_JUMP && activetask != TASK_SIMPLE_FALL && activetask != TASK_COMPLEX_FALL_AND_GET_UP)
 				Playa->m_pIntelligence->m_TaskMgr.ClearTaskEventResponse();
 
 			if (!Wall_inway_test && !CPad::GetPad(0)->GetJump() && activetask != TASK_SIMPLE_USE_GUN
