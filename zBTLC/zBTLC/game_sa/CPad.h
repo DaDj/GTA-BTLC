@@ -166,6 +166,11 @@ public:
 	static CMouseControllerState &NewMouseControllerState;
 	static CMouseControllerState &OldMouseControllerState;
 
+	//KeyStates
+	static CKeyboardState &CPad::TempKeyState;
+	static CKeyboardState &CPad::OldKeyState;
+	static CKeyboardState &CPad::NewKeyState;
+
 	// Functions list : Not finished
 
 	void UpdateMouse();

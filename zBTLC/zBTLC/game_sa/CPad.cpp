@@ -1,10 +1,17 @@
 
 #include "CPad.h"
 
+//KeyStates
+CKeyboardState &CPad::TempKeyState = *(CKeyboardState*)0xB72CB0;
+CKeyboardState &CPad::OldKeyState = *(CKeyboardState*)0xB72F20;
+CKeyboardState &CPad::NewKeyState = *(CKeyboardState*)0xB73190;
+
 // mouse states
 CMouseControllerState & CPad::PCTempMouseControllerState = *(CMouseControllerState *)0xB73404;
 CMouseControllerState & CPad::NewMouseControllerState = *(CMouseControllerState *)0xB73418;
 CMouseControllerState & CPad::OldMouseControllerState = *(CMouseControllerState *)0xB7342C;
+
+
 
 // Converted from thiscall void CPad::UpdateMouse(void) 0x53F3C0
 void CPad::UpdateMouse() {

@@ -3,18 +3,25 @@
 #include "plbase/PluginBase_SA.h"
 #include "CVector2D.h"
 #include "CSprite2d.h"
+#include "CAudioengine.h"
 
 // Menu entries action to perform
 enum eMenuActions   // There's many actions @0x57702E and @0x57CD88
 {
-	MENU_ACTION_NA       = 0,
-    MENU_ACTION_TEXT     = 1,       // Some static text at the top of the page (works only on first entry)
-    MENU_ACTION_BACK     = 2,       // Back to previous menu
-    MENU_ACTION_YES      = 3,       // Used as YES in menus (also as NO, weird?)
-    MENU_ACTION_NO       = 4,       // Used as NO in menus  (also as YES, weird?)
-    MENU_ACTION_SWITCH   = 5,       // Switch to target menu
-    MENU_ACTION_SKIP     = 20,      // Skip this entry (unselectable)
+	MENU_ACTION_NA = 0,
+	MENU_ACTION_TEXT = 1,       // Some static text at the top of the page (works only on first entry)
+	MENU_ACTION_BACK = 2,       // Back to previous menu
+	MENU_ACTION_YES = 3,       // Used as YES in menus (also as NO, weird?)
+	MENU_ACTION_NO = 4,       // Used as NO in menus  (also as YES, weird?)
+	MENU_ACTION_SWITCH = 5,       // Switch to target menu
+	MENU_ACTION_SKIP = 20,      // Skip this entry (unselectable)
+	MENU_ACTION_SLIDER_BRIGHTNESS = 27, //SLider Game Brightness
+	MENU_ACTION_SLIDER_MUSIC =  28, //Slider music volume
+	MENU_ACTION_SLIDER_SFX = 29, //Slider Sound effects volume
+
     MENU_ACTION_BACK_PC  = 55,      // Same as BACK without a extra checking (?)
+	MENU_ACTION_SLIDER_LOD = 61,	//Slider lod distance
+	MENU_ACTION_SLIDER_MOUSESENSITIVITY //Slider Mouse sensitivity
 };
 
 // Type of menu entries
@@ -194,10 +201,10 @@ public:
 	char              m_nRadioStation;
 	char field_53;
 	int             m_dwSelectedMenuItem;
-	char field_58;
+	char m_bQuitGame;
 	char drawRadarOrMap;
 	char field_5A;
-	char field_5B;
+	char				 m_bAllStreamingStuffLoaded;
 	bool                m_bMenuActive;
 	char doGameReload;
 	char field_5E;
@@ -243,8 +250,8 @@ public:
 	int             m_dwAppliedResolution;
 	int             m_dwResolution;
 	int field_DC;
-	int mousePosLeftA;
-	int mousePosTopA;
+	int					mousePosLeft_NotClipped;
+	int					mousePosTop_NotClipped;
 	bool                m_bSavePhotos;
 	bool                m_bMainMenuSwitch;
 	char              m_nPlayerNumber;
@@ -255,18 +262,18 @@ public:
 	char field_F5[3];
 	//union{
 	//	struct{
-			CSprite2d m_apTextures[25];
+			//CSprite2d m_apTextures[25];
 	//	};
 	//	struct{
-	//		CSprite2d m_apRadioSprites[13];
-	//		CSprite2d m_apBackgroundTextures[8];
-	//		CSprite2d m_apAdditionalBackgroundTextures[2];
-	//		CSprite2d m_apMouseTextures[2];
+			CSprite2d m_apRadioSprites[13];
+			CSprite2d m_apBackgroundTextures[8];
+			CSprite2d m_apAdditionalBackgroundTextures[2];
+			CSprite2d m_apMouseTextures[2];
 	//	};
 	//};
 	bool                m_bTexturesLoaded;
 	unsigned char     m_nCurrentMenuPage;
-	char field_15E;
+	char				 m_nPreviousMenuPage;
 	unsigned char       m_bSelectedSaveGame;
 	char field_160;
 	char field_161;
@@ -279,24 +286,24 @@ public:
 	int field_1AD0;
 	int field_1AD4;
 	int field_1AD8;
-	short field_1ADC;
+	short field_1ADC; 
 	bool                m_bChangeVideoMode;
 	char field_1ADF;
 	int field_1AE0;
 	int field_1AE4;
 	char field_1AE8;
-	char field_1AE9;
+	char				m_bAudioRetuneInProgress;
 	char field_1AEA;
 	bool                m_bScanningUserTracks;
-	int field_1AEC;
+	int					m_dwHelperTextFadingAlpha;
 	char field_1AF0;
 	char field_1AF1;
 	char field_1AF2;
 	char field_1AF3;
 	int field_1AF4;
-	int field_1AF8;
-	int field_1AFC;
-	int field_1B00;
+	int					m_dwOldMousePosLeft;
+	int					m_dwOldMousePosTop;
+	int					bSlidingType;
 	int field_1B04;
 	char field_1B08;
 	char field_1B09;
@@ -311,7 +318,7 @@ public:
 	char field_1B15;
 	char field_1B16;
 	char field_1B17;
-	int EventToDo;
+	int					m_dwHelperText;
 	int field_1B1C;
 	unsigned char       m_nTexturesRound;
 	unsigned char       m_nNumberOfMenuOptions;
@@ -330,7 +337,7 @@ public:
 	char field_1B3E;
 	char field_1B3F;
 	int field_1B40;
-	char field_1B44;
+	char				m_bExitMenu;
 	char field_1B45;
 	short field_1B46;
 	int field_1B48;
@@ -339,23 +346,30 @@ public:
 	char field_1B51;
 	short field_1B52;
 	int field_1B54;
-	int field_1B58;
+	int					m_dwHelperTextFadingTimer;
 	char field_1B5C;
 	char field_1B5D;
 	short field_1B5E;
 	int field_1B60;
 	int field_1B64;
-	int field_1B68;
-	int field_1B6C;
+	int					m_dwTimeSlideLeftMove;
+	int					m_dwTimeSlideRightMove;
 	int field_1B70;
 	int field_1B74;
 
 	static int& nLastMenuPage;
-
+	static int LikeALastSelectedMenuItem;
 	static bool& bInvertMouseX;
 	static bool& bInvertMouseY;
+
+	void ProcessStreaming(char bImmediately);
+	void UserInput();
+	//void RedefineScreenUserInput(int enter, int exit);
+	//int GetNumberOfMenuOptions();
+	static void MyInit();
 };
 #pragma pack(pop)
 
 
 extern CMenuManager &FrontEndMenuManager;
+extern CMenuPage	*MenuPages;

@@ -97,8 +97,8 @@ namespace BUGFIX
 
 		////PEDS stay in car at Death  --BUGGY (Autopilot doesnt recognize dead driver)
 		//MemoryVP::Patch<int>(0x5E832C + 1, 0x21080);
-		
-			
+
+	
 	}
 
 

@@ -252,8 +252,8 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 				//RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
 				/*CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f / 2),
 					y_fac(40.0f + 50.0f / 2 + y_off), 1.0f, x_fac(100.0f / 2),
-					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);
-*/				CTxdStore::PushCurrentTxd();
+					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);*/				
+				CTxdStore::PushCurrentTxd();
 				CRect Icon = CRect(RsGlobal.maximumWidth - x_fac(120.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
 				CSprite2d Test = CSprite2d::CSprite2d();
 				CTxdStore::SetCurrentTxd(model->m_wTxdIndex);

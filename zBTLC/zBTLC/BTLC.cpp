@@ -89,18 +89,18 @@ void Function_starter()
 	My_PlayerWeaponReload::init();	//Add Reload with "R" functions.
 	My_PlayerWallhitreactions::init();
 	My_GPS::init();
-	My_CCam::INIT();					// IV Styled AIM CAM
+	My_CCam::INIT();		// IV Styled AIM CAM
 	
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
 
-	CHud::My_Init();	//New HuD
-	CRadar::My_Init();	//New Radar
-	CStreaming::My_Init();//New COP stream functions - ALL cops&copcars in all cities 
-	CAnimationStyleDescriptor::My_init();
-	CEntity::My_Init();
-	CPed::My_Init();
+	CHud::My_Init();		//New HuD
+	CRadar::My_Init();		//New Radar
+	CStreaming::My_Init();	//New COP stream functions - ALL cops&copcars in all cities 
+	CAnimationStyleDescriptor::My_init(); //Armed running
+	CEntity::My_Init();		//static shadows for all new traffic lights and Lamps
+	CPed::My_Init();		//Armed Animations for Peds
 
 	
 	

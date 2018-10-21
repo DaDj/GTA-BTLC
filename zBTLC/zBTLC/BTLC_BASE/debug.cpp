@@ -87,7 +87,8 @@ namespace debug
 			RECT rDesktopRect;
 			GetWindowRect(hDesktop, &rDesktopRect);
 			// Update Position
-			SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
+			//SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
+			SetWindowPos(hConsole, nullptr, rDesktopRect.left - 1200, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
 		}
 	}
 
