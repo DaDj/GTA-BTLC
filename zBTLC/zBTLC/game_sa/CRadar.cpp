@@ -35,6 +35,8 @@ void CRadar::My_Init()
 	MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
 	//Draw radar mask
 	MemoryVP::InjectHook(0x585700, &CRadar::DrawRadarMask, PATCH_JUMP);
+
+
 	//replace original 
 	MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
 
@@ -115,26 +117,24 @@ unsigned char CRadar::CalculateBlipAlpha(float distance)
 void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 {
 	//((void(__cdecl *)(CVector2D&, CVector2D const&))0x583480)(out, in);
-
+	__asm push edx
 	float cut_delta = CRadar::Radar_Width * Radar_Cut_Width;
 	float cut_delta_y = CRadar::Radar_Width * (1 - CRadar::Radar_Height / CRadar::Radar_Width);
-	float radar_size = CRadar::Radar_Width +   cut_delta;
-	float radar_posX = CRadar::Radar_Posx  - 0.5 * cut_delta ;
+	float radar_size = CRadar::Radar_Width + cut_delta;
+	float radar_posX = CRadar::Radar_Posx - 0.5 * cut_delta;
 	float radar_posY = CRadar::Radar_Posy - 0.5 * cut_delta_y;
 
 	if (FrontEndMenuManager.drawRadarOrMap)
 	{
 		out.x = FrontEndMenuManager.m_fMapZoom * in.x + FrontEndMenuManager.m_fMapBaseX;
 		out.y = FrontEndMenuManager.m_fMapBaseY - FrontEndMenuManager.m_fMapZoom * in.y;
-		return;
 	}
 	else
 	{
 		out.x = (CHud::x_fac(radar_posX ) + CHud::x_fac(radar_size *0.5))   + CHud::x_fac(radar_size * 0.5 ) * in.x ;
 		out.y = CHud::y_fac(448.0)- (CHud::y_fac(radar_posY) + CHud::y_fac(radar_size)* 0.5) - CHud::y_fac(radar_size * 0.5)  *  in.y ;
-		return;
 	}
-	
+	__asm pop edx
 }
 
 
@@ -378,8 +378,8 @@ void CRadar::DrawRadarMask()
 	//     |           |
 	//     D[3]--------C[2]
 	CVector2D CUT_INPUT[4];
-	CVector2D CUT_OUTPUT[8];
-	for (int j = 0; j < 4; j++)
+	CVector2D CUT_OUTPUT[4];
+	for (int j = 0; j < 1; j++)
 	{
 		switch (j)
 		{

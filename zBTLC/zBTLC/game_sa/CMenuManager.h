@@ -14,14 +14,66 @@ enum eMenuActions   // There's many actions @0x57702E and @0x57CD88
 	MENU_ACTION_YES = 3,       // Used as YES in menus (also as NO, weird?)
 	MENU_ACTION_NO = 4,       // Used as NO in menus  (also as YES, weird?)
 	MENU_ACTION_SWITCH = 5,       // Switch to target menu
+	MENU_ACTION_SCANUSERTRACKS = 6,       // Scan User Tracks
+	MENU_ACTION_CONFIGURATIONINPUT = 7,  //Configuration
+	MENU_ACTION_FOOTCONTROLs = 8,  //Foot Controls
+	MENU_ACTION_VEHICLECONTROLS = 9,  //vehicles controls
+	MENU_ACTION_NEWGAME = 10,  //new game
+	MENU_ACTION_MISSIONPACK = 11,  //mission pack
+	MENU_ACTION_LOADMISSION = 12,  //Load mission pack
+	MENU_ACTION_SAVEDGAMESLOT = 13,  //SAVEGAMESLOT
+	MENU_ACTION_LOADNEWGAMERUNNING = 14,  //LOADGAME if alreadyrunning
+	MENU_ACTION_SAVEGAMECANCEL= 15,  //cancel game saving
+	MENU_ACTION_UNUSED1 = 16,  //unused
+	MENU_ACTION_UNUSED2 = 17,  //unused
+	MENU_ACTION_SAVEGAMESLOTDECISION = 18,  //on save game screen
+	MENU_ACTION_UNUSED3 = 19,  //unused
 	MENU_ACTION_SKIP = 20,      // Skip this entry (unselectable)
+	MENU_ACTION_STATS = 21,  //unused
+	MENU_ACTION_UNUSED4 = 22,  //unused
+	MENU_ACTION_UNUSED5 = 23,  //unused
+	MENU_ACTION_FRAMELIMIT = 24, //FRAME LIMITER
+	MENU_ACTION_SUBTITLE= 25, //SUB TITLES
+	MENU_ACTION_WIDESCREEN = 26,
 	MENU_ACTION_SLIDER_BRIGHTNESS = 27, //SLider Game Brightness
 	MENU_ACTION_SLIDER_MUSIC =  28, //Slider music volume
 	MENU_ACTION_SLIDER_SFX = 29, //Slider Sound effects volume
-
-    MENU_ACTION_BACK_PC  = 55,      // Same as BACK without a extra checking (?)
+	MENU_ACTION_RADIOEQ = 30, //RADIO EQUALIZER
+	MENU_ACTION_RADIOAUTOTUNE = 31, //Radio auto tune
+	MENU_ACTION_RADIOSTATION = 32, //Radio station
+	MENU_ACTION_MAPLEGEND = 33, //Map legend
+	MENU_ACTION_RADARMODE = 34, //HUD radar mode
+	MENU_ACTION_HUD = 35, //HUD 
+	MENU_ACTION_UNUSED6 = 36, //unused
+	MENU_ACTION_LANGUAGEENGLISH = 37, //ENGLISHLANGUAGE
+	MENU_ACTION_UNUSED7 = 38, //maybe some language
+	MENU_ACTION_UNUSED8 = 39, //maybe some language
+	MENU_ACTION_UNUSED9 = 40, //maybe some language
+	MENU_ACTION_UNUSED10 = 41, //Spanish language
+	MENU_ACTION_VISUALFX = 42, //Visual fx quality
+	MENU_ACTION_MIPMAPS = 43, // mip mapping
+	MENU_ACTION_ANTIALIASING = 44, //anti aliasing
+	MENU_ACTION_UNUSED11 = 45, //unused
+	MENU_ACTION_INVERTMOUSE = 46, // invert mouse vertically
+	MENU_ACTION_INVERTLEFTSTICKX= 47, //invert left stick x
+	MENU_ACTION_INVERTLEFTSTICKY = 48, //invert left stick Y
+	MENU_ACTION_INVERTRICHTSTICKX = 49, // invert right stick Y
+	MENU_ACTION_INVERTRIGHTSTICKY= 50, // invert right stick Y
+	MENU_ACTION_INVERTLEFTAXIS = 51, //invert left axis
+	MENU_ACTION_INVERTRIGHTAXIS = 52, //invert right axis
+	MENU_ACTION_QUITGAMECONFIRM = 53, //confirm quit game
+	MENU_ACTION_RESUMEGAME= 54, //Resume game
+    MENU_ACTION_QUITGAMECANCEL  = 55,      //cancel quit game 
+	MENU_ACTION_RESOLUTION = 56,      // Resolution
+	MENU_ACTION_RESETSETTINGS = 57,      //REST for settings?
+	MENU_ACTION_CHANGEINPUTDEVICE = 58,      // select if mosue ofr joypad
+	MENU_ACTION_STEERWITHMOUSE = 59,      // steer with mouse
+	MENU_ACTION_FLYWITHMOUSE = 60,      // sfly with mouse
 	MENU_ACTION_SLIDER_LOD = 61,	//Slider lod distance
-	MENU_ACTION_SLIDER_MOUSESENSITIVITY //Slider Mouse sensitivity
+	MENU_ACTION_SLIDER_MOUSESENSITIVITY = 62, //Slider Mouse sensitivity
+	MENU_ACTION_USERTRACKSPLAYMODE = 63, //playmode of user tracks
+	MENU_ACTION_USERTRACKSAUTOMATICSCAN =64, // automatic scan of user tracks
+	MENU_ACTION_SAVEGALLERYPHOTOS = 65 //store user photos option
 };
 
 // Type of menu entries
@@ -364,8 +416,17 @@ public:
 
 	void ProcessStreaming(char bImmediately);
 	void UserInput();
-	//void RedefineScreenUserInput(int enter, int exit);
-	//int GetNumberOfMenuOptions();
+	void RedefineScreenUserInput(int enter, int exit);
+	int GetNumberOfMenuOptions();
+	int AdditionalOptionInput(int bUp, int bDown);
+	bool CheckFrontEndDownInput();
+	bool CheckFrontEndUpInput();
+	bool CheckFrontEndRightInput();
+	bool CheckFrontEndLeftInput();
+	void CheckSliderMovement(char count);
+	void ProcessUserInput(char bDown, char bUp,char bEnter, char bExit, char wheel);
+
+
 	static void MyInit();
 };
 #pragma pack(pop)

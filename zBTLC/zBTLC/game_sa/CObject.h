@@ -14,7 +14,41 @@ struct structObject_masspoint
 	float z;
 };
 
-
+enum eobjectflags 
+{
+	Object_Flag0 = 0x1,
+	Object_Flag1 = 0x2,
+	Object_PickupPropertyForSale = 0x4,
+	Object_PickupInShopOutOfStock = 0x8,
+	Object_GlassBroken = 0x10,
+	Object_ObjectFlag5 = 0x20,
+	Object_IsExploded = 0x40,
+	Object_ObjectFlag7 = 0x80,
+	Object_IsLampPost = 0x100,
+	Object_IsTargatable = 0x200,
+	Object_IsBroken = 0x400,
+	Object_TrainCrossEnabled = 0x800,
+	Object_IsPhotographed = 0x1000,
+	Object_IsLiftable = 0x2000,
+	Object_IsDoorMoving = 0x4000,
+	Object_bIsDoorOpen = 0x8000,
+	Object_HasNoModel = 0x10000,
+	Object_IsScaled = 0x20000,
+	Object_CanBeAttachedToMagnet = 0x40000,
+	Object_ObjectFlag19 = 0x80000,
+	Object_ObjectFlag20 = 0x100000,
+	Object_ObjectFlag21 = 0x200000,
+	Object_FadingIn = 0x400000,
+	Object_AffectedByColBrightness = 0x800000,
+	Object_ObjectFlag24 = 0x1000000,
+	Object_DoNotRender = 0x2000000,
+	Object_FadingIn2 = 0x4000000,
+	Object_Flag27 = 0x8000000,
+	Object_Flag28 = 0x10000000,
+	Object_Flag29 = 0x20000000,
+	Object_Flag30 = 0x40000000,
+	Object_Flag31 = 0x80000000
+ };
 
 enum eObjectType {
     OBJECT_MISSION = 2,

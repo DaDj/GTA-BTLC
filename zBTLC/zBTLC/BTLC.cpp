@@ -45,6 +45,7 @@ float VERSION = 0.42f;
 #include "game_sa\CEntity.h"
 #include "game_sa\List_c.h"
 #include "game_sa\CProcObjectMan.h"
+#include "game_sa/CPickups.h"
 	
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -102,7 +103,8 @@ void Function_starter()
 	CEntity::My_Init();		//static shadows for all new traffic lights and Lamps
 	CPed::My_Init();		//Armed Animations for Peds
 
-	
+	//Test
+	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
 	
 
 	 //static Crosshair Hook

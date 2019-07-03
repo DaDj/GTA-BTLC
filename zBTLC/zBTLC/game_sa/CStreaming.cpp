@@ -79,7 +79,7 @@ unsigned int CStreaming::GetDefaultCopModel()
 
 //	result = copModelByTown[CTheZones::m_CurrLevel];
 	result = CStreaming::copModelByTown[CStreaming::copModel_curr];
-	std::cout << "COP MODEL -> " << result << std::endl;
+	//std::cout << "COP MODEL -> " << result << std::endl;
 	if (CStreaming::ms_aInfoForModel[result].m_loadState != 1)
 	{
 		v1 = 0;

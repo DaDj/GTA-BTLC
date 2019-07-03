@@ -170,7 +170,9 @@
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CAudioengine.cpp" />
+    <ClCompile Include="game_sa\CHardModels.cpp" />
     <ClCompile Include="game_sa\CPedModelInfo.cpp" />
+    <ClCompile Include="game_sa\CPickup.cpp" />
     <ClCompile Include="game_sa\CPolyBunch.cpp" />
     <ClCompile Include="game_sa\CProcObjectMan.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
@@ -660,7 +662,9 @@
     <ClInclude Include="game_sa\CAEStaticChannel.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />
     <ClInclude Include="game_sa\CAudioengine.h" />
+    <ClInclude Include="game_sa\CHardModels.h" />
     <ClInclude Include="game_sa\CPedModelInfo.h" />
+    <ClInclude Include="game_sa\CPickup.h" />
     <ClInclude Include="game_sa\CPolyBunch.h" />
     <ClInclude Include="game_sa\CProcObjectMan.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />
@@ -1202,6 +1206,7 @@
     <ClInclude Include="game_sa\tBoatHandlingData.h" />
     <ClInclude Include="game_sa\tFlyingHandlingData.h" />
     <ClInclude Include="game_sa\tHandlingData.h" />
+    <ClInclude Include="game_sa\tPickupMessage.h" />
     <ClInclude Include="game_sa\tTransmissionGear.h" />
     <ClInclude Include="BTLC.h" />
     <ClInclude Include="Patch\assembly.hpp" />

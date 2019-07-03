@@ -1447,6 +1447,12 @@
     <ClCompile Include="game_sa\CAudioengine.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CPickup.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CHardModels.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3140,6 +3146,15 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CAudioengine.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPickup.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\tPickupMessage.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CHardModels.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
