@@ -379,7 +379,7 @@ void CRadar::DrawRadarMask()
 	//     D[3]--------C[2]
 	CVector2D CUT_INPUT[4];
 	CVector2D CUT_OUTPUT[4];
-	for (int j = 0; j < 1; j++)
+	for (int j = 0; j < 4; j++)
 	{
 		switch (j)
 		{
