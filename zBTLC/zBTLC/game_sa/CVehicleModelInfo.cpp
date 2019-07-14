@@ -2,6 +2,7 @@
 #include "rw/rpworld.h"
 #include <iterator>
 #include "CCarFxRender.h"
+#include <list>
 
 
 
@@ -319,38 +320,54 @@ void CVehicleModelInfo::FindEditableMaterialList()
 
 	RpClump *clump = reinterpret_cast<RpClump*>(m_pRwObject);
 
+	RpAtomic * atomic;
+	RpGeometry *Geometry;
 
 	for (RwLLLink* link = rwLinkListGetFirstLLLink(&clump->atomicList); link != rwLinkListGetTerminator(&clump->atomicList); link = rwLLLinkGetNext(link))
 	{
-	 RpAtomic * atomic = rwLLLinkGetData(link, RpAtomic, inClumpLink);
+		atomic = rwLLLinkGetData(link, RpAtomic, inClumpLink);
 		if (atomic == nullptr)
 			break;
-		RpGeometry *Geometry = atomic->geometry;
+		Geometry = atomic->geometry;
 		int NumMaterials = Geometry->matList.numMaterials;
-
 		for (int i = 0; i < NumMaterials; i++)
 		{
-
 			if (RwTexture* texture = RpMaterialGetTexture(Geometry->matList.materials[i]))
 			{
 				if (const char* texName = RwTextureGetName(texture))
 				{
 					if (strcmp(texName, "vehiclegrunge256") == 0 )
-					{
 						editableMaterials.push_back(Geometry->matList.materials[i]);
-					}
+
 					if (strcmp(texName, "vehicle_genericmud_truck") == 0)
-					{
 						editableMaterials.push_back(Geometry->matList.materials[i]);
-					}
 				}
 			}
 		}
-
 	}
 
-	//for (uint32_t i = 0; i < m_pVehicleStruct->m_nNumExtras; i++)
+	//
 	//	FindDirtMaterials(m_pVehicleStruct->m_apExtras[i], &editableMaterials);
+
+	for (uint32_t i = 0; i < m_pVehicleStruct->m_nNumExtras; i++)
+	{
+		Geometry =  m_pVehicleStruct->m_apExtras[i]->geometry;
+		int NumMaterials = Geometry->matList.numMaterials;
+		for (int i = 0; i < NumMaterials; i++)
+		{
+			if (RwTexture* texture = RpMaterialGetTexture(Geometry->matList.materials[i]))
+			{
+				if (const char* texName = RwTextureGetName(texture))
+				{
+					if (strcmp(texName, "vehiclegrunge256") == 0)
+						editableMaterials.push_back(Geometry->matList.materials[i]);
+
+					if (strcmp(texName, "vehicle_genericmud_truck") == 0)
+						editableMaterials.push_back(Geometry->matList.materials[i]);
+				}
+			}
+		}
+	}
 
 	m_numDirtMaterials = editableMaterials.size();
 	if (m_numDirtMaterials > IN_PLACE_BUFFER_DIRT_SIZE)
