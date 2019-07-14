@@ -7,6 +7,7 @@
 #include "RwObjectNameIdAssocation.h"
 #include "CRGBA.h"
 #include "CPool.h"
+#include <stdint.h>
 
 enum VehicleUpgradePosn {
 	UPGRADE_BONNET,
@@ -83,7 +84,16 @@ public:
 	} *m_pVehicleStruct;
 
 	char field_60[464];
-	RpMaterial *m_apDirtMaterials[32];
+	static const size_t IN_PLACE_BUFFER_DIRT_SIZE = 30;
+	union {
+		struct {;
+			RpMaterial**	m_dirtMaterials;
+			size_t			m_numDirtMaterials;
+			RpMaterial*		m_staticDirtMaterials[IN_PLACE_BUFFER_DIRT_SIZE];
+		};
+		RpMaterial*			__oldDirtMaterials[32]; // Unused with SilentPatch
+	};
+	//RpMaterial *m_apDirtMaterials[32];
 	unsigned char m_anPrimaryColors[8];
 	unsigned char m_anSecondaryColors[8];
 	unsigned char m_anTertiaryColors[8];
@@ -114,7 +124,7 @@ public:
 	} &ms_linkedUpgrades;
 
 	// vehicle components description tables
-	// static RwObjectNameIdAssocation ms_vehicleDescs[12];
+	// static RwNameIdAssocation ms_vehicleDescs[12];
 	static RwObjectNameIdAssocation *ms_vehicleDescs;
 
 	// remap texture
@@ -123,6 +133,10 @@ public:
 	static RwTexture *ms_pLightsTexture;
 	// vehiclelightson128 texture
 	static RwTexture *ms_pLightsOnTexture;
+
+
+
+	//static RwTexture *DirtTexture2[16] ;
 
 	// color of currently rendered car
 	// static unsigned char ms_currentCol[4];
@@ -268,6 +282,11 @@ public:
 	void SetEnvMapCoeff(float coeff);
 	// get num doors in this model
 	int GetNumDoors();
+
+	static RpAtomic *FindDirtMaterials(RpAtomic * atomic, void * data);
+
+	void FindEditableMaterialList();
+	static void RemapDirt(CVehicleModelInfo* modelInfo, uint32_t dirtID);
 };
 
 VALIDATE_SIZE(CVehicleModelInfo::CVehicleStructure, 0x314);

@@ -1,4 +1,10 @@
 #include "CVehicleModelInfo.h"
+#include "rw/rpworld.h"
+#include <iterator>
+#include "CCarFxRender.h"
+
+
+
 
 RwTexture *CVehicleModelInfo::ms_pRemapTexture = (RwTexture *)0xB4E47C;
 RwTexture *CVehicleModelInfo::ms_pLightsTexture = (RwTexture *)0xB4E68C;
@@ -7,6 +13,8 @@ unsigned char *CVehicleModelInfo::ms_currentCol = (unsigned char *)0xB4E3F0;
 CRGBA *CVehicleModelInfo::ms_vehicleColourTable = (CRGBA *)0xB4E480;
 char *CVehicleModelInfo::ms_compsUsed = (char *)0xB4E478;
 char *CVehicleModelInfo::ms_compsToUse = (char *)0x8A6458;
+//RwTexture **CVehicleModelInfo::ms_aDirtTextures =(RwTexture **)0xC02BD0;
+//RwTexture *CVehicleModelInfo::DirtTexture2[16] = {};
 
 void CVehicleModelInfo::ShutdownLightTexture()
 {
@@ -296,3 +304,87 @@ int CVehicleModelInfo::GetNumDoors()
 {
 	return ((int(__thiscall *)(CVehicleModelInfo*))0x4C73C0)(this);
 }
+
+RpAtomic* CVehicleModelInfo::FindDirtMaterials(RpAtomic* atomic, void * data)
+{
+	
+	return atomic;
+}
+
+// Courtesy of Silent (from SilentPatch)
+
+void CVehicleModelInfo::FindEditableMaterialList()
+{
+	std::vector<RpMaterial*> editableMaterials;
+
+	RpClump *clump = reinterpret_cast<RpClump*>(m_pRwObject);
+
+
+	for (RwLLLink* link = rwLinkListGetFirstLLLink(&clump->atomicList); link != rwLinkListGetTerminator(&clump->atomicList); link = rwLLLinkGetNext(link))
+	{
+	 RpAtomic * atomic = rwLLLinkGetData(link, RpAtomic, inClumpLink);
+		if (atomic == nullptr)
+			break;
+		RpGeometry *Geometry = atomic->geometry;
+		int NumMaterials = Geometry->matList.numMaterials;
+
+		for (int i = 0; i < NumMaterials; i++)
+		{
+
+			if (RwTexture* texture = RpMaterialGetTexture(Geometry->matList.materials[i]))
+			{
+				if (const char* texName = RwTextureGetName(texture))
+				{
+					if (strcmp(texName, "vehiclegrunge256") == 0 )
+					{
+						editableMaterials.push_back(Geometry->matList.materials[i]);
+					}
+					if (strcmp(texName, "vehicle_genericmud_truck") == 0)
+					{
+						editableMaterials.push_back(Geometry->matList.materials[i]);
+					}
+				}
+			}
+		}
+
+	}
+
+	//for (uint32_t i = 0; i < m_pVehicleStruct->m_nNumExtras; i++)
+	//	FindDirtMaterials(m_pVehicleStruct->m_apExtras[i], &editableMaterials);
+
+	m_numDirtMaterials = editableMaterials.size();
+	if (m_numDirtMaterials > IN_PLACE_BUFFER_DIRT_SIZE)
+	{
+		m_dirtMaterials = new RpMaterial*[m_numDirtMaterials];
+		std::copy(editableMaterials.begin(), editableMaterials.end(), stdext::make_checked_array_iterator(m_dirtMaterials, m_numDirtMaterials));
+	}
+	else
+	{
+		m_dirtMaterials = nullptr;
+		// Use existing space instead of allocating new space
+		std::copy(editableMaterials.begin(), editableMaterials.end(), m_staticDirtMaterials);
+	}
+	m_nCurrentPrimaryColor = -1;
+	m_nCurrentSecondaryColor = -1;
+	m_nCurrentQuaternaryColor = -1;
+	m_nCurrentTertiaryColor = -1;
+}
+
+
+void CVehicleModelInfo::RemapDirt(CVehicleModelInfo* modelInfo, uint32_t dirtID)
+{
+	RpMaterial** materials = modelInfo->m_numDirtMaterials > CVehicleModelInfo::IN_PLACE_BUFFER_DIRT_SIZE ? modelInfo->m_dirtMaterials : modelInfo->m_staticDirtMaterials;
+
+
+   for (size_t i = 0; i < modelInfo->m_numDirtMaterials; i++)
+	{
+	  // RpMaterialSetTexture(materials[i], materials[i]->texture);
+
+	   if(strcmp(materials[i]->texture->name, "vehicle_genericmud_truck") == 0)
+			RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures_2[dirtID]);
+	   else
+		   RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures[dirtID]);
+   }
+	 
+	}
+

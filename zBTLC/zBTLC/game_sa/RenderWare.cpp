@@ -979,6 +979,11 @@ RwTexture* RwTexDictionaryAddTexture(RwTexDictionary* dict, RwTexture* texture) 
 	return ((RwTexture*(__cdecl *)(RwTexDictionary*, RwTexture*))0x7F3980)(dict, texture);
 }
 
+RwTexture* RwReadTexture(char *name, char *Maskname)
+{
+	return ((RwTexture* (__cdecl *)(char const*, char const*))0x4C7510)(name, Maskname);
+}
+
 RwTexture* RwTexDictionaryRemoveTexture(RwTexture* texture) {
 	return ((RwTexture*(__cdecl *)(RwTexture*))0x7F39C0)(texture);
 }
@@ -1300,7 +1305,7 @@ RwImage* RwImageCreateResample(const RwImage* srcImage, RwInt32 width, RwInt32 h
 }
 
 RwImage* RwImageSetFromRaster(RwImage* image, RwRaster* raster) {
-	return ((RwImage*(__cdecl *)(RwImage*, RwRaster*))0x804250)(image, raster);
+return ((RwImage*(__cdecl *)(RwImage*, RwRaster*))0x804250)(image, raster);
 }
 
 RwRaster* RwRasterSetFromImage(RwRaster* raster, RwImage* image) {

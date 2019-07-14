@@ -267,6 +267,7 @@ RwTexture* RwTextureCreate(RwRaster* raster); // 0x7F37C0
 RwBool RwTextureDestroy(RwTexture* texture); // 0x7F3820
 RwTexture* RwTextureSetRaster(RwTexture* texture, RwRaster* raster); // 0x7F35D0
 RwTexture* RwTexDictionaryAddTexture(RwTexDictionary* dict, RwTexture* texture); // 0x7F3980
+RwTexture* RwReadTexture(char *name, char *Maskname);
 RwTexture* RwTexDictionaryRemoveTexture(RwTexture* texture); // 0x7F39C0
 RwTexture* RwTexDictionaryFindNamedTexture(RwTexDictionary* dict, const RwChar* name); // 0x7F39F0
 RwTexDictionary* RwTexDictionaryGetCurrent(void); // 0x7F3A90

@@ -46,6 +46,8 @@ float VERSION = 0.42f;
 #include "game_sa\List_c.h"
 #include "game_sa\CProcObjectMan.h"
 #include "game_sa/CPickups.h"
+#include "game_sa/CVehicleModelInfo.h"
+#include "game_sa/CCarFxRender.h"
 	
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -102,6 +104,7 @@ void Function_starter()
 	CAnimationStyleDescriptor::My_init(); //Armed running
 	CEntity::My_Init();		//static shadows for all new traffic lights and Lamps
 	CPed::My_Init();		//Armed Animations for Peds
+	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
 
 	//Test
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
@@ -147,7 +150,14 @@ void btlc_init()
 
 }
 
+void Delayed_Patches()
+{
+	//Patch New Dirt Materials (includes silents fix for Dirtlevels)
+	MemoryVP::InjectHook(0x5D5DB0, &CVehicleModelInfo::RemapDirt, PATCH_JUMP);
+	MemoryVP::InjectHook(0x4C9648, &CVehicleModelInfo::FindEditableMaterialList, PATCH_CALL);
+	MemoryVP::Patch<DWORD>(0x4C964D, 0x0FEBCE8B);
 
+}
 
 void check_gameversion()
 {
@@ -219,7 +229,10 @@ void check_gameversion()
 
 void ParseCommandlineArgument(int thing, char* pArg)
 {
+	Delayed_Patches();
+
 	LPSTR TEST = GetCommandLine();
+
 	//Close game if it isn't launched via launcher
 	if (!strstr(TEST, "-launch"))
 	{
@@ -227,6 +240,7 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		exit(0);
 		return;
 	}
+
 
 	if (pArg)
 	{

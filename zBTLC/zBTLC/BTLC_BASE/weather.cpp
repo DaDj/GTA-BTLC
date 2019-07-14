@@ -20,7 +20,7 @@ namespace weather
 	///</summary>
 	void enhanced_rain()
 	{
-		for (int a = 0; a < 40; a++)
+		for (int a = 0; a < 60; a++)
 		{
 			((void(_cdecl*)())0x72AF70)();
 		}
