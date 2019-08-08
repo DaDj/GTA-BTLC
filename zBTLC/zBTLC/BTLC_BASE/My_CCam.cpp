@@ -54,10 +54,10 @@ namespace My_CCam
 					if (Switch_side())
 						offset.x = -0.44f;
 					else
-						offset.x = 0.44f;
+						offset.x = 0.34f;
 					//offset.x = 0.44f;
-					offset.y = 0.4f;
-					offset.z = -0.13f;
+					offset.y = 0.1f;
+					offset.z = -0.10f;
 					plugin::CallMethod<0x521500, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5);
 					break;
 				default:
@@ -78,9 +78,9 @@ namespace My_CCam
 	float AIMWEAPON_RIFLE1_ZOOM = 50.0f;
 	float AIMWEAPON_RIFLE2_ZOOM = 50.0f;
 	float AIMWEAPON_DEFAULT_ZOOM = 50.0f;
-	float AIMWEAPON_DRIVE_CLOSE_ENOUGH = 0.17453f;
-	float AIMWEAPON_DRIVE_SENS_MULT = 0.25f;
-	float AIMWEAPON_FREETARGET_SENS = 0.1f;
+	float AIMWEAPON_DRIVE_CLOSE_ENOUGH = 0.14453f;
+	float AIMWEAPON_DRIVE_SENS_MULT = 0.02f;
+	float AIMWEAPON_FREETARGET_SENS = 0.05f;
 	float AIMWEAPON_STICK_SENS = 0.007f;
 	MemoryVP::Patch<float>(0x8CC4B4, AIMWEAPON_RIFLE1_ZOOM);
 	MemoryVP::Patch<float>(0x8CC4B8, AIMWEAPON_RIFLE2_ZOOM);

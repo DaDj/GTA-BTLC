@@ -38,12 +38,20 @@ namespace visuals
 	void vehicle_headlights()
 	{
 		static float
-			HeadlightCoronaDistance = 200.0f;
+			HeadlightCoronaDistance = 200.0f,
+			DD_HLightSdw = 50.0,
+			DD_HLightSdw2 = DD_HLightSdw / 1.5;
+
 
 		MemoryVP::Patch<int>(0x6E0DEE, 110);//HeadlightCoronaAlpha
 		MemoryVP::Patch<int>(0x6E0CF8, 110);//HeadlightCoronaAlpha
 		MemoryVP::Patch<float>(0x6E0CA6, 0.5); //HeadlightCoronaSize
 		MemoryVP::Patch<void*>(0x6E0C62 + 2, &HeadlightCoronaDistance); //HeadlightCoronaDistance
+
+		MemoryVP::Patch<float>(0x872744, DD_HLightSdw*0.75);//Headlightsahdow distance
+		MemoryVP::Patch<float>(0x872748, DD_HLightSdw *DD_HLightSdw);//Headlightshadowdistance 
+		MemoryVP::Patch<float>(0x872740, ( 1 / (DD_HLightSdw * 0, 33)));//Headlightshadowdistance
+		MemoryVP::Patch<void*>(0x70C5FE, &DD_HLightSdw2); //Headlightshadowdistance
 	}
 
 

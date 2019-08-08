@@ -273,9 +273,10 @@ void   CStreaming::StreamCopModels(signed int townID)
 				i++;
 			}
 		}
+			CStreaming::RequestModel(CStreaming::copModelByTown[COP_ID], 2);
+			CStreaming::RequestModel(CStreaming::copCarModelByTown[COPCAR_ID], 2);
 
-		CStreaming::RequestModel(CStreaming::copModelByTown[COP_ID], 2);
-		CStreaming::RequestModel(CStreaming::copCarModelByTown[COPCAR_ID], 2);
+
 	}
 }
 

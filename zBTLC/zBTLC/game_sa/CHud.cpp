@@ -90,6 +90,8 @@ char *LastBigMessage = (char *)0xBAABC0;
 unsigned short &OddJob2On = *(unsigned short *)0xBAB1E0;
 float &PagerXOffset = *(float *)0x8D0938;
 
+
+
 enum eHudState
 {
 	STATE_OFF,
@@ -143,24 +145,110 @@ void CHud::DrawPlayerInfo()
 void CHud::DrawPlayerhealthandarmor(CPed *player)
 {
 	static unsigned int lastdamagetaken;
+	static int LastHealth;
+	enum eBlinkstate
+	{
+		NO_BLINK,
+		BLINK_ON,
+		BLINK_OFF
+	};
+
 	float percentage_health = (player->m_fHealth / player->m_fMaxHealth) * 100;
-	CRGBA color_health = CRGBA::CRGBA(10, 110, 10, 255);
+	CRGBA color_health = CRGBA::CRGBA(87, 124, 88, 255);
 	if (percentage_health < 30)
 		color_health = CRGBA::CRGBA(90, 0, 0, 255);
 
-	float percentage_armor = player->m_fArmour ;
-	CRGBA color_armor = CRGBA::CRGBA(80, 120, 180, 245);
-	if(percentage_armor <= 1.0f)
-	      color_armor = CRGBA::CRGBA(200, 200, 230, 90);
+	float percentage_armor = player->m_fArmour;
+	CRGBA color_armor = CRGBA::CRGBA(74, 148, 160, 255);
+	if (percentage_armor <= 1.0f)
+		color_armor = CRGBA::CRGBA(200, 200, 230, 90);
 
-	lastdamagetaken = CWorld::Players[CWorld::PlayerInFocus].m_dwLastTimeEnergyLost;
-	if (CTimer::m_snTimeInMilliseconds < (lastdamagetaken + 60))
+
+
+	m_LastTimeEnergyLost = CWorld::Players[CWorld::PlayerInFocus].m_dwLastTimeEnergyLost;
+
+	if (CTimer::m_snTimeInMilliseconds < (m_LastTimeEnergyLost + 60))
+	{
 		CSprite2d::DrawRect(CRect::CRect(x_fac(0.0f), y_fac(0.0f), RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(80, 30, 30, 40));
 
-		CSprite2d::DrawRect(CRect::CRect(x_fac(10.0f), y_fac(448.0f-21.0f), x_fac(110.0f), y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
-		CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 20.0f), x_fac(98.0f), y_fac(7.0f), percentage_health, 0, 0, 0, color_health, color_health);
-		//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
-		CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 12.0f), x_fac(98.0f), y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
+		//color_health = CRGBA::CRGBA(90, 0, 0, 255);
+	}
+
+
+
+	//Implement Blinking
+	//if (LastHealth > player->m_fHealth)
+	//{
+	//	m_EnergyLostTimer = 0;
+	//	m_EnergyLostState = BLINK_OFF;
+	//}
+
+	//if (m_EnergyLostTimer > 500.0)
+	//{
+	//	m_EnergyLostState = NO_BLINK;
+	//	m_EnergyLostTimer = 0;
+	//}
+	//else if (m_EnergyLostState != NO_BLINK)
+	//{
+	//	m_EnergyLostTimer += CTimer::ms_fTimeStep*10 ;
+
+	//	float test_BLINK = m_EnergyLostTimer / 500.0f;
+	//	if (test_BLINK > 0.10 && test_BLINK < 0.45 ||  test_BLINK > 0.65 && test_BLINK < 0.80)
+	//		m_EnergyLostState = BLINK_ON;
+	//	else
+	//		m_EnergyLostState = BLINK_OFF;
+	//}
+
+	LastHealth = player->m_fHealth;
+	m_EnergyLostState = NO_BLINK;
+
+
+	//CSprite2d::DrawRect(CRect::CRect(x_fac(10.0f), y_fac(448.0f-21.0f), x_fac(110.0f), y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
+	//CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 20.0f), x_fac(98.0f), y_fac(7.0f), percentage_health, 0, 0, 0, color_health, color_health);
+	//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
+	//CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 12.0f), x_fac(98.0f), y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
+
+	//RADAR TESTURE
+	CRect Icon = CRect(x_fac(65.0f-46.5), RsGlobal.maximumHeight-y_fac(60+46.5), x_fac(65.0f+46.5),  RsGlobal.maximumHeight- y_fac(60.0f-46.5));
+	CHud::Sprites[3].Draw(Icon, CRGBA(255, 255, 255, 180));
+
+
+	float x[100];
+	float y[100];
+	float x2[100];
+	float y2[100];
+	int Degree = 180;
+	int DegreeStep = 5;
+	int Polycount = 360 / DegreeStep;
+
+
+	for (int i = 0; i < Polycount; i++)
+	{
+		x[i] = sin(Degree*3.141 / 180);
+		y[i] = cos(Degree*3.141 / 180);
+
+		x2[i] = x_fac(x[i] * 45 + 65);
+		y2[i] = y_fac(y[i] * 45 + 448 - 60);
+		x[i] = x_fac(x[i] * 40 + 65);
+		y[i] = y_fac(y[i] * 40 + 448 - 60);
+		Degree += DegreeStep;
+	}
+
+	int index_health = min(Polycount / 2, ceil((Polycount-1) * percentage_health / 200));
+	int percent = ceil((Polycount-1) *(percentage_armor / 200 + percentage_health / 200));
+
+	for (int i = 0; i < percent; i++)
+	{
+		if (i == Polycount-2)
+			CSprite2d::Draw2DPolygon(x[i], y[i], x2[i], y2[i], x[0], y[0], x2[0], y2[0], color_armor);
+		else if (i < index_health && 	m_EnergyLostState != BLINK_OFF)
+			CSprite2d::Draw2DPolygon(x[i], y[i], x2[i], y2[i], x[i + 1], y[i + 1], x2[i + 1], y2[i + 1], color_health);
+		else if(i >= index_health)
+			CSprite2d::Draw2DPolygon(x[i], y[i], x2[i], y2[i], x[i + 1], y[i + 1], x2[i + 1], y2[i + 1], color_armor);
+	}
+
+
+
 }
 
 void CHud::DrawWeaponInfo(CPed *player , float y_off)
@@ -229,6 +317,8 @@ void CHud::DrawWeaponInfo(CPed *player , float y_off)
 
 void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 {
+	CRect Icon;
+
 	RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
 	int weapModel = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type, 1)->m_dwModelId1;
 	if (weapModel <= 0)
@@ -254,10 +344,12 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 					y_fac(40.0f + 50.0f / 2 + y_off), 1.0f, x_fac(100.0f / 2),
 					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);*/				
 				CTxdStore::PushCurrentTxd();
-				CRect Icon = CRect(RsGlobal.maximumWidth - x_fac(120.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
+				if(iconTex->raster->height == iconTex->raster->width)
+					Icon = CRect(RsGlobal.maximumWidth - x_fac(130.0f-50), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
+				else
+					Icon = CRect(RsGlobal.maximumWidth - x_fac(130.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
 				CSprite2d Test = CSprite2d::CSprite2d();
 				CTxdStore::SetCurrentTxd(model->m_wTxdIndex);
-				//Test.m_pTexture = iconTex;
 				Test.SetTexture(iconTex->name);
 				Test.Draw(Icon, CRGBA(255, 255, 255, alpha));
 				CTxdStore::PopCurrentTxd();

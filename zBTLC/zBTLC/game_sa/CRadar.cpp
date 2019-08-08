@@ -3,11 +3,10 @@
 #include "RenderWare.h"
 #include "CHud.h"
 
-float CRadar::Radar_Height = 65.0f;
+float CRadar::Radar_Height = 70.0f;
 float CRadar::Radar_Width = 100.0f;
 float CRadar::Radar_Posx = 10.0f;
 float CRadar::Radar_Posy = 23.0f;
-float CRadar::Radar_Cut_Width = 0.1f;
 
 unsigned int MAX_RADAR_SPRITES = 64;
 unsigned int MAX_RADAR_TRACES = 175;
@@ -31,16 +30,30 @@ int *gRadarTextures = (int *)0xBA8478;
 
 void CRadar::My_Init()
 {
-	//newradartoscreenspace
-	MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
+//#define RECTRADAR
+
+	CRadar::Radar_Height = 39 * 2;
+	CRadar::Radar_Width = 39 * 2;
+	CRadar::Radar_Posx = 65 - Radar_Height / 2;
+	CRadar::Radar_Posy = 60 - Radar_Height / 2;
+#ifdef  RECTRADAR
+
+	CRadar::Radar_Height = 70.0f;
+	CRadar::Radar_Width = 100.0f;
+	CRadar::Radar_Posx = 10.0f;
+	CRadar::Radar_Posy = 23.0f;
+
 	//Draw radar mask
 	MemoryVP::InjectHook(0x585700, &CRadar::DrawRadarMask, PATCH_JUMP);
-
-
 	//replace original 
 	MemoryVP::InjectHook(0x5832F0, &CRadar::LimitRadarPoint, PATCH_JUMP);
+#endif 
 
-	int alpha = 200;
+
+	//newradartoscreenspace
+	MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
+
+	int alpha = 150;
 	MemoryVP::Patch<int>(0x586432 + 1, alpha);
 	MemoryVP::Patch<int>(0x58647B + 1, alpha);
 	MemoryVP::Patch<int>(0x5864BC + 1, alpha);
@@ -78,8 +91,8 @@ void CRadar::DrawLegend(int x, int y, int blipType)
 float CRadar::LimitRadarPoint(CVector2D& point)
 {
 	//return ((float(__cdecl *)(CVector2D&))0x5832F0)(point2);
-	float Limit_x = 1 - CRadar::Radar_Cut_Width;
-	float Limit_y = abs((CRadar::Radar_Height/CRadar::Radar_Width));
+	float Limit_x = 1;
+	float Limit_y = 1;
 	 
 	float result = sqrt( point.x * point.x + point.y * point.y);
 	if (result > sqrt(2.f) / 2)
@@ -118,11 +131,6 @@ void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 {
 	//((void(__cdecl *)(CVector2D&, CVector2D const&))0x583480)(out, in);
 	__asm push edx
-	float cut_delta = CRadar::Radar_Width * Radar_Cut_Width;
-	float cut_delta_y = CRadar::Radar_Width * (1 - CRadar::Radar_Height / CRadar::Radar_Width);
-	float radar_size = CRadar::Radar_Width + cut_delta;
-	float radar_posX = CRadar::Radar_Posx - 0.5 * cut_delta;
-	float radar_posY = CRadar::Radar_Posy - 0.5 * cut_delta_y;
 
 	if (FrontEndMenuManager.drawRadarOrMap)
 	{
@@ -131,8 +139,8 @@ void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 	}
 	else
 	{
-		out.x = (CHud::x_fac(radar_posX ) + CHud::x_fac(radar_size *0.5))   + CHud::x_fac(radar_size * 0.5 ) * in.x ;
-		out.y = CHud::y_fac(448.0)- (CHud::y_fac(radar_posY) + CHud::y_fac(radar_size)* 0.5) - CHud::y_fac(radar_size * 0.5)  *  in.y ;
+		out.x = CHud::x_fac(CRadar::Radar_Posx + CRadar::Radar_Width*0.5) + CHud::x_fac(CRadar::Radar_Width*0.5)* in.x ;
+		out.y = RsGlobal.maximumHeight - CHud::y_fac(CRadar::Radar_Posy+ CRadar::Radar_Height*0.5) -  CHud::y_fac(CRadar::Radar_Height*0.5)  *  in.y ;
 	}
 	__asm pop edx
 }
@@ -359,7 +367,7 @@ void CRadar::DrawAreaOnRadar(CRect const& rect, CRGBA const& color, bool inMenu)
 void CRadar::DrawRadarMask()
 {
 	//((void(__cdecl *)())0x585700)();
-	float Limit_x = 1 - CRadar::Radar_Cut_Width;
+	float Limit_x = 1 ;
 	float Limit_y = abs((CRadar::Radar_Height / CRadar::Radar_Width)) ;
 	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTURERASTER,(void*)0);
 	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
@@ -427,12 +435,12 @@ void CRadar::DrawRadarMask()
 			break;
 		}
 
-		for (int i = 0; i < 4; i++)
+	/*	for (int i = 0; i < 4; i++)
 		{
 			CRadar::TransformRadarPointToScreenSpace(CUT_OUTPUT[i], CUT_INPUT[i]);
 		}
 		CSprite2d::SetMaskVertices(4, CUT_OUTPUT, CSprite2d::NearScreenZ + 0.0000001);
-		RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, CSprite2d::maVertices, 4);
+		RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, CSprite2d::maVertices, 4);*/
 	}
 	 RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)5);
 	return;
