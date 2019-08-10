@@ -4,6 +4,15 @@
 #include "CPed.h"
 #include "CSprite2d.h"
 
+enum eHudSprites {
+	HUDSPRITE_FIST,
+	HUDSPRITE_SITEM16,
+	HUDSPRITE_SITEROCKET,
+	HUDSPRITE_RADARDISC,
+	HUDSPRITE_RADARRINGPLANE,
+	HUDSPRITE_SKIPICON
+};
+
 class CHud
 {
 public:
@@ -62,6 +71,14 @@ public:
 	static bool &bDrawingVitalStats;
 	static CSprite2d *Sprites; // static CSprite2d Sprites[6]
 
+	static CSprite2d NewRadarSprites[2]; // static CSprite2d Sprites[6]
+
+	static char *CHud::Spritenames[6];
+	static	char *CHud::NewSpritesNames[5];
+	static float Health_Radius;
+	static float Health_PosX;
+	static float Health_PosY;
+	static float Health_innerRadius;
 
 
 	static void My_Init();
@@ -82,6 +99,12 @@ public:
 	static void DrawZoneText();
 	static void DrawCarName();
 	static void DrawWastedArrested();
+	static void DrawRadar();
+
+	static void Initialise();
+	static void ReInitialise();
+	static void Shutdown();
+
 
 };
 

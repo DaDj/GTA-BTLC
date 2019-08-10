@@ -32,10 +32,10 @@ void CRadar::My_Init()
 {
 //#define RECTRADAR
 
-	CRadar::Radar_Height = 39 * 2;
-	CRadar::Radar_Width = 39 * 2;
-	CRadar::Radar_Posx = 65 - Radar_Height / 2;
-	CRadar::Radar_Posy = 60 - Radar_Height / 2;
+	CRadar::Radar_Height = CHud::Health_innerRadius * 2 ;
+	CRadar::Radar_Width = CHud::Health_innerRadius * 2 ;
+	CRadar::Radar_Posx = CHud::Health_PosX  - Radar_Height / 2;
+	CRadar::Radar_Posy = CHud::Health_PosY - Radar_Height / 2;
 #ifdef  RECTRADAR
 
 	CRadar::Radar_Height = 70.0f;
@@ -53,7 +53,7 @@ void CRadar::My_Init()
 	//newradartoscreenspace
 	MemoryVP::InjectHook(0x583480, &CRadar::TransformRadarPointToScreenSpace, PATCH_JUMP);
 
-	int alpha = 150;
+	int alpha = 200;
 	MemoryVP::Patch<int>(0x586432 + 1, alpha);
 	MemoryVP::Patch<int>(0x58647B + 1, alpha);
 	MemoryVP::Patch<int>(0x5864BC + 1, alpha);
@@ -516,6 +516,7 @@ void CRadar::DrawRadarGangOverlay(bool inMenu)
 void CRadar::DrawRadarMap()
 {
 	((void(__cdecl *)())0x586880)();
+
 }
 
 // Converted from cdecl void CRadar::DrawMap(void) 0x586B00

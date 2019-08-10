@@ -75,6 +75,12 @@ int &CHud::m_ZoneNameTimer = *(int *)0xBAA938;
 short &CHud::m_ItemToFlash = *(short *)0xBAB1DC;
 bool &CHud::bDrawingVitalStats = *(bool *)0xBAB1DE;
 CSprite2d *CHud::Sprites = (CSprite2d *)0xBAB1FC;
+CSprite2d CHud::NewRadarSprites[2]; // static CSprite2d Sprites[6]
+
+float CHud::Health_Radius = 43.0f;
+float CHud::Health_innerRadius = 38.5f;
+float CHud::Health_PosX = 90.0f;
+float CHud::Health_PosY = 65.0f;
 
 short &TimerMainCounterHideState = *(short *)0xBAA388;
 bool &TimerMainCounterWasDisplayed = *(bool *)0xBAA38A;
@@ -90,6 +96,22 @@ char *LastBigMessage = (char *)0xBAABC0;
 unsigned short &OddJob2On = *(unsigned short *)0xBAB1E0;
 float &PagerXOffset = *(float *)0x8D0938;
 
+ char *CHud::Spritenames[6] = {
+	"fist",
+	"siteM16",
+	"siterocket",
+	"radardisc",
+	"radarRingPlane",
+	"SkipIcon",
+};
+
+ char *CHud::NewSpritesNames[5] = {
+   "radarringfront",
+	"radarringback",
+   "mp_higher",
+   "mp_level",
+   "mp_lower",
+ };
 
 
 enum eHudState
@@ -106,6 +128,9 @@ void CHud::My_Init()
 	MemoryVP::InjectHook(0x58FBDB, &CHud::DrawWantedLevel, PATCH_CALL);
 	MemoryVP::InjectHook(0x58AA50, &CHud::DrawZoneText, PATCH_JUMP);
 	MemoryVP::InjectHook(0x58AEA0, &CHud::DrawCarName, PATCH_JUMP);
+	MemoryVP::InjectHook(0x5BD76F, &CHud::Initialise, PATCH_CALL); 
+	MemoryVP::InjectHook(0x53BBA2, &CHud::Shutdown, PATCH_CALL);
+	MemoryVP::InjectHook(0x58FC53, &CHud::DrawRadar, PATCH_CALL);
 }
 
 void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) 
@@ -133,7 +158,10 @@ float CHud::y_fac(float y)
 
 void CHud::DrawPlayerInfo()
 {
-
+	//RADAR TESTURE
+	float scaleRadius = Health_Radius + 1.5;
+	CRect Icon = CRect(x_fac(Health_PosX - scaleRadius), y_fac(448 - Health_PosY + scaleRadius), x_fac(Health_PosX + scaleRadius), y_fac(448 - Health_PosY - scaleRadius));
+	CHud::Sprites[3].Draw(Icon, CRGBA(255, 255, 255, 180));
 
 	CPed *player = CWorld::Players[CWorld::PlayerInFocus].m_pPed;
 
@@ -208,9 +236,7 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
 	//CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 12.0f), x_fac(98.0f), y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
 
-	//RADAR TESTURE
-	CRect Icon = CRect(x_fac(65.0f-46.5), RsGlobal.maximumHeight-y_fac(60+46.5), x_fac(65.0f+46.5),  RsGlobal.maximumHeight- y_fac(60.0f-46.5));
-	CHud::Sprites[3].Draw(Icon, CRGBA(255, 255, 255, 180));
+
 
 
 	float x[100];
@@ -227,10 +253,10 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		x[i] = sin(Degree*3.141 / 180);
 		y[i] = cos(Degree*3.141 / 180);
 
-		x2[i] = x_fac(x[i] * 45 + 65);
-		y2[i] = y_fac(y[i] * 45 + 448 - 60);
-		x[i] = x_fac(x[i] * 40 + 65);
-		y[i] = y_fac(y[i] * 40 + 448 - 60);
+		x2[i] = x_fac(x[i] * Health_Radius + Health_PosX);
+		y2[i] = y_fac(y[i] * Health_Radius + 448 - Health_PosY);
+		x[i] = x_fac(x[i] * Health_innerRadius + Health_PosX);
+		y[i] = y_fac(y[i] * Health_innerRadius + 448 - Health_PosY);
 		Degree += DegreeStep;
 	}
 
@@ -703,7 +729,7 @@ void CHud::DrawZoneText()
 			CFont::SetAlignment(ALIGN_RIGHT);
 			CFont::SetProp(true);
 			CFont::SetBackground(false,false);
-			CFont::SetScale(x_fac(0.4f), y_fac(0.6f));
+			CFont::SetScale(x_fac(0.5f), y_fac(0.7f));
 			CFont::SetOutlinePosition(1);
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
 			CFont::SetFontStyle(2);
@@ -784,7 +810,7 @@ void CHud::DrawCarName()
 		CFont::SetAlignment(ALIGN_RIGHT);
 		CFont::SetProp(true);
 		CFont::SetBackground(false, false);
-		CFont::SetScale(x_fac(0.4f), y_fac(0.6f));
+		CFont::SetScale(x_fac(0.5f), y_fac(0.7f));
 		CFont::SetOutlinePosition(1);
 		CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, max(Fontalpha, 0.0f)));
 		CFont::SetFontStyle(2);
@@ -795,5 +821,73 @@ void CHud::DrawCarName()
 
 void CHud::DrawWastedArrested()
 {
+
+}
+
+void CHud::Initialise() {
+	//plugin::Call<0x5BA850>();
+
+
+	int	txd = CTxdStore::AddTxdSlot("hud");
+	CTxdStore::LoadTxd(txd, "MODELS\\HUD.TXD");
+	CTxdStore::AddRef(txd);
+	CTxdStore::PushCurrentTxd();
+	CTxdStore::SetCurrentTxd(txd);
+
+	for (int i = 0; i < 6; i++)
+		Sprites[i].SetTexture(Spritenames[i]);
+
+
+	for (int i = 0; i < 2; i++)
+		NewRadarSprites[i].SetTexture(NewSpritesNames[i]);
+	
+
+	CTxdStore::PopCurrentTxd();
+	ReInitialise();
+
+
+
+}
+
+
+
+void CHud::Shutdown() {
+	//plugin::Call<0x588850>();
+	int HUDTxd = CTxdStore::FindTxdSlot("hud");
+	CTxdStore::RemoveTxdSlot(HUDTxd);
+
+	for (int i = 0; i < 6; ++i)
+		Sprites[i].Delete();
+
+	for (int i = 0; i < 2; i++)
+		NewRadarSprites[i].Delete();
+
+
+}
+
+void CHud::ReInitialise() {
+	plugin::Call<0x588880>();
+}
+
+void CHud::DrawRadar() {
+//	plugin::Call<0x58A330>();
+	if (FrontEndMenuManager.m_dwRadarMode != 2 && (m_ItemToFlash != 8 || CTimer::m_FrameCounter & 8))
+	{
+		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
+		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATESHADEMODE, (void*)1);
+		CRadar::DrawMap();
+		if ( FindPlayerVehicle(-1,0) && FindPlayerVehicle(-1,0)->m_dwVehicleSubClass == VEHICLE_PLANE && FindPlayerVehicle(-1, 0)->m_wModelIndex != 539)
+		{
+			// Draw inside Radar here (for planes)
+		}
+		float scaleRadius = Health_Radius + 1.5;
+		CRect Icon = CRect(x_fac(Health_PosX - scaleRadius), y_fac(448 - Health_PosY + scaleRadius), x_fac(Health_PosX + scaleRadius), y_fac(448 - Health_PosY - scaleRadius));
+		CHud::NewRadarSprites[0].Draw(Icon, CRGBA(255, 255, 255, 180));
+
+
+	}
+	CRadar::DrawBlips();
+	//if (FrontEndMenuManager.m_dwRadarMode == 1)
+
 
 }
