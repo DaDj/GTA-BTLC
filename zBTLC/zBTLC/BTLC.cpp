@@ -48,6 +48,7 @@ float VERSION = 0.42f;
 #include "game_sa/CPickups.h"
 #include "game_sa/CVehicleModelInfo.h"
 #include "game_sa/CCarFxRender.h"
+#include "game_sa/CVehicle.h"
 	
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -105,6 +106,7 @@ void Function_starter()
 	CEntity::My_Init();		//static shadows for all new traffic lights and Lamps
 	CPed::My_Init();		//Armed Animations for Peds
 	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
+	CVehicle::MyInit();		//Support for IVF Lights
 
 	//Test
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
@@ -122,7 +124,6 @@ void Function_starter()
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);	
-
 
 }
 
@@ -152,11 +153,7 @@ void btlc_init()
 
 void Delayed_Patches()
 {
-	//Patch New Dirt Materials (includes silents fix for Dirtlevels)
-	MemoryVP::InjectHook(0x5D5DB0, &CVehicleModelInfo::RemapDirt, PATCH_JUMP);
-	MemoryVP::InjectHook(0x4C9648, &CVehicleModelInfo::FindEditableMaterialList, PATCH_CALL);
-	MemoryVP::Patch<DWORD>(0x4C964D, 0x0FEBCE8B);
-
+	CVehicleModelInfo::MyInit();
 }
 
 void check_gameversion()

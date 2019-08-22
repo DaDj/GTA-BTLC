@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "../Patch/MemoryMgr.h"
 #include <sstream>
+#include <iostream>
 #include "../Events_SA/Events_SA.h"
 #include "../game_sa/RenderWare.h"
 #include "../game_sa/CFileLoader.h"
@@ -12,17 +13,18 @@
 #include "../game_sa/CSprite.h"
 #include "../game_sa/CFont.h"
 #include "../game_sa/CMenuManager.h"
+#include "../game_sa/CVehicleModelInfo.h"
+#include "../game_sa/CTxdStore.h"
+#include "../game_sa/CClothesBuilder.h"
 
-
-
-namespace debug 
+namespace debug
 {
-	
+
 
 	void init()
-	{		
+	{
 		debug_console();
-		MemoryVP::InjectHook(0x405E0A, &CFileLoader::LoadObjectInstance_a,PATCH_CALL);
+		MemoryVP::InjectHook(0x405E0A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 		MemoryVP::InjectHook(0x4062F2, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 		MemoryVP::InjectHook(0x5B892A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 
@@ -39,7 +41,7 @@ namespace debug
 		//	CFont::PrintString(CHud::x_fac(200.0f), CHud::y_fac(5.0f), string);
 
 
-	
+
 		//	static float test_lod = 5.0;
 		//	static float test_lod2 = 1/(test_lod - 0.925);
 		//	
@@ -49,12 +51,12 @@ namespace debug
 		//	MemoryVP::Patch<float>(0x865250, (test_lod - 0.925) / 16);
 		//	//float thing1 = *(float*)0x57AED6 + 2;
 		//	//float thing = *(float*)0x865438;
-	
+
 		//};
 
 		plugin::Events::gameProcessEvent += []
 		{
-	
+
 		};
 
 		plugin::Events::drawHudEvent += []
@@ -62,9 +64,38 @@ namespace debug
 			draw_current_Modelname();
 			draw_FPS();
 			//draw_graphics_info();
+
+
+			RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
+			if (CVehicleModelInfo::ms_pCustomLightsTexture)
+			{
+				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, CVehicleModelInfo::ms_pCustomLightsTexture->raster);
+				CSprite::RenderOneXLUSprite(180,180,1,100,100,255,255,255,255,1,255,0,0 );
+				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+			}
+
+
+			RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
+			if (CVehicleModelInfo::ms_pCustomLightsTexture)
+			{
+				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, CVehicleModelInfo::ms_pCustomLightsOnTexture->raster);
+				CSprite::RenderOneXLUSprite(280, 280, 1, 100, 100, 255, 255, 255, 255, 1, 255, 0, 0);
+				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+			}
+
+
+			//CPed *player = FindPlayerPed(-1);
+			//	if (player && player->m_pVehicle && player->m_bInVehicle )
+			//	{
+			//		
+			//		float speed = player->m_pVehicle->m_fGasPedal;
+			//		std::cout<< speed << '\r';
+			//	}
 		};
 	}
-	
+
 	void debug_console()
 	{
 		MemoryVP::InjectHook(0x821982, printf, PATCH_JUMP);
@@ -103,7 +134,7 @@ namespace debug
 		if (entity != 0)
 		{
 			CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
-			sprintf(string, " Model: %s" ,CFileLoader::Objectnamelist[entity->m_wModelIndex].mName);
+			sprintf(string, " Model: %s", CFileLoader::Objectnamelist[entity->m_wModelIndex].mName);
 			CFont::SetFontStyle(FONT_SUBTITLES);
 			CFont::SetAlignment(ALIGN_LEFT);
 			CFont::SetOutlinePosition(1);
@@ -115,13 +146,13 @@ namespace debug
 	void draw_FPS()
 	{
 		char string[40];
-		CFont::SetColor(CRGBA::CRGBA(200,200,200,255));
+		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
 		sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetAlignment(ALIGN_LEFT);
 		CFont::SetOutlinePosition(1);
 		CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
-		CFont::PrintString(CHud::x_fac(200.0f),CHud::y_fac(5.0f), string);
+		CFont::PrintString(CHud::x_fac(200.0f), CHud::y_fac(5.0f), string);
 	}
 
 	void draw_graphics_info()

@@ -1,4 +1,7 @@
 #include "CVehicle.h"
+#include "CModelInfo.h"
+#include "CTxdStore.h"
+#include <iostream>
 
 float &CVehicle::WHEELSPIN_TARGET_RATE          = *(float *)0x8D3498;
 float &CVehicle::WHEELSPIN_INAIR_TARGET_RATE    = *(float *)0x8D349C;
@@ -961,6 +964,23 @@ void CVehicle::SetVehicleCreatedBy(int createdBy)
 // Converted from thiscall void CVehicle::SetupRender(void) 0x6D64F0
 void CVehicle::SetupRender()
 {
+	CVehicleModelInfo *vehModel = (CVehicleModelInfo *)CModelInfo::ms_modelInfoPtrs[this->m_wModelIndex];
+	CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(CModelInfo::ms_modelInfoPtrs[m_wModelIndex]->m_wTxdIndex);
+
+	if (txd)
+	{
+		CVehicleModelInfo::ms_pCustomLightsTexture = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "vehiclelights");
+		CVehicleModelInfo::ms_pCustomLightsOnTexture = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "vehiclelights_on");
+	}
+	if (CVehicleModelInfo::ms_pCustomLightsTexture)
+	{
+		std::cout << "actually found smth!"  << '\r';
+	}
+	if (CVehicleModelInfo::ms_pCustomLightsOnTexture)
+	{
+		std::cout << "actually found smth!"  << '\r';
+	}
+
 	((void (__thiscall *)(CVehicle*))0x6D64F0)(this);
 }
 
@@ -1203,3 +1223,10 @@ void CVehicle::ProcessWeapons()
 {
 	((void (__thiscall *)(CVehicle*))0x6E3950)(this);
 }
+
+void CVehicle::MyInit()
+{
+	MemoryVP::InjectHook(0x5532A9, &CVehicle::SetupRender, PATCH_CALL);
+}
+
+

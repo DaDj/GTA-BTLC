@@ -837,16 +837,11 @@ void CHud::Initialise() {
 	for (int i = 0; i < 6; i++)
 		Sprites[i].SetTexture(Spritenames[i]);
 
-
 	for (int i = 0; i < 2; i++)
 		NewRadarSprites[i].SetTexture(NewSpritesNames[i]);
 	
-
 	CTxdStore::PopCurrentTxd();
 	ReInitialise();
-
-
-
 }
 
 
@@ -861,8 +856,6 @@ void CHud::Shutdown() {
 
 	for (int i = 0; i < 2; i++)
 		NewRadarSprites[i].Delete();
-
-
 }
 
 void CHud::ReInitialise() {
@@ -883,8 +876,6 @@ void CHud::DrawRadar() {
 		float scaleRadius = Health_Radius + 1.5;
 		CRect Icon = CRect(x_fac(Health_PosX - scaleRadius), y_fac(448 - Health_PosY + scaleRadius), x_fac(Health_PosX + scaleRadius), y_fac(448 - Health_PosY - scaleRadius));
 		CHud::NewRadarSprites[0].Draw(Icon, CRGBA(255, 255, 255, 180));
-
-
 	}
 	CRadar::DrawBlips();
 	//if (FrontEndMenuManager.m_dwRadarMode == 1)

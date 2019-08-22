@@ -521,6 +521,8 @@ public:
     void SetupUpgradesAfterLoad();
     void GetPlaneWeaponFiringStatus(bool& status, eOrdnanceType& ordnanceType);
     void ProcessWeapons();
+
+	static void MyInit();
 };
 #pragma pack(pop)
 

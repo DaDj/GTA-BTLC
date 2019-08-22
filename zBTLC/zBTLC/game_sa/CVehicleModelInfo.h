@@ -9,6 +9,7 @@
 #include "CPool.h"
 #include <stdint.h>
 
+
 enum VehicleUpgradePosn {
 	UPGRADE_BONNET,
 	UPGRADE_BONNET_LEFT,
@@ -33,6 +34,15 @@ struct  UpgradePosnDesc {
 	CQuaternion m_qRotation;
 	int m_nParentComponentId;
 };
+
+
+struct RestoreEntry
+{
+	void* address;
+	int value;
+};
+VALIDATE_SIZE(RestoreEntry, 0x8);
+
 
 VALIDATE_SIZE(UpgradePosnDesc, 0x20);
 
@@ -135,6 +145,15 @@ public:
 	static RwTexture *ms_pLightsOnTexture;
 
 
+	// vehiclelights128 texture
+	static RwTexture *ms_pCustomLightsTexture;
+	// vehiclelightson128 texture
+	static RwTexture *ms_pCustomLightsOnTexture;
+
+
+
+
+
 
 	//static RwTexture *DirtTexture2[16] ;
 
@@ -213,7 +232,7 @@ public:
 	bool IsUpgradeAvailable(VehicleUpgradePosn upgrade);
 	// change colors and settings of material according to vehicle color and lights states.  Data 
 	// contains pointer to restore entries
-	RpMaterial *SetEditableMaterialsCB(RpMaterial *material, void *data);
+	static RpMaterial *SetEditableMaterialsCBb(RpMaterial *material, void *data);
 	// execute SetEditableMaterialsCB(RpMaterial *, void *) for atomic materials and also remove
 	// vehicle window if needed. Data contains pointer to restore entries
 	RpAtomic *SetEditableMaterialsCB(RpAtomic *atomic, void *data);
@@ -287,6 +306,8 @@ public:
 
 	void FindEditableMaterialList();
 	static void RemapDirt(CVehicleModelInfo* modelInfo, uint32_t dirtID);
+
+	static void MyInit();
 };
 
 VALIDATE_SIZE(CVehicleModelInfo::CVehicleStructure, 0x314);

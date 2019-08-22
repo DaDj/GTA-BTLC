@@ -25,7 +25,7 @@ void CCarFxRender::MyShutdown()
 	for (int i = 0; i < 16; i++)
 	{
 		RwTextureDestroy(ms_aDirtTextures_2[i]);
-		//RwTextureDestroy(ms_aDirtTextures_3[i]);
+		RwTextureDestroy(ms_aDirtTextures_3[i]);
 		//RwTextureDestroy(ms_aDirtTextures_4[i]);
 		//RwTextureDestroy(ms_aDirtTextures_5[i]);
 		//RwTextureDestroy(ms_aDirtTextures_6[i]);
@@ -35,7 +35,11 @@ void CCarFxRender::MyShutdown()
 void CCarFxRender::MyInitialiseDirtTextures()
 {
 	InitialiseDirtTexture();
+	MyInitialiseDirtTextureSingle("vehiclegrunge_iv", ms_aDirtTextures_3);
 	MyInitialiseDirtTextureSingle("vehicle_genericmud_truck", ms_aDirtTextures_2);
+	
+
+	
 }
 
 void CCarFxRender::MyInitialiseDirtTextureSingle(char* name, RwTexture** dirtTextureArray )
