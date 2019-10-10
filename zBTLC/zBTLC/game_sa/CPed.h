@@ -30,7 +30,7 @@ enum eMoveState {
 #pragma pack(push, 4)
 class  CPed : public CPhysical {
 protected:
-    CPed(plugin::dummy_func_t){}
+	CPed(plugin::dummy_func_t) : CPhysical(plugin::dummy) {}
 public:
 	CPedCollisionAudio  m_CollisionAudio;
 	CPedVoice           m_PedVoice;

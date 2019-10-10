@@ -170,6 +170,7 @@
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CAudioengine.cpp" />
+    <ClCompile Include="game_sa\CBouncingPanel.cpp" />
     <ClCompile Include="game_sa\CCarFxRender.cpp" />
     <ClCompile Include="game_sa\CClothesBuilder.cpp" />
     <ClCompile Include="game_sa\CHardModels.cpp" />
@@ -661,10 +662,15 @@
     <ClInclude Include="DXSDK\8.0\include\d3dx8.h" />
     <ClInclude Include="DXSDK\9.0c\Include\d3d9.h" />
     <ClInclude Include="DXSDK\9.0c\Include\d3dx9.h" />
+    <ClInclude Include="Events_SA\Extender.h" />
+    <ClInclude Include="Events_SA\Extender\ObjectExtender.h" />
+    <ClInclude Include="Events_SA\Extender\PedExtender.h" />
+    <ClInclude Include="Events_SA\Extender\VehicleExtender.h" />
     <ClInclude Include="game_sa\CAEAudioChannel.h" />
     <ClInclude Include="game_sa\CAEStaticChannel.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />
     <ClInclude Include="game_sa\CAudioengine.h" />
+    <ClInclude Include="game_sa\CBouncingPanel.h" />
     <ClInclude Include="game_sa\CCarFxRender.h" />
     <ClInclude Include="game_sa\CClothesBuilder.h" />
     <ClInclude Include="game_sa\CHardModels.h" />

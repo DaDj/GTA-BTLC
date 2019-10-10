@@ -7,6 +7,7 @@
 #include "CVisibilityPlugins.h"
 
 
+
 RwTexture *CVehicleModelInfo::ms_pRemapTexture = (RwTexture *)0xB4E47C;
 RwTexture *CVehicleModelInfo::ms_pLightsTexture = (RwTexture *)0xB4E68C;
 RwTexture *CVehicleModelInfo::ms_pLightsOnTexture = (RwTexture *)0xB4E690;
@@ -16,6 +17,8 @@ char *CVehicleModelInfo::ms_compsUsed = (char *)0xB4E478;
 char *CVehicleModelInfo::ms_compsToUse = (char *)0x8A6458;
 
 char *CVehicleModelInfo::ms_lightsOn = (char*)0xB4E3E8;
+
+VehicleLightFlags CVehicleModelInfo::LightStatus;
 
 //RwTexture **CVehicleModelInfo::ms_aDirtTextures =(RwTexture **)0xC02BD0;
 //RwTexture *CVehicleModelInfo::DirtTexture2[16] = {};
@@ -151,91 +154,107 @@ bool CVehicleModelInfo::IsUpgradeAvailable(VehicleUpgradePosn upgrade)
 
 RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, void* data)
 {
-	RestoreEntry **pEntries  = (RestoreEntry **)data;
+	RestoreEntry **pEntries = (RestoreEntry **)data;
 	int CarColorID;
 	int LightID = -1;
-	int MaterialColor2 = *(int*)&material->color & 0xFFFFFF;
-
+	int MaterialColor = *(int*)&material->color & 0xFFFFFF;
+	int LighttextureType = 0;
 
 	if (ms_pRemapTexture && material && RpMaterialGetTexture(material) && material->texture->name[0] == '#')
 	{
 		(*pEntries)->address = &material->texture;
 		(*pEntries)->value = (int)material->texture;
 		(*pEntries)++;
-
 		material->texture = ms_pRemapTexture;
 	}
 
 	if ((int)material->texture == (int)ms_pLightsTexture->raster)
+		LighttextureType = 1;
+	else if (ms_pCustomLightsTexture != nullptr && (int)material->texture == (int)ms_pCustomLightsTexture)
+		LighttextureType = 2;
+
+	if (LighttextureType)
 	{
-		
-		switch (MaterialColor2)
+		switch (MaterialColor)
 		{
-		case 0xAFFF:
-			LightID = 0;
+		case 0xAFFF: //Left Headlight 
+			LightID = LightStatus.bHeadlight_Left;
 			break;
-		case 0xC8FF00:
-			LightID = 1;
+		case 0xC8FF00: //Right Headlight
+			LightID = LightStatus.bHeadlight_Right;
 			break;
-		case 0xFFB9:
-			LightID = 2;
+		case 0xFFB9: //Left taillight
+			if (LighttextureType == 1)
+				LightID = max(LightStatus.bTaillight_Left, LightStatus.bBrakelight_Left);
+			else
+				LightID = LightStatus.bTaillight_Left;
 			break;
-		case 0x3CFF:
-			LightID = 3;
+		case 0x3CFF: //Right Taillight
+			if (LighttextureType == 1)
+				LightID = max(LightStatus.bTaillight_Right, LightStatus.bBrakelight_Right);
+			else
+				LightID = LightStatus.bTaillight_Right;
 			break;
+		case 0xFFB8: //Left Brake Light
+			LightID = LightStatus.bBrakelight_Left;
+			break;
+		case 0x3BFF: //Right Brake Light
+			LightID = LightStatus.bBrakelight_Right;
+			break;
+		case 0xC6FF00: //Right Reverse Light
+			LightID = LightStatus.bReverselight_Right;
+			break;
+		case 0xADFF: //Left Reverse Light
+			LightID = LightStatus.bReverselight_Left;
+			break;
+		default:
+			LightID = -1;
 		}
 		(*pEntries)->address = &material->color;
-		(*pEntries)->value = *(int*)&material->color; 
+		(*pEntries)->value = *(int*)&material->color;
 		(*pEntries)++;
 		material->color.red = 255;
 		material->color.blue = 255;
 		material->color.green = 255;
-		if (LightID != -1)
+
+		if (LightID > 0)
 		{
-			if (CVehicleModelInfo::ms_lightsOn[LightID])
-			{
-				(*pEntries)->address = &material->texture;
-				(*pEntries)->value = (int)material->texture;
-				(*pEntries)++;
+			(*pEntries)->address = &material->texture;
+			(*pEntries)->value = (int)material->texture;
+			(*pEntries)++;
 
-				(*pEntries)->address = &material->surfaceProps.ambient;
-				(*pEntries)->value = *(int*)&material->surfaceProps.ambient;
-				(*pEntries)++;
+			(*pEntries)->address = &material->surfaceProps.ambient;
+			(*pEntries)->value = *(int*)&material->surfaceProps.ambient;
+			(*pEntries)++;
 
-				(*pEntries)->address = &material->surfaceProps.specular;
-				(*pEntries)->value = *(int*)&material->surfaceProps.specular;
-				(*pEntries)++;
+			(*pEntries)->address = &material->surfaceProps.specular;
+			(*pEntries)->value = *(int*)&material->surfaceProps.specular;
+			(*pEntries)++;
 
-				(*pEntries)->address = &material->surfaceProps.diffuse;
-				(*pEntries)->value = *(int*)&material->surfaceProps.diffuse;
-				(*pEntries)++;
+			(*pEntries)->address = &material->surfaceProps.diffuse;
+			(*pEntries)->value = *(int*)&material->surfaceProps.diffuse;
+			(*pEntries)++;
 
+			if (LighttextureType == 1)
 				material->texture = (RwTexture*)ms_pLightsOnTexture->raster;
-				material->surfaceProps.ambient = 16.0;
-				material->surfaceProps.specular = 0;
-				material->surfaceProps.diffuse = 0;
-			}
+			else if (LighttextureType == 2)
+				material->texture = ms_pCustomLightsOnTexture;
+
+			material->surfaceProps.ambient = 16.0;
+			material->surfaceProps.specular = 0;
+			material->surfaceProps.diffuse = 0;
 		}
 
 	}
 	else
 	{
-		switch (MaterialColor2)
+		switch (MaterialColor)
 		{
-		case 0xFF3C:
-			CarColorID = (unsigned __int8)CVehicleModelInfo::ms_currentCol[0];
-			break;
-		case 0xAF00FF:
-			CarColorID = (unsigned __int8)CVehicleModelInfo::ms_currentCol[1];
-			break;
-		case 0xFFFF00:
-			CarColorID = (unsigned __int8)CVehicleModelInfo::ms_currentCol[2];
-			break;
-		case 0xFF00FF:
-			CarColorID = (unsigned __int8)CVehicleModelInfo::ms_currentCol[3];
-			break;
-		default:
-			return material;
+		case 0xFF3C: CarColorID = CVehicleModelInfo::ms_currentCol[0]; break;
+		case 0xAF00FF: CarColorID = CVehicleModelInfo::ms_currentCol[1]; break;
+		case 0xFFFF00: CarColorID = CVehicleModelInfo::ms_currentCol[2]; break;
+		case 0xFF00FF: CarColorID = CVehicleModelInfo::ms_currentCol[3]; break;
+		default: return material;
 		}
 		(*pEntries)->address = &material->color;
 		(*pEntries)->value = *(int*)&material->color; //get all colors somehow....
@@ -250,7 +269,7 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 
 RpAtomic * CVehicleModelInfo::SetEditableMaterialsCB(RpAtomic * atomic, void * data)
 {
-	
+
 	return ((RpAtomic* (__cdecl *)(RpAtomic*, void*))0x4C83E0)(atomic, data);
 }
 
@@ -413,7 +432,7 @@ int CVehicleModelInfo::GetNumDoors()
 
 RpAtomic* CVehicleModelInfo::FindDirtMaterials(RpAtomic* atomic, void * data)
 {
-	
+
 	return atomic;
 }
 
@@ -441,7 +460,7 @@ void CVehicleModelInfo::FindEditableMaterialList()
 			{
 				if (const char* texName = RwTextureGetName(texture))
 				{
-					if (strcmp(texName, "vehiclegrunge256") == 0 )
+					if (strcmp(texName, "vehiclegrunge256") == 0)
 						editableMaterials.push_back(Geometry->matList.materials[i]);
 
 					if (strcmp(texName, "vehicle_genericmud_truck") == 0)
@@ -460,7 +479,7 @@ void CVehicleModelInfo::FindEditableMaterialList()
 
 	for (uint32_t i = 0; i < m_pVehicleStruct->m_nNumExtras; i++)
 	{
-		Geometry =  m_pVehicleStruct->m_apExtras[i]->geometry;
+		Geometry = m_pVehicleStruct->m_apExtras[i]->geometry;
 		int NumMaterials = Geometry->matList.numMaterials;
 		for (int i = 0; i < NumMaterials; i++)
 		{
@@ -505,21 +524,21 @@ void CVehicleModelInfo::RemapDirt(CVehicleModelInfo* modelInfo, uint32_t dirtID)
 	RpMaterial** materials = modelInfo->m_numDirtMaterials > CVehicleModelInfo::IN_PLACE_BUFFER_DIRT_SIZE ? modelInfo->m_dirtMaterials : modelInfo->m_staticDirtMaterials;
 
 
-   for (size_t i = 0; i < modelInfo->m_numDirtMaterials; i++)
+	for (size_t i = 0; i < modelInfo->m_numDirtMaterials; i++)
 	{
-	  // RpMaterialSetTexture(materials[i], materials[i]->texture);
+		// RpMaterialSetTexture(materials[i], materials[i]->texture);
 
-	   if(strcmp(materials[i]->texture->name, "vehicle_genericmud_truck") == 0)
+		if (strcmp(materials[i]->texture->name, "vehicle_genericmud_truck") == 0)
 			RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures_2[dirtID]);
 
-	   if (strcmp(materials[i]->texture->name, "vehiclegrunge_iv") == 0)
-		   RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures_3[dirtID]);
+		if (strcmp(materials[i]->texture->name, "vehiclegrunge_iv") == 0)
+			RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures_3[dirtID]);
 
-	   if (strcmp(materials[i]->texture->name, "vehiclegrunge256") == 0)
-		   RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures[dirtID]);
-   }
-	 
+		if (strcmp(materials[i]->texture->name, "vehiclegrunge256") == 0)
+			RpMaterialSetTexture(materials[i], CCarFxRender::ms_aDirtTextures[dirtID]);
 	}
+
+}
 
 void CVehicleModelInfo::MyInit()
 {

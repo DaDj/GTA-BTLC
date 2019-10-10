@@ -9,7 +9,7 @@
 unsigned int MAX_COLLECTED_PICKUPS = 20;
 unsigned int MAX_PICKUP_MESSAGES = 16;
 unsigned int MAX_NUM_PICKUPS = 620;
-static float degreetoRadian = 3.14 / 180;
+static float degreetoRadian = 3.14f / 180;
 
 unsigned char &CPickups::DisplayHelpMessage = *(unsigned char *)0x8A5F48;
 int &CPickups::PlayerOnWeaponPickup = *(int *)0x97D640;
@@ -121,7 +121,7 @@ void CPickups::DoPickUpEffects(CObject* entity) {
 			0.1,
 			40.0,
 			0,
-			0.0);
+			0.0f);
 	
 	}
 	CVector Pos = entity->GetPosition();

@@ -66,7 +66,7 @@ namespace debug
 			//draw_graphics_info();
 
 
-			RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
+		/*	RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
 			if (CVehicleModelInfo::ms_pCustomLightsTexture)
 			{
 				RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
@@ -83,7 +83,7 @@ namespace debug
 				RwRenderStateSet(rwRENDERSTATETEXTURERASTER, CVehicleModelInfo::ms_pCustomLightsOnTexture->raster);
 				CSprite::RenderOneXLUSprite(280, 280, 1, 100, 100, 255, 255, 255, 255, 1, 255, 0, 0);
 				RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
-			}
+			}*/
 
 
 			//CPed *player = FindPlayerPed(-1);

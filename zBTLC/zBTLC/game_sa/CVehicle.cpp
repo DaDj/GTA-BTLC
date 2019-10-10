@@ -2,6 +2,9 @@
 #include "CModelInfo.h"
 #include "CTxdStore.h"
 #include <iostream>
+#include "CAutomobile.h"
+
+static VehicleExtendedData<MyVehicle> MyCustomVehicle;
 
 float &CVehicle::WHEELSPIN_TARGET_RATE          = *(float *)0x8D3498;
 float &CVehicle::WHEELSPIN_INAIR_TARGET_RATE    = *(float *)0x8D349C;
@@ -53,7 +56,20 @@ float &DIFF_SPRING_MULT_Z                       = *(float *)0x8D35C0;
 float &DIFF_SPRING_COMPRESS_MULT                = *(float *)0x8D35C4;
 CVector *VehicleGunOffset                       = (CVector *)0x8D35D4;
 char *&HandlingFilename                         = *(char **)0x8D3970;
-char(*VehicleNames)[14]                         = (char(*)[14])0x8D3978;                        
+char(*VehicleNames)[14]                         = (char(*)[14])0x8D3978;          
+
+
+
+
+
+void* CVehicle::operator new(unsigned int size) {
+	return ((void*(__cdecl *)(unsigned int))0x6E2D50)(size);
+}
+
+void CVehicle::operator delete(void* data) {
+	((void(__cdecl *)(void*))0x6E2D90)(data);
+}
+
 
 // Converted from void CVehicle::ProcessControlCollisionCheck(void) 0x871EDC
 void CVehicle::ProcessControlCollisionCheck()
@@ -966,22 +982,16 @@ void CVehicle::SetupRender()
 {
 	CVehicleModelInfo *vehModel = (CVehicleModelInfo *)CModelInfo::ms_modelInfoPtrs[this->m_wModelIndex];
 	CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(CModelInfo::ms_modelInfoPtrs[m_wModelIndex]->m_wTxdIndex);
-
 	if (txd)
 	{
 		CVehicleModelInfo::ms_pCustomLightsTexture = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "vehiclelights");
 		CVehicleModelInfo::ms_pCustomLightsOnTexture = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "vehiclelights_on");
 	}
-	if (CVehicleModelInfo::ms_pCustomLightsTexture)
-	{
-		std::cout << "actually found smth!"  << '\r';
-	}
-	if (CVehicleModelInfo::ms_pCustomLightsOnTexture)
-	{
-		std::cout << "actually found smth!"  << '\r';
-	}
 
-	((void (__thiscall *)(CVehicle*))0x6D64F0)(this);
+	//VehicleLightFlags &LightStatus = MyCustomVehicle.Get(this).Lights;
+	CVehicleModelInfo::LightStatus = MyCustomVehicle.Get(this).Lights;
+
+   ((void (__thiscall *)(CVehicle*))0x6D64F0)(this);
 }
 
 // Converted from thiscall void CVehicle::ProcessWheel(CVector &,CVector &,CVector &,CVector &,int,float,float,float,char,float *,tWheelState *,ushort) 0x6D6C00
@@ -1180,6 +1190,58 @@ bool CVehicle::DoTailLightEffect(int lightId, CMatrix& matrix, unsigned char arg
 void CVehicle::DoVehicleLights(CMatrix& matrix, unsigned int flags)
 {
 	((void (__thiscall *)(CVehicle*, CMatrix&, unsigned int))0x6E1A60)(this, matrix, flags);
+
+	VehicleLightFlags &LightStatus = MyCustomVehicle.Get(this).Lights;
+	//char reasonToEnableLights = GetVehicleLightsStatus();
+
+	CAutomobile *Vehicle = (CAutomobile*)this;
+	int Damaged_FrontLeft = Vehicle->m_damageManager.GetLightStatus(LIGHT_FRONT_LEFT);
+	int Damaged_FrontRight = Vehicle->m_damageManager.GetLightStatus(LIGHT_FRONT_RIGHT);
+	int Damaged_RearLeft = Vehicle->m_damageManager.GetLightStatus(LIGHT_REAR_LEFT);
+	int Damaged_RearRight = Vehicle->m_damageManager.GetLightStatus(LIGHT_REAR_RIGHT);
+
+	//Check  what kind of taillight it is.
+	//If true == breaklight
+	LightStatus.bBrakelight_Left = 0;
+	LightStatus.bBrakelight_Right = 0;
+	LightStatus.bTaillight_Left = m_renderLights.m_bLeftRear;
+	LightStatus.bTaillight_Right = m_renderLights.m_bRightRear;
+	if (m_fBreakPedal > 0.0 && !m_nFlags.bIsHandbrakeOn)
+	{
+		//Check if its also a normal light(night)
+		if (GetVehicleLightsStatus())
+		{
+			LightStatus.bTaillight_Left = m_renderLights.m_bLeftRear;
+			LightStatus.bTaillight_Right = m_renderLights.m_bRightRear;
+		}
+		else
+		{
+			LightStatus.bTaillight_Left = 0;
+			LightStatus.bTaillight_Right = 0;
+		}
+
+		if (m_renderLights.m_bLeftRear)
+			LightStatus.bBrakelight_Left = 1;
+
+		if (m_renderLights.m_bRightRear)
+			LightStatus.bBrakelight_Right = 1;
+	}
+
+	//Check if player is reversing
+	LightStatus.bReverselight_Left = 0;
+	LightStatus.bReverselight_Right = 0;
+	if (m_fGasPedal < 0.0)
+	{
+		if (!Damaged_RearLeft)
+			LightStatus.bReverselight_Left = 1;
+
+		if (!Damaged_RearRight)
+			LightStatus.bReverselight_Right = 1;
+	}
+
+	LightStatus.bHeadlight_Left = m_renderLights.m_bLeftFront;
+	LightStatus.bHeadlight_Right = m_renderLights.m_bRightFront;
+
 }
 
 // Converted from thiscall void CVehicle::FillVehicleWithPeds(bool bSetClothesToAfro) 0x6E2900
@@ -1227,6 +1289,7 @@ void CVehicle::ProcessWeapons()
 void CVehicle::MyInit()
 {
 	MemoryVP::InjectHook(0x5532A9, &CVehicle::SetupRender, PATCH_CALL);
+	MemoryVP::InjectHook(0x6ABCB9, &CVehicle::DoVehicleLights, PATCH_CALL); //CAutomobile::PreRender
 }
 
 

@@ -50,6 +50,9 @@
     <Filter Include="game_sa\Patching\Paths">
       <UniqueIdentifier>{856890ab-2ff3-4d47-b265-c8a3399c4fd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Events_Sa\Extender">
+      <UniqueIdentifier>{1cf19ada-271a-4f96-ae12-40102efd816f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1460,6 +1463,9 @@
       <Filter>game_sa</Filter>
     </ClCompile>
     <ClCompile Include="game_sa\CCarFxRender.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CBouncingPanel.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3180,6 +3186,21 @@
     </ClInclude>
     <ClInclude Include="game_sa\CCarFxRender.h">
       <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CBouncingPanel.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="Events_SA\Extender\ObjectExtender.h">
+      <Filter>Events_Sa\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="Events_SA\Extender\PedExtender.h">
+      <Filter>Events_Sa\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="Events_SA\Extender\VehicleExtender.h">
+      <Filter>Events_Sa\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="Events_SA\Extender.h">
+      <Filter>Events_Sa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

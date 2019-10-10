@@ -9,7 +9,6 @@
 #include "CPool.h"
 #include <stdint.h>
 
-
 enum VehicleUpgradePosn {
 	UPGRADE_BONNET,
 	UPGRADE_BONNET_LEFT,
@@ -28,6 +27,23 @@ enum VehicleUpgradePosn {
 	UPGRADE_ROOF,
 	UPGRADE_NITRO,
 };
+
+
+struct VehicleLightFlags {
+	unsigned char bHeadlight_Left : 1;
+	unsigned char bHeadlight_Right : 1;
+	unsigned char bIndicator_FrontLeft : 1;
+	unsigned char bIndicator_FrontRight : 1;
+	unsigned char bIndicator_RearLeft : 1;
+	unsigned char bIndicator_RearRight : 1;
+	unsigned char bTaillight_Left : 1;
+	unsigned char bTaillight_Right : 1;
+	unsigned char bReverselight_Left : 1;
+	unsigned char bReverselight_Right : 1;
+	unsigned char bBrakelight_Left : 1;
+	unsigned char bBrakelight_Right : 1;
+};
+
 
 struct  UpgradePosnDesc {
 	CVector m_vPosition;
@@ -152,7 +168,7 @@ public:
 
 
 
-
+	static VehicleLightFlags LightStatus;
 
 
 	//static RwTexture *DirtTexture2[16] ;
@@ -308,6 +324,8 @@ public:
 	static void RemapDirt(CVehicleModelInfo* modelInfo, uint32_t dirtID);
 
 	static void MyInit();
+
+
 };
 
 VALIDATE_SIZE(CVehicleModelInfo::CVehicleStructure, 0x314);

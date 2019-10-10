@@ -10,6 +10,8 @@
 
 #pragma pack(push, 4)
 class CPhysical : public CEntity {
+protected:
+	CPhysical(plugin::dummy_func_t) : CEntity(plugin::dummy) {}
 public:
 	int field_38;
 	unsigned int m_nLastCollisionTime;

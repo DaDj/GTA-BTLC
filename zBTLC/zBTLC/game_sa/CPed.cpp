@@ -9,6 +9,7 @@ void CPed::My_Init()
 
 
 
+
 // Converted from thiscall void* CPed::operator new(uint size) 0x5E4720
 void* CPed::operator new(unsigned int size) {
 	return ((void* (__cdecl *)(unsigned int))0x5E4720)(size);

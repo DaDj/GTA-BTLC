@@ -159,7 +159,7 @@ char *MakeUpperCase(char *dest, char *src);
  void RpAnimBlendFrameSetName(RwFrame* frame, char* name);
  CAnimBlendAssociation* RpAnimBlendGetNextAssociation(CAnimBlendAssociation* association);
  CAnimBlendAssociation* RpAnimBlendGetNextAssociation(CAnimBlendAssociation* association, unsigned int flags);
- void RpAnimBlendKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, float time, void* customData);
+ void RpAnimBlendKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, float time, void* MyVehicle);
  bool RpAnimBlendPluginAttach();
 
  void AsciiToGxtChar(char const *src, char *dst);

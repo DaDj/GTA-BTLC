@@ -5,6 +5,8 @@
 
 #pragma pack(push, 4)
 class CPlaceable {
+protected:
+	CPlaceable(plugin::dummy_func_t) {}
 public:
     CSimpleTransform m_placement;
     CMatrixLink *m_matrix;

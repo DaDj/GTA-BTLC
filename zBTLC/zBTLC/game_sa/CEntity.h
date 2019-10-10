@@ -10,6 +10,8 @@
 
 #pragma pack(push, 4)
 class CEntity : public CPlaceable {
+protected:
+	CEntity(plugin::dummy_func_t) : CPlaceable(plugin::dummy) {}
 public:
 
 	static void My_Init();
@@ -66,7 +68,7 @@ public:
     unsigned char m_nType : 3;
     unsigned char m_nStatus : 5;
     
-
+	
 	// originally virtual functions
     void Add(CRect &rect);
     void Add(); // similar to previous, but with entity bound rect
