@@ -574,8 +574,8 @@ CAnimBlendAssociation* RpAnimBlendGetNextAssociation(CAnimBlendAssociation* asso
 }
 
 // Converted from cdecl void RpAnimBlendKeyFrameInterpolate(void *voidOut,void *voidIn1,void *voidIn2,float time,void *customData) 0x4D60C0
-void RpAnimBlendKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, float time, void* MyVehicle) {
-	plugin::Call<0x4D60C0, void*, void*, void*, float, void*>(voidOut, voidIn1, voidIn2, time, MyVehicle);
+void RpAnimBlendKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, float time, void* customData) {
+	plugin::Call<0x4D60C0, void*, void*, void*, float, void*>(voidOut, voidIn1, voidIn2, time, customData);
 }
 
 // Converted from cdecl bool RpAnimBlendPluginAttach(void) 0x4D6150
