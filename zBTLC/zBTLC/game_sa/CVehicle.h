@@ -105,6 +105,8 @@ public:
 		Lights.bReverselight_Right = 0;
 		Lights.bBrakelight_Left = 0;
 		Lights.bBrakelight_Right = 0;	
+
+		Lights.bIndicatorEmergency = 0;
 	}
 };
 
@@ -563,6 +565,8 @@ public:
 	static void operator delete(void* data);
 
 	static void MyInit();
+
+	static CVector2D GetCarPathLinkPosition(CCarPathLinkAddress & address);
 
 
 

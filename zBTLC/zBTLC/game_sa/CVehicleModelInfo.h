@@ -42,6 +42,7 @@ struct VehicleLightFlags {
 	unsigned char bReverselight_Right : 1;
 	unsigned char bBrakelight_Left : 1;
 	unsigned char bBrakelight_Right : 1;
+	unsigned char bIndicatorEmergency : 1;
 };
 
 

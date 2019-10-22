@@ -1,4 +1,5 @@
 #include "common.h"
+#include "CGeneral.h"
 
 CVector FindPlayerCoors(int playerId)
 {
@@ -80,6 +81,13 @@ AnimBlendFrameData *RpAnimBlendClumpFindFrame(RpClump *clump, char *name)
 char *MakeUpperCase(char *dest, char *src)
 {
 	return ((char *(__cdecl *)(char *, char *))0x7186E0)(dest, src);
+}
+
+float GetZAngleForPoint(CVector2D const & point)
+{
+	float angle = CGeneral::GetATanOfXY(point.x, point.y) * 57.295776f - 90.0f;
+	while (angle < 0.0f) angle += 360.0f;
+	return angle;
 }
 
 CWanted * FindPlayerWanted(int playerId)

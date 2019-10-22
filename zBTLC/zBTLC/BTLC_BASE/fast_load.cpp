@@ -15,7 +15,7 @@ namespace fastload
 {
 #define SKIP_LOADSCREEN  1
 	static int prevDisplayedSplash = 1;
-	static float Loadscreen_Time = 0.01;
+	static float Loadscreen_Time = 0.01f;
 	
 	//Fix for the non-looping splashes
 	void IncreaseDisplayedSplash()
@@ -53,7 +53,7 @@ namespace fastload
 		//loadscreentime
 		MemoryVP::Patch<void*>(0x590DA4 + 2, &Loadscreen_Time);
 
-		if (SKIP_LOADSCREEN == 1)
+		if (SKIP_LOADSCREEN)
 		{
 			// Disable loading bar rendering
 			MemoryVP::Nop(0x5905B4, 5);

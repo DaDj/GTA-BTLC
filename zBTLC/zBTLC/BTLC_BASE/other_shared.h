@@ -3,7 +3,9 @@ inline bool KeyPressed(unsigned int keyCode) {
 	return (GetKeyState(keyCode) & 0x8000) != 0;
 }
 
-
+inline bool KeyJustPressed(unsigned int keyCode) {
+	return (GetAsyncKeyState(keyCode) & 0x0001) != 0;
+}
 
 //#define VALIDATE_SIZE(struc, size) static_assert(sizeof(struc) == size, "Invalid structure size of " #struc)
 //#define VALIDATE_OFFSET(struc, member, offset) \

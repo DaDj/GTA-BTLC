@@ -3,6 +3,9 @@
 #include "CTxdStore.h"
 #include <iostream>
 #include "CAutomobile.h"
+#include "common.h"
+#include "CTimer.h"
+#include "CCamera.h"
 
 static VehicleExtendedData<MyVehicle> MyCustomVehicle;
 
@@ -1193,6 +1196,9 @@ void CVehicle::DoVehicleLights(CMatrix& matrix, unsigned int flags)
 
 	VehicleLightFlags &LightStatus = MyCustomVehicle.Get(this).Lights;
 	//char reasonToEnableLights = GetVehicleLightsStatus();
+	int StatusIndicatorLeft = 0;
+	int StatusIndicatorRight = 0;
+
 
 	CAutomobile *Vehicle = (CAutomobile*)this;
 	int Damaged_FrontLeft = Vehicle->m_damageManager.GetLightStatus(LIGHT_FRONT_LEFT);
@@ -1242,6 +1248,76 @@ void CVehicle::DoVehicleLights(CMatrix& matrix, unsigned int flags)
 	LightStatus.bHeadlight_Left = m_renderLights.m_bLeftFront;
 	LightStatus.bHeadlight_Right = m_renderLights.m_bRightFront;
 
+	
+	// Check Indicators States
+	if ((m_dwVehicleSubClass == VEHICLE_AUTOMOBILE | m_dwVehicleSubClass == VEHICLE_BIKE) &&
+		(GetVehicleAppearance() == VEHICLE_APPEARANCE_AUTOMOBILE || GetVehicleAppearance() == VEHICLE_APPEARANCE_BIKE) &&
+		m_nFlags.bEngineOn && m_fHealth > 0 && !m_nFlags.bIsDrowning && !m_pAttachedTo)
+	{
+		StatusIndicatorLeft = 0;
+		StatusIndicatorRight = 0;
+		LightStatus.bIndicator_FrontLeft = 0;
+		LightStatus.bIndicator_FrontRight = 0;
+		LightStatus.bIndicator_RearLeft = 0;
+		LightStatus.bIndicator_RearRight = 0;
+
+		if (LightStatus.bIndicatorEmergency)
+		{
+			StatusIndicatorLeft = LightStatus.bIndicatorEmergency;
+			StatusIndicatorRight = LightStatus.bIndicatorEmergency;
+		}
+		
+		if (this->m_pDriver && m_pDriver == FindPlayerPed())
+		{
+			if (KeyJustPressed('Z')  )// Z
+				LightStatus.bIndicatorEmergency = !LightStatus.bIndicatorEmergency;
+			StatusIndicatorLeft = LightStatus.bIndicatorEmergency;
+			StatusIndicatorRight = LightStatus.bIndicatorEmergency;
+		}
+		else
+		{
+			CVector2D prevPoint = GetCarPathLinkPosition(m_autoPilot.m_wPreviousPathNodeInfo);
+			CVector2D currPoint = GetCarPathLinkPosition(m_autoPilot.m_wCurrentPathNodeInfo);
+			CVector2D nextPoint = GetCarPathLinkPosition(m_autoPilot.m_wNextPathNodeInfo);
+
+			float angle = GetZAngleForPoint(nextPoint - currPoint) - GetZAngleForPoint(currPoint - prevPoint);
+			while (angle < 0.0f) angle += 360.0f;
+			while (angle > 360.0f) angle -= 360.0f;
+
+			if (angle >= 30.0f && angle < 180.0f)
+				StatusIndicatorLeft = 1;
+			else if (angle <= 330.0f && angle > 180.0f)
+				StatusIndicatorRight = 1;
+
+			if (StatusIndicatorLeft == 0 && StatusIndicatorRight == 0) {
+				if (m_autoPilot.m_nCurrentLane == 0 && m_autoPilot.m_nNextLane == 1)
+					StatusIndicatorRight = 1;
+				else if (m_autoPilot.m_nCurrentLane == 1 && m_autoPilot.m_nNextLane == 0)
+					StatusIndicatorLeft = 1;
+			}
+		}
+		int TURN_ON_OFF_DELAY = 500;
+		float MAX_RADIUS = 200.0f;
+		if (CTimer::m_snTimeInMilliseconds % (TURN_ON_OFF_DELAY * 2) < TURN_ON_OFF_DELAY &&
+			DistanceBetweenPoints(TheCamera.m_vGameCamPos, GetPosition()) < MAX_RADIUS)
+		{
+			if (StatusIndicatorLeft)
+			{
+				if (!Damaged_FrontLeft)
+					LightStatus.bIndicator_FrontLeft = 1;
+				if (!Damaged_RearLeft)
+					LightStatus.bIndicator_RearLeft = 1;
+			}
+
+			if (StatusIndicatorRight)
+			{
+				if (!Damaged_FrontRight)
+					LightStatus.bIndicator_FrontRight = 1;
+				if (!Damaged_RearRight)
+					LightStatus.bIndicator_RearRight = 1;
+			}
+		}
+	}
 }
 
 // Converted from thiscall void CVehicle::FillVehicleWithPeds(bool bSetClothesToAfro) 0x6E2900
@@ -1293,3 +1369,11 @@ void CVehicle::MyInit()
 }
 
 
+
+CVector2D CVehicle::GetCarPathLinkPosition(CCarPathLinkAddress &address) {
+	if (address.m_wAreaId != -1 && address.m_wCarPathLinkId != -1 && ThePaths.m_pPathNodes[address.m_wAreaId]) {
+		return CVector2D(static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.x) / 8.0f,
+			static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.y) / 8.0f);
+	}
+	return CVector2D(0.0f, 0.0f);
+}

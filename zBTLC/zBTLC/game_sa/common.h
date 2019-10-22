@@ -46,6 +46,8 @@ AnimBlendFrameData *RpAnimBlendClumpFindFrame(RpClump *clump, char *name);
 
 char *MakeUpperCase(char *dest, char *src);
 
+float GetZAngleForPoint(CVector2D const &point);
+
 
  //float x_fac(float x);
  //float y_fac(float y);

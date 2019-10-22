@@ -207,6 +207,19 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 		case 0xADFF: //Left Reverse Light
 			LightID = LightStatus.bReverselight_Left;
 			break;
+		
+		case 0xFFB7: //Front Left Indicator Light
+			LightID = LightStatus.bIndicator_FrontLeft;
+			break;
+		case 0x3AFF: //Front Right Indicator Light
+			LightID = LightStatus.bIndicator_FrontRight;
+			break;
+		case 0xFFB5: //Back Left Indicator Light
+			LightID = LightStatus.bIndicator_RearLeft;
+			break;
+		case 0x38FF: //Back Right Indicator Light
+			LightID = LightStatus.bIndicator_RearRight;
+			break;
 		default:
 			LightID = -1;
 		}
@@ -244,24 +257,23 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 			material->surfaceProps.specular = 0;
 			material->surfaceProps.diffuse = 0;
 		}
-
 	}
 	else
 	{
 		switch (MaterialColor)
 		{
-		case 0xFF3C: CarColorID = CVehicleModelInfo::ms_currentCol[0]; break;
-		case 0xAF00FF: CarColorID = CVehicleModelInfo::ms_currentCol[1]; break;
-		case 0xFFFF00: CarColorID = CVehicleModelInfo::ms_currentCol[2]; break;
-		case 0xFF00FF: CarColorID = CVehicleModelInfo::ms_currentCol[3]; break;
+		case 0xFF3C:	CarColorID = CVehicleModelInfo::ms_currentCol[0]; break;
+		case 0xAF00FF:	CarColorID = CVehicleModelInfo::ms_currentCol[1]; break;
+		case 0xFFFF00:	CarColorID = CVehicleModelInfo::ms_currentCol[2]; break;
+		case 0xFF00FF:	CarColorID = CVehicleModelInfo::ms_currentCol[3]; break;
 		default: return material;
 		}
 		(*pEntries)->address = &material->color;
 		(*pEntries)->value = *(int*)&material->color; //get all colors somehow....
 		(*pEntries)++;
-		material->color.red = CVehicleModelInfo::ms_vehicleColourTable[CarColorID].red;
-		material->color.green = CVehicleModelInfo::ms_vehicleColourTable[CarColorID].green;
-		material->color.blue = CVehicleModelInfo::ms_vehicleColourTable[CarColorID].blue;
+		material->color.red		= CVehicleModelInfo::ms_vehicleColourTable[CarColorID].red;
+		material->color.green	= CVehicleModelInfo::ms_vehicleColourTable[CarColorID].green;
+		material->color.blue	= CVehicleModelInfo::ms_vehicleColourTable[CarColorID].blue;
 	}
 	return material;
 	//return ((RpMaterial* (__cdecl *)(RpMaterial*, void*))0x4C8220)(material, data);
