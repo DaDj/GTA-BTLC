@@ -11,6 +11,7 @@
 #include "../game_sa/CStreaming.h"
 #include "../game_sa/CWaterlevel.h"
 #include "../Patch/MemoryMgr.h"
+#include "../game_sa/CVehicleModelInfo.h"
 #include <iostream>
 #include "limits.h"
 
@@ -22,6 +23,21 @@ namespace limits
 	{
 		limits::IMG_LIMIT();	//Limit adjusting
 		Water_limit::init(); //waterlimit
+		vehicleColourTable();
+	}
+
+	void vehicleColourTable()
+	{
+		MemoryVP::Patch<void*>(0x447097, &CVehicleModelInfo::ms_vehicleColourTable);  //= 0xB4E480 + 0x0  -> lea     eax, _ZN17CVehicleModelInfo21ms_vehicleColourTableE.red[eax*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x44B1C1, &CVehicleModelInfo::ms_vehicleColourTable);  //= 0xB4E480 + 0x0  -> mov     eax, dword ptr _ZN17CVehicleModelInfo21ms_vehicleColourTableE.red[edx*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x4C8390, &CVehicleModelInfo::ms_vehicleColourTable);  //= 0xB4E480 + 0x0  -> mov     cl, _ZN17CVehicleModelInfo21ms_vehicleColourTableE.red[esi*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x5817CC, &CVehicleModelInfo::ms_vehicleColourTable);  //= 0xB4E480 + 0x0  -> mov     edi, dword ptr _ZN17CVehicleModelInfo21ms_vehicleColourTableE.red[edx*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x582176, &CVehicleModelInfo::ms_vehicleColourTable);  //= 0xB4E480 + 0x0  -> mov     eax, dword ptr _ZN17CVehicleModelInfo21ms_vehicleColourTableE.red[eax*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x6A6FFA, &CVehicleModelInfo::ms_vehicleColourTable);  //= 0xB4E480 + 0x0  -> mov     ecx, dword ptr _ZN17CVehicleModelInfo21ms_vehicleColourTableE.red[eax*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x4C8399, &CVehicleModelInfo::ms_vehicleColourTable->green);  //= 0xB4E480 + 0x1  -> mov     dl, _ZN17CVehicleModelInfo21ms_vehicleColourTableE.green[esi*4]; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x5B68D8, &CVehicleModelInfo::ms_vehicleColourTable->green);  //= 0xB4E480 + 0x1  -> mov     [esp+4E4h+var_4D4], offset _ZN17CVehicleModelInfo21ms_vehicleColourTableE.green; CVehicleModelInfo::ms_vehicleColourTable
+		MemoryVP::Patch<void*>(0x4C83A3, &CVehicleModelInfo::ms_vehicleColourTable->blue);  //= 0xB4E480 + 0x2  -> mov     cl, _ZN17CVehicleModelInfo21ms_vehicleColourTableE.blue[esi*4]; CVehicleModelInfo::ms_vehicleColourTable
+
 	}
 
 	int AddImageToList(LPCSTR lpFileName, char notPlayerFile)

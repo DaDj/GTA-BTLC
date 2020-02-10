@@ -12,7 +12,8 @@ RwTexture *CVehicleModelInfo::ms_pRemapTexture = (RwTexture *)0xB4E47C;
 RwTexture *CVehicleModelInfo::ms_pLightsTexture = (RwTexture *)0xB4E68C;
 RwTexture *CVehicleModelInfo::ms_pLightsOnTexture = (RwTexture *)0xB4E690;
 unsigned char *CVehicleModelInfo::ms_currentCol = (unsigned char *)0xB4E3F0;
-CRGBA *CVehicleModelInfo::ms_vehicleColourTable = (CRGBA *)0xB4E480;
+//CRGBA *CVehicleModelInfo::ms_vehicleColourTable = (CRGBA *)0xB4E480;
+CRGBA CVehicleModelInfo::ms_vehicleColourTable[256] = {};
 char *CVehicleModelInfo::ms_compsUsed = (char *)0xB4E478;
 char *CVehicleModelInfo::ms_compsToUse = (char *)0x8A6458;
 
@@ -165,13 +166,15 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 		(*pEntries)->address = &material->texture;
 		(*pEntries)->value = (int)material->texture;
 		(*pEntries)++;
-		material->texture = ms_pRemapTexture;
+		material->texture = (RwTexture*)ms_pRemapTexture->raster;
 	}
 
 	if ((int)material->texture == (int)ms_pLightsTexture->raster)
 		LighttextureType = 1;
 	else if (ms_pCustomLightsTexture != nullptr && (int)material->texture == (int)ms_pCustomLightsTexture)
 		LighttextureType = 2;
+	else
+		LighttextureType = 0;
 
 	if (LighttextureType)
 	{

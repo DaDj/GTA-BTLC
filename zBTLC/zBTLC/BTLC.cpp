@@ -19,7 +19,7 @@
 ////										                  ////
 //////////////////////////////////////////////////////////////////
 #define DEBUG 
-float VERSION = 0.42f;
+float VERSION = 0.5f;
 
 #include "BTLC_BASE\debug.h"
 #include "BTLC_BASE\fixes.h"

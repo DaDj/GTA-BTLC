@@ -197,7 +197,7 @@ public:
 
 	// vehicle colours from carcols.dat
 	// static CRGBA ms_vehicleColourTable[128];
-	static CRGBA *ms_vehicleColourTable;
+	static CRGBA ms_vehicleColourTable[256];
 
 	// destroying vehiclelights textures
 	static void ShutdownLightTexture();
