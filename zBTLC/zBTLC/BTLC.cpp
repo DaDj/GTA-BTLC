@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////
 ////										                  ////
 //////////////////////////////////////////////////////////////////
-#define DEBUG 
+//#define _DEBUG 
 float VERSION = 0.5f;
 
 #include "BTLC_BASE\debug.h"
@@ -59,7 +59,7 @@ void Function_starter();
 
 void Main()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 	debug::init();
 	std::cout << std::endl;
 	std::cout << "GTA:BACK TO LIBERTY CITY" << std::endl;
@@ -74,6 +74,7 @@ void Main()
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
+
 	//check game version
 	check_gameversion();
 
@@ -108,7 +109,7 @@ void Function_starter()
 	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
 	CVehicle::MyInit();		//Support for IVF Lights
 
-	//Test
+	//Test new Pickup
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
 	
 
@@ -242,17 +243,17 @@ void ParseCommandlineArgument(int thing, char* pArg)
 	if (pArg)
 	{
 		////DEV enables the debug_consoles and outputs
-		//if (!_stricmp(pArg, "-launch"))
-		//{
-		//	debug_console();	//debug console
-		//	return;
-		//}
+		if (!_stricmp(pArg, "-debug"))
+		{
+			debug::init();
+			return;
+		}
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{	
 			CDxHandler::WindowMode_Hook();
 			std::cout << "windowmode" << std::endl;
-			return;
+			//return;
 		}
 		////DEV enables the debug_consoles and outputs
 		//if (!_stricmp(pArg, "-DEV"))

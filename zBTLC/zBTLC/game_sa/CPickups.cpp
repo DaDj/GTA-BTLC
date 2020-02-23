@@ -125,9 +125,7 @@ void CPickups::DoPickUpEffects(CObject* entity) {
 	
 	}
 	CVector Pos = entity->GetPosition();
-	entity->SetPosn(Pos.x, Pos.y, CWorld::FindGroundZForCoord(Pos.x, Pos.y)+0.1);
-	
-
+	//entity->SetPosn(Pos.x, Pos.y, CWorld::FindGroundZForCoord(Pos.x, Pos.y)+0.1);
 }
 
 // Converted from cdecl CPickup* CPickups::FindPickUpForThisObject(CObject *object) 0x4551C0

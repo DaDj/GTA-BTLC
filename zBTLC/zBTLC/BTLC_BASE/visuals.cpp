@@ -71,7 +71,7 @@ namespace visuals
 		MemoryVP::Patch<char>(0x704DBC, 0x30);//(XOR)
 
 		//Corona shadow distance
-		MemoryVP::Patch<float>(0x6FD3A6, 80.0); 
+		MemoryVP::Patch<float>(0x6FD3A6, 95.0); 
 		//ground distance
 		//MemoryVP::Patch<float>(0x6FD368 + 4, 6.5);
 
