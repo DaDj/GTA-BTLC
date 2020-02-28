@@ -2,6 +2,7 @@
 #include "plbase/PluginBase_SA.h"
 #include "CPed.h"
 #include "CVector.h"
+#include	"CPlayerPed.h"
 
 #define FUNC_GTASA_crc32fromBlock 0x53CED0
 #define FUNC_GTASA_crc32FromString 0x53CF00
@@ -32,4 +33,4 @@ static auto FindPlayerCoors = (void (__cdecl*)(CVector *outPoint, int playerInde
 static auto GetRandomBool = (bool (__cdecl*)(float probability))FUNC_GetRandomBool;
 
 // Returns pointer to player ped
- CPed* FindPlayerPed(int index = -1);
+CPlayerPed* FindPlayerPed(int index = -1);

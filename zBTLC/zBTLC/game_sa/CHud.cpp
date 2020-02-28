@@ -21,6 +21,7 @@
 #include "CTask.h"
 #include "CCamera.h"
 #include "CMenuManager.h"
+#include "CPlayerPed.h"
 
 char(*CHud::m_BigMessage)[128] = (char(*)[128])0xBAACC0;
 bool &CHud::bScriptDontDisplayAreaName = *(bool *)0xBAA3F8;
@@ -96,22 +97,22 @@ char *LastBigMessage = (char *)0xBAABC0;
 unsigned short &OddJob2On = *(unsigned short *)0xBAB1E0;
 float &PagerXOffset = *(float *)0x8D0938;
 
- char *CHud::Spritenames[6] = {
-	"fist",
-	"siteM16",
-	"siterocket",
-	"radardisc",
-	"radarRingPlane",
-	"SkipIcon",
+char *CHud::Spritenames[6] = {
+   "fist",
+   "siteM16",
+   "siterocket",
+   "radardisc",
+   "radarRingPlane",
+   "SkipIcon",
 };
 
- char *CHud::NewSpritesNames[5] = {
-   "radarringfront",
-	"radarringback",
-   "mp_higher",
-   "mp_level",
-   "mp_lower",
- };
+char *CHud::NewSpritesNames[5] = {
+  "radarringfront",
+   "radarringback",
+  "mp_higher",
+  "mp_level",
+  "mp_lower",
+};
 
 
 enum eHudState
@@ -128,14 +129,15 @@ void CHud::My_Init()
 	MemoryVP::InjectHook(0x58FBDB, &CHud::DrawWantedLevel, PATCH_CALL);
 	MemoryVP::InjectHook(0x58AA50, &CHud::DrawZoneText, PATCH_JUMP);
 	MemoryVP::InjectHook(0x58AEA0, &CHud::DrawCarName, PATCH_JUMP);
-	MemoryVP::InjectHook(0x5BD76F, &CHud::Initialise, PATCH_CALL); 
+	MemoryVP::InjectHook(0x5BD76F, &CHud::Initialise, PATCH_CALL);
 	MemoryVP::InjectHook(0x53BBA2, &CHud::Shutdown, PATCH_CALL);
 	MemoryVP::InjectHook(0x58FC53, &CHud::DrawRadar, PATCH_CALL);
+	//MemoryVP::InjectHook(0x58FBBF, &CHud::DrawCrosshairs, PATCH_CALL);
 }
 
-void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief) 
+void CHud::SetHelpMessage(char const *text, bool quickMessage, bool permanent, bool addToBrief)
 {
-    ((void(__cdecl *)(char const *, bool, bool, bool))0x588BE0)(text, quickMessage, permanent, addToBrief);
+	((void(__cdecl *)(char const *, bool, bool, bool))0x588BE0)(text, quickMessage, permanent, addToBrief);
 }
 
 float CHud::x_fac(float x)
@@ -167,7 +169,7 @@ void CHud::DrawPlayerInfo()
 
 	float moneypos = CHud::DrawMoneyInfo(player);
 	CHud::DrawPlayerhealthandarmor(player);
-	CHud::DrawWeaponInfo(player,  moneypos);
+	CHud::DrawWeaponInfo(player, moneypos);
 }
 
 void CHud::DrawPlayerhealthandarmor(CPed *player)
@@ -191,18 +193,13 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	if (percentage_armor <= 1.0f)
 		color_armor = CRGBA::CRGBA(200, 200, 230, 90);
 
-
-
 	m_LastTimeEnergyLost = CWorld::Players[CWorld::PlayerInFocus].m_dwLastTimeEnergyLost;
 
 	if (CTimer::m_snTimeInMilliseconds < (m_LastTimeEnergyLost + 60))
 	{
 		CSprite2d::DrawRect(CRect::CRect(x_fac(0.0f), y_fac(0.0f), RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(80, 30, 30, 40));
-
 		//color_health = CRGBA::CRGBA(90, 0, 0, 255);
 	}
-
-
 
 	//Implement Blinking
 	//if (LastHealth > player->m_fHealth)
@@ -226,19 +223,13 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	//	else
 	//		m_EnergyLostState = BLINK_OFF;
 	//}
-
 	LastHealth = player->m_fHealth;
 	m_EnergyLostState = NO_BLINK;
-
 
 	//CSprite2d::DrawRect(CRect::CRect(x_fac(10.0f), y_fac(448.0f-21.0f), x_fac(110.0f), y_fac(448.0f - 4.0f)), CRGBA::CRGBA(50, 50, 50, 190));
 	//CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 20.0f), x_fac(98.0f), y_fac(7.0f), percentage_health, 0, 0, 0, color_health, color_health);
 	//CSprite2d::DrawRect(CRect::CRect(CHud::x_fac(20.0), CHud::y_fac(464.0f), CHud::x_fac(98.0f), CHud::y_fac(465.0f + 8.0f)), CRGBA::CRGBA(30, 30, 30, 180));
 	//CSprite2d::DrawBarChart(x_fac(11.0f), y_fac(448.0f - 12.0f), x_fac(98.0f), y_fac(7.0f), percentage_armor, 0, 0, 0, color_armor, color_armor);
-
-
-
-
 	float x[100];
 	float y[100];
 	float x2[100];
@@ -246,7 +237,6 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	int Degree = 180;
 	int DegreeStep = 5;
 	int Polycount = 360 / DegreeStep;
-
 
 	for (int i = 0; i < Polycount; i++)
 	{
@@ -260,36 +250,33 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		Degree += DegreeStep;
 	}
 
-	int index_health = min(Polycount / 2, ceil((Polycount-1) * percentage_health / 200));
-	int percent = ceil((Polycount-1) *(percentage_armor / 200 + percentage_health / 200));
+	int index_health = min(Polycount / 2, ceil((Polycount - 1) * percentage_health / 200));
+	int percent = ceil((Polycount - 1) *(percentage_armor / 200 + percentage_health / 200));
 
 	for (int i = 0; i < percent; i++)
 	{
-		if (i == Polycount-2)
+		if (i == Polycount - 2)
 			CSprite2d::Draw2DPolygon(x[i], y[i], x2[i], y2[i], x[0], y[0], x2[0], y2[0], color_armor);
 		else if (i < index_health && 	m_EnergyLostState != BLINK_OFF)
 			CSprite2d::Draw2DPolygon(x[i], y[i], x2[i], y2[i], x[i + 1], y[i + 1], x2[i + 1], y2[i + 1], color_health);
-		else if(i >= index_health)
+		else if (i >= index_health)
 			CSprite2d::Draw2DPolygon(x[i], y[i], x2[i], y2[i], x[i + 1], y[i + 1], x2[i + 1], y2[i + 1], color_armor);
 	}
-
-
-
 }
 
-void CHud::DrawWeaponInfo(CPed *player , float y_off)
+void CHud::DrawWeaponInfo(CPed *player, float y_off)
 {
 	float alpha = 0;
 	static int l_lastammo;
 	eTaskType activetask = player->m_pIntelligence->m_TaskMgr.GetActiveTask()->GetId();
 	int cammode = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode;
 
-	if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type || activetask == TASK_SIMPLE_USE_GUN
-		|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwState == 1 || cammode == MODE_AIMWEAPON || KeyPressed(VK_TAB)
-		|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo != l_lastammo)
+	if (m_LastWeapon != player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType || activetask == TASK_SIMPLE_USE_GUN
+		|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_nState == 1 || cammode == MODE_AIMWEAPON || KeyPressed(VK_TAB)
+		|| player->m_aWeapons[player->m_nActiveWeaponSlot].m_nTotalAmmo != l_lastammo)
 	{
-		l_lastammo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo;
-		m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
+		l_lastammo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nTotalAmmo;
+		m_LastWeapon = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType;
 		m_WeaponTimer = 0;
 		if (m_WeaponState == STATE_ON)
 			m_WeaponState = STATE_ON;
@@ -346,7 +333,7 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 	CRect Icon;
 
 	RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, reinterpret_cast<void *>(rwFILTERLINEAR));
-	int weapModel = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type, 1)->m_dwModelId1;
+	int weapModel = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType, 1)->m_dwModelId1;
 	if (weapModel <= 0)
 	{
 		CRect Icon = CRect(RsGlobal.maximumWidth - x_fac(120.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
@@ -356,22 +343,22 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 		CModelInfo::GetModelInfo(weapModel);
 		CBaseModelInfo *model = CModelInfo::GetModelInfo(weapModel);
 		CTexDictionary *txd = CTxdStore::ms_pTxdPool->GetAt(model->m_wTxdIndex);
-		if (txd && txd->m_pRwDictionary) 
+		if (txd && txd->m_pRwDictionary)
 		{
-		
+
 			RwTexture *iconTex = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "icon");
-			if(!iconTex)
-			iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
+			if (!iconTex)
+				iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "ICON"));
 
 			if (iconTex) {
 				//RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
 				//RwRenderStateSet(rwRENDERSTATETEXTURERASTER, iconTex->raster);
 				/*CSprite::RenderOneXLUSprite(RsGlobal.maximumWidth - x_fac(30.0f + 100.0f / 2),
 					y_fac(40.0f + 50.0f / 2 + y_off), 1.0f, x_fac(100.0f / 2),
-					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);*/				
+					y_fac(50.0f / 2), 255, 255, 255, 255, 1.0f, alpha, 0, 0);*/
 				CTxdStore::PushCurrentTxd();
-				if(iconTex->raster->height == iconTex->raster->width)
-					Icon = CRect(RsGlobal.maximumWidth - x_fac(130.0f-50), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
+				if (iconTex->raster->height == iconTex->raster->width)
+					Icon = CRect(RsGlobal.maximumWidth - x_fac(130.0f - 50), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
 				else
 					Icon = CRect(RsGlobal.maximumWidth - x_fac(130.0f), y_fac(40.0f + y_off), RsGlobal.maximumWidth - x_fac(30.0f), y_fac(40.0f + y_off + 50.0f));
 				CSprite2d Test = CSprite2d::CSprite2d();
@@ -387,10 +374,10 @@ void CHud::DrawWeaponIcon(CPed *player, float alpha, float y_off)
 
 void CHud::DrawWeaponAmmo(CPed *player, float alpha, float y_off)
 {
-	int weap = player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type;
-	int weap_AmmoInClip = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwAmmoInClip;
-	int weap_totalAmmo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_dwTotalAmmo - weap_AmmoInClip;
-	int max_weapammo = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_Type, 1)->m_wAmmoClip;
+	int weap = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType;
+	int weap_AmmoInClip = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nAmmoInClip;
+	int weap_totalAmmo = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nTotalAmmo - weap_AmmoInClip;
+	int max_weapammo = CWeaponInfo::GetWeaponInfo(player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType, 1)->m_wAmmoClip;
 	if (weap < 15 || weap == WEAPON_PARACHUTE || weap == WEAPON_NIGHTVISION
 		|| weap == WEAPON_DETONATOR || weap == WEAPON_INFRARED)
 		return;
@@ -406,7 +393,7 @@ void CHud::DrawWeaponAmmo(CPed *player, float alpha, float y_off)
 	if (max_weapammo > 1 && weap_AmmoInClip < 1000)
 	{
 		CFont::SetColor(CRGBA::CRGBA(100, 100, 100, alpha));
-   		sprintf(string, "%d", weap_AmmoInClip);
+		sprintf(string, "%d", weap_AmmoInClip);
 		CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(30.0f + y_off), string);
 		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, alpha));
 		sprintf(string, "%d", weap_totalAmmo);
@@ -418,7 +405,7 @@ void CHud::DrawWeaponAmmo(CPed *player, float alpha, float y_off)
 		sprintf(string, "%d", weap_totalAmmo);
 		CFont::PrintString(RsGlobal.maximumWidth - x_fac(35.0f), y_fac(30.0f + y_off), string);
 	}
-	
+
 }
 
 void CHud::DrawWantedLevel(CPed *player)
@@ -432,7 +419,7 @@ void CHud::DrawWantedLevel(CPed *player)
 	CWanted *pWanted = FindPlayerWanted(-1);
 	float alphavalue = 255.0;
 	int  WantedLevelBeforeParole = pWanted->m_dwWantedLevelBeforeParole;
-	char WantedText[5] ;
+	char WantedText[5];
 	char Stringshow[5];
 	WantedText[0] = 93;
 	WantedText[1] = 0;
@@ -440,7 +427,6 @@ void CHud::DrawWantedLevel(CPed *player)
 	{
 		NO_BLINK,
 		BLINK
-
 	};
 
 	if (m_LastWanted != WantedLevel)
@@ -539,12 +525,12 @@ float CHud::DrawMoneyInfo(CPed *player)
 
 	if (m_Money != m_Lastmoney || KeyPressed(VK_TAB))
 	{
-	
+
 		if (m_Money != m_Lastmoney)
 			m_MoneyDelta = m_Money - m_Lastmoney;
 
 		if (m_Moneystate == ON)
-			m_MoneyTimer = 0;		
+			m_MoneyTimer = 0;
 		else
 		{
 			m_Moneystate = Move_posy;
@@ -591,7 +577,7 @@ float CHud::DrawMoneyInfo(CPed *player)
 
 		alpha = m_MoneyFadeTimer / 600.0f * 255.0f;
 		if (alpha == 0.0f)
-		{	
+		{
 			m_MoneyMoveTimer += CTimer::ms_fTimeStep * 0.02 * -1000.0;
 			if (m_MoneyMoveTimer < 0.0)
 				m_Moneystate = OFF;
@@ -719,7 +705,7 @@ void CHud::DrawZoneText()
 		float &unknownB = *(float*)0xBAA3E4;
 
 
-		if (m_Message ||  unknownA != 0.0f || unknownB != 0.0)
+		if (m_Message || unknownA != 0.0f || unknownB != 0.0)
 		{
 			m_ZoneState = 3;
 		}
@@ -728,7 +714,7 @@ void CHud::DrawZoneText()
 			CHud::m_ZoneNameTimer += CTimer::ms_fTimeStep * 0.02 * 1000.0;
 			CFont::SetAlignment(ALIGN_RIGHT);
 			CFont::SetProp(true);
-			CFont::SetBackground(false,false);
+			CFont::SetBackground(false, false);
 			CFont::SetScale(x_fac(0.5f), y_fac(0.7f));
 			CFont::SetOutlinePosition(1);
 			CFont::SetDropColor(CRGBA::CRGBA(30, 30, 30, Fontalpha));
@@ -739,7 +725,7 @@ void CHud::DrawZoneText()
 		}
 	}
 
-	
+
 }
 
 void CHud::DrawCarName()
@@ -839,12 +825,10 @@ void CHud::Initialise() {
 
 	for (int i = 0; i < 2; i++)
 		NewRadarSprites[i].SetTexture(NewSpritesNames[i]);
-	
+
 	CTxdStore::PopCurrentTxd();
 	ReInitialise();
 }
-
-
 
 void CHud::Shutdown() {
 	//plugin::Call<0x588850>();
@@ -863,13 +847,13 @@ void CHud::ReInitialise() {
 }
 
 void CHud::DrawRadar() {
-//	plugin::Call<0x58A330>();
+	//	plugin::Call<0x58A330>();
 	if (FrontEndMenuManager.m_dwRadarMode != 2 && (m_ItemToFlash != 8 || CTimer::m_FrameCounter & 8))
 	{
 		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
 		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATESHADEMODE, (void*)1);
 		CRadar::DrawMap();
-		if ( FindPlayerVehicle(-1,0) && FindPlayerVehicle(-1,0)->m_dwVehicleSubClass == VEHICLE_PLANE && FindPlayerVehicle(-1, 0)->m_wModelIndex != 539)
+		if (FindPlayerVehicle(-1, 0) && FindPlayerVehicle(-1, 0)->m_dwVehicleSubClass == VEHICLE_PLANE && FindPlayerVehicle(-1, 0)->m_wModelIndex != 539)
 		{
 			// Draw inside Radar here (for planes)
 		}
@@ -879,6 +863,316 @@ void CHud::DrawRadar() {
 	}
 	CRadar::DrawBlips();
 	//if (FrontEndMenuManager.m_dwRadarMode == 1)
+}
 
+void CHud::DrawCrosshairs()
+{
+	CPlayerPed *playerPed; // edi
+	WORD mode1; // ax
+	BOOL bSimpleAim; // bl
+	WORD mode2; // ax
+	ePedState unused; // eax
+	eWeaponType v6; // eax
+	double v8; // st7
+	CRGBA color; // eax
+	//double v10; // st7
+	//double v11; // st6
+	//double v12; // st5
+	//float v13; // ST58_4
+	//double v14; // st5
+	//float v15; // ST4C_4
+	//float v16; // ST54_4
+	//double v17; // st7
+	//float v18; // ST50_4
+	//double v19; // st7
+	//float v20; // ST4C_4
+	//CRGBA *v21; // eax
+	//double v22; // st7
+	//CRGBA *v23; // eax
+	//double v24; // st7
+	//CRGBA *v25; // eax
+	//CRGBA *v26; // eax
+	//WORD mode5; // ax
+	//double v28; // st7
+	//double v29; // st6
+	//float v30; // ST58_4
+	//float v31; // ST54_4
+	//double v32; // st7
+	//float v33; // ST50_4
+	//double v34; // st7
+	//float v35; // ST4C_4
+	//CRGBA *v36; // eax
+	//double v37; // st7
+	//CRGBA *v38; // eax
+	//double v39; // st7
+	//CRGBA *v40; // eax
+	//CRGBA *v41; // eax
+	//CPed *v42; // eax
+	//CPed *v43; // eax
+	//WORD mode6; // ax
+	//RwTexture *texCrosshair; // esi
+	//double v46; // st7
+	//double v47; // st6
+	//CPed *v48; // eax
+	//double v49; // st7
+	//int modelId; // eax
+	//CPedModelInfo *model; // eax
+	//int txdIndex; // ecx
+	//RwTexDictionary **pTxd; // ecx
+	//RwTexDictionary *txd; // esi
+	//int key; // eax
+	//float v56; // ST54_4
+	//float v57; // ST58_4
+	//float v58; // ST0C_4
+	//float v59; // ST08_4
+	//float v60; // ST0C_4
+	//float v61; // ST08_4
+	//float v62; // ST0C_4
+	//float v63; // ST08_4
+	//float v64; // ST0C_4
+	//float v65; // ST08_4
+	char bDrawCrosshair; // [esp+43h] [ebp-2Dh]
+	//float v67; // [esp+44h] [ebp-2Ch]
+	//float v68; // [esp+48h] [ebp-28h]
+	//float v69; // [esp+48h] [ebp-28h]
+	//float v70; // [esp+4Ch] [ebp-24h]
+	float _crosshairSizeMP; // [esp+50h] [ebp-20h]
+	//float _crosshairSizeMPa; // [esp+50h] [ebp-20h]
+	//int v73; // [esp+54h] [ebp-1Ch]
+	//float v74; // [esp+58h] [ebp-18h]
+	//float v75; // [esp+5Ch] [ebp-14h]
+	//CRect coords; // [esp+60h] [ebp-10h]
+
+	playerPed = FindPlayerPed();
+	mode1 = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode;
+	bSimpleAim = 0;
+	bDrawCrosshair = 0;
+
+	if (mode1 != MODE_SNIPER && mode1 == MODE_1STPERSON)
+	{
+		if (FindPlayerVehicle(-1, 0) && (FindPlayerVehicle(-1, 0)->m_wModelIndex == 520 || FindPlayerVehicle(-1, 0)->m_wModelIndex == 425))
+			bDrawCrosshair = 1;
+	}
+
+	if (TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode != MODE_1STPERSON
+		&& !playerPed->m_aWeapons[playerPed->m_nActiveWeaponSlot].IsTypeMelee())
+		bDrawCrosshair = 1;
+
+	if (mode1 == MODE_M16_1STPERSON_RUNABOUT
+		|| mode1 == MODE_ROCKETLAUNCHER_RUNABOUT
+		|| mode1 == MODE_ROCKETLAUNCHER_RUNABOUT_HS
+		|| mode1 == MODE_SNIPER_RUNABOUT)
+		bSimpleAim = 1;
+
+
+	if (!playerPed->m_pTargetedObject && playerPed->m_pPlayerData->m_bFreeAiming
+		&& (!playerPed->m_pIntelligence->GetUseGunTask() || playerPed->m_pIntelligence->GetUseGunTask()->field_E))
+	{
+		if (mode1 == MODE_AIMWEAPON || mode1 == MODE_AIMWEAPON_FROMCAR || mode1 == MODE_AIMWEAPON_ATTACHED)
+		{
+			if (playerPed->m_pedState != 59 && playerPed->m_pedState != 57)
+			{
+				if ((v6 = playerPed->m_aWeapons[playerPed->m_nActiveWeaponSlot].m_nType, v6 >= WEAPON_PISTOL)
+					&& v6 <= WEAPON_M4
+					|| v6 == WEAPON_TEC9
+					|| v6 == WEAPON_COUNTRYRIFLE
+					|| v6 == WEAPON_MINIGUN
+					|| v6 == WEAPON_FTHROWER)
+				{
+					bSimpleAim = mode1 != MODE_AIMWEAPON || !TheCamera.m_bTransitionState;
+				}
+			}
+		}
+	}
+	if (bDrawCrosshair || bSimpleAim || CTheScripts::bDrawCrossHair)// IF AIM
+	{
+		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
+		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0);
+
+			if (mode1 == MODE_AIMWEAPON || mode1 == MODE_AIMWEAPON_FROMCAR || mode1 == MODE_AIMWEAPON_ATTACHED)
+			{
+				v8 = playerPed->GetWeaponRadiusOnScreen();
+				_crosshairSizeMP = v8;
+				float widthfac = 0.53*RsGlobal.maximumWidth ;
+				float heightfac = 0.38* RsGlobal.maximumHeight ;
+				CRect Test = CRect(widthfac  - x_fac(1.0f), heightfac + y_fac(1.0f), widthfac + x_fac(1.0f), heightfac - y_fac(1.0f));
+				CSprite2d::DrawRect(Test, CRGBA::CRGBA(255, 255, 255, 255));
+		
+		}
+	}
+				//		v10 = (double)RsGlobal.MaximumWidth * 0.0015625 * 64.0 * _crosshairSizeMP;
+				//		v74 = v10;
+				//		v11 = (double)RsGlobal.MaximumHeight * 0.002232143 * 64.0 * _crosshairSizeMP;
+				//		v75 = v11;
+				//		v12 = v74 * 0.5;
+				//		*(float *)&v73 = v12;
+				//		v13 = v12 + v70 - v10;
+				//		v14 = v75 * 0.5;
+				//		coords.x1 = v13;
+				//		v15 = v14;
+				//		v16 = v14 + v68 - v11;
+				//		coords.y2 = v16;
+				//		v17 = *(float *)&v73 + v13;
+				//		v18 = v17;
+				//		coords.x2 = v17;
+				//		v19 = v15 + v16;
+				//		v20 = v19;
+				//		coords.y1 = v19;
+				//		v21 = CRGBA::CRGBA((CRGBA *)&v73, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v21);
+				//		v22 = v13 + v74;
+				//		v74 = v22;
+				//		coords.x1 = v22;
+				//		coords.y2 = v16;
+				//		coords.x2 = v18;
+				//		coords.y1 = v20;
+				//		v23 = CRGBA::CRGBA((CRGBA *)&v73, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v23);
+				//		v24 = v16 + v75;
+				//		coords.x1 = v13;
+				//		v75 = v24;
+				//		coords.y2 = v24;
+				//		coords.y1 = v20;
+				//		coords.x2 = v18;
+				//		v25 = CRGBA::CRGBA((CRGBA *)&v73, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v25);
+				//		coords.x1 = v74;
+				//		coords.y2 = v75;
+				//		coords.x2 = v18;
+				//		coords.y1 = v20;
+				//		v26 = CRGBA::CRGBA((CRGBA *)&v75, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v26);
+				//		goto @@return;
+				//	}
+				//}
+				//if (CTheScripts::bDrawCrossHair != 2)     // FPS M16
+				//{
+				//	mode5 = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_wMode;
+				//	if (mode5 == MODE_M16_1STPERSON
+				//		|| mode5 == MODE_M16_1STPERSON_RUNABOUT
+				//		|| mode5 == MODE_1STPERSON_RUNABOUT
+				//		|| mode5 == MODE_HELICANNON_1STPERSON)
+				//	{
+				//		v28 = (double)RsGlobal.MaximumWidth * 0.0015625 * 64.0;
+				//		v75 = v28;
+				//		v29 = (double)RsGlobal.MaximumHeight * 0.002232143 * 64.0;
+				//		v74 = v29;
+				//		v73 = RsGlobal.MaximumHeight / 2;
+				//		v30 = (double)(RsGlobal.MaximumWidth / 2) - v28 * 0.5;
+				//		coords.x1 = v30;
+				//		v31 = (double)(RsGlobal.MaximumHeight / 2) - v29 * 0.5;
+				//		coords.y2 = v31;
+				//		v32 = v75 * 0.5 + v30;
+				//		v33 = v32;
+				//		coords.x2 = v32;
+				//		v34 = v74 * 0.5 + v31;
+				//		v35 = v34;
+				//		coords.y1 = v34;
+				//		v36 = CRGBA::CRGBA((CRGBA *)&v73, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v36);
+				//		v37 = v30 + v75;
+				//		v75 = v37;
+				//		coords.x1 = v37;
+				//		coords.x2 = v33;
+				//		coords.y2 = v31;
+				//		coords.y1 = v35;
+				//		v38 = CRGBA::CRGBA((CRGBA *)&v73, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v38);
+				//		v39 = v31 + v74;
+				//		v74 = v39;
+				//		coords.y2 = v39;
+				//		coords.x1 = v30;
+				//		coords.x2 = v33;
+				//		coords.y1 = v35;
+				//		v40 = CRGBA::CRGBA((CRGBA *)&v73, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v40);
+				//		coords.x1 = v75;
+				//		coords.x2 = v33;
+				//		coords.y2 = v74;
+				//		coords.y1 = v35;
+				//		v41 = CRGBA::CRGBA((CRGBA *)&v75, 255u, 255u, 255u, 255u);
+				//		CSprite2d::Draw((CSprite2d *)&CHud::Sprites.siteM16, (CRect *)&coords, v41);
+				//		@@return:
+				//			RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATESRCBLEND, 5u);
+				//		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEDESTBLEND, 6u);
+				//		RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEZWRITEENABLE, 1u);
+				//		return;
+				//	}
+				//}
+				//RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTUREFILTER, 2u);
+				//v42 = FindPlayerPed(-1);
+				//if (v42->m_aWeapons[v42->m_nActiveWeaponSlot].m_nType == WEAPON_CAMERA
+				//	|| (v43 = FindPlayerPed(-1), v43->m_aWeapons[v43->m_nActiveWeaponSlot].m_nType == WEAPON_SNIPERRIFLE)
+				//	|| CTheScripts::bDrawCrossHair == 2)
+				//{
+				//	v48 = FindPlayerPed(-1);
+				//	if (v48->m_aWeapons[v48->m_nActiveWeaponSlot].m_nType == WEAPON_CAMERA || CTheScripts::bDrawCrossHair == 2)
+				//	{
+				//		*(float *)&v73 = (double)RsGlobal.MaximumWidth * 0.0015625 * 256.0;
+				//		v49 = (double)RsGlobal.MaximumHeight * 0.002232143 * 192.0;
+				//	}
+				//	else
+				//	{
+				//		*(float *)&v73 = (double)RsGlobal.MaximumWidth * 0.0015625 * 210.0;
+				//		v49 = (double)RsGlobal.MaximumHeight * 0.002232143 * 210.0;
+				//	}
+				//	_crosshairSizeMPa = v49;
+				//	v67 = 0.0;
+				//	v69 = 0.0;
+				//	modelId = CWeaponInfo::GetWeaponInfo(playerPed->m_aWeapons[playerPed->m_nActiveWeaponSlot].m_nType, 1)->dwModelId1;
+				//	if (modelId <= 0)
+				//		goto @@return;
+				//		model = CModelInfo::ms_modelInfoPtrs[modelId];
+				//	txdIndex = model->clump.base.m_wTxdIndex;
+				//	pTxd = (RwTexDictionary **)(CTxdStore::ms_pTxdPool->m_byteMap[txdIndex] >= 0 ? (char *)CTxdStore::ms_pTxdPool->m_pObjects
+				//		+ 12 * txdIndex : 0);
+				//	txd = *pTxd;
+				//	if (!*pTxd)
+				//		goto @@return;
+				//		key = CKeyGen::AppendStringToKey(model->clump.base.m_dwKey, (int)"CROSSHAIR");
+				//	texCrosshair = RwTexDictionaryFindHashNamedTexture(txd, key);
+				//}
+				//else
+				//{
+				//	mode6 = TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode;
+				//	if (mode6 != MODE_ROCKETLAUNCHER
+				//		&& mode6 != MODE_1STPERSON
+				//		&& mode6 != MODE_ROCKETLAUNCHER_RUNABOUT
+				//		&& mode6 != MODE_ROCKETLAUNCHER_HS
+				//		&& mode6 != MODE_ROCKETLAUNCHER_RUNABOUT_HS)
+				//	{
+				//		goto @@return;
+				//	}
+				//	texCrosshair = (RwTexture *)CHud::Sprites.siterocket;
+				//	v46 = (double)RsGlobal.MaximumWidth * 0.0015625;
+				//	*(float *)&v73 = 24.0 * v46;
+				//	v47 = (double)RsGlobal.MaximumHeight * 0.002232143;
+				//	_crosshairSizeMPa = 24.0 * v47;
+				//	v69 = v46 * 20.0;
+				//	v67 = v47 * 20.0;
+				//}
+				//if (texCrosshair)
+				//{
+				//	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+				//	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTUREADDRESS, (void*)3u);
+				//	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATETEXTURERASTER, (unsigned int)texCrosshair->raster);
+				//	v56 = _crosshairSizeMPa * 0.5;
+				//	v57 = *(float *)&v73 * 0.5;
+				//	v58 = (double)(RsGlobal.MaximumHeight / 2) - v56 - v67;
+				//	v59 = (double)(RsGlobal.MaximumWidth / 2) - v57 - v69;
+				//	CSprite::RenderOneXLUSprite(v59, v58, 1.0, v57, v56, 255u, 255u, 255u, 255, 0.0099999998, 255, 0, 0);
+				//	v60 = (double)(RsGlobal.MaximumHeight / 2) - v56 - v67;
+				//	v61 = (double)(RsGlobal.MaximumWidth / 2) + v57 + v69;
+				//	CSprite::RenderOneXLUSprite(v61, v60, 1.0, v57, v56, 255u, 255u, 255u, 255, 0.0099999998, 255, 1, 0);
+				//	v62 = (double)(RsGlobal.MaximumHeight / 2) + v56 + v67;
+				//	v63 = (double)(RsGlobal.MaximumWidth / 2) - v57 - v69;
+				//	CSprite::RenderOneXLUSprite(v63, v62, 1.0, v57, v56, 255u, 255u, 255u, 255, 0.0099999998, 255, 0, 1);
+				//	LODWORD(v75) = RsGlobal.MaximumWidth / 2;
+				//	v64 = (double)(RsGlobal.MaximumHeight / 2) + v56 + v67;
+				//	v65 = (double)(RsGlobal.MaximumWidth / 2) + v57 + v69;
+				//	CSprite::RenderOneXLUSprite(v65, v64, 1.0, v57, v56, 255u, 255u, 255u, 255, 0.0099999998, 255, 1, 1);
+				//	RwEngineInstance->dOpenDevice.fpRenderStateSet(rwRENDERSTATEZWRITEENABLE, 0);
+				//}
+				//goto @@return;
 
 }

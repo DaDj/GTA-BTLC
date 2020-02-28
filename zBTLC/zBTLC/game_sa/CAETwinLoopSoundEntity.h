@@ -10,29 +10,34 @@
    m_pBaseAudio is a pointer to audio which created twin sound. For example,
    this could be CAEVehicleAudioEntity for playing skid sounds.              */
 
+
 #include "plbase/PluginBase_SA.h"
 #include "CAEAudioEntity.h"
 
-#pragma pack(push, 1)
-class CAETwinLoopSoundEntity : public CAEAudioEntity
-{
-	short m_wBankSlotId;
-	short m_wSoundType[2];
-	char pad1[2];
-	CAEAudioEntity *m_pBaseAudio;
-	short field_88;
-	short field_8A;
-	short field_8C;
-	short m_wPlayTimeMin;
-	short m_wPlayTimeMax;
-	char pad2[2];
-	unsigned int m_dwTimeToSwapSounds;
-	bool m_bPlayingFirstSound;
-	char pad3;
-	short m_wStartingPlayPercentage[2]; // 0 - 99 percentage
-	short field_9E;
-	CAESound *m_apSounds[2];
+class  CAETwinLoopSoundEntity : public CAEAudioEntity {
+public:
+    short           m_nBankSlotId;
+    short           m_nSoundType[2];
+private:
+    char _pad1[2];
+public:
+    CAEAudioEntity *m_pBaseAudio;
+    short field_88;
+    short field_8A;
+    short field_8C;
+    short           m_nPlayTimeMin;
+    short           m_nPlayTimeMax;
+private:
+    char _pad2[2];
+public:
+    unsigned int    m_nTimeToSwapSounds;
+    bool            m_bPlayingFirstSound;
+private:
+    char _pad3;
+public:
+    short           m_anStartingPlayPercentage[2]; // 0 - 99 percentage
+    short field_9E;
+    CAESound       *m_apSounds[2];
 };
-#pragma pack(pop)
 
 VALIDATE_SIZE(CAETwinLoopSoundEntity, 0xA8);

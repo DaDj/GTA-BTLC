@@ -16,6 +16,7 @@
 #include "../game_sa/CVehicleModelInfo.h"
 #include "../game_sa/CTxdStore.h"
 #include "../game_sa/CClothesBuilder.h"
+#include "../game_sa/CCamera.h"
 
 namespace debug
 {
@@ -147,7 +148,11 @@ namespace debug
 	{
 		char string[40];
 		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
-		sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
+		//sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
+		//sprintf(string, "FPS : %d", (int)TheCamera.m_PlayerWeaponMode.m_wMode);
+		//sprintf(string, "FPS : %d", (int)TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode);
+		sprintf(string, "FPS : %f", (float)TheCamera.m_fPedZoomBase);
+
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetAlignment(ALIGN_LEFT);
 		CFont::SetOutlinePosition(1);

@@ -61,7 +61,7 @@ namespace visuals
 		pickup_appearence();
 		vehicle_headlights();
 
-		// No Heat Haze <-move to visuals
+		// No Heat Haze 
 		MemoryVP::Patch<BYTE>(0x72C1B7, 0xEB);
 		// Render the static shadow at every fxquality
 		//MemoryVP::Patch<BYTE>(0x70BDAC, 0x84);

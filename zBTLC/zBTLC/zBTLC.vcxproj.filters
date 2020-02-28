@@ -1468,6 +1468,24 @@
     <ClCompile Include="game_sa\CBouncingPanel.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\FxSystem_c.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\FxBox_c.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\FxPlane_c.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\FxPrtMult_c.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\FxSphere_c.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CAEWeatherAudioEntity.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3201,6 +3219,45 @@
     </ClInclude>
     <ClInclude Include="Events_SA\Extender.h">
       <Filter>Events_Sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\ePedPieceTypes.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\FxSystem_c.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\FxBox_c.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\FxPlane_c.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\FxPrtMult_c.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\FxSphere_c.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEExplosionAudioEntity.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEFireAudioEntity.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEPedAudioEntity.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEPedSpeechAudioEntity.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEPoliceScannerAudioEntity.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEWeaponAudioEntity.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEWeatherAudioEntity.h">
+      <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

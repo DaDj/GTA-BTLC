@@ -1371,7 +1371,8 @@ void CVehicle::MyInit()
 
 
 CVector2D CVehicle::GetCarPathLinkPosition(CCarPathLinkAddress &address) {
-	if (address.m_wAreaId != -1 && address.m_wCarPathLinkId != -1 && ThePaths.m_pPathNodes[address.m_wAreaId]) {
+	if (address.m_wAreaId != -1 && address.m_wCarPathLinkId != -1 && ThePaths.m_pPathNodes[address.m_wAreaId])
+	{
 		return CVector2D(static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.x) / 8.0f,
 			static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.y) / 8.0f);
 	}

@@ -91,10 +91,10 @@ void Function_starter()
 	limits::Init();
 	visuals::init();		//VISUAL CHANGES init
 
-	My_PlayerWeaponReload::init();	//Add Reload with "R" functions.
-	My_PlayerWallhitreactions::init();
-	My_GPS::init();
-	My_CCam::INIT();		// IV Styled AIM CAM
+	My_PlayerWeaponReload::init();		//Add Reload with "R" functions.
+	My_PlayerWallhitreactions::init();	//Wallhitanimations for player
+	My_GPS::init();						//Gps for cars like in IV
+	My_CCam::INIT();					// IV Styled AIM CAM
 	
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
@@ -109,9 +109,12 @@ void Function_starter()
 	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
 	CVehicle::MyInit();		//Support for IVF Lights
 
+		
+	MemoryVP::Nop(0x53C1C6, 5); //Disable Roadblock as long as I don't have any.
+
+
 	//Test new Pickup
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
-	
 
 	 //static Crosshair Hook
 	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
@@ -232,12 +235,12 @@ void ParseCommandlineArgument(int thing, char* pArg)
 	LPSTR TEST = GetCommandLine();
 
 	//Close game if it isn't launched via launcher
-	if (!strstr(TEST, "-launch"))
-	{
-		MessageBoxA(0, "Please use the GTA_BTLC Launcher to start this game.(GTA_BTLC.exe)", "BTLC - Launch", MB_ICONEXCLAMATION);
-		exit(0);
-		return;
-	}
+	//if (!strstr(TEST, "-launch"))
+	//{
+	//	MessageBoxA(0, "Please use the GTA_BTLC Launcher to start this game.(GTA_BTLC.exe)", "BTLC - Launch", MB_ICONEXCLAMATION);
+	//	exit(0);
+	//	return;
+	//}
 
 
 	if (pArg)

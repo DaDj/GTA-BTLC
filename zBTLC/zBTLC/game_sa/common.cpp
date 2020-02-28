@@ -1,6 +1,7 @@
 #include "common.h"
 #include "CGeneral.h"
 
+
 CVector FindPlayerCoors(int playerId)
 {
 	return ((CVector (__cdecl *)(int))0x56E010)(playerId);
@@ -41,9 +42,9 @@ float FindPlayerHeight()
 	return ((float (__cdecl *)())0x56E520)();
 }
 
-CPed * FindPlayerPed(int playerId)
+CPlayerPed * FindPlayerPed(int playerId)
 {
-	return ((CPed *(__cdecl *)(int))0x56E210)(playerId);
+	return ((CPlayerPed *(__cdecl *)(int))0x56E210)(playerId);
 }
 
 CVehicle * FindPlayerVehicle(int playerId, bool bIncludeRemote)

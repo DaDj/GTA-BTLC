@@ -19,7 +19,7 @@ public:
 	static bool &DisplayHud;
 	static bool &PlayerisOffMap;
 	static tScriptParam *ScriptParams;
-    
+	static int &bDrawCrossHair;
     static CRunningScript *&pIdleScripts;
     static CRunningScript *&pActiveScripts;
 };

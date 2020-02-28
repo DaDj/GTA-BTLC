@@ -22,5 +22,3 @@ public:
     char field_8B;
     int field_8C;
 };
-
-VALIDATE_SIZE(CAEStaticChannel, 0x90);

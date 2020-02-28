@@ -829,7 +829,7 @@ void CPed::My_ProcessAnimGroups()
 	if (!Ped->IsPlayer())
 	{
 		int animgrp = 0;
-		eWeaponType Weapon_Type = Ped->m_aWeapons[Ped->m_nActiveWeaponSlot].m_Type;
+		eWeaponType Weapon_Type = Ped->m_aWeapons[Ped->m_nActiveWeaponSlot].m_nType;
 		if (Weapon_Type == WEAPON_RLAUNCHER || Weapon_Type == WEAPON_RLAUNCHER_HS)
 			animgrp = 57;
 		if (Weapon_Type == WEAPON_BASEBALLBAT || Weapon_Type == WEAPON_SHOVEL || Weapon_Type == WEAPON_POOLCUE)
@@ -842,8 +842,13 @@ void CPed::My_ProcessAnimGroups()
 			|| Weapon_Type == WEAPON_SAWNOFF
 			|| Weapon_Type == WEAPON_SNIPERRIFLE
 			|| Weapon_Type == WEAPON_COUNTRYRIFLE
+			|| Weapon_Type == WEAPON_SHOTGUN
 			)
+		{
 			animgrp = 60;
+			std::cout <<  " PED --> ARMED ANIM " << std::endl; 
+		}
+		
 
 		//When Ped has one of the the weapons, the animgrp won't be 0
 		if (!animgrp == 0)
@@ -856,11 +861,11 @@ void CPed::My_ProcessAnimGroups()
 		
 
 
-			struct	ModelCarsData
+	/*		struct	ModelCarsData
 			{
 				short count;
 				CPedModelInfo objects[278];
-			};   
+			};   */
 				
 	/*		int test = 0;
 			int testing = 0;

@@ -100,6 +100,7 @@ public:
 	static void DrawCarName();
 	static void DrawWastedArrested();
 	static void DrawRadar();
+	static void	DrawCrosshairs();
 
 	static void Initialise();
 	static void ReInitialise();

@@ -96,7 +96,7 @@ float CPlayerPed::GetWeaponRadiusOnScreen() {
 	bool accucary_dependant = false;
 
 	Player = this;
-	weapon_type = Player->m_aWeapons[Player->m_nActiveWeaponSlot].m_Type;
+	weapon_type = Player->m_aWeapons[Player->m_nActiveWeaponSlot].m_nType;
 	weapskill = CPed::GetWeaponSkill(weapon_type);
 	Weapinfo = CWeaponInfo::GetWeaponInfo(weapon_type, weapskill);
 	v4 = Size_Factor_A / Weapinfo->m_fAccuracy;

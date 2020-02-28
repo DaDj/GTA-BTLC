@@ -30,10 +30,10 @@ namespace My_PlayerWeaponReload
 		//active weapon slot
 		int activeweaponslot = Player->m_nActiveWeaponSlot;
 		//get the info for the current weapon
-		CWeaponInfo* Currentweapon = CWeaponInfo::GetWeaponInfo(Player->m_aWeapons[activeweaponslot].m_Type, Player->m_nWeaponSkill);
+		CWeaponInfo* Currentweapon = CWeaponInfo::GetWeaponInfo(Player->m_aWeapons[activeweaponslot].m_nType, Player->m_nWeaponSkill);
 
 		//only allow reload if palyed presed "R" and the ammo in the mag is smaller than the max allowed ammo in the mag.
-		if (KeyPressed('R') && Player->m_aWeapons[activeweaponslot].m_dwAmmoInClip < Currentweapon->m_wAmmoClip)
-			Player->m_aWeapons[activeweaponslot].m_dwState = 2;
+		if (KeyPressed('R') && Player->m_aWeapons[activeweaponslot].m_nAmmoInClip < Currentweapon->m_wAmmoClip)
+			Player->m_aWeapons[activeweaponslot].m_nState = WEAPONSTATE_RELOADING;
 	}
 }

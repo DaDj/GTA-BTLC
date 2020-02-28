@@ -168,6 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
+    <ClCompile Include="game_sa\CAEWeatherAudioEntity.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CAudioengine.cpp" />
     <ClCompile Include="game_sa\CBouncingPanel.cpp" />
@@ -640,8 +641,13 @@
     <ClCompile Include="game_sa\CWeaponModelInfo.cpp" />
     <ClCompile Include="game_sa\CWorld.cpp" />
     <ClCompile Include="game_sa\CZone.cpp" />
+    <ClCompile Include="game_sa\FxBox_c.cpp" />
     <ClCompile Include="game_sa\FxManager_c.cpp" />
     <ClCompile Include="game_sa\FxMemoryPool_c.cpp" />
+    <ClCompile Include="game_sa\FxPlane_c.cpp" />
+    <ClCompile Include="game_sa\FxPrtMult_c.cpp" />
+    <ClCompile Include="game_sa\FxSphere_c.cpp" />
+    <ClCompile Include="game_sa\FxSystem_c.cpp" />
     <ClCompile Include="game_sa\Fx_c.cpp" />
     <ClCompile Include="game_sa\ListItem_c.cpp" />
     <ClCompile Include="game_sa\List_c.cpp" />
@@ -667,7 +673,14 @@
     <ClInclude Include="Events_SA\Extender\PedExtender.h" />
     <ClInclude Include="Events_SA\Extender\VehicleExtender.h" />
     <ClInclude Include="game_sa\CAEAudioChannel.h" />
+    <ClInclude Include="game_sa\CAEExplosionAudioEntity.h" />
+    <ClInclude Include="game_sa\CAEFireAudioEntity.h" />
+    <ClInclude Include="game_sa\CAEPedAudioEntity.h" />
+    <ClInclude Include="game_sa\CAEPedSpeechAudioEntity.h" />
+    <ClInclude Include="game_sa\CAEPoliceScannerAudioEntity.h" />
     <ClInclude Include="game_sa\CAEStaticChannel.h" />
+    <ClInclude Include="game_sa\CAEWeaponAudioEntity.h" />
+    <ClInclude Include="game_sa\CAEWeatherAudioEntity.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />
     <ClInclude Include="game_sa\CAudioengine.h" />
     <ClInclude Include="game_sa\CBouncingPanel.h" />
@@ -1179,6 +1192,7 @@
     <ClInclude Include="game_sa\ePadButtons.h" />
     <ClInclude Include="game_sa\ePedBones.h" />
     <ClInclude Include="game_sa\ePedModel.h" />
+    <ClInclude Include="game_sa\ePedPieceTypes.h" />
     <ClInclude Include="game_sa\ePedState.h" />
     <ClInclude Include="game_sa\ePedType.h" />
     <ClInclude Include="game_sa\ePickupType.h" />
@@ -1192,9 +1206,14 @@
     <ClInclude Include="game_sa\eWeaponType.h" />
     <ClInclude Include="game_sa\eWinchType.h" />
     <ClInclude Include="game_sa\functions.h" />
+    <ClInclude Include="game_sa\FxBox_c.h" />
     <ClInclude Include="game_sa\FxFrustumInfo_c.h" />
     <ClInclude Include="game_sa\FxManager_c.h" />
     <ClInclude Include="game_sa\FxMemoryPool_c.h" />
+    <ClInclude Include="game_sa\FxPlane_c.h" />
+    <ClInclude Include="game_sa\FxPrtMult_c.h" />
+    <ClInclude Include="game_sa\FxSphere_c.h" />
+    <ClInclude Include="game_sa\FxSystem_c.h" />
     <ClInclude Include="game_sa\Fx_c.h" />
     <ClInclude Include="game_sa\IFrame.h" />
     <ClInclude Include="game_sa\LimbOrienation.h" />

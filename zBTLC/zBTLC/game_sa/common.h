@@ -6,7 +6,7 @@
 #include "CVehicle.h"
 #include "CWeaponInfo.h"
 #include "CAnimBlendClumpData.h"
-
+#include"CPlayerPed.h"
 // returns player coors
 CVector FindPlayerCoors(int playerId);
 // returns player speed
@@ -24,7 +24,7 @@ float FindPlayerHeading(int playerId);
 // returns Z coord for active player
 float FindPlayerHeight();
 // returns player ped
-CPed * FindPlayerPed(int playerId = -1);
+CPlayerPed * FindPlayerPed(int playerId = -1);
 // returns player vehicle
 CVehicle * FindPlayerVehicle(int playerId, bool bIncludeRemote);
 // 2 players are playing

@@ -23,6 +23,11 @@ void CPathFind::DoPathSearch(unsigned char pathType, CVector origin, CNodeAddres
 		waterPath);
 }
 
+void CPathFind::UpdateStreaming(unsigned char force)
+{
+	((void (__thiscall *)(CPathFind*, unsigned char))0x450A60)(this, force);
+}
+
 CPathNode *CPathFind::GetPathNode(CNodeAddress address)
 {
 	return ((CPathNode *(__thiscall *)(CPathFind *, CNodeAddress))0x420AC0)(this, address);
