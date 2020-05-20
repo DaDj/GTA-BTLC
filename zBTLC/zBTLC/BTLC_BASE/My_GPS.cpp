@@ -32,7 +32,7 @@ namespace My_GPS
 	void init()
 	{
 		//increase pathnode load distance
-		//MemoryVP::Patch<float>(0x450ACE, 1900.0);
+		//MemoryVP::Patch<float>(0x450ACE, 1500.0);
 		//MemoryVP::Patch<float>(0x450B01, 1500.0);
 	//	MemoryVP::Patch<float>(0x450B92, 1500.0);
 
@@ -43,14 +43,18 @@ namespace My_GPS
 
 		Events::drawRadarOverlayEvent += []() 
 		{
+			MemoryVP::Patch<float>(0x450ACE, 1500.0);
+			//MemoryVP::Patch<float>(0x450B01, 1500.0);
+			//MemoryVP::Patch<float>(0x450B92, 1500.0);
+			ThePaths.UpdateStreaming(1);
 			GPS_DRAW();
+			MemoryVP::Patch<float>(0x450ACE, 350.0);
 		};
 
 		Events::drawHudEvent += [] 
 		{
 			HUD_DRAW();
 		};
-
 	}
 
 	static void Setup2dVertex(RwIm2DVertex &vertex, float x, float y) {
@@ -94,10 +98,7 @@ namespace My_GPS
 			destPosn.z = CWorld::FindGroundZForCoord(destPosn.x, destPosn.y);
 
 			short nodesCount = 0;
-			MemoryVP::Patch<float>(0x450ACE, 1900.0);
-			ThePaths.UpdateStreaming(1);
-			MemoryVP::Patch<float>(0x450ACE, 350.0);
-
+	
 			ThePaths.DoPathSearch(0, FindPlayerCoors(0), CNodeAddress(), destPosn, resultNodes, &nodesCount, MAX_NODE_POINTS, &gpsDistance,
 				999999.0f, NULL, 999999.0f, true, CNodeAddress(), false, playa->m_pVehicle->m_dwVehicleSubClass == VEHICLE_BOAT);
 
@@ -172,7 +173,7 @@ namespace My_GPS
 
 				gpsDistance += DistanceBetweenPoints(FindPlayerCoors(0), ThePaths.GetPathNode(resultNodes[0])->GetNodeCoors());
 				gpsShown = true;
-			}
+			}		
 		}
 	}
 

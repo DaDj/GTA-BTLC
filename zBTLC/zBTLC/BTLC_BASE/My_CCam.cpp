@@ -24,9 +24,9 @@ namespace My_CCam
 		/*if (Switch_side())
 			offset.x = -0.0f;
 		else*/
-		offset.x = 0.20f;
+		offset.x = 0.10f;
 		offset.y = 0.1f;
-		offset.z = -0.10f;
+		offset.z = -0.00f;
 		plugin::CallMethod<0x522D40, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5, arg6);
 	}
 
@@ -37,20 +37,23 @@ namespace My_CCam
 		CPed *Player = FindPlayerPed();
 
 
-		if (TheCamera.m_fPedZoomBase < -0.5)
+	/*	if (TheCamera.m_fPedZoomBase < -0.5)
 			offset.y = 1.0;
 		if (TheCamera.m_fPedZoomBase > 3.0)
 			offset.y = -0.5;
 		else if (TheCamera.m_fPedZoomBase > 1.0)
-			offset.y = 0.0;
+			offset.y = 0.0;*/
+
+		offset.y = 0.0;
 
 
 		if (Switch_side())
-			offset.x = -0.44f;
+			offset.x = -0.24f;
 		else
 			offset.x = 0.34f;
-		//offset.x = 0.44f;
 		offset.z = -0.00f;
+
+
 		plugin::CallMethod<0x521500, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5);
 	//	plugin::CallMethod<0x511B50, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5, HeatSeekingflag);
 	}
@@ -80,20 +83,21 @@ namespace My_CCam
 
 				
 			
-					if (TheCamera.m_fPedZoomBase < -0.5)
+				/*	if (TheCamera.m_fPedZoomBase < -0.5)
 						offset.y = 1.0;
 					if (TheCamera.m_fPedZoomBase > 3.0)
 						offset.y = -0.5;
-					else if (TheCamera.m_fPedZoomBase > 1.0)
+					else if (TheCamera.m_fPedZoomBase > 1.0)*/
 						offset.y = 0.0;
 						
-			
+				
 					if (Switch_side())
-						offset.x = -0.44f;
+						offset.x = -0.24f;
 					else
 						offset.x = 0.34f;
-					//offset.x = 0.44f;
 					offset.z = -0.00f;
+
+
 					plugin::CallMethod<0x521500, CCam *, CVector const&>(cam, Player->TransformFromObjectSpace(offset), arg3, arg4, arg5);
 					break;
 				default:
@@ -112,10 +116,10 @@ namespace My_CCam
 	MemoryVP::InjectHook(0x527A09, Process_FollowPed, PATCH_CALL);
 	MemoryVP::InjectHook(0x527A2D, Process_Rocket, PATCH_CALL);
 
-	float AIMWEAPON_RIFLE1_ZOOM = 70.0f;
-	float AIMWEAPON_RIFLE2_ZOOM = 70.0f;
-	float AIMWEAPON_DEFAULT_ZOOM = 70.0f;
-	float AIMWEAPON_DRIVE_CLOSE_ENOUGH = 0.14453f;
+	float AIMWEAPON_RIFLE1_ZOOM = 45.0f;
+	float AIMWEAPON_RIFLE2_ZOOM = 45.0f;
+	float AIMWEAPON_DEFAULT_ZOOM = 45.0f;
+	float AIMWEAPON_DRIVE_CLOSE_ENOUGH = 0.04453f;
 	float AIMWEAPON_DRIVE_SENS_MULT = 0.02f;
 	float AIMWEAPON_FREETARGET_SENS = 0.05f;
 	float AIMWEAPON_STICK_SENS = 0.007f;
@@ -126,6 +130,23 @@ namespace My_CCam
 	MemoryVP::Patch<float>(0x8CC4AC, AIMWEAPON_DRIVE_SENS_MULT);
 	MemoryVP::Patch<float>(0x8CC4A8, AIMWEAPON_FREETARGET_SENS);
 	MemoryVP::Patch<float>(0x8CC4A0, AIMWEAPON_STICK_SENS);
+
+	struct tAimingCamData {
+		float m_fMaxDist, m_fSomeAdditionalDist, _rel_to_vert_angle_mp, _someVertAngle, m_fZShift,  m_fVertAngleUpLimit, m_fVertAngleDownLimit;
+	};
+	
+	tAimingCamData (&camdata)[4] = *(tAimingCamData(*)[4])0x8CC4C0;  //{ 1.3, 1.6, 1.0 -0.12, 0.0, 0.78539819, 1.5533431 };
+
+	int index = 0;
+	camdata[index].m_fMaxDist = 0.5;
+	camdata[index].m_fSomeAdditionalDist = 0.8;
+	camdata[index]._rel_to_vert_angle_mp = 1.0;
+	camdata[index]._someVertAngle = -0.10;
+	camdata[index].m_fZShift = 0.0;
+	camdata[index].m_fVertAngleUpLimit = 0.78539819;
+	camdata[index].m_fVertAngleDownLimit = 0.8533431;
+
+
 
 	}
 

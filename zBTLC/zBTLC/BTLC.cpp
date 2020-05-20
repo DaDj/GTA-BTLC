@@ -95,7 +95,7 @@ void Function_starter()
 	My_PlayerWallhitreactions::init();	//Wallhitanimations for player
 	My_GPS::init();						//Gps for cars like in IV
 	My_CCam::INIT();					// IV Styled AIM CAM
-	
+
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
 	CTrafficlights::Set_Trafficlight_models();
@@ -108,10 +108,8 @@ void Function_starter()
 	CPed::My_Init();		//Armed Animations for Peds
 	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
 	CVehicle::MyInit();		//Support for IVF Lights
-
-		
+	
 	MemoryVP::Nop(0x53C1C6, 5); //Disable Roadblock as long as I don't have any.
-
 
 	//Test new Pickup
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);

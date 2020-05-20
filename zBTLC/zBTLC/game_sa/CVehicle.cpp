@@ -1250,7 +1250,7 @@ void CVehicle::DoVehicleLights(CMatrix& matrix, unsigned int flags)
 
 	
 	// Check Indicators States
-	if ((m_dwVehicleSubClass == VEHICLE_AUTOMOBILE | m_dwVehicleSubClass == VEHICLE_BIKE) &&
+	if ((m_dwVehicleSubClass == VEHICLE_AUTOMOBILE || m_dwVehicleSubClass == VEHICLE_BIKE) &&
 		(GetVehicleAppearance() == VEHICLE_APPEARANCE_AUTOMOBILE || GetVehicleAppearance() == VEHICLE_APPEARANCE_BIKE) &&
 		m_nFlags.bEngineOn && m_fHealth > 0 && !m_nFlags.bIsDrowning && !m_pAttachedTo)
 	{
@@ -1269,12 +1269,12 @@ void CVehicle::DoVehicleLights(CMatrix& matrix, unsigned int flags)
 		
 		if (this->m_pDriver && m_pDriver == FindPlayerPed())
 		{
-			if (KeyJustPressed('Z')  )// Z
-				LightStatus.bIndicatorEmergency = !LightStatus.bIndicatorEmergency;
-			StatusIndicatorLeft = LightStatus.bIndicatorEmergency;
-			StatusIndicatorRight = LightStatus.bIndicatorEmergency;
+			//if (KeyJustPressed('Z')  )// Z
+			//	LightStatus.bIndicatorEmergency = !LightStatus.bIndicatorEmergency;
+			//StatusIndicatorLeft = LightStatus.bIndicatorEmergency;
+			//StatusIndicatorRight = LightStatus.bIndicatorEmergency;
 		}
-		else
+		else if(this->m_pDriver)
 		{
 			CVector2D prevPoint = GetCarPathLinkPosition(m_autoPilot.m_wPreviousPathNodeInfo);
 			CVector2D currPoint = GetCarPathLinkPosition(m_autoPilot.m_wCurrentPathNodeInfo);
@@ -1371,9 +1371,9 @@ void CVehicle::MyInit()
 
 
 CVector2D CVehicle::GetCarPathLinkPosition(CCarPathLinkAddress &address) {
-	if (address.m_wAreaId != -1 && address.m_wCarPathLinkId != -1 && ThePaths.m_pPathNodes[address.m_wAreaId])
+	if (address.m_wAreaId != -1 && address.m_wCarPathLinkId != -1 && ThePaths.m_pNaviNodes[address.m_wAreaId])
 	{
-		return CVector2D(static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.x) / 8.0f,
+              		return CVector2D(static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.x) / 8.0f,
 			static_cast<float>(ThePaths.m_pNaviNodes[address.m_wAreaId][address.m_wCarPathLinkId].m_posn.y) / 8.0f);
 	}
 	return CVector2D(0.0f, 0.0f);
