@@ -5,7 +5,7 @@
 #include "../../game_sa/RenderWare.h"
 #include <iostream>
 
-void changeresu();
+int changeresu();
 
 char** __cdecl FIND_VIDEOMODES();
 

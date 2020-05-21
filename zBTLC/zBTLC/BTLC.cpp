@@ -126,7 +126,7 @@ void Function_starter()
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);	
-
+	MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
 }
 
 
@@ -252,8 +252,11 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{	
-			CDxHandler::WindowMode_Hook();
-			std::cout << "windowmode" << std::endl;
+	
+			MemoryVP::InjectHook(0x748995, &changeresu, PATCH_CALL);
+			//MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
+			//CDxHandler::WindowMode_Hook();
+			//std::cout << "windowmode" << std::endl;
 			//return;
 		}
 		////DEV enables the debug_consoles and outputs

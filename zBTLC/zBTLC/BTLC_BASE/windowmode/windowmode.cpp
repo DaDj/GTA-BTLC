@@ -1,6 +1,7 @@
 
 #include "windowmode.h"
 #include "../../Patch/MemoryMgr.h"
+
 #define DEBUG_WND
 #define HIDWORD(_qw)    ((DWORD)(((_qw) >> 32) & 0xffffffff))
 static int* GcurSelVM = (int*)0x8D6220;
@@ -19,31 +20,50 @@ HWND INITINSTANCE(HINSTANCE hinstance)
 	};
 
 	AdjustWindowRect(&rect, 0x10000000, 0);
-	return CreateWindowExA(
+
+	HWND Temp = CreateWindowExA(
 		0,
 		*Appname,
-		RsGlobal.appName ,
+		RsGlobal.appName,
 		0x10000000,
-		0,
+		-900,
 		0,
 		rect.right - rect.left,
-		rect.bottom- rect.top,
+		rect.bottom - rect.top,
 		0,
 		0,
 		hinstance,
 		0);
+	return Temp;
+
+
 }
 
-void changeresu()
+int changeresu()
 {
+	
+	
 	std::cout << "Enable window mode" << std::endl;
-	//*GcurSelVM = 58;
-	//CVideomodemanager::SetCurrentVideomode(*GcurSelVM);
+	*GcurSelVM = 45;
+	CVideomodemanager::SetCurrentVideomode(*GcurSelVM);
 	*GcurSelVM = 0;
 	CVideomodemanager::SetCurrentVideomode(*GcurSelVM);
 	FrontEndMenuManager.m_dwAppliedResolution = *GcurSelVM;
 	FrontEndMenuManager.m_dwResolution = *GcurSelVM;
+	
+	RECT rect =
+	{
+		0,
+		0,
+		3200,
+		1800
+	};
+	SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW);
+	SetWindowPos(RsGlobal.ps->window, HWND_NOTOPMOST, -rect.right, 0,
+		(rect.right - rect.left),
+		(rect.bottom - rect.top), 0);
 
+	return ((int(__cdecl*) ())0x538860)();
 }
 
 char** __cdecl FIND_VIDEOMODES()
@@ -54,13 +74,13 @@ char** __cdecl FIND_VIDEOMODES()
 	int* currentsubsys = (int*)0x8D6248;
 	int* unknown = (int*)0xC8CF80;
 
-	if (GetAsyncKeyState(VK_TAB))
-	{
-		
-		changeresu();
-		SetFocus(RsGlobal.ps->window);
-		SetForegroundWindow(RsGlobal.ps->window);
-	}
+	//if (GetAsyncKeyState(VK_TAB))
+	//{
+	//	
+	//	changeresu();
+	//	SetFocus(RsGlobal.ps->window);																					
+	//	SetForegroundWindow(RsGlobal.ps->window);
+	//}
 		
 
 	if (Subsystems)
@@ -105,9 +125,9 @@ char** __cdecl FIND_VIDEOMODES()
 			CVideomodemanager::GetVideoModeInfo(&modeinfo, FrontEndMenuManager.m_dwResolution);
 			char* v4 = (char*)calloc(100, 1);
 			Subsystems[v3] = v4;
-			//sprintf(v4, " _____%lu X %lu", modeinfo.width, modeinfo.height, modeinfo.depth);
-			//sprintf(v4, " windowed");
-			//std::cout << v3 << " " << modeinfo.width << " " << modeinfo.height << " " << modeinfo.depth << " " << modeinfo.flags << " " << std::endl;
+		/*	sprintf(v4, " _____%lu X %lu", modeinfo.width, modeinfo.height, modeinfo.depth);
+			sprintf(v4, " windowed");
+			std::cout << v3 << " " << modeinfo.width << " " << modeinfo.height << " " << modeinfo.depth << " " << modeinfo.flags << " " << std::endl;*/
 		}
 	}
 	return Subsystems;
@@ -197,7 +217,7 @@ int __cdecl psSelectDevice()
 		if (!DialogBoxParamA((HINSTANCE)v2, (LPCSTR)0x68, v3, (DLGPROC)CVideomodemanager::DialogFunc, 0) || !CVideomodemanager::SetSubSystem(*SubsystemIndex))
 			return 0;
 	}
-	
+
 	CVideomodemanager::GetVideoModeInfo(&modeinfo, *GcurSelVM);
 	FrontEndMenuManager.m_dwSelectedMenuItem = 0;
 	if (!CVideomodemanager::SetVideomode(*GcurSelVM))
@@ -214,6 +234,8 @@ int __cdecl psSelectDevice()
 			RsGlobal.ps->fullscreen = 1;
 	}
 	CVideomodemanager::setMultisamplevels(FrontEndMenuManager.m_dwAppliedAntiAliasingLevel);
+
+	//changeresu();
 	return 1;
 }
 

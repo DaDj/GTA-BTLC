@@ -53,7 +53,7 @@ namespace BUGFIX
 		MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
 
 		//DISABLE TASK::ROADCROSSLOOKAROUN
-		//(HOTFIX FOR PATHS)
+		//(HOTFIX FOR PATHS) //will be disabled bug is found in path generation
 		MemoryVP::Nop(0x671CF0, 5);
 		MemoryVP::Nop(0x671CF0, 5);
 		MemoryVP::Patch<BYTE>(0x67448F, 0xEB);
@@ -98,7 +98,12 @@ namespace BUGFIX
 		////PEDS stay in car at Death  --BUGGY (Autopilot doesnt recognize dead driver)
 		//MemoryVP::Patch<int>(0x5E832C + 1, 0x21080);
 
-	
+		//// Disable whell rotation after leaving vehicle
+		MemoryVP::Nop(0x6B5579, 6);
+		MemoryVP::Nop(0x6B568A, 6);
+
+		////wheel trun speed
+		MemoryVP::Patch<float>(0x871058, 0.1f);
 	}
 
 

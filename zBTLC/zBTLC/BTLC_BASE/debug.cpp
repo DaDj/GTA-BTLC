@@ -120,7 +120,7 @@ namespace debug
 			GetWindowRect(hDesktop, &rDesktopRect);
 			// Update Position
 			//SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
-			SetWindowPos(hConsole, nullptr, rDesktopRect.left - 1200, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
+			SetWindowPos(hConsole, nullptr, rDesktopRect.left - rDesktopRect.right, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
 		}
 	}
 
@@ -148,10 +148,10 @@ namespace debug
 	{
 		char string[40];
 		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
-		//sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
+		sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
 		//sprintf(string, "FPS : %d", (int)TheCamera.m_PlayerWeaponMode.m_wMode);
 		//sprintf(string, "FPS : %d", (int)TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode);
-		sprintf(string, "FPS : %f", (float)TheCamera.m_fPedZoomBase);
+		//sprintf(string, "Radrmode : %f", (float)FrontEndMenuManager.m_dwRadarMode);
 
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetAlignment(ALIGN_LEFT);
