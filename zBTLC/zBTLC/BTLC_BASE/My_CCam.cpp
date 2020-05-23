@@ -138,13 +138,13 @@ namespace My_CCam
 	tAimingCamData (&camdata)[4] = *(tAimingCamData(*)[4])0x8CC4C0;  //{ 1.3, 1.6, 1.0 -0.12, 0.0, 0.78539819, 1.5533431 };
 
 	int index = 0;
-	camdata[index].m_fMaxDist = 0.5;
-	camdata[index].m_fSomeAdditionalDist = 0.8;
-	camdata[index]._rel_to_vert_angle_mp = 1.0;
-	camdata[index]._someVertAngle = -0.10;
-	camdata[index].m_fZShift = 0.0;
-	camdata[index].m_fVertAngleUpLimit = 0.78539819;
-	camdata[index].m_fVertAngleDownLimit = 0.8533431;
+	camdata[index].m_fMaxDist = 0.5f;
+	camdata[index].m_fSomeAdditionalDist = 0.8f;
+	camdata[index]._rel_to_vert_angle_mp = 1.0f;
+	camdata[index]._someVertAngle = -0.10f;
+	camdata[index].m_fZShift = 0.0f;
+	camdata[index].m_fVertAngleUpLimit = 0.78539819f;
+	camdata[index].m_fVertAngleDownLimit = 0.8533431f;
 
 
 

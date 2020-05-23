@@ -24,4 +24,4 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CCopPed, 0x7C4);
+//VALIDATE_SIZE(CCopPed, 0x7C4);

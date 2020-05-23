@@ -17,7 +17,7 @@
 #include "ePedState.h"
 #include "CAnimBlendAssociation.h"
 #include "CModelInfo.h"
-
+//#include "CPlayerPed.h"
 
 //enum ePedStats {
 //
@@ -389,6 +389,8 @@ static	void My_Init();
 	void MakeTyresMuddySectorList(CPtrList& ptrList);
 	void DeadPedMakesTyresBloody();
 	void My_ProcessAnimGroups();
+
+	void ReapplyMoveAnims();
 
     static void* operator new(unsigned int size);
     static void operator delete(void* data);

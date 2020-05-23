@@ -59,7 +59,7 @@ void CEntity::MyPreRender_Shadow(CEntity *Entity)
 		}*/
 	}
 
-	
+
 }
  
 void CEntity::Add(CRect &rect)

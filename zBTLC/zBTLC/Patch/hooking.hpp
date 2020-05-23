@@ -315,7 +315,7 @@ namespace injector
 
                 // Functor for the original call
                 func_type original = [&manager](Args... args) -> Ret {
-                   return manager.original(args...);
+                 return manager.original(args...);
                 };
 
                 if(manager.assoc.size() == 1)

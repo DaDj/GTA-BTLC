@@ -29,6 +29,13 @@ namespace BUGFIX
 
 	void various()
 	{
+		////Sniper fucntions for cuntgun fun.
+		//MemoryVP::Patch<BYTE>(0x685B7E + 2, 33);
+		//// jumptable offset  
+		//MemoryVP::Patch<BYTE>(0x742A30 + 33 - 16, 3);
+
+
+
 		//Enables running on metal.
 		MemoryVP::Patch(0x55E870, 0xC2C03366);
 		MemoryVP::Patch(0x55E874, 0x0004);
@@ -53,7 +60,7 @@ namespace BUGFIX
 		MemoryVP::Patch<BYTE>(0x688B36, 0xEB);
 
 		//DISABLE TASK::ROADCROSSLOOKAROUN
-		//(HOTFIX FOR PATHS) //will be disabled bug is found in path generation
+		//(HOTFIX FOR PATHS) //will be disabled, bug is found in path generation
 		MemoryVP::Nop(0x671CF0, 5);
 		MemoryVP::Nop(0x671CF0, 5);
 		MemoryVP::Patch<BYTE>(0x67448F, 0xEB);

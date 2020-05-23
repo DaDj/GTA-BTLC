@@ -287,8 +287,12 @@ public:
 	int field_D70;
 	int field_D74;
 
+	static float& m_f3rdPersonCHairMultY;
+	static float& m_f3rdPersonCHairMultX;
 	static float& m_fMouseAccelVertical;
 	static float& m_fMouseAccelHorzntl;
+
+
 	char GetFading();
 	int GetFadeStage();
 };

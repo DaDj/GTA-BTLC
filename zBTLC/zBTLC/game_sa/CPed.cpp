@@ -846,13 +846,17 @@ void CPed::My_ProcessAnimGroups()
 			)
 		{
 			animgrp = 60;
-			std::cout <<  " PED --> ARMED ANIM " << std::endl; 
+			//std::cout <<  " PED --> ARMED ANIM " << std::endl; 
 		}
 		
 
 		//When Ped has one of the the weapons, the animgrp won't be 0
 		if (!animgrp == 0)
+		{
 			Ped->m_dwAnimGroup = animgrp;
+			Ped->ReapplyMoveAnims();
+		
+		}
 		else
 		{
 			//If he has none of the above weapons, revert back to Ped standard animgroup
@@ -880,4 +884,10 @@ void CPed::My_ProcessAnimGroups()
 
 	//Original Animations
 	Ped->UpdatePosition();
+}
+
+/// Faked reapply Move Anims fucntion. Is for PlayerPEd in reality
+void CPed::ReapplyMoveAnims()
+{
+	plugin::CallMethod<0x609650, CPed *>(this);
 }

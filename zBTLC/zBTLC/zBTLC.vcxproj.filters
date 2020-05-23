@@ -1486,6 +1486,9 @@
     <ClCompile Include="game_sa\CAEWeatherAudioEntity.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CTaskUtilityLineUpPedWithCar.cpp">
+      <Filter>game_sa\CTask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3258,6 +3261,9 @@
     </ClInclude>
     <ClInclude Include="game_sa\CAEWeatherAudioEntity.h">
       <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CTaskUtilityLineUpPedWithCar.h">
+      <Filter>game_sa\CTask</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

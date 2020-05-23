@@ -2,12 +2,26 @@
 
 #include "plbase/PluginBase_SA.h"
 #include "CTaskSimple.h"
+#include "CAnimBlendAssociation.h"
+#include "CEntity.h"
 
-class CTaskSimpleThrowProjectile : public CTaskSimple {
+class  CTaskSimpleThrowProjectile : public CTaskSimple {
 protected:
-    CTaskSimpleThrowProjectile(plugin::dummy_func_t a) : CTaskSimple(a) {}
+	CTaskSimpleThrowProjectile(plugin::dummy_func_t a) : CTaskSimple(a) {}
 public:
-    
+	bool m_bIsAborting;
+	bool m_bFinished;
+	bool m_bStarted;
+private:
+	char pad;
+public:
+	CAnimBlendAssociation *m_pAnim;
+	CEntity *m_pTarget;
+	CVector m_vecPosition;
+	unsigned int m_nStartTime;
+
+	CTaskSimpleThrowProjectile(CEntity* pTarget, CVector Posn);
 };
+
 
 //VALIDATE_SIZE(CTaskSimpleThrowProjectile, 0x);
