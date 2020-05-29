@@ -17,6 +17,7 @@
 #include "../game_sa/CTxdStore.h"
 #include "../game_sa/CClothesBuilder.h"
 #include "../game_sa/CCamera.h"
+#include "../game_sa/FxManager_c.h"
 
 namespace debug
 {

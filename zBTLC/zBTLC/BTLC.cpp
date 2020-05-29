@@ -34,6 +34,8 @@ float VERSION = 0.5f;
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"
 #include "BTLC_BASE\My_CCam.h"
+#include "BTLC_BASE/My_FxTool.h"
+#include "BTLC_BASE/My_SkinSelector.h"
 
 
 #include "game_sa\CObject.h"
@@ -49,11 +51,13 @@ float VERSION = 0.5f;
 #include "game_sa/CVehicleModelInfo.h"
 #include "game_sa/CCarFxRender.h"
 #include "game_sa/CVehicle.h"
-	
+
 void btlc_init(); //BTLC INIT
 void check_gameversion();
 void ParseCommandlineArgument(int thing, char* pArg);
 void Function_starter();
+
+#define ModdingTools
 
 
 
@@ -67,10 +71,6 @@ void Main()
 	std::cout << "Version: " << VERSION << " >DEBUG" << std::endl;
 	std::cout << "COMPILED: " << __TIMESTAMP__ << std::endl << std::endl;
 #endif // DEBUG
-
-	//Windowmode INIT
-	//CDxHandler::btogglereq_btlc = true;
-
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
@@ -91,10 +91,18 @@ void Function_starter()
 	limits::Init();
 	visuals::init();		//VISUAL CHANGES init
 
+
 	My_PlayerWeaponReload::init();		//Add Reload with "R" functions.
 	My_PlayerWallhitreactions::init();	//Wallhitanimations for player
 	My_GPS::init();						//Gps for cars like in IV
 	My_CCam::INIT();					// IV Styled AIM CAM
+
+#ifdef ModdingTools
+	//My_FxTool::init();		//FX Tool.
+	My_SkinSelector::Init();
+#endif // ModdingTools
+
+
 
 	//Trafficlight changes
 	CTrafficlights::Set_polygon_size(13);
@@ -108,13 +116,13 @@ void Function_starter()
 	CPed::My_Init();		//Armed Animations for Peds
 	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
 	CVehicle::MyInit();		//Support for IVF Lights
-	
+
 	MemoryVP::Nop(0x53C1C6, 5); //Disable Roadblock as long as I don't have any.
 
 	//Test new Pickup
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
 
-	 //static Crosshair Hook
+	//static Crosshair Hook
 	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
 
 	//New Masspoints for dynamic Objects
@@ -125,7 +133,7 @@ void Function_starter()
 	MemoryVP::InjectHook(0x74629C, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);	
+	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
 }
 
@@ -142,13 +150,13 @@ void btlc_init()
 	static  char  settingsfile[13] = "gta_btlc.set";//new settings file
 	MemoryVP::Patch<void*>(0x57C672, &settingsfile);
 	MemoryVP::Patch<void*>(0x57C902, &settingsfile);
-	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);	
-	
+	MemoryVP::Patch<void*>(0x7489A0, &settingsfile);
+
 	//MemoryVP::Patch<BYTE>(0x5A3353, 0xFF);
 	//MemoryVP::Nop(0x5A332A, 2);
 	//MemoryVP::Nop(0x5A3355, 2);
 	MemoryVP::Patch<int>(0x5A3327, 5000);
-	MemoryVP::Patch<int>(0x5A335D + 1,8000);
+	MemoryVP::Patch<int>(0x5A335D + 1, 8000);
 	//MemoryVP::Patch<int>(0x5A3EB2  + 1, 2000);
 
 }
@@ -166,19 +174,19 @@ void check_gameversion()
 	IMAGE_NT_HEADERS*  nt = (IMAGE_NT_HEADERS*)(base + dos->e_lfanew);
 	int entryadress = base + nt->OptionalHeader.AddressOfEntryPoint;
 	bool fail = 0;
-	char* failtext  = "TestWindow";
+	char* failtext = "TestWindow";
 	char* test = (char*)0x407610;
 
 	switch (entryadress)
 	{
 	case 0x824570:  // GTA SA 1.0 US Compact //&and hoodlum?
-		if (*test ==  (char)0xe9) 
+		if (*test == (char)0xe9)
 		{
 			failtext = "GTA SA 1.0 US Hoodlum not supported. \nPlease use GTA SA 1.0 US Compact";
 			fail = 1;
 			break;
 		}
-		std::cout << "EXE VERSION: COMPACT detected. -> start game" <<std::endl ;
+		std::cout << "EXE VERSION: COMPACT detected. -> start game" << std::endl;
 		break;
 
 	case 0x8245BC:  // GTA SA 1.0 EU Cracked (??????)
@@ -251,8 +259,8 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		}
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
-		{	
-	
+		{
+
 			MemoryVP::InjectHook(0x748995, &changeresu, PATCH_CALL);
 			//MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
 			//CDxHandler::WindowMode_Hook();

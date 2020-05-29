@@ -1489,6 +1489,15 @@
     <ClCompile Include="game_sa\CTaskUtilityLineUpPedWithCar.cpp">
       <Filter>game_sa\CTask</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\FxSystemBP_c.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_FxTool.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_SkinSelector.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3264,6 +3273,15 @@
     </ClInclude>
     <ClInclude Include="game_sa\CTaskUtilityLineUpPedWithCar.h">
       <Filter>game_sa\CTask</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\FxSystemBP_c.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_FxTool.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_SkinSelector.h">
+      <Filter>BTLC_BASE\features</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

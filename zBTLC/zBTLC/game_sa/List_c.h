@@ -50,4 +50,33 @@ public:
 	ListItem_c * GetItemOffset(bool bFromHead, int iOffset);
 };
 
+
+template <
+	typename ItemType
+>
+class TList_c : public List_c
+{
+public:
+	ItemType * GetHead(void) {
+		return static_cast<ItemType *>(List_c::GetHead());
+	}
+
+	ItemType * RemoveHead(void) {
+		return static_cast<ItemType *>(List_c::RemoveHead());
+	}
+
+	ItemType * GetNext(ItemType * pItem) {
+		return static_cast<ItemType *>(List_c::GetNext(pItem));
+	}
+
+	ItemType * GetPrev(ItemType * pItem) {
+		return static_cast<ItemType *>(List_c::GetPrev(pItem));
+	}
+
+	ItemType * GetItemOffset(bool bFromHead, int iOffset) {
+		return static_cast<ItemType *>(List_c::GetItemOffset(bFromHead, iOffset));
+	}
+};
+
+
 VALIDATE_SIZE(List_c, 0xC);

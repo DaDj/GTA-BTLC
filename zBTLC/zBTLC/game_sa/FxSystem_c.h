@@ -7,6 +7,7 @@
 #include "FxPrtMult_c.h"
 #include "FxSphere_c.h"
 #include "FxBox_c.h"
+#include "FxSystemBP_c.h"
 
 enum eFxSystemKillStatus {
     FX_NOT_KILLED = 0,
@@ -19,7 +20,7 @@ enum eFxSystemPlayStatus {
     FX_STOPPED = 1
 };
 
-class FxSystemBP_c;
+
 class Particle_c;
 
 class FxSystem_c : public ListItem_c {
