@@ -74,6 +74,8 @@ namespace visuals
 		//ground distance
 		//MemoryVP::Patch<float>(0x6FD368 + 4, 6.5);
 
+		//Not Health triangle
+		MemoryVP::Patch<BYTE>(0x53E1EC, 0xEB);
 			
 		//Traffic/Lampost ground distance
 		//MemoryVP::Patch<float>(0x70C89B +1, 5.0);

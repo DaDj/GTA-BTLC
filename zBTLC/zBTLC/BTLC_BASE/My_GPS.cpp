@@ -191,8 +191,8 @@ namespace My_GPS
 			CFont::SetDropColor(CRGBA(0, 0, 0, 250));
 			CVector2D radarBottom;
 			CVector2D position;
-			position.x = -0.7f;
-			position.y = -0.5f;
+			position.x = -1.7f;
+			position.y = -1.5f;
 			//CRadar::LimitRadarPoint(position);
 			CRadar::TransformRadarPointToScreenSpace(radarBottom, position);
 			char text[16];

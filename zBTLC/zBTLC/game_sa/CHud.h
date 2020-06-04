@@ -71,10 +71,10 @@ public:
 	static bool &bDrawingVitalStats;
 	static CSprite2d *Sprites; // static CSprite2d Sprites[6]
 
-	static CSprite2d NewRadarSprites[2]; // static CSprite2d Sprites[6]
+	static CSprite2d NewRadarSprites[6]; // static CSprite2d Sprites[6]
 
 	static char *CHud::Spritenames[6];
-	static	char *CHud::NewSpritesNames[5];
+	static	char *CHud::NewSpritesNames[6];
 	static float Health_Radius;
 	static float Health_PosX;
 	static float Health_PosY;

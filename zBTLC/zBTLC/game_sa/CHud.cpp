@@ -76,7 +76,7 @@ int &CHud::m_ZoneNameTimer = *(int *)0xBAA938;
 short &CHud::m_ItemToFlash = *(short *)0xBAB1DC;
 bool &CHud::bDrawingVitalStats = *(bool *)0xBAB1DE;
 CSprite2d *CHud::Sprites = (CSprite2d *)0xBAB1FC;
-CSprite2d CHud::NewRadarSprites[2]; // static CSprite2d Sprites[6]
+CSprite2d CHud::NewRadarSprites[6]; // static CSprite2d Sprites[6]
 
 float CHud::Health_Radius = 43.0f;
 float CHud::Health_innerRadius = 38.5f;
@@ -106,12 +106,13 @@ char *CHud::Spritenames[6] = {
    "SkipIcon",
 };
 
-char *CHud::NewSpritesNames[5] = {
+char *CHud::NewSpritesNames[6] = {
   "radarringfront",
    "radarringback",
   "mp_higher",
   "mp_level",
   "mp_lower",
+  "hud_target",
 };
 
 
@@ -823,7 +824,7 @@ void CHud::Initialise() {
 	for (int i = 0; i < 6; i++)
 		Sprites[i].SetTexture(Spritenames[i]);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 6; i++)
 		NewRadarSprites[i].SetTexture(NewSpritesNames[i]);
 
 	CTxdStore::PopCurrentTxd();
@@ -838,7 +839,7 @@ void CHud::Shutdown() {
 	for (int i = 0; i < 6; ++i)
 		Sprites[i].Delete();
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 6; i++)
 		NewRadarSprites[i].Delete();
 }
 
@@ -879,7 +880,7 @@ void CHud::DrawCrosshairs()
 	eWeaponType CurrentWeapon = playerPed->m_aWeapons[playerPed->m_nActiveWeaponSlot].m_nType; // eax
 	CRGBA color; // eax
 	char bDrawCrosshair = 0;
-//	float _crosshairSizeMP;
+	//	float _crosshairSizeMP;
 	int bSimpleAim = 0;
 
 	if (mode1 == MODE_1STPERSON)
@@ -931,21 +932,105 @@ void CHud::DrawCrosshairs()
 			CRect Rect = CRect(widthfac - x_fac(0.5f), heightfac + y_fac(0.5f), widthfac + x_fac(0.5f), heightfac - y_fac(0.5f));
 			CSprite2d::DrawRect(Rect, CRGBA::CRGBA(230, 230, 230, 255));
 
-			//left top
-			Rect = CRect(widthfac - x_fac(10.0f), heightfac - y_fac(10.0f), widthfac, heightfac);
-			Sprites[1].Draw(Rect, CRGBA::CRGBA(255, 255, 255, 255));
-			//Right top
-			Rect = CRect(widthfac + x_fac(10.0f), heightfac - y_fac(10.0f), widthfac, heightfac);
-			Sprites[1].Draw(Rect, CRGBA::CRGBA(255, 255, 255, 255));
-			//Left bottom
-			Rect = CRect(widthfac - x_fac(10.0f), heightfac + y_fac(10.0f), widthfac, heightfac);
-			Sprites[1].Draw(Rect, CRGBA::CRGBA(255, 255, 255, 255));
-			//Right bottomm
-			Rect = CRect(widthfac + x_fac(10.0f), heightfac + y_fac(10.0f), widthfac, heightfac);
-			Sprites[1].Draw(Rect, CRGBA::CRGBA(255, 255, 255, 255));
+			CRGBA Color = CRGBA::CRGBA(255, 255, 255, 255);
+			float TargetSize = 10.0f * playerPed->GetWeaponRadiusOnScreen();
 
-			RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
-			RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)6);
+			float percentage_health = 0.0f;
+			if (playerPed->m_pPlayerTargettedPed)
+			{
+				if (playerPed->m_pPlayerTargettedPed->m_fHealth >= 0)
+				{
+					TargetSize = 15.0f;
+					float TargetSizeHealth = TargetSize * 0.8;
+					percentage_health = 1 - (playerPed->m_pPlayerTargettedPed->m_fHealth / playerPed->m_pPlayerTargettedPed->m_fMaxHealth) ;
+					RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)0);
+					RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+					RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+					RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
+					RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)rwFILTERLINEAR);
+					RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)rwSHADEMODEFLAT);
+					RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
+					RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
+					RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
+					RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)rwALPHATESTFUNCTIONALWAYS);
+
+					CVector2D CircleMaskVertices[8];
+					constexpr auto CircleSize = 16;
+					float x[CircleSize];
+					float y[CircleSize];
+					int Degree = 180;
+					int DegreeStep = 360 / CircleSize;
+					for (int i = 0; i < CircleSize; i++)
+					{
+						x[i] = x_fac(sin(Degree*3.141 / 180)  *(TargetSizeHealth *1.1)) + widthfac;
+						y[i] = y_fac(cos(Degree*3.141 / 180)  *(TargetSizeHealth *1.1)) + heightfac;
+						Degree -= DegreeStep;
+					}
+					CircleMaskVertices[0].x = widthfac;
+					CircleMaskVertices[0].y = heightfac;
+
+					for (int offset = 0; offset < (CircleSize*percentage_health - 1); offset = offset + 2)
+					{
+						for (int i = 0; i < 4; i++)
+						{
+							CircleMaskVertices[i + 1].x = x[i + offset];
+							CircleMaskVertices[i + 1].y = y[i + offset];
+							if (i + offset > (CircleSize -1))
+							{
+								CircleMaskVertices[i + 1].x = x[0];
+								CircleMaskVertices[i + 1].y = y[0];
+							}
+						}
+						CSprite2d::SetMaskVertices(4, CircleMaskVertices, CSprite2d::NearScreenZ + 0.000001);
+						RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, CSprite2d::maVertices, 4);
+					}
+					RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
+					RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0);
+					RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)0);
+					RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+					RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
+					RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+					RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)rwFILTERLINEAR);
+					RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)rwSHADEMODEFLAT);
+					RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)rwALPHATESTFUNCTIONGREATER);
+					RwRenderStateSet(rwRENDERSTATETEXTUREADDRESS, (void*)rwTEXTUREADDRESSCLAMP);
+					RwRenderStateSet(rwRENDERSTATETEXTUREPERSPECTIVE, (void*)0);
+
+					RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NewRadarSprites[5].m_pTexture->raster);
+			
+					int Halfwidth = x_fac(TargetSizeHealth)/2;
+					int HalfHeight = y_fac(TargetSizeHealth) / 2;
+					int posx = widthfac - Halfwidth;
+					int posy = heightfac - HalfHeight;
+
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 0, 0);
+					 posx = widthfac + Halfwidth;
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 1, 0);
+					 posy = heightfac + HalfHeight;
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 1, 1);
+					posx = widthfac - Halfwidth;
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 0, 1);
+					RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
+				}
+			}
+
+	
+
+			//left top
+			Rect = CRect(widthfac - x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);
+			Sprites[1].Draw(Rect, Color);
+			//Right top
+			Rect = CRect(widthfac + x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);
+			Sprites[1].Draw(Rect, Color);
+			//Left bottom
+			Rect = CRect(widthfac - x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);
+			Sprites[1].Draw(Rect, Color);
+			//Right bottomm
+			Rect = CRect(widthfac + x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);
+			Sprites[1].Draw(Rect, Color);
+
+			RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+			RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
 			RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
 			return;
 		}
@@ -1001,7 +1086,7 @@ void CHud::DrawCrosshairs()
 		TheCamera.m_PlayerWeaponMode.m_fDuration = 0.0;,
 	}*/
 
-		if (mode1 == MODE_SNIPER || mode1 == MODE_1STPERSON || mode1 == MODE_CAMERA ) 
+		if (mode1 == MODE_SNIPER || mode1 == MODE_1STPERSON || mode1 == MODE_CAMERA)
 		{
 			RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
 			int weapModel = CWeaponInfo::GetWeaponInfo(CurrentWeapon, 1)->m_dwModelId1;

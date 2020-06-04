@@ -87,7 +87,6 @@ float CPlayerPed::GetWeaponRadiusOnScreen() {
 	long double v4; 
 	char weapskill; 
 	long double result;
-	long double v7;
 	float Size_Factor_A = 0.4f;
 	float Size_Factor_B = 15.0f; //for changing radius
 	float Size_min = 0.2f;
@@ -99,7 +98,11 @@ float CPlayerPed::GetWeaponRadiusOnScreen() {
 	weapon_type = Player->m_aWeapons[Player->m_nActiveWeaponSlot].m_nType;
 	weapskill = CPed::GetWeaponSkill(weapon_type);
 	Weapinfo = CWeaponInfo::GetWeaponInfo(weapon_type, weapskill);
-	v4 = Size_Factor_A / Weapinfo->m_fAccuracy;
+	if (accucary_dependant)
+		v4 = Size_Factor_A / Weapinfo->m_fAccuracy;
+	else
+		v4 = 0.2;
+
 
 	if (Weapinfo->m_fAccuracy)
 	{
@@ -107,12 +110,11 @@ float CPlayerPed::GetWeaponRadiusOnScreen() {
 		{
 			if (weapon_type == WEAPON_SHOTGUN || weapon_type == WEAPON_SAWNOFF || weapon_type == WEAPON_SPAS12)
 			{
-				result = v4;
+					result = v4;
 			}
 			else
 			{
-				v7 = min(Size_Factor_B / Weapinfo->m_fWeaponRange, Size_max);
-				result = (Size_Factor_A * Player->m_pPlayerData->m_fAttackButtonCounter + 1.0) * (v7 * v4);
+				result = (Size_Factor_A * Player->m_pPlayerData->m_fAttackButtonCounter + 1.0) * (min(Size_Factor_B / Weapinfo->m_fWeaponRange, Size_max) * v4);
 				if (Player->m_bIsDucking)
 					result *= Size_Factor_A;
 			}
@@ -120,11 +122,11 @@ float CPlayerPed::GetWeaponRadiusOnScreen() {
 		else
 		{
 			if (!accucary_dependant)
-			result = 0.35;
+			result = 0.2;
 			else
 			result =  v4;
 		}
-		result = max(Size_min, result);
+		result = max(Size_min, result)/Size_min;
 	}
 	else
 		result = 0.0;

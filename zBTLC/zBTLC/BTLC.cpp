@@ -75,58 +75,46 @@ void Main()
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
 
-	//check game version
-	check_gameversion();
-
-	//START BTLC STUFF
-	Function_starter();
+	
+	check_gameversion();	//check game version
+	Function_starter();		//START BTLC STUFF
 }
 
 void Function_starter()
 {
-	btlc_init();			//INIT OF BTLC
-	fastload::Init();		//Fast loader
-	BUGFIX::init();			//Fixes of some small GTA Bugs
-	weather::init();		//Changes the weather effects.
+	btlc_init();						//INIT OF BTLC
+	fastload::Init();					//Fast loader
+	BUGFIX::init();						//Fixes of some small GTA Bugs
+	weather::init();					//Changes the weather effects.
 	limits::Init();
-	visuals::init();		//VISUAL CHANGES init
-
+	visuals::init();					//VISUAL CHANGES init
 
 	My_PlayerWeaponReload::init();		//Add Reload with "R" functions.
 	My_PlayerWallhitreactions::init();	//Wallhitanimations for player
-	My_GPS::init();						//Gps for cars like in IV
-	My_CCam::INIT();					// IV Styled AIM CAM
+	My_GPS::init();						//GPS for cars like in IV
+	My_CCam::INIT();					//IV Styled AIM CAM
 
 #ifdef ModdingTools
 	//My_FxTool::init();		//FX Tool.
 	My_SkinSelector::Init();
 #endif // ModdingTools
 
+	CHud::My_Init();					//New HuD
+	CRadar::My_Init();					//New Radar
+	CStreaming::My_Init();				//New COP stream functions - ALL cops&copcars in all cities 
+	CAnimationStyleDescriptor::My_init(); //Armed running for Peds
+	CEntity::My_Init();					//static shadows for all new traffic lights and Lamps
+	CPed::My_Init();					//Armed Animations for Peds
+	CCarFxRender::MyInit();				//New Dirt on Cars and lights mechanics
+	CVehicle::MyInit();					//Support for IVF Lights
 
-
-	//Trafficlight changes
-	CTrafficlights::Set_polygon_size(13);
-	CTrafficlights::Set_Trafficlight_models();
-
-	CHud::My_Init();		//New HuD
-	CRadar::My_Init();		//New Radar
-	CStreaming::My_Init();	//New COP stream functions - ALL cops&copcars in all cities 
-	CAnimationStyleDescriptor::My_init(); //Armed running
-	CEntity::My_Init();		//static shadows for all new traffic lights and Lamps
-	CPed::My_Init();		//Armed Animations for Peds
-	CCarFxRender::MyInit(); //New Dirt on Cars mechanics
-	CVehicle::MyInit();		//Support for IVF Lights
+	CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
+	CTrafficlights::Set_Trafficlight_models();	//Trafficlight changes
 
 	MemoryVP::Nop(0x53C1C6, 5); //Disable Roadblock as long as I don't have any.
-
-	//Test new Pickup
-	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);
-
-	//static Crosshair Hook
-	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);
-
-	//New Masspoints for dynamic Objects
-	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);
+	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);				//Test new Pickup
+	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);	//static Crosshair Hook
+	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);				//New Masspoints for dynamic Objects
 
 	//set numMonitor to only give back one
 	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);
@@ -238,8 +226,6 @@ void ParseCommandlineArgument(int thing, char* pArg)
 {
 	Delayed_Patches();
 
-	LPSTR TEST = GetCommandLine();
-
 	//Close game if it isn't launched via launcher
 	//if (!strstr(TEST, "-launch"))
 	//{
@@ -247,7 +233,7 @@ void ParseCommandlineArgument(int thing, char* pArg)
 	//	exit(0);
 	//	return;
 	//}
-
+	LPSTR TEST = GetCommandLine();
 
 	if (pArg)
 	{

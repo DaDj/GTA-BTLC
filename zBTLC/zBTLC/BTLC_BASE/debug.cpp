@@ -58,7 +58,9 @@ namespace debug
 
 		plugin::Events::gameProcessEvent += []
 		{
-
+			//MemoryVP::Patch<int>(0xC7C70D, 1); //Liftcam
+			//MemoryVP::Patch<int>(0xC7C70C, 1);	//videocam
+		
 		};
 
 		plugin::Events::drawHudEvent += []
@@ -150,6 +152,7 @@ namespace debug
 		char string[40];
 		CFont::SetColor(CRGBA::CRGBA(200, 200, 200, 255));
 		sprintf(string, "FPS : %d", (int)CTimer::ms_gameFPS);
+		//sprintf(string, "FPS : %d", FindPlayerPed()->m_bSignalAfterKill );
 		//sprintf(string, "FPS : %d", (int)TheCamera.m_PlayerWeaponMode.m_wMode);
 		//sprintf(string, "FPS : %d", (int)TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode);
 		//sprintf(string, "Radrmode : %f", (float)FrontEndMenuManager.m_dwRadarMode);

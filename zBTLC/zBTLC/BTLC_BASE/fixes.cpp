@@ -105,7 +105,7 @@ namespace BUGFIX
 		////PEDS stay in car at Death  --BUGGY (Autopilot doesnt recognize dead driver)
 		//MemoryVP::Patch<int>(0x5E832C + 1, 0x21080);
 
-		//// Disable whell rotation after leaving vehicle
+		//// Disable wheel rotation after leaving vehicle
 		MemoryVP::Nop(0x6B5579, 6);
 		MemoryVP::Nop(0x6B568A, 6);
 
