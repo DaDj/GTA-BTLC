@@ -941,8 +941,8 @@ void CHud::DrawCrosshairs()
 				if (playerPed->m_pPlayerTargettedPed->m_fHealth >= 0)
 				{
 					TargetSize = 15.0f;
-					float TargetSizeHealth = TargetSize * 0.8;
-					percentage_health = 1 - (playerPed->m_pPlayerTargettedPed->m_fHealth / playerPed->m_pPlayerTargettedPed->m_fMaxHealth) ;
+					float TargetSizeHealth = TargetSize * 0.85;
+					percentage_health = 1 - (playerPed->m_pPlayerTargettedPed->m_fHealth / playerPed->m_pPlayerTargettedPed->m_fMaxHealth);
 					RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)0);
 					RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
 					RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
@@ -955,23 +955,23 @@ void CHud::DrawCrosshairs()
 					RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void*)rwALPHATESTFUNCTIONALWAYS);
 
 					CVector2D CircleMaskVertices[8];
-					constexpr auto CircleSize = 16;
+					constexpr auto CircleSize = 8;
 					float x[CircleSize];
 					float y[CircleSize];
 					int Degree = 180;
 					int DegreeStep = 360 / CircleSize;
 					for (int i = 0; i < CircleSize; i++)
 					{
-						x[i] = x_fac(sin(Degree*3.141 / 180)  *(TargetSizeHealth *1.1)) + widthfac;
-						y[i] = y_fac(cos(Degree*3.141 / 180)  *(TargetSizeHealth *1.1)) + heightfac;
+						x[i] = x_fac(sin(Degree*3.1415926/ 180)  *(TargetSizeHealth *1.1)) + widthfac;
+						y[i] = y_fac(cos(Degree*3.1415926/ 180)  *(TargetSizeHealth *1.1)) + heightfac;
 						Degree -= DegreeStep;
 					}
 					CircleMaskVertices[0].x = widthfac;
 					CircleMaskVertices[0].y = heightfac;
-
-					for (int offset = 0; offset < (CircleSize*percentage_health - 1); offset = offset + 2)
+					
+					for (int offset = 0; offset < floor(CircleSize*percentage_health); offset = offset + 1)
 					{
-						for (int i = 0; i < 4; i++)
+						for (int i = 0; i < 3; i++)
 						{
 							CircleMaskVertices[i + 1].x = x[i + offset];
 							CircleMaskVertices[i + 1].y = y[i + offset];
@@ -981,8 +981,8 @@ void CHud::DrawCrosshairs()
 								CircleMaskVertices[i + 1].y = y[0];
 							}
 						}
-						CSprite2d::SetMaskVertices(4, CircleMaskVertices, CSprite2d::NearScreenZ + 0.000001);
-						RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, CSprite2d::maVertices, 4);
+						CSprite2d::SetMaskVertices(3, CircleMaskVertices, CSprite2d::NearScreenZ + 0.000001);
+						RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, CSprite2d::maVertices, 3);
 					}
 					RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
 					RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0);
@@ -1003,18 +1003,28 @@ void CHud::DrawCrosshairs()
 					int posx = widthfac - Halfwidth;
 					int posy = heightfac - HalfHeight;
 
-					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 0, 0);
+					int R = 220;
+					int G = 255;
+					int B = 220;
+					if (playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskFighting() 
+						|| playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskUseGun() 
+						|| FindPlayerPed()->m_pPlayerTargettedPed->m_nPedType == PED_TYPE_COP)
+					{
+						R = 255;
+						G = 220;
+						B = 220;
+					}
+
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 0, 0);
 					 posx = widthfac + Halfwidth;
-					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 1, 0);
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 1, 0);
 					 posy = heightfac + HalfHeight;
-					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 1, 1);
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 1, 1);
 					posx = widthfac - Halfwidth;
-					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, 255, 220, 220, 180, 1.0f, 180, 0, 1);
+					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 0, 1);
 					RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
 				}
 			}
-
-	
 
 			//left top
 			Rect = CRect(widthfac - x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);

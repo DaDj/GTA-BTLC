@@ -146,7 +146,6 @@ void btlc_init()
 	MemoryVP::Patch<int>(0x5A3327, 5000);
 	MemoryVP::Patch<int>(0x5A335D + 1, 8000);
 	//MemoryVP::Patch<int>(0x5A3EB2  + 1, 2000);
-
 }
 
 void Delayed_Patches()
