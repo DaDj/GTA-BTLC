@@ -27,7 +27,6 @@ float VERSION = 0.5f;
 #include "BTLC_BASE\visuals.h"
 #include "BTLC_BASE\limits.h"
 #include "BTLC_BASE\windowmode\windowmode.h"
-#include "BTLC_BASE\windowmode\dxhandler.h"
 #include "BTLC_BASE\fast_load.h"
 #include "BTLC_BASE\CTrafficlights.h"
 #include "BTLC_BASE\My_PlayerWeaponReload.h"
@@ -36,7 +35,7 @@ float VERSION = 0.5f;
 #include "BTLC_BASE\My_CCam.h"
 #include "BTLC_BASE/My_FxTool.h"
 #include "BTLC_BASE/My_SkinSelector.h"
-
+#include "BTLC_BASE/IniReader.h"
 
 #include "game_sa\CObject.h"
 #include "game_sa\CPlayerPed.h"
@@ -56,13 +55,14 @@ void btlc_init(); //BTLC INIT
 void check_gameversion();
 void ParseCommandlineArgument(int thing, char* pArg);
 void Function_starter();
+void Load_BTLCSettings();
 
-#define ModdingTools
 
 
 
 void Main()
 {
+
 #ifdef _DEBUG
 	debug::init();
 	std::cout << std::endl;
@@ -74,14 +74,13 @@ void Main()
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
-
-	
 	check_gameversion();	//check game version
 	Function_starter();		//START BTLC STUFF
 }
 
 void Function_starter()
 {
+	Load_BTLCSettings();				//Load BTLC Settings
 	btlc_init();						//INIT OF BTLC
 	fastload::Init();					//Fast loader
 	BUGFIX::init();						//Fixes of some small GTA Bugs
@@ -122,7 +121,10 @@ void Function_starter()
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
-	MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
+	//MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
+	MemoryVP::InjectHook(0x619BA6, &psSelectDevice, PATCH_CALL);
+	MemoryVP::InjectHook(0x619D10, &psSelectDevice, PATCH_CALL);
+	
 }
 
 
@@ -148,9 +150,12 @@ void btlc_init()
 	//MemoryVP::Patch<int>(0x5A3EB2  + 1, 2000);
 }
 
+
+
 void Delayed_Patches()
 {
 	CVehicleModelInfo::MyInit();
+	debug::DebugMenuSetup();
 }
 
 void check_gameversion()
@@ -163,6 +168,7 @@ void check_gameversion()
 	bool fail = 0;
 	char* failtext = "TestWindow";
 	char* test = (char*)0x407610;
+
 
 	switch (entryadress)
 	{
@@ -232,6 +238,7 @@ void ParseCommandlineArgument(int thing, char* pArg)
 	//	exit(0);
 	//	return;
 	//}
+
 	LPSTR TEST = GetCommandLine();
 
 	if (pArg)
@@ -245,12 +252,8 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{
-
-			MemoryVP::InjectHook(0x748995, &changeresu, PATCH_CALL);
-			//MemoryVP::InjectHook(0x7487A8, &INITINSTANCE);
-			//CDxHandler::WindowMode_Hook();
-			//std::cout << "windowmode" << std::endl;
-			//return;
+			CVideomodemanager::SubsystemIndex = 1;
+			MemoryVP::InjectHook(0x748995, &SetupWindowStyle, PATCH_CALL);
 		}
 		////DEV enables the debug_consoles and outputs
 		//if (!_stricmp(pArg, "-DEV"))
@@ -258,5 +261,28 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//	debug::init();	//debug console
 		//	return;
 		//}
+	}
+}
+
+
+void Load_BTLCSettings()
+{
+	
+	CIniReader ini("BTLCSettings.ini");
+
+	if (ini.data.size() <= 0)
+	{
+		ini.WriteInteger("Display Settings", "Monitor", 0);
+		ini.WriteBoolean("Display Settings", "Windowed", 1);
+		ini.WriteInteger("Display Settings", "Windowed Width", 2560);
+		ini.WriteInteger("Display Settings", "Windowed Height", 1400);
+
+	}
+	else
+	{
+		CMenuManager::CustomOptions.isWndwmode = ini.ReadInteger("Display Settings", "Windowed", 1);
+		CMenuManager::CustomOptions.Monitor = ini.ReadInteger("Display Settings", "Monitor", 0);
+		CMenuManager::CustomOptions.Wndwmode_width = ini.ReadInteger("Display Settings", "Windowed Width", 2560);
+		CMenuManager::CustomOptions.Wndwmode_height =  ini.ReadInteger("Display Settings", "Windowed Height", 1400);
 	}
 }

@@ -184,7 +184,7 @@ enum eMenuTexture
 };
 
 
-#pragma pack(push, 4)
+
 struct CMenuPageButton
 {
     unsigned char m_nActionType;      // Unknown if signed or signed, but it does only '==' comparisions, so it's safe to use unsigned (moar numbers)
@@ -197,9 +197,7 @@ struct CMenuPageButton
     char m_nAlign;
     //char _pad2;
 };
-#pragma pack(pop)
 
-#pragma pack(push, 4)
 struct CMenuPage
 {
     char m_szTitleName[8];
@@ -207,14 +205,19 @@ struct CMenuPage
     char m_nStartingButton;
     CMenuPageButton m_aButtons[12];
 };
-#pragma pack(pop)
+
 
 VALIDATE_SIZE(CMenuPageButton, 0x12);
 VALIDATE_SIZE(CMenuPage, 0xE2);
 
+struct MyDisplayoptions
+{
+	int isWndwmode;
+	int Wndwmode_width;
+	int Wndwmode_height;
+	int Monitor;
+};
 
-
-#pragma pack(push, 1)
 class CMenuManager
 {
 public:
@@ -427,9 +430,13 @@ public:
 	void ProcessUserInput(char bDown, char bUp,char bEnter, char bExit, char wheel);
 
 
+	static  MyDisplayoptions CustomOptions;
 	static void MyInit();
+
 };
-#pragma pack(pop)
+
+
+
 
 
 extern CMenuManager &FrontEndMenuManager;

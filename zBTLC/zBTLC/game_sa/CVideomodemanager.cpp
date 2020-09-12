@@ -1,6 +1,9 @@
 #include "CVideomodemanager.h"
 
 
+
+int CVideomodemanager::SubsystemIndex = 0;
+
 CVideomodemanager::CVideomodemanager()
 {
 }

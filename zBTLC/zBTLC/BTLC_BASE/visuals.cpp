@@ -62,17 +62,21 @@ namespace visuals
 
 		// No Heat Haze 
 		MemoryVP::Patch<BYTE>(0x72C1B7, 0xEB);
+
 		// Render the static shadow at every fxquality
 		//MemoryVP::Patch<BYTE>(0x70BDAC, 0x84);
 
-		//no Motion BLur
-		MemoryVP::Patch<char>(0x704DBC + 1, 0xDB);//(DB)
-		MemoryVP::Patch<char>(0x704DBC, 0x30);//(XOR)
+		//no Motion Blur
+		//MemoryVP::Patch<char>(0x704DBC + 1, 0xDB);//(DB)
+		//MemoryVP::Patch<char>(0x704DBC, 0x30);//(XOR)
+
+		//Motion Blur Alpha
+		MemoryVP::Patch<int>(0x8D5104, 200);
 
 		//Corona shadow distance
 		MemoryVP::Patch<float>(0x6FD3A6, 95.0); 
 		//ground distance
-		//MemoryVP::Patch<float>(0x6FD368 + 4, 6.5);
+		//MemoryVP::Patch<float>(0x6FD368 + 4, 7.5);
 
 		//Not Health triangle
 		MemoryVP::Patch<BYTE>(0x53E1EC, 0xEB);
@@ -81,8 +85,8 @@ namespace visuals
 		//MemoryVP::Patch<float>(0x70C89B +1, 5.0);
 
 		//Traffic/Lampost shadow distance
-			MemoryVP::Patch<float>(0x70C89C, 80.0);
-			MemoryVP::Patch<float>(0x70C88B, 80.0);
+		MemoryVP::Patch<float>(0x70C89C, 80.0);
+		MemoryVP::Patch<float>(0x70C88B, 80.0);
 
 		//Shadow distances////////////////////////////
 		static float

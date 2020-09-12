@@ -13,9 +13,9 @@
 
 namespace fastload 
 {
-#define SKIP_LOADSCREEN  1
+#define SKIP_LOADSCREEN  0
 	static int prevDisplayedSplash = 1;
-	static float Loadscreen_Time = 0.01f;
+	static float Loadscreen_Time = 1.01f;
 	
 	//Fix for the non-looping splashes
 	void IncreaseDisplayedSplash()

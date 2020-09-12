@@ -6,15 +6,17 @@
 #define HIDWORD(_qw)    ((DWORD)(((_qw) >> 32) & 0xffffffff))
 static int* GcurSelVM = (int*)0x8D6220;
 static char **Subsystems = (char**)0xC920D0;
+
+
 LPCSTR *Appname = (LPCSTR*)0x8D6224;
 //static char** Subsystems;
 
 HWND INITINSTANCE(HINSTANCE hinstance)
 {
-	RECT rect = 
+	RECT rect =
 	{
-		0, 
-		0, 
+		0,
+		0,
 		RsGlobal.maximumWidth,
 		RsGlobal.maximumHeight
 	};
@@ -35,33 +37,17 @@ HWND INITINSTANCE(HINSTANCE hinstance)
 		hinstance,
 		0);
 	return Temp;
-
-
 }
 
-int changeresu()
+int SetupWindowStyle()
 {
-	
-	
 	std::cout << "Enable window mode" << std::endl;
-	*GcurSelVM = 45;
-	CVideomodemanager::SetCurrentVideomode(*GcurSelVM);
-	*GcurSelVM = 0;
-	CVideomodemanager::SetCurrentVideomode(*GcurSelVM);
-	FrontEndMenuManager.m_dwAppliedResolution = *GcurSelVM;
-	FrontEndMenuManager.m_dwResolution = *GcurSelVM;
-	
-	RECT rect =
-	{
+
+	SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW); //with frame
+	SetWindowPos(RsGlobal.ps->window, NULL, 0, 0,
 		0,
-		0,
-		3200,
-		1800
-	};
-	SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW);
-	SetWindowPos(RsGlobal.ps->window, HWND_NOTOPMOST, -rect.right, 0,
-		(rect.right - rect.left),
-		(rect.bottom - rect.top), 0);
+		0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+		SWP_FRAMECHANGED);
 
 	return ((int(__cdecl*) ())0x538860)();
 }
@@ -76,28 +62,34 @@ char** __cdecl FIND_VIDEOMODES()
 
 	//if (GetAsyncKeyState(VK_TAB))
 	//{
-	//	
 	//	changeresu();
 	//	SetFocus(RsGlobal.ps->window);																					
 	//	SetForegroundWindow(RsGlobal.ps->window);
 	//}
-		
 
 	if (Subsystems)
 	{
-		if (*currentsubsys == vidmgr.GetCurrentSubSystem())
-		{
-			//std::cout << FrontEndMenuManager.m_dwAppliedResolution << std::endl;
-			//std::cout << FrontEndMenuManager.m_dwResolution << std::endl;
-			//std::cout << RsGlobal.maximumHeight << std::endl;
-			//std::cout << RsGlobal.maximumWidth << std::endl;
-			return Subsystems;
-		}
-		CVideomodemanager::FreeVideoModeList();
+		//if (*currentsubsys == vidmgr.GetCurrentSubSystem())
+		//{
+		//	//std::cout << FrontEndMenuManager.m_dwAppliedResolution << std::endl;
+		//	//std::cout << FrontEndMenuManager.m_dwResolution << std::endl;
+		//	//std::cout << RsGlobal.maximumHeight << std::endl;
+		//	//std::cout << RsGlobal.maximumWidth << std::endl;
+		//	return Subsystems;
+		//}
+		//CVideomodemanager::FreeVideoModeList();
 	}
 	*currentsubsys = vidmgr.GetCurrentSubSystem();
 	i_vidmodes = CVideomodemanager::GetNumVideoModes();
 	int v3 = 0;
+
+
+	//setup the width and height text of window mode TEXT
+	RECT rect;
+	GetClientRect(RsGlobal.ps->window, &rect);
+	int wndWidth = rect.right;
+	int wndHeight = rect.bottom;
+
 
 	for (Subsystems = (char**)calloc(i_vidmodes, 4); v3 < i_vidmodes; ++v3)
 	{
@@ -122,18 +114,18 @@ char** __cdecl FIND_VIDEOMODES()
 		}
 		else
 		{
-			CVideomodemanager::GetVideoModeInfo(&modeinfo, FrontEndMenuManager.m_dwResolution);
+			CVideomodemanager::GetVideoModeInfo(&modeinfo, FrontEndMenuManager.m_dwAppliedResolution);
 			char* v4 = (char*)calloc(100, 1);
 			Subsystems[v3] = v4;
-		/*	sprintf(v4, " _____%lu X %lu", modeinfo.width, modeinfo.height, modeinfo.depth);
-			sprintf(v4, " windowed");
-			std::cout << v3 << " " << modeinfo.width << " " << modeinfo.height << " " << modeinfo.depth << " " << modeinfo.flags << " " << std::endl;*/
+			sprintf(v4, " _____%lu X %lu Windowed", wndWidth, wndHeight);
+			//sprintf(v4, "windowed");
+			//std::cout << v3 << " " << modeinfo.width << " " << modeinfo.height << " " << modeinfo.depth << " " << modeinfo.flags << " " << std::endl;
 		}
 	}
 	return Subsystems;
 }
 
-int __cdecl psSelectDevice()
+int  psSelectDevice()
 {
 	CVideomodemanager Vidmgr;
 	HWND v2;//v2
@@ -148,63 +140,57 @@ int __cdecl psSelectDevice()
 	int* not_vidmodeselected = (int*)0x8D6218;
 	int* unk_C92118 = (int*)0xC92118;
 	bool success = false;
-//	unsigned __int64 CurrentSubSystem; //v6
+	//	unsigned __int64 CurrentSubSystem; //v6
 	int* unk_C92108 = (int*)0xC92108;
+	v3 = RsGlobal.ps->window;
+	v2 = RsGlobal.ps->instance;
+	*i_Subsystems = CVideomodemanager::GetNumSubSystems();
 
-		v3 = RsGlobal.ps->window;
-		v2 = RsGlobal.ps->instance;
-		*i_Subsystems = CVideomodemanager::GetNumSubSystems();
+	if (!*i_Subsystems)
+		return 0;
+	if (*i_Subsystems > 16)
+		*i_Subsystems = 16;
 
-		if (!*i_Subsystems)
-			return 0;
-		if (*i_Subsystems > 16)
-			*i_Subsystems = 16;
-
-		if (*i_Subsystems > 0)
+	/*if (*i_Subsystems > 0)
+	{
+		do
 		{
-			do
-			{
-				CVideomodemanager::GetSubSystemInfo(Info_SubSystem, i_whilelooper++);
-				Info_SubSystem += 80;
-				std::cout << Info_SubSystem[80];
-			} while (i_whilelooper < *i_Subsystems);
-		}
+			CVideomodemanager::GetSubSystemInfo(Info_SubSystem, i_whilelooper++);
+			Info_SubSystem += 80;
+			std::cout << Info_SubSystem[80];
+		} while (i_whilelooper < *i_Subsystems);
+	}*/
 
-		*SubsystemIndex = Vidmgr.GetCurrentSubSystem();
-		//CurrentSubSystem = __rdtsc();
-		//*unk_C92104 = HIDWORD(CurrentSubSystem);
-		//*unk_C92108 = CurrentSubSystem;
-
+	*SubsystemIndex = CVideomodemanager::SubsystemIndex;
 	if (*i_Subsystems <= 1)
 	{
 		*unk_C92118 = 0;
 		if (CVideomodemanager::SetSubSystem(*SubsystemIndex))
 		{
-				if (!FIND_VIDEOMODES()[FrontEndMenuManager.m_dwResolution] || !FrontEndMenuManager.m_dwResolution)
+			if (!FIND_VIDEOMODES()[FrontEndMenuManager.m_dwResolution] || !FrontEndMenuManager.m_dwResolution)
+			{
+				while (*GcurSelVM < CVideomodemanager::GetNumVideoModes())
 				{
-
-					while ((signed int)*GcurSelVM < CVideomodemanager::GetNumVideoModes())
+					CVideomodemanager::GetVideoModeInfo(&modeinfo, *GcurSelVM);
+					if (!*not_vidmodeselected || modeinfo.width == 1440 && modeinfo.height == 900 && modeinfo.depth == 32 && modeinfo.flags & 1)
 					{
-						CVideomodemanager::GetVideoModeInfo(&modeinfo, *GcurSelVM);
-						if (!*not_vidmodeselected || modeinfo.width == 1440 && modeinfo.height == 900 && modeinfo.depth == 32 && modeinfo.flags & 1)
-						{
-							success = true;
-							break;
-						}
-						++*GcurSelVM;
+						success = true;
+						break;
 					}
-					if (!success)
-					{
-						MessageBoxA(0, "Cannot find 800x600x32 video mode", "GTA: San Andreas", 0);
-						return 0;
-					}
+					++*GcurSelVM;
 				}
 				if (!success)
 				{
-					FrontEndMenuManager.m_dwAppliedResolution = FrontEndMenuManager.m_dwResolution;
-					*GcurSelVM = FrontEndMenuManager.m_dwResolution;
+					MessageBoxA(0, "Cannot find 800x600x32 video mode", "GTA: San Andreas", 0);
+					return 0;
 				}
-			
+			}
+			if (!success)
+			{
+				FrontEndMenuManager.m_dwAppliedResolution = FrontEndMenuManager.m_dwResolution;
+				*GcurSelVM = FrontEndMenuManager.m_dwResolution;
+			}
+
 			success = true;
 		}
 		if (!success)
@@ -218,10 +204,17 @@ int __cdecl psSelectDevice()
 			return 0;
 	}
 
+	if (CMenuManager::CustomOptions.isWndwmode)
+		*GcurSelVM = 0;
+
 	CVideomodemanager::GetVideoModeInfo(&modeinfo, *GcurSelVM);
 	FrontEndMenuManager.m_dwSelectedMenuItem = 0;
+
 	if (!CVideomodemanager::SetVideomode(*GcurSelVM))
-	return 0;
+		return 0;
+
+	if (CMenuManager::CustomOptions.isWndwmode)
+		CVideomodemanager::GetVideoModeInfo(&modeinfo, 41);
 
 	if (modeinfo.flags & 1)
 	{
@@ -229,12 +222,34 @@ int __cdecl psSelectDevice()
 		if (Refreshrate != -1)
 			CVideomodemanager::setrefreshrate(Refreshrate);
 
-			RsGlobal.maximumWidth = modeinfo.width;
-			RsGlobal.maximumHeight = modeinfo.height;
-			RsGlobal.ps->fullscreen = 1;
+		RsGlobal.maximumWidth = modeinfo.width;
+		RsGlobal.maximumHeight = modeinfo.height;
+		RsGlobal.ps->fullscreen = 1;
 	}
 	CVideomodemanager::setMultisamplevels(FrontEndMenuManager.m_dwAppliedAntiAliasingLevel);
 
+
+	if (FrontEndMenuManager.CustomOptions.isWndwmode)
+	{
+		RECT rect =
+		{
+			0,
+			0,
+			 CMenuManager::CustomOptions.Wndwmode_width,
+			 CMenuManager::CustomOptions.Wndwmode_height
+		};
+		SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW); //with frame
+		SetWindowPos(RsGlobal.ps->window, HWND_NOTOPMOST, 0, 0,
+			(rect.right - rect.left),
+			(rect.bottom - rect.top), 0);
+
+		GetClientRect(RsGlobal.ps->window, &rect);
+		RsGlobal.maximumWidth = rect.right;
+		RsGlobal.maximumHeight = rect.bottom;
+		RsGlobal.maximumWidth = rect.right;
+		RsGlobal.maximumHeight = rect.bottom;
+		RsGlobal.ps->fullscreen = 0;
+	}
 	//changeresu();
 	return 1;
 }

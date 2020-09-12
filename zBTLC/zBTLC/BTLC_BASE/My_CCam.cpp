@@ -46,9 +46,8 @@ namespace My_CCam
 
 		offset.y = 0.0;
 
-
 		if (Switch_side())
-			offset.x = -0.24f;
+			offset.x = -0.44f;
 		else
 			offset.x = 0.34f;
 		offset.z = -0.00f;
@@ -92,7 +91,7 @@ namespace My_CCam
 						
 				
 					if (Switch_side())
-						offset.x = -0.24f;
+						offset.x = -0.44f;
 					else
 						offset.x = 0.34f;
 					offset.z = -0.00f;

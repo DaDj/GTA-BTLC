@@ -61,10 +61,10 @@ namespace BUGFIX
 
 		//DISABLE TASK::ROADCROSSLOOKAROUN
 		//(HOTFIX FOR PATHS) //will be disabled, bug is found in path generation
-		MemoryVP::Nop(0x671CF0, 5);
-		MemoryVP::Nop(0x671CF0, 5);
-		MemoryVP::Patch<BYTE>(0x67448F, 0xEB);
-		MemoryVP::Patch<BYTE>(0x6744A4, 0xEB);
+		//MemoryVP::Nop(0x671CF0, 5);
+		//MemoryVP::Nop(0x671CF0, 5);
+		//MemoryVP::Patch<BYTE>(0x67448F, 0xEB);
+		//MemoryVP::Patch<BYTE>(0x6744A4, 0xEB);
 
 		// DISABLE PLAYING REPLAYS
 		MemoryVP::Patch<BYTE>(0x460390, 0xC3);

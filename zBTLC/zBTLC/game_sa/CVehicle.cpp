@@ -1206,6 +1206,12 @@ void CVehicle::DoVehicleLights(CMatrix& matrix, unsigned int flags)
 	int Damaged_RearLeft = Vehicle->m_damageManager.GetLightStatus(LIGHT_REAR_LEFT);
 	int Damaged_RearRight = Vehicle->m_damageManager.GetLightStatus(LIGHT_REAR_RIGHT);
 
+
+	LightStatus.bDamagedFrontLeft = Damaged_FrontLeft;
+	LightStatus.bDamagedFrontRight = Damaged_FrontRight;
+	LightStatus.bDamagedRearLeft = Damaged_RearLeft;
+	LightStatus.bDamagedRearRight = Damaged_RearRight;
+
 	//Check  what kind of taillight it is.
 	//If true == breaklight
 	LightStatus.bBrakelight_Left = 0;

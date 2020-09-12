@@ -8,7 +8,7 @@
 
 //#include "CAudioEngine.h"
 
-
+MyDisplayoptions  CMenuManager::CustomOptions = { 0,800,600,0 };
 CMenuManager &FrontEndMenuManager = *(CMenuManager *)0xBA6748;
 CMenuPage	*MenuPages = (CMenuPage *)0x8CE008;
 

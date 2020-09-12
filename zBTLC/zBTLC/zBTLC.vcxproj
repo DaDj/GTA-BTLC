@@ -71,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetExt>.asi</TargetExt>
-    <OutDir>..\..\..\..\..\..\..\Rockstar Games\IV to SA Reborn  V5\scripts</OutDir>
+    <OutDir>..\..\..\..\..\..\..\Rockstar Games\IV to SA Reborn  V5\plugins</OutDir>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Custom</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ZBTLC_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
@@ -100,6 +100,8 @@
       <EnablePREfast>false</EnablePREfast>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,8 +197,6 @@
     <ClCompile Include="BTLC_BASE\visuals.cpp" />
     <ClCompile Include="BTLC_BASE\weather.cpp" />
     <ClCompile Include="BTLC_BASE\windowmode\windowmode.cpp" />
-    <ClCompile Include="BTLC_BASE\windowmode\dxhandler.cpp" />
-    <ClCompile Include="BTLC_BASE\windowmode\WindowMode_Hook.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -667,8 +667,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BTLC_BASE\CTrafficlights.h" />
+    <ClInclude Include="BTLC_BASE\debugmenu_public.h" />
+    <ClInclude Include="BTLC_BASE\IniReader.h" />
+    <ClInclude Include="BTLC_BASE\ini_parser.hpp" />
     <ClInclude Include="BTLC_BASE\My_FxTool.h" />
     <ClInclude Include="BTLC_BASE\My_SkinSelector.h" />
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="DXSDK\8.0\dinput.h" />
     <ClInclude Include="DXSDK\8.0\include\d3d8.h" />
     <ClInclude Include="DXSDK\8.0\include\d3dx8.h" />
@@ -712,8 +716,6 @@
     <ClInclude Include="BTLC_BASE\visuals.h" />
     <ClInclude Include="BTLC_BASE\weather.h" />
     <ClInclude Include="BTLC_BASE\windowmode\windowmode.h" />
-    <ClInclude Include="BTLC_BASE\windowmode\dxhandler.h" />
-    <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h" />
     <ClInclude Include="Events_SA\EventList.h" />
     <ClInclude Include="Events_SA\Events_SA.h" />
     <ClInclude Include="game_sa\AnimBlendFrameData.h" />

@@ -238,6 +238,9 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 	int Degree = 180;
 	int DegreeStep = 5;
 	int Polycount = 360 / DegreeStep;
+	int index_health = min(Polycount / 2, ceil((Polycount - 1) * percentage_health / 200));
+	int percent = ceil((Polycount - 1) *(percentage_armor / 200 + percentage_health / 200));
+
 
 	for (int i = 0; i < Polycount; i++)
 	{
@@ -250,9 +253,6 @@ void CHud::DrawPlayerhealthandarmor(CPed *player)
 		y[i] = y_fac(y[i] * Health_innerRadius + 448 - Health_PosY);
 		Degree += DegreeStep;
 	}
-
-	int index_health = min(Polycount / 2, ceil((Polycount - 1) * percentage_health / 200));
-	int percent = ceil((Polycount - 1) *(percentage_armor / 200 + percentage_health / 200));
 
 	for (int i = 0; i < percent; i++)
 	{
@@ -880,7 +880,6 @@ void CHud::DrawCrosshairs()
 	eWeaponType CurrentWeapon = playerPed->m_aWeapons[playerPed->m_nActiveWeaponSlot].m_nType; // eax
 	CRGBA color; // eax
 	char bDrawCrosshair = 0;
-	//	float _crosshairSizeMP;
 	int bSimpleAim = 0;
 
 	if (mode1 == MODE_1STPERSON)
@@ -926,7 +925,6 @@ void CHud::DrawCrosshairs()
 
 		if (mode1 == MODE_AIMWEAPON || mode1 == MODE_AIMWEAPON_FROMCAR || mode1 == MODE_AIMWEAPON_ATTACHED)
 		{
-			//_crosshairSizeMP = playerPed->GetWeaponRadiusOnScreen();;
 			float widthfac = CCamera::m_f3rdPersonCHairMultX*  RsGlobal.maximumWidth;
 			float heightfac = CCamera::m_f3rdPersonCHairMultY* RsGlobal.maximumHeight;
 			CRect Rect = CRect(widthfac - x_fac(0.5f), heightfac + y_fac(0.5f), widthfac + x_fac(0.5f), heightfac - y_fac(0.5f));
@@ -938,7 +936,7 @@ void CHud::DrawCrosshairs()
 			float percentage_health = 0.0f;
 			if (playerPed->m_pPlayerTargettedPed)
 			{
-				if (playerPed->m_pPlayerTargettedPed->m_fHealth >= 0)
+				if (playerPed->m_pPlayerTargettedPed->m_fHealth > 0)
 				{
 					TargetSize = 15.0f;
 					float TargetSizeHealth = TargetSize * 0.85;
@@ -962,20 +960,20 @@ void CHud::DrawCrosshairs()
 					int DegreeStep = 360 / CircleSize;
 					for (int i = 0; i < CircleSize; i++)
 					{
-						x[i] = x_fac(sin(Degree*3.1415926/ 180)  *(TargetSizeHealth *1.1)) + widthfac;
-						y[i] = y_fac(cos(Degree*3.1415926/ 180)  *(TargetSizeHealth *1.1)) + heightfac;
+						x[i] = x_fac(sin(Degree*3.1415926 / 180)  *(TargetSizeHealth *1.1)) + widthfac;
+						y[i] = y_fac(cos(Degree*3.1415926 / 180)  *(TargetSizeHealth *1.1)) + heightfac;
 						Degree -= DegreeStep;
 					}
 					CircleMaskVertices[0].x = widthfac;
 					CircleMaskVertices[0].y = heightfac;
-					
+
 					for (int offset = 0; offset < floor(CircleSize*percentage_health); offset = offset + 1)
 					{
 						for (int i = 0; i < 3; i++)
 						{
 							CircleMaskVertices[i + 1].x = x[i + offset];
 							CircleMaskVertices[i + 1].y = y[i + offset];
-							if (i + offset > (CircleSize -1))
+							if (i + offset > (CircleSize - 1))
 							{
 								CircleMaskVertices[i + 1].x = x[0];
 								CircleMaskVertices[i + 1].y = y[0];
@@ -997,48 +995,42 @@ void CHud::DrawCrosshairs()
 					RwRenderStateSet(rwRENDERSTATETEXTUREPERSPECTIVE, (void*)0);
 
 					RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NewRadarSprites[5].m_pTexture->raster);
-			
-					int Halfwidth = x_fac(TargetSizeHealth)/2;
+					int Halfwidth = x_fac(TargetSizeHealth) / 2;
 					int HalfHeight = y_fac(TargetSizeHealth) / 2;
 					int posx = widthfac - Halfwidth;
 					int posy = heightfac - HalfHeight;
-
-					int R = 220;
+					int R = 255;
 					int G = 255;
-					int B = 220;
-					if (playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskFighting() 
-						|| playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskUseGun() 
-						|| FindPlayerPed()->m_pPlayerTargettedPed->m_nPedType == PED_TYPE_COP)
-					{
-						R = 255;
-						G = 220;
-						B = 220;
-					}
+					int B = 255;
+						//if (playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskFighting()
+						//	|| playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskUseGun()
+						//	|| FindPlayerPed()->m_pPlayerTargettedPed->m_nPedType == PED_TYPE_COP)
+						//	R = 255;	G = 220;	B = 220;
 
 					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 0, 0);
-					 posx = widthfac + Halfwidth;
+					posx = widthfac + Halfwidth;
 					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 1, 0);
-					 posy = heightfac + HalfHeight;
+					posy = heightfac + HalfHeight;
 					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 1, 1);
 					posx = widthfac - Halfwidth;
 					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 0, 1);
 					RwRenderStateSet(rwRENDERSTATEZTESTENABLE, 0);
 				}
+				else
+					bDrawCrosshair = false;
 			}
 
-			//left top
-			Rect = CRect(widthfac - x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);
-			Sprites[1].Draw(Rect, Color);
-			//Right top
-			Rect = CRect(widthfac + x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);
-			Sprites[1].Draw(Rect, Color);
-			//Left bottom
-			Rect = CRect(widthfac - x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);
-			Sprites[1].Draw(Rect, Color);
-			//Right bottomm
-			Rect = CRect(widthfac + x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);
-			Sprites[1].Draw(Rect, Color);
-
+			if (bDrawCrosshair)
+			{
+				Rect = CRect(widthfac - x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);	//left top
+				Sprites[1].Draw(Rect, Color);
+				Rect = CRect(widthfac + x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);	//Right top
+				Sprites[1].Draw(Rect, Color);				
+				Rect = CRect(widthfac - x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);//Left bottom
+				Sprites[1].Draw(Rect, Color);
+				Rect = CRect(widthfac + x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);//Right bottomm
+				Sprites[1].Draw(Rect, Color);
+			}
 			RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
 			RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
 			RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
@@ -1088,13 +1080,16 @@ void CHud::DrawCrosshairs()
 
 	if (CurrentWeapon == WEAPON_CAMERA || CurrentWeapon == WEAPON_SNIPERRIFLE || CurrentWeapon == WEAPON_COUNTRYRIFLE || CTheScripts::bDrawCrossHair == 2)
 	{
-		/*	if ( CurrentWeapon == WEAPON_COUNTRYRIFLE)
-	{
-		TheCamera.m_PlayerWeaponMode.m_wMode = MODE_SNIPER   ;
-		TheCamera.m_PlayerWeaponMode.m_MaxZoom = 10;
-		TheCamera.m_PlayerWeaponMode.m_MinZoom = 30;
-		TheCamera.m_PlayerWeaponMode.m_fDuration = 0.0;,
-	}*/
+	//		if ( CurrentWeapon == WEAPON_COUNTRYRIFLE)
+	//{
+	//	TheCamera.m_PlayerWeaponMode.m_wMode = MODE_SNIPER   ;
+	//	TheCamera.m_PlayerWeaponMode.m_MaxZoom = 10;
+	//	TheCamera.m_PlayerWeaponMode.m_MinZoom = 30;
+	//	TheCamera.m_PlayerWeaponMode.m_fDuration = 0.0;
+	//	// jumptable offset  
+	//MemoryVP::Patch<BYTE>(0x742A30 + 33 - 16, 3);
+
+	//}
 
 		if (mode1 == MODE_SNIPER || mode1 == MODE_1STPERSON || mode1 == MODE_CAMERA)
 		{
@@ -1107,6 +1102,8 @@ void CHud::DrawCrosshairs()
 				RwTexture *iconTex = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "CROSSHAIR");
 				if (!iconTex)
 					iconTex = RwTexDictionaryFindHashNamedTexture(txd->m_pRwDictionary, CKeyGen::AppendStringToKey(model->m_dwKey, "CROSSHAIR"));
+				if (!iconTex)
+					iconTex = RwTexDictionaryFindNamedTexture(txd->m_pRwDictionary, "TARGET");
 
 				if (iconTex)
 				{

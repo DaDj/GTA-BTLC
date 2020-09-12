@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <WinBase.h>
+#include "../Defines.h"
 #ifndef __MEMORYMGR
 #define __MEMORYMGR
 

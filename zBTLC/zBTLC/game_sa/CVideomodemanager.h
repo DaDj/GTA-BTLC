@@ -7,6 +7,8 @@ public:
 	CVideomodemanager();
 	~CVideomodemanager();
 
+	
+
 	static int GetNumSubSystems(); //Numbers of Subsystems -added trick to skip the Dialogfunc //RWENGINE
 	int GetCurrentSubSystem();//RWENGINE
 	static char* GetSubSystemInfo(char *subsystemInfo, int subsystemIndex);
@@ -20,6 +22,8 @@ public:
 	static unsigned int setMultisamplevels(int a1);
 	static  int sub_7460A0(int a1, int a2, int a3);
 	static signed int  DialogFunc(HWND hDlg, int a2, unsigned int a3, int a4);
+
+	static int CVideomodemanager::SubsystemIndex;
 
 };
 

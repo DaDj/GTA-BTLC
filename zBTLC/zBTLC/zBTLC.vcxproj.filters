@@ -53,6 +53,12 @@
     <Filter Include="Events_Sa\Extender">
       <UniqueIdentifier>{1cf19ada-271a-4f96-ae12-40102efd816f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BTLC_BASE\DebugStuff">
+      <UniqueIdentifier>{a5992bb5-02b7-4170-adaa-fd9682da7d61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BTLC_BASE\IO">
+      <UniqueIdentifier>{03ba864b-18c5-4ed9-84e1-eb3f5026f908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1393,12 +1399,6 @@
     <ClCompile Include="Patch\paths\Paths.cpp">
       <Filter>game_sa\Patching\Paths</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\windowmode\dxhandler.cpp">
-      <Filter>BTLC_BASE\windowmode</Filter>
-    </ClCompile>
-    <ClCompile Include="BTLC_BASE\windowmode\WindowMode_Hook.cpp">
-      <Filter>BTLC_BASE\windowmode</Filter>
-    </ClCompile>
     <ClCompile Include="game_sa\CWaterlevel.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
@@ -1413,9 +1413,6 @@
     </ClCompile>
     <ClCompile Include="BTLC_BASE\My_PlayerWeaponReload.cpp">
       <Filter>BTLC_BASE\features</Filter>
-    </ClCompile>
-    <ClCompile Include="BTLC_BASE\debug.cpp">
-      <Filter>BTLC_BASE</Filter>
     </ClCompile>
     <ClCompile Include="game_sa\CFileLoader.cpp">
       <Filter>game_sa</Filter>
@@ -1492,11 +1489,14 @@
     <ClCompile Include="game_sa\FxSystemBP_c.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\My_FxTool.cpp">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClCompile>
     <ClCompile Include="BTLC_BASE\My_SkinSelector.cpp">
-      <Filter>BTLC_BASE\features</Filter>
+      <Filter>BTLC_BASE\DebugStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_FxTool.cpp">
+      <Filter>BTLC_BASE\DebugStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="BTLC_BASE\debug.cpp">
+      <Filter>BTLC_BASE\DebugStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3114,14 +3114,8 @@
     <ClInclude Include="game_sa\eSprintType.h">
       <Filter>game_sa</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\windowmode\dxhandler.h">
-      <Filter>BTLC_BASE\windowmode</Filter>
-    </ClInclude>
     <ClInclude Include="Patch\assembly.hpp">
       <Filter>game_sa\Patching</Filter>
-    </ClInclude>
-    <ClInclude Include="BTLC_BASE\windowmode\wnd_misc.h">
-      <Filter>BTLC_BASE\windowmode</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CWaterlevel.h">
       <Filter>game_sa</Filter>
@@ -3137,9 +3131,6 @@
     </ClInclude>
     <ClInclude Include="BTLC_BASE\My_PlayerWeaponReload.h">
       <Filter>BTLC_BASE\features</Filter>
-    </ClInclude>
-    <ClInclude Include="BTLC_BASE\debug.h">
-      <Filter>BTLC_BASE</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CFileLoader.h">
       <Filter>game_sa</Filter>
@@ -3277,11 +3268,26 @@
     <ClInclude Include="game_sa\FxSystemBP_c.h">
       <Filter>game_sa</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\My_FxTool.h">
-      <Filter>BTLC_BASE\features</Filter>
-    </ClInclude>
     <ClInclude Include="BTLC_BASE\My_SkinSelector.h">
-      <Filter>BTLC_BASE\features</Filter>
+      <Filter>BTLC_BASE\DebugStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_FxTool.h">
+      <Filter>BTLC_BASE\DebugStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\debug.h">
+      <Filter>BTLC_BASE\DebugStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\debugmenu_public.h">
+      <Filter>BTLC_BASE\DebugStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\ini_parser.hpp">
+      <Filter>BTLC_BASE\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\IniReader.h">
+      <Filter>BTLC_BASE\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

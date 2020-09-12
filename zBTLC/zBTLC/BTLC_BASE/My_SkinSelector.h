@@ -14,5 +14,6 @@
 namespace My_SkinSelector
 {
 	void Init();
-
+	void Set_SkintoIndex(int index);
+	void Set_skin();
 }

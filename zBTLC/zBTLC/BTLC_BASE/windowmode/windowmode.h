@@ -5,10 +5,15 @@
 #include "../../game_sa/RenderWare.h"
 #include <iostream>
 
-int changeresu();
+
+
+
+ 
+int SetupWindowStyle();
 
 char** __cdecl FIND_VIDEOMODES();
 
-int __cdecl psSelectDevice();
+int  psSelectDevice();
+
 
 HWND INITINSTANCE(HINSTANCE hinstance);

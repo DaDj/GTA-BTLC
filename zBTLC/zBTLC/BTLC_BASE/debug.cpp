@@ -19,10 +19,14 @@
 #include "../game_sa/CCamera.h"
 #include "../game_sa/FxManager_c.h"
 
+DebugMenuAPI gDebugMenuAPI;
+void(*DebugMenuProcess)(void);
+void(*DebugMenuRender)(void);
+static void stub(void) { };
+
 namespace debug
 {
-
-
+	
 	void init()
 	{
 		debug_console();
@@ -177,6 +181,25 @@ namespace debug
 		CFont::PrintString(CHud::x_fac(15.0f), CHud::y_fac(15.0f), string);
 	}
 
+	void DebugMenuInit(void)
+	{
+		if (DebugMenuLoad()) {
+			DebugMenuProcess = (void(*)(void))GetProcAddress(gDebugMenuAPI.module, "DebugMenuProcess");
+			DebugMenuRender = (void(*)(void))GetProcAddress(gDebugMenuAPI.module, "DebugMenuRender");
+		}
+		if (DebugMenuProcess == NULL || DebugMenuRender == NULL) {
+			DebugMenuProcess = stub;
+			DebugMenuRender = stub;
+		}
 
+	}
+
+	void DebugMenuSetup()
+	{
+
+		if (DebugMenuLoad()) {
+			DebugMenuInit();
+		}
+	}
 }
 

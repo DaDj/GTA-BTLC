@@ -107,6 +107,11 @@ public:
 		Lights.bBrakelight_Right = 0;	
 
 		Lights.bIndicatorEmergency = 0;
+
+		Lights.bDamagedFrontLeft = 0;
+		Lights.bDamagedFrontRight = 0;
+		Lights.bDamagedRearLeft = 0;
+		Lights.bDamagedRearRight = 0;
 	}
 };
 
