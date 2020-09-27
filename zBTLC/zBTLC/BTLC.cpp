@@ -109,6 +109,7 @@ void Function_starter()
 
 	CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
 	CTrafficlights::Set_Trafficlight_models();	//Trafficlight changes
+	CMenuManager::MyInit();
 
 	MemoryVP::Nop(0x53C1C6, 5); //Disable Roadblock as long as I don't have any.
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);				//Test new Pickup
@@ -121,9 +122,9 @@ void Function_starter()
 	MemoryVP::InjectHook(0x745D3B, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
-	//MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
-	MemoryVP::InjectHook(0x619BA6, &psSelectDevice, PATCH_CALL);
-	MemoryVP::InjectHook(0x619D10, &psSelectDevice, PATCH_CALL);
+	MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
+	//MemoryVP::InjectHook(0x619BA6, &psSelectDevice, PATCH_CALL);
+	//MemoryVP::InjectHook(0x619D10, &psSelectDevice, PATCH_CALL);
 	
 }
 
@@ -252,7 +253,6 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{
-			CVideomodemanager::SubsystemIndex = 1;
 			MemoryVP::InjectHook(0x748995, &SetupWindowStyle, PATCH_CALL);
 		}
 		////DEV enables the debug_consoles and outputs
@@ -276,13 +276,14 @@ void Load_BTLCSettings()
 		ini.WriteBoolean("Display Settings", "Windowed", 1);
 		ini.WriteInteger("Display Settings", "Windowed Width", 2560);
 		ini.WriteInteger("Display Settings", "Windowed Height", 1400);
-
+		ini.WriteBoolean("Display Settings", "Borderless", 1);
 	}
 	else
 	{
 		CMenuManager::CustomOptions.isWndwmode = ini.ReadInteger("Display Settings", "Windowed", 1);
-		CMenuManager::CustomOptions.Monitor = ini.ReadInteger("Display Settings", "Monitor", 0);
+		CVideomodemanager::SubsystemIndex =  CMenuManager::CustomOptions.Monitor = ini.ReadInteger("Display Settings", "Monitor", 0);
 		CMenuManager::CustomOptions.Wndwmode_width = ini.ReadInteger("Display Settings", "Windowed Width", 2560);
 		CMenuManager::CustomOptions.Wndwmode_height =  ini.ReadInteger("Display Settings", "Windowed Height", 1400);
+		CMenuManager::CustomOptions.Borderless = ini.ReadInteger("Display Settings", "Borderless", 0);
 	}
 }

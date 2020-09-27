@@ -43,11 +43,23 @@ int SetupWindowStyle()
 {
 	std::cout << "Enable window mode" << std::endl;
 
-	SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW); //with frame
-	SetWindowPos(RsGlobal.ps->window, NULL, 0, 0,
-		0,
-		0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
-		SWP_FRAMECHANGED);
+	if (!CMenuManager::CustomOptions.Borderless)
+	{
+		SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW); //with frame
+		SetWindowPos(RsGlobal.ps->window, NULL, 0, 0,
+			0,
+			0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+			SWP_FRAMECHANGED);
+	}
+	else
+	{
+		SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE); //without frame
+		SetWindowPos(RsGlobal.ps->window, NULL, 0, 0,
+			0,
+			0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+			SWP_FRAMECHANGED);
+	}
+
 
 	return ((int(__cdecl*) ())0x538860)();
 }

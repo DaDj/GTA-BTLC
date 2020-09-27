@@ -19,6 +19,18 @@ bool& CMenuManager::bInvertMouseY = *(bool *)0xBA6745;
 
 int& CMenuManager::nLastMenuPage = *(int *)0x8CDFF0;
 
+float CMenuManager::StretchX(float x)
+{
+	float width_fac = RsGlobal.maximumHeight / 448.0f;
+	return x * width_fac;
+}
+
+float CMenuManager::StretchY(float y)
+{
+	float height_fac = RsGlobal.maximumHeight / 448.0f;
+	return y * height_fac;
+}
+
 void CMenuManager::ProcessStreaming(char bImmediately)
 {
 	((void(__thiscall *)(CMenuManager*, char))0x573CF0)(this, bImmediately);
@@ -441,9 +453,45 @@ void CMenuManager::ProcessUserInput(char bDown, char bUp, char bEnter, char bExi
 	((void(__thiscall *)(CMenuManager*, char, char, char, char,char ))0x57B480)(this, bDown,bUp,bEnter,bExit,wheel);
 }
 
+void CMenuManager::DrawBackground()
+{
+
+}
+
+int CMenuManager::DisplaySlider(float x, float y, float Height, float Height2, float Width, float progress, signed int rgbaColor)
+{
+	float PosLeft = x;
+	float PosRight = x + Width;
+	float PosRightProgress = x + Width * progress;
+	float PosTop = y + Height2/2 - 2*Height;
+	float PosBottom = PosTop + 2*Height;
+
+	// Draw Black background (as border)
+	CRect BackgroundRectBorder = CRect(PosLeft - StretchX(1.0f), PosTop - StretchY(1.0f), PosRight + StretchX(1.0f), PosBottom + StretchY(1.0f));
+	CSprite2d::DrawRect(BackgroundRectBorder, CRGBA::CRGBA(10, 10, 10, 255));
+
+	//Draw real gray background
+	CRect BackgroundRect = CRect(PosLeft, PosTop, PosRight, PosBottom);
+	CSprite2d::DrawRect(BackgroundRect, CRGBA::CRGBA(100, 100, 100, 255));
+
+	//Draw current Progress/Slider
+	CRect Rect = CRect(PosLeft, PosTop, PosRightProgress, PosBottom);
+	CSprite2d::DrawRect(Rect, CRGBA::CRGBA(240, 240, 240, 240));
+
+	// Draw an slider knob
+	float SizeXKnob = StretchX(2.0f);
+	float OverSizeYKnob = StretchY(0.0f);
+	CRect CurrentPosRect = CRect(PosRightProgress - SizeXKnob, PosTop - OverSizeYKnob, PosRightProgress + SizeXKnob, PosBottom + OverSizeYKnob);
+	CSprite2d::DrawRect(CurrentPosRect, CRGBA::CRGBA(20, 20, 20, 255));
+
+	return x + Width * progress + StretchX(2.0f);
+}
+
 
 void CMenuManager::MyInit()
 {
+	MemoryVP::InjectHook(0x576860,&CMenuManager::DisplaySlider, PATCH_JUMP);
 }
+
 
 

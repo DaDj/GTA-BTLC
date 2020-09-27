@@ -216,6 +216,7 @@ struct MyDisplayoptions
 	int Wndwmode_width;
 	int Wndwmode_height;
 	int Monitor;
+	int Borderless;
 };
 
 class CMenuManager
@@ -379,12 +380,12 @@ public:
 	unsigned char       m_nNumberOfMenuOptions;
 	short field_1B22;
 	int field_1B24;
-	char field_1B28;
+	char				bMapDataLoadedMAYBE;
 	char field_1B29;
 	short field_1B2A;
 	int field_1B2C;
 	int field_1B30;
-	short field_1B34;
+	short bDisablePlayerControl;
 	short field_1B36;
 	int field_1B38;
 	char field_1B3C;
@@ -395,7 +396,7 @@ public:
 	char				m_bExitMenu;
 	char field_1B45;
 	short field_1B46;
-	int field_1B48;
+	int				m_dwMAYBEKeyDelay;
 	int field_1B4C;
 	char              m_nBackgroundSprite;
 	char field_1B51;
@@ -417,6 +418,9 @@ public:
 	static bool& bInvertMouseX;
 	static bool& bInvertMouseY;
 
+	float StretchX(float x);
+	float StretchY(float y);
+
 	void ProcessStreaming(char bImmediately);
 	void UserInput();
 	void RedefineScreenUserInput(int enter, int exit);
@@ -428,7 +432,9 @@ public:
 	bool CheckFrontEndLeftInput();
 	void CheckSliderMovement(char count);
 	void ProcessUserInput(char bDown, char bUp,char bEnter, char bExit, char wheel);
+	void DrawBackground();
 
+	int DisplaySlider(float x, float y, float Height, float Height2, float Width, float progress, signed int rgbaColor);
 
 	static  MyDisplayoptions CustomOptions;
 	static void MyInit();

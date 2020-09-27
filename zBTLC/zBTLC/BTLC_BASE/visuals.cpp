@@ -84,6 +84,11 @@ namespace visuals
 		//Traffic/Lampost ground distance
 		//MemoryVP::Patch<float>(0x70C89B +1, 5.0);
 
+		//No LOD on Flying
+		MemoryVP::Nop(0x5557CF, 7);
+	
+
+
 		//Traffic/Lampost shadow distance
 		MemoryVP::Patch<float>(0x70C89C, 80.0);
 		MemoryVP::Patch<float>(0x70C88B, 80.0);
