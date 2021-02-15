@@ -185,6 +185,7 @@
     <ClCompile Include="game_sa\CPolyBunch.cpp" />
     <ClCompile Include="game_sa\CProcObjectMan.cpp" />
     <ClCompile Include="game_sa\CTaskUtilityLineUpPedWithCar.cpp" />
+    <ClCompile Include="game_sa\CUtrax.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
     <ClCompile Include="BTLC_BASE\debug.cpp" />
     <ClCompile Include="BTLC_BASE\fast_load.cpp" />
@@ -703,6 +704,7 @@
     <ClInclude Include="game_sa\CPolyBunch.h" />
     <ClInclude Include="game_sa\CProcObjectMan.h" />
     <ClInclude Include="game_sa\CTaskUtilityLineUpPedWithCar.h" />
+    <ClInclude Include="game_sa\CUtrax.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />
     <ClInclude Include="BTLC_BASE\debug.h" />
     <ClInclude Include="BTLC_BASE\fast_load.h" />

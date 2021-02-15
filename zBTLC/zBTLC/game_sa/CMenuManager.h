@@ -4,6 +4,8 @@
 #include "CVector2D.h"
 #include "CSprite2d.h"
 #include "CAudioengine.h"
+#include "CScene.h"
+#include "CUtrax.h"
 
 // Menu entries action to perform
 enum eMenuActions   // There's many actions @0x57702E and @0x57CD88
@@ -349,7 +351,7 @@ public:
 	int field_1AE4;
 	char field_1AE8;
 	char				m_bAudioRetuneInProgress;
-	char field_1AEA;
+	char IsKeyUnbound;
 	bool                m_bScanningUserTracks;
 	int					m_dwHelperTextFadingAlpha;
 	char field_1AF0;
@@ -417,6 +419,10 @@ public:
 	static int LikeALastSelectedMenuItem;
 	static bool& bInvertMouseX;
 	static bool& bInvertMouseY;
+	static int&  ScanUserTracksProgressPos;
+	static int&  ScanUserTracksProgressPosChange;
+	static bool&  byte_8CDFFA;
+	static int&  dword_B6B988;
 
 	float StretchX(float x);
 	float StretchY(float y);
@@ -431,11 +437,19 @@ public:
 	bool CheckFrontEndRightInput();
 	bool CheckFrontEndLeftInput();
 	void CheckSliderMovement(char count);
-	void ProcessUserInput(char bDown, char bUp,char bEnter, char bExit, char wheel);
+	void ProcessUserInput(int a2, char bDown, char bUp,char bEnter, char bExit, char wheel);
 	void DrawBackground();
+	char PrintMap();
+	char DrawControllerSetupScreen();
+	void DrawQuitGameScreen();
+	char DrawStandardMenus(char a2);
+	char SmallMessageScreen(char* Key);
+	void ResetHelperText();
+	int SetHelperText(int a2);
+	char DisplayHelperText(char * text);
 
 	int DisplaySlider(float x, float y, float Height, float Height2, float Width, float progress, signed int rgbaColor);
-
+	void DefinedState2d();
 	static  MyDisplayoptions CustomOptions;
 	static void MyInit();
 

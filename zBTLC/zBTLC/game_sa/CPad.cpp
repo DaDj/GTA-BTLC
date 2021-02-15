@@ -292,3 +292,5 @@ void CPad::Clear(bool enablePlayerControls, bool resetPhase) {
 void CPad::UpdatePads() {
 	plugin::CallMethod<0x541DD0, CPad *>(this);
 }
+
+
