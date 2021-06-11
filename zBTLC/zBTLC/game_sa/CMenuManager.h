@@ -6,6 +6,7 @@
 #include "CAudioengine.h"
 #include "CScene.h"
 #include "CUtrax.h"
+#include "CRect.h"
 
 // Menu entries action to perform
 enum eMenuActions   // There's many actions @0x57702E and @0x57CD88
@@ -185,7 +186,26 @@ enum eMenuTexture
 	MENUTEX_TEXTURE_COUNT = MENUTEX_MOUSE_TEXTURES_END
 };
 
-
+enum eSlidingtype
+{
+	SLIDINGTYPE_UNK0 = 1,
+	SLIDINGTYPE_UNK1 = 1,
+	SLIDINGTYPE_UNK2 = 2,
+	SLIDINGTYPE_UNK3 = 3,
+	SLIDINGTYPE_UNK4 = 4,
+	SLIDINGTYPE_UNK5 = 5,
+	SLIDINGTYPE_BRIGHTNESSPLUS = 6,
+	SLIDINGTYPE_BRIGHTNESSNEGATIV = 7,
+	SLIDINGTYPE_DRAWDISTANCEPLUS = 8,
+	SLIDINGTYPE_DRAWDISTANCENEGATIV = 9,
+	SLIDINGTYPE_RADIOPLUS = 10,
+	SLIDINGTYPE_RADIONEGATIV = 11,
+	SLIDINGTYPE_SFXPLUS = 12,
+	SLIDINGTYPE_SFXNEGATIV = 13,
+	SLIDINGTYPE_MOUSEACCLPLUS = 14,
+	SLIDINGTYPE_MOUSEACCLNEGATIV = 15,
+	SLIDINGTYPE_STATIC = 16
+};
 
 struct CMenuPageButton
 {
@@ -221,6 +241,14 @@ struct MyDisplayoptions
 	int Borderless;
 };
 
+struct MainMenuStrip
+{
+	int m_nHoverItem;
+	int m_nActiveMenu;
+	CMenuPage Menu[2];
+};
+
+
 class CMenuManager
 {
 public:
@@ -235,7 +263,7 @@ public:
 	int             m_dwRadarMode;
 	char field_28[4];
 	int             m_nTargetBlipIndex; // blip script handle
-	char field_30;
+	char PanelID;
 	char field_31;
 	bool                m_bDontDrawFrontEnd;
 	bool                m_bActivateMenuNextFrame;
@@ -273,7 +301,7 @@ public:
 	float               m_fMapBaseX;
 	float               m_fMapBaseY;
 	CVector2D           m_vMousePos;
-	char field_78;
+	char DrawNormalRadarMap;
 	char field_79[3];
 	int titleLanguage;
 	int textLanguage;
@@ -323,10 +351,10 @@ public:
 			//CSprite2d m_apTextures[25];
 	//	};
 	//	struct{
-			CSprite2d m_apRadioSprites[13];
-			CSprite2d m_apBackgroundTextures[8];
-			CSprite2d m_apAdditionalBackgroundTextures[2];
-			CSprite2d m_apMouseTextures[2];
+	CSprite2d m_apRadioSprites[13];
+	CSprite2d m_apBackgroundTextures[8];
+	CSprite2d m_apAdditionalBackgroundTextures[2];
+	CSprite2d m_apMouseTextures[2];
 	//	};
 	//};
 	bool                m_bTexturesLoaded;
@@ -344,7 +372,7 @@ public:
 	int field_1AD0;
 	int field_1AD4;
 	int field_1AD8;
-	short field_1ADC; 
+	short field_1ADC;
 	bool                m_bChangeVideoMode;
 	char field_1ADF;
 	int field_1AE0;
@@ -385,7 +413,7 @@ public:
 	char				bMapDataLoadedMAYBE;
 	char field_1B29;
 	short field_1B2A;
-	int field_1B2C;
+	int m_snTimeMapLoadStart;
 	int field_1B30;
 	short bDisablePlayerControl;
 	short field_1B36;
@@ -423,10 +451,11 @@ public:
 	static int&  ScanUserTracksProgressPosChange;
 	static bool&  byte_8CDFFA;
 	static int&  dword_B6B988;
+	static int(*Slotvalidation)[9];
 
-	float StretchX(float x);
-	float StretchY(float y);
-
+	static float StretchX(float x);
+	static float StretchY(float y);
+	void Initialise();
 	void ProcessStreaming(char bImmediately);
 	void UserInput();
 	void RedefineScreenUserInput(int enter, int exit);
@@ -437,22 +466,31 @@ public:
 	bool CheckFrontEndRightInput();
 	bool CheckFrontEndLeftInput();
 	void CheckSliderMovement(char count);
-	void ProcessUserInput(int a2, char bDown, char bUp,char bEnter, char bExit, char wheel);
+	void CentreMousePointer();
+	void ProcessUserInput(char bDown, char bUp,char bEnter, char bExit, char wheel);
 	void DrawBackground();
 	char PrintMap();
 	char DrawControllerSetupScreen();
 	void DrawQuitGameScreen();
-	char DrawStandardMenus(char a2);
+	char DrawStandardMenus(char DrawTitel);
+	void DrawFrontEnd();
 	char SmallMessageScreen(char* Key);
 	void ResetHelperText();
 	int SetHelperText(int a2);
+	void SetFrontendRenderStates();
 	char DisplayHelperText(char * text);
-
+	char PrintStats();
+	char PrintBriefs();
+	char PrintRadioStationList();
 	int DisplaySlider(float x, float y, float Height, float Height2, float Width, float progress, signed int rgbaColor);
 	void DefinedState2d();
+	bool CheckHover(int left, int right, int bottom, int top);
 	static  MyDisplayoptions CustomOptions;
+	static MainMenuStrip MyMainMenu;
 	static void MyInit();
+	static CRect MainMenuMapRect;
 
+	
 };
 
 

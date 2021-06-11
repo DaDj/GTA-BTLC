@@ -15,6 +15,8 @@
 #include "../game_sa/RenderWare.h"
 #include "d3d9.h"
 
+
+
 namespace BUGFIX
 {
 	/// <summary>

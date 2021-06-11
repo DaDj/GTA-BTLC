@@ -1,6 +1,11 @@
 #include "common.h"
 #include "CGeneral.h"
 
+char *gString = (char *)0xB71670;
+
+char *gta_empty_string = (char *)0x858B54;
+
+float &GAME_GRAVITY = *(float *)0x863984;
 
 CVector FindPlayerCoors(int playerId)
 {

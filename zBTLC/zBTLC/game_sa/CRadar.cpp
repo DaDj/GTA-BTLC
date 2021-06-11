@@ -2,6 +2,8 @@
 #include "CMenuManager.h"
 #include "RenderWare.h"
 #include "CHud.h"
+#include "CPad.h"
+#include "CHudColours.h"
 
 float CRadar::Radar_Height = 70.0f;
 float CRadar::Radar_Width = 100.0f;
@@ -474,6 +476,24 @@ void CRadar::AddBlipToLegendList(unsigned char arg0, int blipArrId)
 void CRadar::SetMapCentreToPlayerCoords()
 {
 	((void(__cdecl *)())0x585B20)();
+}
+
+void CRadar::SetMapCentreToCoords(float x, float y)
+{
+	FrontEndMenuManager.drawRadarOrMap = 1;
+	CRadar::InitFrontEndMap();
+	CVector2D Coords;
+	Coords.x = x;
+	Coords.y = y;
+	CVector2D Coordsout;
+	TransformRealWorldPointToRadarSpace(Coordsout, Coords);
+	LimitRadarPoint(Coordsout);
+	FrontEndMenuManager.drawRadarOrMap = 0;
+	FrontEndMenuManager.m_fMapBaseX = 320 - FrontEndMenuManager.m_fMapZoom + Coordsout.x;
+	FrontEndMenuManager.m_fMapBaseY =  FrontEndMenuManager.m_fMapZoom * Coordsout.y + 224.0f;
+	FrontEndMenuManager.m_vMousePos.x = Coords.x;
+	FrontEndMenuManager.m_vMousePos.y = Coords.y;
+	FrontEndMenuManager.drawRadarOrMap = 0;
 }
 
 // Converted from cdecl void CRadar::Draw3dMarkers(void) 0x585BF0

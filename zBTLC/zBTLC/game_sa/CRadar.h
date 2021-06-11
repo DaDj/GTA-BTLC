@@ -240,6 +240,7 @@ public:
 	static void InitFrontEndMap();
 	static void AddBlipToLegendList(unsigned char arg0, int blipArrId);
 	static void SetMapCentreToPlayerCoords();
+	static void SetMapCentreToCoords(float x, float y);
 	static void Draw3dMarkers();
 	static void SetRadarMarkerState(int arg0, unsigned char arg1);
 	static void DrawRadarSprite(unsigned short spriteId, float x, float y, unsigned char alpha);

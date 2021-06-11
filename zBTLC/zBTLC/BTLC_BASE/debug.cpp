@@ -1,3 +1,4 @@
+
 #include "debug.h"
 #include <Windows.h>
 #include "../Patch/MemoryMgr.h"
@@ -18,17 +19,22 @@
 #include "../game_sa/CClothesBuilder.h"
 #include "../game_sa/CCamera.h"
 #include "../game_sa/FxManager_c.h"
-
+#include "../game_sa/CAEStaticChannel.h"
+#pragma once
 DebugMenuAPI gDebugMenuAPI;
 void(*DebugMenuProcess)(void);
 void(*DebugMenuRender)(void);
 static void stub(void) { };
+
+
 
 namespace debug
 {
 	
 	void init()
 	{
+	
+
 		debug_console();
 		MemoryVP::InjectHook(0x405E0A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 		MemoryVP::InjectHook(0x4062F2, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
@@ -126,8 +132,8 @@ namespace debug
 			RECT rDesktopRect;
 			GetWindowRect(hDesktop, &rDesktopRect);
 			// Update Position
-			//SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
-			SetWindowPos(hConsole, nullptr, rDesktopRect.left - rDesktopRect.right, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
+			SetWindowPos(hConsole, nullptr, rDesktopRect.right + 100, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
+			//SetWindowPos(hConsole, nullptr, rDesktopRect.left - rDesktopRect.right, 150, rect.right - rect.left, rect.bottom - rect.top + 100, 0);
 		}
 	}
 
@@ -167,6 +173,9 @@ namespace debug
 		CFont::SetOutlinePosition(1);
 		CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
 		CFont::PrintString(CHud::x_fac(200.0f), CHud::y_fac(5.0f), string);
+
+		/*sprintf(string, "zoom : %f", (float)FrontEndMenuManager.m_fMapZoom);
+		CFont::PrintString(CHud::x_fac(15.0f), CHud::y_fac(15.0f),string);*/
 	}
 
 	void draw_graphics_info()
@@ -201,5 +210,7 @@ namespace debug
 			DebugMenuInit();
 		}
 	}
+
+
 }
 
