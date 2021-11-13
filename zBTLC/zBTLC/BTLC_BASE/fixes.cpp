@@ -113,6 +113,12 @@ namespace BUGFIX
 
 		////wheel trun speed
 		MemoryVP::Patch<float>(0x871058, 0.1f);
+
+		////More precise Rotations for placed objects --> change 0.5f to 0.000009.
+		// Fixes that small rotations weren't done properly
+		float* Float_001 = (float*)(0x858C14); //0.000009 float number
+		MemoryVP::Patch<void*>(0x5381DC, &Float_001);
+		MemoryVP::Patch<void*>(0x5381F2, &Float_001);
 	}
 
 

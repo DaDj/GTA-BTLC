@@ -4,6 +4,8 @@
 #include "CHud.h"
 #include "CPad.h"
 #include "CHudColours.h"
+#include "CText.h"
+#include "CFont.h"
 
 float CRadar::Radar_Height = 70.0f;
 float CRadar::Radar_Width = 100.0f;
@@ -86,7 +88,238 @@ int CRadar::GetActualBlipArrayIndex(int blipIndex)
 // Converted from cdecl void CRadar::DrawLegend(int x,int y,int blipType) 0x5828A0
 void CRadar::DrawLegend(int x, int y, int blipType)
 {
-	((void(__cdecl *)(int, int, int))0x5828A0)(x, y, blipType);
+	//((void(__cdecl *)(int, int, int))0x5828A0)(x, y, blipType);
+
+	char *str;
+	switch (blipType)
+	{
+	case 3:
+		str = TheText.Get("LG_01");
+		break;
+	case 5:
+		str = TheText.Get("LG_02");
+		break;
+	case 6:
+		str = TheText.Get("LG_03");
+		break;
+	case 7:
+		str = TheText.Get("LG_04");
+		break;
+	case 8:
+		str = TheText.Get("LG_05");
+		break;
+	case 9:
+		str = TheText.Get("LG_06");
+		break;
+	case 10:
+		str = TheText.Get("LG_07");
+		break;
+	case 12:
+		str = TheText.Get("LG_09");
+		break;
+	case 13:
+		str = TheText.Get("LG_10");
+		break;
+	case 14:
+		str = TheText.Get("LG_11");
+		break;
+	case 15:
+		str = TheText.Get("LG_12");
+		break;
+	case 16:
+		str = TheText.Get("LG_13");
+		break;
+	case 18:
+		str = TheText.Get("LG_15");
+		break;
+	case 19:
+		str = TheText.Get("LG_16");
+		break;
+	case 20:
+		str = TheText.Get("LG_17");
+		break;
+	case 21:
+		str = TheText.Get("LG_18");
+		break;
+	case 22:
+		str = TheText.Get("LG_19");
+		break;
+	case 23:
+		str = TheText.Get("LG_20");
+		break;
+	case 24:
+		str = TheText.Get("LG_21");
+		break;
+	case 25:
+		str = TheText.Get("LG_22");
+		break;
+	case 26:
+		str = TheText.Get("LG_23");
+		break;
+	case 27:
+		str = TheText.Get("LG_24");
+		break;
+	case 28:
+		str = TheText.Get("LG_25");
+		break;
+	case 29:
+		str = TheText.Get("LG_26");
+		break;
+	case 30:
+		str = TheText.Get("LG_27");
+		break;
+	case 31:
+		str = TheText.Get("LG_28");
+		break;
+	case 32:
+		str = TheText.Get("LG_29");
+		break;
+	case 33:
+		str = TheText.Get("LG_30");
+		break;
+	case 34:
+		str = TheText.Get("LG_31");
+		break;
+	case 35:
+		str = TheText.Get("LG_32");
+		break;
+	case 36:
+		str = TheText.Get("LG_33");
+		break;
+	case 63:
+		str = TheText.Get("LG_34");
+		break;
+	case 38:
+		str = TheText.Get("LG_35");
+		break;
+	case 39:
+		str = TheText.Get("LG_36");
+		break;
+	case 40:
+		str = TheText.Get("LG_37");
+		break;
+	case 42:
+		str = TheText.Get("LG_39");
+		break;
+	case 43:
+		str = TheText.Get("LG_40");
+		break;
+	case 44:
+		str = TheText.Get("LG_41");
+		break;
+	case 45:
+		str = TheText.Get("LG_42");
+		break;
+	case 46:
+		str = TheText.Get("LG_43");
+		break;
+	case 47:
+		str = TheText.Get("LG_44");
+		break;
+	case 48:
+		str = TheText.Get("LG_45");
+		break;
+	case 49:
+		str = TheText.Get("LG_46");
+		break;
+	case 50:
+		str = TheText.Get("LG_47");
+		break;
+	case 51:
+		str = TheText.Get("LG_48");
+		break;
+	case 52:
+		str = TheText.Get("LG_51");
+		break;
+	case 53:
+		str = TheText.Get("LG_52");
+		break;
+	case 54:
+		str = TheText.Get("LG_53");
+		break;
+	case 55:
+		str = TheText.Get("LG_57");
+		break;
+	case 58:
+		str = TheText.Get("LG_58");
+		break;
+	case 59:
+		str = TheText.Get("LG_59");
+		break;
+	case 60:
+		str = TheText.Get("LG_60");
+		break;
+	case 61:
+		str = TheText.Get("LG_61");
+		break;
+	case 62:
+		str = TheText.Get("LG_62");
+		break;
+	case 37:
+		str = TheText.Get("LG_63");
+		break;
+	case 41:
+		str = TheText.Get("LG_64");
+		break;
+	case 11:
+		str = TheText.Get("LG_66");
+		break;
+	case 17:
+		str = TheText.Get("LG_67");
+		break;
+	case 57:
+		str = TheText.Get("LG_65");
+		break;
+	case 4294967295:
+		str = TheText.Get("LG_49");
+		break;
+	case 4294967294:
+		str = TheText.Get("LG_50");
+		break;
+	case 4294967293:
+		str = TheText.Get("LG_54");
+		break;
+	case 4294967292:
+		str = TheText.Get("LG_55");
+		break;
+	case 4294967291:
+		str = TheText.Get("LG_56");
+		break;
+	default:
+		str = TheText.Get("LG_00");
+		break;
+	}
+
+	CFont::SetBackground(0, 0);
+	CFont::SetProp(1);
+	CFont::SetAlignment(ALIGN_LEFT);
+	CFont::SetFontStyle(FONT_MENU);
+	CFont::SetScale(CHud::x_fac(0.4f), CHud::y_fac(0.35f));
+	CFont::SetOutlinePosition(0);
+	CFont::SetColor(HudColour.GetRGB(HUD_COLOUR_WHITE, 255));
+	CFont::SetDropColor(HudColour.GetRGB(HUD_COLOUR_BLACK, 255));
+
+	CFont::PrintString(x + CHud::x_fac(15.0f), y + CHud::y_fac(5.0f), str);
+	
+
+	if (blipType < 0)
+	{
+		//CSprite2d::Draw2DPolygon()
+	}
+	else
+	{
+		CRGBA Color = CRGBA::CRGBA (255, 255, 255, 255);
+		CRect BlipRect = CRect::CRect();
+		BlipRect.m_fLeft = x ;
+		BlipRect.m_fRight = x + CHud::x_fac(15.0f);
+		BlipRect.m_fTop = y;
+		BlipRect.m_fBottom = y + CHud::y_fac(15.0f);
+
+		CRadar::RadarBlipSprites[blipType].Draw(BlipRect, Color);
+		
+	}
+
+
 }
 
 // Converted from cdecl float CRadar::LimitRadarPoint(CVector2D &point) 0x5832F0

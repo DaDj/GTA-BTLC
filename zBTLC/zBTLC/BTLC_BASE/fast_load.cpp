@@ -13,7 +13,7 @@
 
 namespace fastload 
 {
-#define SKIP_LOADSCREEN  0
+#define SKIP_LOADSCREEN  1
 	static int prevDisplayedSplash = 1;
 	static float Loadscreen_Time = 1.01f;
 	
@@ -41,7 +41,7 @@ namespace fastload
 	{
 	MemoryVP::Nop(0x747483, 6);         // Disable gGameState = 0 setting
 	MemoryVP::Patch<int>(0xC8D4C0, 5);  // Put the game where the user wants (default's to the copyright screen)
-		MemoryVP::InjectHook(0x590AE4, 0x590C9E, PATCH_JUMP);  // Skip fading screen rendering
+	MemoryVP::InjectHook(0x590AE4, 0x590C9E, PATCH_JUMP);  // Skip fading screen rendering
 
 		MemoryVP::Nop(0x590ADE + 5, 1);
 		MemoryVP::InjectHook(0x590ADE, &IncreaseDisplayedSplash, PATCH_CALL);

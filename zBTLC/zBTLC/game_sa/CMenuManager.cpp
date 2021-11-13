@@ -20,8 +20,9 @@
 MyDisplayoptions  CMenuManager::CustomOptions = { 0,800,600,0 };
 
 MainMenuStrip  CMenuManager::MyMainMenu;
-
 CRect CMenuManager::MainMenuMapRect = CRect::CRect();
+
+
 
 CMenuManager &FrontEndMenuManager = *(CMenuManager *)0xBA6748;
 CMenuPage	*MenuPages = (CMenuPage *)0x8CE008;
@@ -661,7 +662,9 @@ void CMenuManager::DrawBackground()
 	BackgrndRect.m_fRight = RsGlobal.maximumWidth;
 	BackgrndRect.m_fTop = 0;
 	BackgrndRect.m_fBottom = RsGlobal.maximumHeight;
-	CSprite2d::DrawRect(BackgrndRect, CRGBA::CRGBA(0, 0, 0, 255));
+	CSprite2d::DrawRect(BackgrndRect, CRGBA::CRGBA(20, 20, 20, 255));
+
+
 
 	FrontEndMenuManager.m_nBackgroundSprite = SpriteID;
 	if (m_nBackgroundSprite)
@@ -692,9 +695,17 @@ void CMenuManager::DrawBackground()
 
 		BackgrndRect.m_fRight = RsGlobal.maximumWidth;
 		BackgrndRect.m_fBottom = RsGlobal.maximumHeight;
-		FrontEndMenuManager.m_apBackgroundTextures[SpriteID - 13].Draw(BackgrndRect, CRGBA::CRGBA(255, 255, 255, 255));
+		FrontEndMenuManager.m_apBackgroundTextures[SpriteID - 13].Draw(BackgrndRect, CRGBA::CRGBA(100, 100, 100, 255));
 	}
+	
 
+	/*CRect Contentcrect;
+	Contentcrect.m_fLeft = StretchX(10);
+	Contentcrect.m_fRight = RsGlobal.maximumWidth - StretchX(10);
+	Contentcrect.m_fTop = StretchY(90);
+	Contentcrect.m_fBottom = RsGlobal.maximumHeight - StretchY(90);
+	CSprite2d::DrawRect(Contentcrect, CRGBA::CRGBA(0, 0, 0, 80));
+*/
 	if (m_nCurrentMenuPage == MENUPAGE_MAP)
 	{
 		float tmpMapBaseX = m_fMapBaseX;
@@ -1037,14 +1048,27 @@ char CMenuManager::PrintMap()
 			
 		}
 	}
-
+	
 	CRadar::DrawBlips();
 	DrawNormalRadarMap = true;
-	m_bMapLegend = 1;
-	for (int i = 0; i < CRadar::MapLegendCounter; i++)
+
+	if (m_bMapLegend)
 	{
-		CRadar::DrawLegend(50.0, RsGlobal.maximumHeight - StretchY(60.0f) - StretchY(15 * i), CRadar::MapLegendList[i]);
+		if (CRadar::MapLegendCounter > 9)
+			CSprite2d::DrawRect(CRect::CRect(-1, StretchY(60.0f), StretchX(250.0f), RsGlobal.maximumHeight - StretchY(61.0f)), CRGBA::CRGBA(0, 0, 0, 150));
+		else
+			CSprite2d::DrawRect(CRect::CRect(-1, StretchY(60.0f), StretchX(150.0f), StretchY(80.0f) + StretchY(30 * CRadar::MapLegendCounter)), CRGBA::CRGBA(0, 0, 0, 150));
+
+		for (int i = 0; i < CRadar::MapLegendCounter; i++)
+		{
+			if (i > 9)
+				CRadar::DrawLegend(StretchX(120.0f), StretchY(80.0f) + StretchY(30 * i) - StretchY(30 * 10), CRadar::MapLegendList[i]);
+			else
+				CRadar::DrawLegend(StretchX(5.0f), StretchY(80.0f) + StretchY(30 * i), CRadar::MapLegendList[i]);
+		}
 	}
+	DisplayHelperText("FEH_MPH");
+
 	drawRadarOrMap = 0;
 	return true;
 }
@@ -1095,8 +1119,8 @@ char CMenuManager::DrawStandardMenus(char DrawTitel)
 			CFont::PrintString(StretchX(28.0), StretchY(30.0), TheText.Get(MenuPages[m_nCurrentMenuPage].m_szTitleName));
 		}
 	}
-	CSprite2d::DrawRect(CRect::CRect(StretchX(0), StretchY(0), RsGlobal.maximumWidth, StretchY(60)), CRGBA::CRGBA(10, 10, 10, 200));
-
+	CSprite2d::DrawRect(CRect::CRect(StretchX(-1), StretchY(-1), RsGlobal.maximumWidth, StretchY(60)), CRGBA::CRGBA(0, 0, 0, 230));
+	CSprite2d::DrawRect(CRect::CRect(-1, RsGlobal.maximumHeight - StretchY(60.0f), RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(0, 0, 0, 230));
 	//Main MEnu on Top//
 	float MultRes = 1;
 	CFont::SetAlignment(ALIGN_CENTER);
