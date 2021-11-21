@@ -644,6 +644,7 @@
     <ClCompile Include="game_sa\CWeapon.cpp" />
     <ClCompile Include="game_sa\CWeaponInfo.cpp" />
     <ClCompile Include="game_sa\CWeaponModelInfo.cpp" />
+    <ClCompile Include="game_sa\CWeather.cpp" />
     <ClCompile Include="game_sa\CWorld.cpp" />
     <ClCompile Include="game_sa\CZone.cpp" />
     <ClCompile Include="game_sa\FxBox_c.cpp" />
@@ -1191,6 +1192,7 @@
     <ClInclude Include="game_sa\CWeaponAudio.h" />
     <ClInclude Include="game_sa\CWeaponInfo.h" />
     <ClInclude Include="game_sa\CWeaponModelInfo.h" />
+    <ClInclude Include="game_sa\CWeather.h" />
     <ClInclude Include="game_sa\CWorld.h" />
     <ClInclude Include="game_sa\CZone.h" />
     <ClInclude Include="game_sa\eax4.h" />

@@ -35,7 +35,7 @@ namespace debug
 	{
 	
 
-		debug_console();
+		//debug_console();
 		MemoryVP::InjectHook(0x405E0A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 		MemoryVP::InjectHook(0x4062F2, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 		MemoryVP::InjectHook(0x5B892A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);

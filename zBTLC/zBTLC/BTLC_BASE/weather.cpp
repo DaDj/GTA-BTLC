@@ -10,7 +10,9 @@
 
 #include "../Patch/MemoryMgr.h"
 #include "../game_sa/CStreaming.h"
-
+#include "../game_sa/CWorld.h"
+#include "../game_sa/common.h"
+#include "../game_sa/CCamera.h"
 
 namespace weather
 {
@@ -20,11 +22,21 @@ namespace weather
 	///</summary>
 	void enhanced_rain()
 	{
-		for (int a = 0; a < 38; a++)
-		{
-			((void(_cdecl*)())0x72AF70)();
-		}
+		CVector CameraPos = TheCamera.m_matrix->pos;
+		CColPoint v29;
+		CEntity *v27;
+		CStoredCollPoly duemmy;
 
+		bool bRoof = CWorld::ProcessVerticalLine(CameraPos, 40.0f, v29, v27, 1, 1, 0, 0, 0, 0, &duemmy);
+
+		if (!bRoof)
+		{
+			for (int a = 0; a < 20; a++)
+			{
+				((void(_cdecl*)())0x72AF70)();
+			}
+		}
+		 
 	}
 
 
@@ -96,11 +108,12 @@ namespace weather
 	void enhanced_rain_init()
 	{
 		static float
-			rainstreak_pos = 3.0f,//
-			rainstreak_size = 3.0,//
-			rainstreak_posx_rand = 1.5f,
-			rainstreak_posy_rand = 2.0f,
-			rainstreak_alpha = 0.3f,
+			rainstreak_pos = 4.0f,//
+			rainstreak_size = 2.0,//
+			rainstreak_posx_rand = 3.5f,
+			rainstreak_posy_rand = 3.0f,
+			rainstreak_posz_rand = 3.0f,
+			rainstreak_alpha = 0.75f,
 			rainsplash_val2 = 4.1f,//
 			rainsplash_val1 = 8.1f, //
 			rainsplash_loop = 10.0f,
@@ -117,13 +130,18 @@ namespace weather
 		MemoryVP::Patch<float*>(0x72B289 + 2, &rainstreak_alpha);//alpha
 		MemoryVP::Patch<float*>(0x72B3CA + 2, &rainstreak_posy_rand);//random posy
 		MemoryVP::Patch<float*>(0x72B3A7 + 2, &rainstreak_posx_rand);//random posx
+		MemoryVP::Patch<float*>(0x72B418 + 2, &rainstreak_posz_rand);//random posx
+		//MemoryVP::Patch<BYTE>(0x72B516 + 2, 64);
 
 		//rain splashes stuff(textures on the ground)
 		MemoryVP::Patch<float*>(0x72AD12 + 2, &rainsplash_val1);
 		MemoryVP::Patch<float*>(0x72ACEB + 2, &rainsplash_val1);
 		MemoryVP::Patch<float*>(0x72AD1C + 2, &rainsplash_val2);
 		MemoryVP::Patch<float*>(0x72ACF5 + 2, &rainsplash_val2);
-		MemoryVP::Patch<float*>(0x72AB16 + 2, &rainsplash_loop);
+		//MemoryVP::Patch<float*>(0x72AB16 + 2, &rainsplash_loop); // is wrong
+		MemoryVP::Patch<float>(0x72AB8C +1,  0.5f); // alpha
+		MemoryVP::Patch<INT>(0x72AB58 + 1, 32); //number of splahes
+
 		MemoryVP::Patch<float>(0x72AB87 + 1, 0.04f); //splashsize
 
 		//rain clouds/smoke(on the ground)
@@ -163,7 +181,6 @@ namespace weather
 
 		//hook weather effects
 		MemoryVP::InjectHook(0x53E126, &weather_effects);
-
 	}
 	
 }

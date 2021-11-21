@@ -252,12 +252,12 @@ struct MainMenuStrip
 class CMenuManager
 {
 public:
-	char field_0;
+	char m_bStatScrollUp;
 	char field_1[3];
 	float               m_fStatsScrollSpeed;
 	char field_8;
 	char field_9[23];
-	char field_20;
+	char m_bVibration;
 	bool                m_bHudOn;
 	char field_22[2];
 	int             m_dwRadarMode;
@@ -274,8 +274,11 @@ public:
 	int             m_dwBrightness;
 	float               m_fDrawDistance;
 	bool                m_bShowSubtitles;
-	char field_45[4];
-	char field_49;
+	bool m_bMapShowLocations;
+	bool m_bMapShowContacts;
+	bool m_bMapShowMission;
+	bool m_bMapShowOther;
+	bool m_bMapShowGangArea;
 	bool                m_bMapLegend;
 	bool                m_bWidescreenOn;
 	bool                m_bFrameLimiterOn;
@@ -301,7 +304,7 @@ public:
 	float               m_fMapBaseX;
 	float               m_fMapBaseY;
 	CVector2D           m_vMousePos;
-	char DrawNormalRadarMap;
+	char m_bMapLoaded;
 	char field_79[3];
 	int titleLanguage;
 	int textLanguage;
@@ -312,7 +315,9 @@ public:
 	bool                m_bLanguageChanged;
 	char field_8D[3];
 	int field_90;
-	char field_94[24];
+	int field_94;
+	char *m_pJPegBuffer; //!< +0x98  \see JPegCompress file
+	char field_9C[16];
 	int field_AC;
 	char              m_nRadioMode;
 	char invertPadX1;
@@ -321,7 +326,7 @@ public:
 	char invertPadY2;
 	char swapPadAxis1;
 	char swapPadAxis2;
-	char field_B7;
+	char m_bInVehicleControlsScreen;
 	bool                m_bDrawMouse;
 	char field_B9[3];
 	int             m_dwMousePosLeft;
@@ -341,9 +346,9 @@ public:
 	bool                m_bSavePhotos;
 	bool                m_bMainMenuSwitch;
 	char              m_nPlayerNumber;
-	char field_EB;
+	char m_bReinitLanguageSettings;
 	int field_EC;
-	int field_F0;
+	int m_nEnteredKey;
 	char field_F4;
 	char field_F5[3];
 	//union{
@@ -361,7 +366,7 @@ public:
 	unsigned char     m_nCurrentMenuPage;
 	char				 m_nPreviousMenuPage;
 	unsigned char       m_bSelectedSaveGame;
-	char field_160;
+	char m_nSelectedMissionPack;
 	char field_161;
 	char                m_mpackName[8];
 	char field_16A[6486];
@@ -404,17 +409,17 @@ public:
 	char field_1B15;
 	char field_1B16;
 	char field_1B17;
-	int					m_dwHelperText;
+	int					m_nHelperTextIndex;
 	int field_1B1C;
 	unsigned char       m_nTexturesRound;
 	unsigned char       m_nNumberOfMenuOptions;
 	short field_1B22;
-	int field_1B24;
-	char				bMapDataLoadedMAYBE;
+	int m_nStatBarPerformanceTimer;
+	char				m_bUpdateMap;
 	char field_1B29;
 	short field_1B2A;
-	int m_snTimeMapLoadStart;
-	int field_1B30;
+	int m_nMapTimer;
+	int m_nBriefHistoryTimer;
 	short bDisablePlayerControl;
 	short field_1B36;
 	int field_1B38;

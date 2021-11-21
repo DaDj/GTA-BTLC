@@ -91,7 +91,7 @@ void CMenuManager::Initialise()
 	if (!field_F4)
 	{
 		m_nCurrentMenuPage = MENUPAGE_QUIT_GAME_2;
-		DrawNormalRadarMap = 1;
+		m_bMapLoaded = 0;
 		m_dwOldMousePosLeft = 0;
 		m_dwOldMousePosTop = 0;
 		m_bDrawMouse = 0;
@@ -985,33 +985,34 @@ char CMenuManager::PrintMap()
 
 
 
-	if (DrawNormalRadarMap)
+	if (m_bMapLoaded)
 	{
 		if (field_5A && !m_bAllStreamingStuffLoaded)
 		{
-			m_snTimeMapLoadStart = CTimer::m_snTimeInMillisecondsPauseMode;
-			bMapDataLoadedMAYBE = 0;
+			m_nMapTimer = CTimer::m_snTimeInMillisecondsPauseMode;
+			m_bUpdateMap = 0;
 		}
 
-		if (CTimer::m_snTimeInMillisecondsPauseMode - m_snTimeMapLoadStart > 3500)
-			bMapDataLoadedMAYBE = 1;
+		if (CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer > 150)
+			m_bUpdateMap = 1;
 
 	}
 	else
 	{
-		m_snTimeMapLoadStart = CTimer::m_snTimeInMillisecondsPauseMode;
-		bMapDataLoadedMAYBE = 0;
+		m_nMapTimer = CTimer::m_snTimeInMillisecondsPauseMode;
+		m_bUpdateMap = 0;
 	}
 
-
-	if (DrawNormalRadarMap)
+	//BLue Background
+	CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, 255));
+	if (m_bMapLoaded)
 	{
 		if (m_bAllStreamingStuffLoaded)
 			field_5A = false;
 
-		if (bMapDataLoadedMAYBE)
+		if (m_bUpdateMap && !m_bAllStreamingStuffLoaded)
 		{
-			CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, 255));
+		
 			
 			for ( int iA = 0; iA < 12; iA++)
 			{
@@ -1041,16 +1042,29 @@ char CMenuManager::PrintMap()
 			
 			}
 		
-			
+		
 			
 			//CSprite2d::DrawRect(CRect::CRect(StretchX(60.0f), RsGlobal.maximumHeight - StretchY(60.0f), RsGlobal.maximumWidth- StretchX(60.0f) , RsGlobal.maximumHeight), CRGBA::CRGBA(0, 0, 0, 100));
 			//CSprite2d::DrawRect(CRect::CRect(0, StretchY(60.0f), StretchX(60.0f), RsGlobal.maximumHeight), CRGBA::CRGBA(0, 0, 0, 100));
+
+
 			
 		}
 	}
 	
+
+
+
 	CRadar::DrawBlips();
-	DrawNormalRadarMap = true;
+	m_bMapLoaded = true;
+
+
+	//Loading Fade
+	float fProgress = min(1.0f,(CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer)/400.0f);
+	int MyFadeAlpha = max(((pow(2, 8 * fProgress) - 1) / 255)*255,0);
+	if (MyFadeAlpha > 0)
+		CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, (255 -MyFadeAlpha)));
+
 
 	if (m_bMapLegend)
 	{
@@ -1108,7 +1122,7 @@ char CMenuManager::DrawStandardMenus(char DrawTitel)
 	DrawTitel = 0;
 	if (DrawTitel && MenuPages[m_nCurrentMenuPage].m_szTitleName[0])
 	{
-		if (m_nCurrentMenuPage != MENUPAGE_MAP || !DrawNormalRadarMap)
+		if (m_nCurrentMenuPage != MENUPAGE_MAP || !m_bMapLoaded)
 		{
 			CFont::SetAlignment(ALIGN_LEFT);
 			CFont::SetFontStyle(FONT_PRICEDOWN);

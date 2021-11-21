@@ -1504,6 +1504,9 @@
     <ClCompile Include="game_sa\CPcSave.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CWeather.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3299,6 +3302,9 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CPcSave.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CWeather.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
