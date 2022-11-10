@@ -1507,6 +1507,12 @@
     <ClCompile Include="game_sa\CWeather.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="BTLC_BASE\My_Soundeffects.cpp">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CAEStreamingChannel.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3305,6 +3311,12 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CWeather.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="BTLC_BASE\My_Soundeffects.h">
+      <Filter>BTLC_BASE\features</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CAEStreamingChannel.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>

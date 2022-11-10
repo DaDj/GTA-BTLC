@@ -39,14 +39,11 @@ namespace My_PlayerWallhitreactions
 		if (FindPlayerPed() && !FindPlayerPed()->m_bInVehicle && FindPlayerPed()->IsAlive())
 		{
 			CVector Position = FindPlayerPed()->TransformFromObjectSpace(CVector(0.0f, 0.6f, 0.6f));
-			CVector PlayerPosition = FindPlayerCoors(-1);
 			CVector Playerspeed = FindPlayerSpeed(-1);
 			CPed* Playa = FindPlayerPed();
 			eTaskType activetask = Playa->m_pIntelligence->m_TaskMgr.GetActiveTask()->GetId();
 			time_check = CTimer::m_snTimeInMilliseconds - (time_last_hit);
-			Wall_inway_test = CWorld::GetIsLineOfSightClear(PlayerPosition, Position, 1, 0, 0, 0, 0, 0, 0);
-
-
+			Wall_inway_test = CWorld::GetIsLineOfSightClear(FindPlayerCoors(-1), Position, 1, 0, 0, 0, 0, 0, 0);
 
 			if (time_check < 20 && activetask != TASK_COMPLEX_JUMP && activetask != TASK_SIMPLE_FALL && activetask != TASK_COMPLEX_FALL_AND_GET_UP)
 				Playa->m_pIntelligence->m_TaskMgr.ClearTaskEventResponse();
@@ -57,7 +54,6 @@ namespace My_PlayerWallhitreactions
 				&& activetask != TASK_COMPLEX_CLIMB && activetask != TASK_SIMPLE_CLIMB && activetask != TASK_COMPLEX_JUMP
 				&& activetask != TASK_SIMPLE_JUMP && activetask != TASK_SIMPLE_DUCK && activetask != TASK_SIMPLE_FALL)
 			{
-
 				if ((abs(Playerspeed.x) >= 0.12 || abs(Playerspeed.y) > 0.12) )
 				{
 					Playa->m_pIntelligence->m_TaskMgr.SetTask(new CTaskSimpleHitWall, 1, false);
@@ -68,7 +64,6 @@ namespace My_PlayerWallhitreactions
 				{
 					Playa->m_pIntelligence->m_TaskMgr.SetTask(new CTaskSimpleStandStill(20, 1, 1, 2.0), 2, false);
 					time_last_hit = CTimer::m_snTimeInMilliseconds;
-					
 				}
 			}
 		}

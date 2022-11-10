@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////
 //#define _DEBUG 
 float VERSION = 0.5f;
-
+#include <initguid.h> //for EAX
 #include "BTLC_BASE\debug.h"
 #include "BTLC_BASE\fixes.h"
 #include "BTLC_BASE\weather.h"
@@ -35,6 +35,7 @@ float VERSION = 0.5f;
 #include "BTLC_BASE\My_CCam.h"
 #include "BTLC_BASE/My_FxTool.h"
 #include "BTLC_BASE/My_SkinSelector.h"
+#include "BTLC_BASE/My_Soundeffects.h"
 #include "BTLC_BASE/IniReader.h"
 
 #include "game_sa\CObject.h"
@@ -50,6 +51,7 @@ float VERSION = 0.5f;
 #include "game_sa/CVehicleModelInfo.h"
 #include "game_sa/CCarFxRender.h"
 #include "game_sa/CVehicle.h"
+#include "game_sa/CAEStreamingChannel.h"
 
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -92,9 +94,11 @@ void Function_starter()
 	My_PlayerWallhitreactions::init();	//Wallhitanimations for player
 	My_GPS::init();						//GPS for cars like in IV
 	My_CCam::INIT();					//IV Styled AIM CAM
+	CMySoundeffects::Init();			//Sound effects for examplereverb in tunnels
+
 
 #ifdef ModdingTools
-	//My_FxTool::init();		//FX Tool.
+	My_FxTool::init();		//FX Tool.
 	My_SkinSelector::Init();
 #endif // ModdingTools
 
@@ -106,6 +110,7 @@ void Function_starter()
 	CPed::My_Init();					//Armed Animations for Peds
 	CCarFxRender::MyInit();				//New Dirt on Cars and lights mechanics
 	CVehicle::MyInit();					//Support for IVF Lights
+	CAEStreamingChannel::MyInit();	//Disable BassEQ stuff for now(crashes with dsound)
 
 	CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
 	CTrafficlights::Set_Trafficlight_models();	//Trafficlight changes

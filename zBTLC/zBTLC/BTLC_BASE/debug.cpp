@@ -20,6 +20,7 @@
 #include "../game_sa/CCamera.h"
 #include "../game_sa/FxManager_c.h"
 #include "../game_sa/CAEStaticChannel.h"
+#include "../game_sa/CWeather.h"
 #pragma once
 DebugMenuAPI gDebugMenuAPI;
 void(*DebugMenuProcess)(void);
@@ -200,17 +201,13 @@ namespace debug
 			DebugMenuProcess = stub;
 			DebugMenuRender = stub;
 		}
-
 	}
 
 	void DebugMenuSetup()
 	{
-
 		if (DebugMenuLoad()) {
 			DebugMenuInit();
 		}
 	}
-
-
 }
 

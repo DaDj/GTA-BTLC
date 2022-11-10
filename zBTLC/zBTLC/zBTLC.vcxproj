@@ -71,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetExt>.asi</TargetExt>
-    <OutDir>..\..\..\..\..\..\..\Rockstar Games\IV to SA Reborn  V5\plugins</OutDir>
+    <OutDir>F:\Modding\BTLC\03_Game\plugins</OutDir>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -172,6 +172,8 @@
     <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
     <ClCompile Include="BTLC_BASE\My_FxTool.cpp" />
     <ClCompile Include="BTLC_BASE\My_SkinSelector.cpp" />
+    <ClCompile Include="BTLC_BASE\My_Soundeffects.cpp" />
+    <ClCompile Include="game_sa\CAEStreamingChannel.cpp" />
     <ClCompile Include="game_sa\CAEWeatherAudioEntity.cpp" />
     <ClCompile Include="game_sa\CAnimationManager.cpp" />
     <ClCompile Include="game_sa\CAudioengine.cpp" />
@@ -675,6 +677,7 @@
     <ClInclude Include="BTLC_BASE\ini_parser.hpp" />
     <ClInclude Include="BTLC_BASE\My_FxTool.h" />
     <ClInclude Include="BTLC_BASE\My_SkinSelector.h" />
+    <ClInclude Include="BTLC_BASE\My_Soundeffects.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DXSDK\8.0\dinput.h" />
     <ClInclude Include="DXSDK\8.0\include\d3d8.h" />
@@ -692,6 +695,7 @@
     <ClInclude Include="game_sa\CAEPedSpeechAudioEntity.h" />
     <ClInclude Include="game_sa\CAEPoliceScannerAudioEntity.h" />
     <ClInclude Include="game_sa\CAEStaticChannel.h" />
+    <ClInclude Include="game_sa\CAEStreamingChannel.h" />
     <ClInclude Include="game_sa\CAEWeaponAudioEntity.h" />
     <ClInclude Include="game_sa\CAEWeatherAudioEntity.h" />
     <ClInclude Include="game_sa\CAnimationManager.h" />

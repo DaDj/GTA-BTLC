@@ -1,6 +1,6 @@
 #include "My_SkinSelector.h"
 #include "debug.h"
-
+#include "../game_sa/CWeather.h"
 
 using namespace plugin;
 namespace My_SkinSelector
@@ -27,9 +27,6 @@ namespace My_SkinSelector
 			}
 			DebugMenuEntry *e = DebugMenuAddVar("BTLC", "Set Skin", &current_index, Set_skin , 1, 0, NumPeds, NULL);
 			DebugMenuEntrySetWrap(e, true);
-
-			DebugMenuAddCmd("BTLC", "Set Skin to Player", []() {Set_SkintoIndex(0); });
-			DebugMenuAddCmd("BTLC", "Set Skin to CluckinBell", []() {Set_SkintoIndex(154); });
 		};
 
 	}

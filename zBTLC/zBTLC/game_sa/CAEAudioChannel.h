@@ -33,4 +33,3 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CAEAudioChannel, 0x60);
