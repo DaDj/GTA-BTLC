@@ -49,9 +49,12 @@ int CMySoundeffects::SetReverbEnv()
 	if (  CHud::m_ZoneName && !_stricmp(CHud::m_ZoneName, "Easton"))
 		return EAX_ENVIRONMENT_CONCERTHALL;
 
-
+	
 	return EAX_ENVIRONMENT_CITY;
 }
+
+//Also check out that fucntion for audio zones. Pretty nice. basically already implemented
+//char __thiscall CAEAudioHardware::UpdateReverbEnvironment(CAEAudioHardware *this)
 
  void __fastcall CMySoundeffects::SetChannelAdditionalFX(CAEStaticChannel *channel, int, bool compressed) {
 	if (channel->m_pDirectSoundBuffer && channel->m_pDirectSound3DBuffer) {
@@ -66,6 +69,7 @@ int CMySoundeffects::SetReverbEnv()
 					gCurrentEnvironment = SetReverbEnv();
 			
 				propertySet->Set(EAXPROPERTYID_EAX40_FXSlot0, EAXREVERB_ENVIRONMENT, 0, 0, &gCurrentEnvironment, 4);
+			//	propertySet->Set(EAXPROPERTYID_EAX40_FXSlot0, EAXREVWER)
 				propertySet->Release();
 			}
 		}

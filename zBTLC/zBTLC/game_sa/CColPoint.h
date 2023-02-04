@@ -3,6 +3,17 @@
 #include "plbase/PluginBase_SA.h"
 #include "CVector.h"
 
+
+struct tColLighting {
+	union {
+		struct {
+			uint8 day : 4;
+			uint8 night : 4;
+		};
+		uint8 value;
+	};
+};
+
 #pragma pack(push, 4)
 class CColPoint
 {

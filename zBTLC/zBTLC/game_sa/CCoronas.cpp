@@ -5,9 +5,14 @@ float& CCoronas::SunScreenY = *(float *)0xC3E02C;
 unsigned char& CCoronas::SunBlockedByClouds = *(unsigned char *)0xC3E030;
 bool& CCoronas::bChangeBrightnessImmediately = *(bool *)0xC3E034;
 unsigned int& CCoronas::NumRegisteredCoronas = *(unsigned int *)0xC3E038;
-CRegisteredCorona *CCoronas::aCoronas = (CRegisteredCorona *)0xC3E058;
 float& CCoronas::LightsMult = *(float *)0x8D4B5C;
 unsigned int& CCoronas::MoonSize = *(unsigned int *)0x8D4B60;
+
+RwTexture* (&gpCoronaTexture)[CORONA_TEXTURES_COUNT] = *(RwTexture*(*)[CORONA_TEXTURES_COUNT])0xC3E000;
+CRegisteredCorona(&CCoronas::aCoronas)[MAX_NUM_CORONAS] = *(CRegisteredCorona(*)[MAX_NUM_CORONAS])0xC3E058;
+
+uint16(&CCoronas::ms_aEntityLightsOffsets)[8] = *(uint16(*)[8])0x8D5028;
+char(&coronaTexturesAlphaMasks)[260] = *(char(*)[260])0x8D4A58;
 
 void CCoronas::Init()
 {

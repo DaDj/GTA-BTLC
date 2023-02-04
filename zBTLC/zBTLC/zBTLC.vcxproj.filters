@@ -1513,6 +1513,30 @@
     <ClCompile Include="game_sa\CAEStreamingChannel.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CModelIndices.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CPtrList.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CPtrListDoubleLink.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CPtrListSingleLink.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CPtrNodeDoubleLink.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CPtrNodeSingleLink.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CMotionBlurStreaks.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CRegisteredMotionBlurStreak.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3045,45 +3069,6 @@
     <ClInclude Include="game_sa\CStreamingInfo.h">
       <Filter>game_sa</Filter>
     </ClInclude>
-    <ClInclude Include="game_sa\rw\rpcriter.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rperror.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rphanim.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rpmatfx.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rpskin.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rpuvanim.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rpworld.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rtanim.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rtdict.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rtquat.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rwcore.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\rwplcore.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sa\rw\skeleton.h">
-      <Filter>game_sa\rw</Filter>
-    </ClInclude>
     <ClInclude Include="BTLC_BASE\limits.h">
       <Filter>BTLC_BASE</Filter>
     </ClInclude>
@@ -3319,6 +3304,69 @@
     <ClInclude Include="game_sa\CAEStreamingChannel.h">
       <Filter>game_sa</Filter>
     </ClInclude>
+    <ClInclude Include="game_sa\rw\rpcriter.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rperror.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rphanim.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rpmatfx.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rpskin.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rpuvanim.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rpworld.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rtanim.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rtdict.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rtquat.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rwcore.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\rwplcore.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\rw\skeleton.h">
+      <Filter>game_sa\rw</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CModelIndices.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPtrListDoubleLink.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPtrListSingleLink.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPtrNode.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPtrNodeDoubleLink.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CPtrNodeSingleLink.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CMotionBlurStreaks.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CRegisteredMotionBlurStreak.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="changed_classes.txt">
@@ -3329,14 +3377,14 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="zBTLC.rc" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="game_sa\rw\errcom.def">
       <Filter>game_sa\rw</Filter>
     </None>
     <None Include="game_sa\rw\errcore.def">
       <Filter>game_sa\rw</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="zBTLC.rc" />
   </ItemGroup>
 </Project>

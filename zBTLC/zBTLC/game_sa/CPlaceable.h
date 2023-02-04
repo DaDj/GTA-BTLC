@@ -36,7 +36,7 @@ public:
     void SetMatrix(CMatrix  const& matrix);
     
     inline CVector &GetPosition() {
-        return m_matrix ? m_matrix->pos : m_placement.m_vPosn;
+        return m_matrix ? m_matrix->m_pos : m_placement.m_vPosn;
     }
 };
 #pragma pack(pop)

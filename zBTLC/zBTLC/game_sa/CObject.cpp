@@ -7,6 +7,13 @@
 #include "../stdafx.h"
 #include "../Patch/paths/Paths.h"
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
+uint16& CObject::nNoTempObjects = *(uint16*)(0xBB4A70);
+float& CObject::fDistToNearestTree = *(float*)0x8D0A20;
+bool& CObject::bAircraftCarrierSamSiteDisabled = *(bool*)0x8D0A24;
+bool& CObject::bArea51SamSiteDisabled = *(bool*)0xBB4A72;
+
+
 // Converted from thiscall void CObject::ProcessGarageDoorBehaviour(void) 0x44A4D0
 void CObject::ProcessGarageDoorBehaviour() {
     ((void(__thiscall *)(CObject*))0x44A4D0)(this);

@@ -72,7 +72,7 @@ namespace My_GPS
 			&& CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_nCounter == HIWORD(FrontEndMenuManager.m_nTargetBlipIndex)
 			&& CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_nBlipDisplayFlag
 			&& FindPlayerPed()
-			&& DistanceBetweenPoints(CVector2D(FindPlayerCoors(0)),
+			&& DistanceBetweenPoints2D(CVector2D(FindPlayerCoors(0)),
 				CVector2D(CRadar::ms_RadarTrace[LOWORD(FrontEndMenuManager.m_nTargetBlipIndex)].m_vPosition)) < MAX_TARGET_DISTANCE)
 		{
 			CRadar::ClearBlip(FrontEndMenuManager.m_nTargetBlipIndex);

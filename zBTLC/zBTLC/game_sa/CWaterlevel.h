@@ -3,7 +3,8 @@
 #define short short
 #define int int
 #define __int64 long long
-
+#include "CVector.h"
+//KEEP THAT! For the limit adjuster stuff
 /* 580 */
 struct CWaterVertex
 {
@@ -45,5 +46,9 @@ public:
 	static CWaterQuad Quads[601];
 	static CWaterTriangle Triangles[12];
 	static short QuadsandTrianglesList[801];
+
+
+	static bool GetWaterLevelNoWaves(CVector pos, float * pOutWaterLevel, float * fUnkn1, float * fUnkn2);
 };
+
 

@@ -29,7 +29,7 @@ public:
 	static void Initialise();
 	static CBaseModelInfo* GetModelInfo(char* name, int* index);
 	static CBaseModelInfo* GetModelInfoFromHashKey(unsigned int arg0, int* index);
-	static CBaseModelInfo* GetModelInfouint16_t(char* name, unsigned short* int16index);
+	static CBaseModelInfo* GetModelInfouint16_t(const char* name, unsigned short* int16index);
 	// get model in range (search for model only in range (min;max))
 	static CBaseModelInfo* GetModelInfo(char* name, int minIndex, int maxInedx);
 	static void* Get2dEffectStore();

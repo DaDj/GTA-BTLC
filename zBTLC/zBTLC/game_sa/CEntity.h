@@ -8,6 +8,26 @@
 #include "CColModel.h"
 #include "C2dEffect.h"
 
+
+
+class CObject;
+class CVehicle;
+class CTrain;
+class CBike;
+class CBmx;
+class CBoat;
+class CAutomobile;
+class CBike;
+class CTrain;
+class CPed;
+class CObject;
+class CBuilding;
+class CDummy;
+class CBuilding;
+class CDummy;
+class CPhysical;
+class CBaseModelInfo;
+
 #pragma pack(push, 4)
 class CEntity : public CPlaceable {
 protected:
@@ -135,6 +155,39 @@ public:
     void ProcessLightsForEntity();
     void RemoveEscalatorsForEntity();
     bool IsEntityOccluded();
+	void UpdateRW();
+	bool IsGlassModel();
+
+
+	 bool IsPhysical() const { return m_nType > ENTITY_TYPE_BUILDING && m_nType < ENTITY_TYPE_DUMMY; }
+	 bool IsNothing()  const { return m_nType == ENTITY_TYPE_NOTHING; }
+	 bool IsVehicle()  const { return m_nType == ENTITY_TYPE_VEHICLE; }
+ bool IsPed()      const { return m_nType == ENTITY_TYPE_PED; }
+bool IsObject()   const { return m_nType == ENTITY_TYPE_OBJECT; }
+bool IsBuilding() const { return m_nType == ENTITY_TYPE_BUILDING; }
+ bool IsDummy()    const { return m_nType == ENTITY_TYPE_DUMMY; }
+
+bool IsStatic() const { return m_bIsStatic || m_bIsStaticWaitingForCollision; } // 0x4633E0
+
+
+	auto AsPhysical() { return reinterpret_cast<CPhysical*>(this); }
+	auto AsVehicle() { return reinterpret_cast<CVehicle*>(this); }
+	auto AsAutomobile() { return reinterpret_cast<CAutomobile*>(this); }
+	auto AsAutomobile() const { return reinterpret_cast<const CAutomobile*>(this); }
+	auto AsBike() { return reinterpret_cast<CBike*>(this); }
+	auto AsBike()       const { return reinterpret_cast<const CBike*>(this); }
+	auto AsBmx() { return reinterpret_cast<CBmx*>(this); }
+	auto AsBmx()        const { return reinterpret_cast<const CBmx*>(this); }
+	auto AsBoat() { return reinterpret_cast<CBoat*>(this); }
+	auto AsBoat()       const { return reinterpret_cast<const CBoat*>(this); }
+	auto AsTrain() { return reinterpret_cast<CTrain*>(this); }
+	auto AsTrain()      const { return reinterpret_cast<const CTrain*>(this); }
+	auto AsPed() { return reinterpret_cast<CPed*>(this); }
+	auto AsObject() { return reinterpret_cast<CObject*>(this); }
+	auto AsBuilding() { return reinterpret_cast<CBuilding*>(this); }
+	auto AsDummy() { return reinterpret_cast<CDummy*>(this); }
+
+
 };
 #pragma pack(pop)
 

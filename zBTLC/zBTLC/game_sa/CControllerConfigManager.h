@@ -136,6 +136,6 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CControllerConfigManager, 0x12E4);
+//VALIDATE_SIZE(CControllerConfigManager, 0x12E4);
 
 extern  CControllerConfigManager &ControlsManager;

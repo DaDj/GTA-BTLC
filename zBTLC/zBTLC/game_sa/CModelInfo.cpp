@@ -99,9 +99,9 @@ CBaseModelInfo* CModelInfo::GetModelInfoFromHashKey(unsigned int arg0, int* inde
 }
 
 // Converted from stdcall CBaseModelInfo* CModelInfo::GetModelInfouint16_t(char *name,ushort *int16index) 0x4C59F0
-CBaseModelInfo* CModelInfo::GetModelInfouint16_t(char* name, unsigned short* int16index)
+CBaseModelInfo* CModelInfo::GetModelInfouint16_t(const char* name, unsigned short* int16index)
 {
-	return ((CBaseModelInfo* (__cdecl *)(char*, unsigned short*))0x4C59F0)(name, int16index);
+	return ((CBaseModelInfo* (__cdecl *)(const char*, unsigned short*))0x4C59F0)(name, int16index);
 }
 
 // Converted from stdcall CBaseModelInfo* CModelInfo::GetModelInfo(char* name,int minIndex,int maxInedx) 0x4C5A20

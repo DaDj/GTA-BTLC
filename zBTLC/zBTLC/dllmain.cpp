@@ -14,7 +14,7 @@
 #pragma warning(disable:4996) 
 #pragma warning(disable:4244) 
 #pragma warning(disable:4309) 
-
+#define NOMINMAX
 #include "stdafx.h"
 #include "BTLC.h"
 //#include "BTLC_BASE\windowmode\dxhandler.h"

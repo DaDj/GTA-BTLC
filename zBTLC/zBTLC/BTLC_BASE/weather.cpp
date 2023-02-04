@@ -22,7 +22,7 @@ namespace weather
 	///</summary>
 	void enhanced_rain()
 	{
-		CVector CameraPos = TheCamera.m_matrix->pos;
+		CVector CameraPos = TheCamera.m_matrix->m_pos;
 		CColPoint v29;
 		CEntity *v27;
 		CStoredCollPoly duemmy;

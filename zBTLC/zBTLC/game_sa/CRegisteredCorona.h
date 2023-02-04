@@ -16,6 +16,7 @@ enum eCoronaType
 	CORONATYPE_RING_B = 9
 };
 
+enum eCoronaFlareType : uint8 { FLARETYPE_NONE, FLARETYPE_SUN, FLARETYPE_HEADLIGHTS };
 #pragma pack(push,4)
 class CRegisteredCorona
 {

@@ -72,12 +72,12 @@ void CPickups::DoPickUpEffects(CObject* entity) {
 
 	if (Modelindex != CHardModels::miCamerapickup)
 	{
-		entity->m_bDoNotRender = CurrentPickup->PickUpShouldBeInvisible();
+		entity->objectFlags.bDoNotRender = CurrentPickup->PickUpShouldBeInvisible();
 		//entity->bObjectFlag1 = (entity->bObjectFlag1 == 1) ? 0 : 1;
 	}
 	else if( TheCamera.m_aCams[TheCamera.m_nActiveCam].m_eMode == MODE_CAMERA )
 	{
-		entity->m_bDoNotRender = 1;
+		entity->objectFlags.bDoNotRender = 1;
 		return;
 	}
 
@@ -108,7 +108,7 @@ void CPickups::DoPickUpEffects(CObject* entity) {
 			(int)entity,
 			2,
 			gpShadowExplosionTex,
-			&entity->m_matrix->pos,
+			&entity->m_matrix->m_pos,
 			0.8,
 			0.0,
 			0.0,

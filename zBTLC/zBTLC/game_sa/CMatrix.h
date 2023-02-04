@@ -8,13 +8,13 @@ class CMatrix
 {
 public:
     // RwV3d-like:
-    CVector      right;
+    CVector      m_right;
     unsigned int flags;
-    CVector      up;
+    CVector      m_forward;
     unsigned int pad1;
-    CVector      at;
+    CVector      m_up;
     unsigned int pad2;
-    CVector      pos;
+    CVector      m_pos;
     unsigned int pad3;
     
 	RwMatrix *m_pAttachMatrix;
@@ -54,6 +54,18 @@ public:
 	void operator=(CMatrix const& right);
 	void operator+=(CMatrix const& right);
 	void operator*=(CMatrix const& right);
+
+	CVector& GetRight() { return m_right; }
+	const CVector& GetRight() const { return m_right; }
+
+	CVector& GetForward() { return m_forward; }
+	const CVector& GetForward() const { return m_forward; }
+
+	CVector& GetUp() { return m_up; }
+	const CVector& GetUp() const { return m_up; }
+
+	CVector& GetPosition() { return m_pos; }
+	const CVector& GetPosition() const { return m_pos; }
 };
 #pragma pack(pop)
 

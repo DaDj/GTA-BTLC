@@ -6,4 +6,5 @@ class CGeneral
 {
 public:
 	static float GetATanOfXY(float x, float y);
+	static uint16 GetRandomNumber();
 };

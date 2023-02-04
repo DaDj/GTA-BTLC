@@ -3,6 +3,8 @@
 #include "plbase/PluginBase_SA.h"
 #include "CPhysical.h"
 #include "CObjectInfo.h"
+#include "CPtrListDoubleLink.h"
+
 
 struct structObject_masspoint
 {
@@ -56,67 +58,83 @@ enum eObjectType {
     OBJECT_MISSION2 = 6
 };
 
+
+class CObjectData;
 class CDummyObject;
+class CFire;
 
 #pragma pack(push, 1)
 class CObject : public CPhysical {
 public:
-	void               *m_pControlCodeList;
-	unsigned char     m_nObjectType; // see enum eObjectType
-	unsigned char     m_nBonusValue;
-	unsigned short    m_wCostValue;
-	unsigned int bObjectFlag0 : 1;
-	unsigned int bObjectFlag1 : 1;
-	unsigned int    m_bPickupPropertyForSale : 1;
-	unsigned int    m_bPickupInShopOutOfStock : 1;
-	unsigned int    m_bGlassBroken : 1;
-	unsigned int bObjectFlag5 : 1;
-	unsigned int    m_bIsExploded : 1;
-	unsigned int bObjectFlag7 : 1;
-	unsigned int    m_bIsLampPost : 1;
-	unsigned int    m_bIsTargatable : 1;
-	unsigned int    m_bIsBroken : 1;
-	unsigned int    m_bTrainCrossEnabled : 1;
-	unsigned int    m_bIsPhotographed : 1;
-	unsigned int    m_bIsLiftable : 1;
-	unsigned int    m_bIsDoorMoving : 1;
-	unsigned int    m_bbIsDoorOpen : 1;
-	unsigned int    m_bHasNoModel : 1;
-	unsigned int    m_bIsScaled : 1;
-	unsigned int    m_bCanBeAttachedToMagnet : 1;
-	unsigned int bObjectFlag19 : 1;
-	unsigned int bObjectFlag20 : 1;
-	unsigned int bObjectFlag21 : 1;
-	unsigned int    m_bFadingIn : 1;
-	unsigned int    m_bAffectedByColBrightness : 1;
-	unsigned int bObjectFlag24 : 1;
-	unsigned int    m_bDoNotRender : 1;
-	unsigned int    m_bFadingIn2 : 1;
-	unsigned int bObjectFlag27 : 1;
-	unsigned int bObjectFlag28 : 1;
-	unsigned int bObjectFlag29 : 1;
-	unsigned int bObjectFlag30 : 1;
-	unsigned int bObjectFlag31 : 1;
-	unsigned char     m_nColDamageEffect;
-	unsigned char     m_nStoredColDamageEffect;
-	char           field_146;
-	char              m_nGarageDoorGarageIndex;
-	unsigned char     m_nLastWeaponDamage;
-	unsigned char     m_nColBrightness;
-	short             m_nRefModelIndex;
-	unsigned char     m_nCarColor[4]; // this is used for detached car parts
-	int             m_dwRemovalTime; // time when this object must be deleted
-	float               m_fHealth;
-	float               m_fDoorStartAngle; // this is used for door objects
-	float               m_fScale;
-	CObjectInfo        *m_pObjectInfo;
-	void               *m_pFire; // CFire *
-	short             m_wScriptTriggerIndex;
-	short             m_wRemapTxd; // this is used for detached car parts
-	RwTexture          *m_pRemapTexture; // this is used for detached car parts
-	CDummyObject       *m_pDummyObject; // used for dynamic objects like garage doors, train crossings etc.
-	int             m_dwBurnTime; // time when particles must be stopped
-	float               m_fBurnDamage;
+	CPtrNodeDoubleLink* m_pControlCodeList;
+	uint8               m_nObjectType; // see enum eObjectType
+	uint8               m_nBonusValue;
+	uint16              m_wCostValue;
+	union {
+		struct {
+			uint32 bIsPickup : 1;               // 0x1
+			uint32 b0x02 : 1;                   // 0x2 - collision related
+			uint32 bPickupPropertyForSale : 1;  // 0x4
+			uint32 bPickupInShopOutOfStock : 1; // 0x8
+			uint32 bGlassBroken : 1;            // 0x10
+			uint32 b0x20 : 1;                   // 0x20 - Something glass related, see `WindowRespondsToCollision`
+			uint32 bIsExploded : 1;             // 0x40
+			uint32 bChangesVehColor : 1;        // 0x80
+
+			uint32 bIsLampPost : 1;
+			uint32 bIsTargetable : 1;
+			uint32 bIsBroken : 1;
+			uint32 bTrainCrossEnabled : 1;
+			uint32 bIsPhotographed : 1;
+			uint32 bIsLiftable : 1;
+			uint32 bIsDoorMoving : 1;
+			uint32 bIsDoorOpen : 1;
+
+			uint32 bHasNoModel : 1;
+			uint32 bIsScaled : 1;
+			uint32 bCanBeAttachedToMagnet : 1;
+			uint32 bDamaged : 1;
+			uint32 b0x100000 : 1;
+			uint32 b0x200000 : 1;
+			uint32 bFadingIn : 1; // works only for objects with type 2 (OBJECT_MISSION)
+			uint32 bAffectedByColBrightness : 1;
+
+			uint32 b0x1000000 : 1;
+			uint32 bDoNotRender : 1;
+			uint32 bFadingIn2 : 1;
+			uint32 b0x08000000 : 1;
+			uint32 b0x10000000 : 1;
+			uint32 b0x20000000 : 1;
+			uint32 b0x40000000 : 1;
+			uint32 b0x80000000 : 1;
+		} objectFlags;
+		uint32 m_nObjectFlags;
+	};
+	uint8         m_nColDamageEffect;        // see eObjectColDamageEffect
+	uint8         m_nSpecialColResponseCase; // see eObjectSpecialColResponseCases
+	char          field_146;
+	int8          m_nGarageDoorGarageIndex;
+	uint8         m_nLastWeaponDamage;
+	tColLighting  m_nColLighting;
+	int16         m_nRefModelIndex;
+	uint8         m_nCarColor[4];  // this is used for detached car parts
+	uint32        m_nRemovalTime;  // time when this object must be deleted
+	float         m_fHealth;
+	float         m_fDoorStartAngle; // this is used for door objects
+	float         m_fScale;
+	CObjectInfo*  m_pObjectInfo;
+	CFire*        m_pFire;
+	int16         m_wScriptTriggerIndex;
+	int16         m_wRemapTxd;     // this is used for detached car parts
+	RwTexture*    m_pRemapTexture; // this is used for detached car parts
+	CDummyObject* m_pDummyObject;  // used for dynamic objects like garage doors, train crossings etc.
+	uint32        m_nBurnTime;     // time when particles must be stopped
+	float         m_fBurnDamage;
+
+	static uint16& nNoTempObjects;
+	static float&  fDistToNearestTree;
+	static bool&   bAircraftCarrierSamSiteDisabled;
+	static bool&   bArea51SamSiteDisabled;
 
     // class functions
 
@@ -161,6 +179,10 @@ public:
 
 	static void SetObjectdata(int modelindex, CObject* object);
 	static void ReadMasspoints(structObject_masspoint Result[]);
+
+	bool IsFallenLampPost() const { return objectFlags.bIsLampPost && m_matrix->GetUp().z < 0.66F; }
+	bool IsExploded() const { return objectFlags.bIsExploded; }
+
 };
 #pragma pack(pop)
 

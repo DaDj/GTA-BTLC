@@ -100,8 +100,8 @@
       <EnablePREfast>false</EnablePREfast>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <LanguageStandard>
-      </LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +142,8 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <CompileAs>CompileAsCpp</CompileAs>
       <BufferSecurityCheck>true</BufferSecurityCheck>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -181,12 +183,20 @@
     <ClCompile Include="game_sa\CCarFxRender.cpp" />
     <ClCompile Include="game_sa\CClothesBuilder.cpp" />
     <ClCompile Include="game_sa\CHardModels.cpp" />
+    <ClCompile Include="game_sa\CModelIndices.cpp" />
+    <ClCompile Include="game_sa\CMotionBlurStreaks.cpp" />
     <ClCompile Include="game_sa\CPcSave.cpp" />
     <ClCompile Include="game_sa\CPedClothesDesc.cpp" />
     <ClCompile Include="game_sa\CPedModelInfo.cpp" />
     <ClCompile Include="game_sa\CPickup.cpp" />
     <ClCompile Include="game_sa\CPolyBunch.cpp" />
     <ClCompile Include="game_sa\CProcObjectMan.cpp" />
+    <ClCompile Include="game_sa\CPtrList.cpp" />
+    <ClCompile Include="game_sa\CPtrListDoubleLink.cpp" />
+    <ClCompile Include="game_sa\CPtrListSingleLink.cpp" />
+    <ClCompile Include="game_sa\CPtrNodeDoubleLink.cpp" />
+    <ClCompile Include="game_sa\CPtrNodeSingleLink.cpp" />
+    <ClCompile Include="game_sa\CRegisteredMotionBlurStreak.cpp" />
     <ClCompile Include="game_sa\CTaskUtilityLineUpPedWithCar.cpp" />
     <ClCompile Include="game_sa\CUtrax.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
@@ -704,12 +714,20 @@
     <ClInclude Include="game_sa\CCarFxRender.h" />
     <ClInclude Include="game_sa\CClothesBuilder.h" />
     <ClInclude Include="game_sa\CHardModels.h" />
+    <ClInclude Include="game_sa\CModelIndices.h" />
+    <ClInclude Include="game_sa\CMotionBlurStreaks.h" />
     <ClInclude Include="game_sa\CPcSave.h" />
     <ClInclude Include="game_sa\CPedClothesDesc.h" />
     <ClInclude Include="game_sa\CPedModelInfo.h" />
     <ClInclude Include="game_sa\CPickup.h" />
     <ClInclude Include="game_sa\CPolyBunch.h" />
     <ClInclude Include="game_sa\CProcObjectMan.h" />
+    <ClInclude Include="game_sa\CPtrListDoubleLink.h" />
+    <ClInclude Include="game_sa\CPtrListSingleLink.h" />
+    <ClInclude Include="game_sa\CPtrNode.h" />
+    <ClInclude Include="game_sa\CPtrNodeDoubleLink.h" />
+    <ClInclude Include="game_sa\CPtrNodeSingleLink.h" />
+    <ClInclude Include="game_sa\CRegisteredMotionBlurStreak.h" />
     <ClInclude Include="game_sa\CTaskUtilityLineUpPedWithCar.h" />
     <ClInclude Include="game_sa\CUtrax.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />
@@ -1279,11 +1297,11 @@
     <Text Include="game_sa\STATUS_GTA_classes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="game_sa\rw\errcom.def" />
-    <None Include="game_sa\rw\errcore.def" />
+    <ResourceCompile Include="zBTLC.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="zBTLC.rc" />
+    <None Include="game_sa\rw\errcom.def" />
+    <None Include="game_sa\rw\errcore.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

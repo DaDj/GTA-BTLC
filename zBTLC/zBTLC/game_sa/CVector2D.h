@@ -62,7 +62,11 @@ inline CVector2D operator-(const CVector2D& vecOne, const CVector2D& vecTwo) {
     return CVector2D(vecOne.x - vecTwo.x, vecOne.y - vecTwo.y);
 }
 
-inline float DistanceBetweenPoints(const CVector2D &pointOne, const CVector2D &pointTwo) {
-    CVector2D diff = pointTwo - pointOne;
-    return diff.Magnitude();
+//inline float DistanceBetweenPoints(const CVector2D &pointOne, const CVector2D &pointTwo) {
+//    CVector2D diff = pointTwo - pointOne;
+//    return diff.Magnitude();
+//}
+
+inline float DistanceBetweenPoints2D(const CVector2D& pointOne, const CVector2D& pointTwo) {
+	return (pointTwo - pointOne).Magnitude();
 }

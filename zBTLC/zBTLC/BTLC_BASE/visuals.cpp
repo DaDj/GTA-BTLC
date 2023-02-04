@@ -71,7 +71,7 @@ namespace visuals
 		//MemoryVP::Patch<char>(0x704DBC, 0x30);//(XOR)
 
 		//Motion Blur Alpha
-		MemoryVP::Patch<int>(0x8D5104, 200);
+		//MemoryVP::Patch<int>(0x8D5104, 200);
 
 		//Corona shadow distance
 		MemoryVP::Patch<float>(0x6FD3A6, 95.0); 
@@ -87,7 +87,7 @@ namespace visuals
 		//No LOD on Flying
 		MemoryVP::Nop(0x5557CF, 7);
 	
-
+	
 
 		//Traffic/Lampost shadow distance
 		MemoryVP::Patch<float>(0x70C89C, 80.0);

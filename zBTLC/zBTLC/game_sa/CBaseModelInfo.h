@@ -16,6 +16,18 @@ enum ModelInfoType : unsigned char
 	MODEL_INFO_LOD = 8
 };
 
+enum eModelInfoSpecialType : unsigned __int8 {
+	TREE = 1,
+	PALM = 2,
+	GLASS_TYPE_1 = 4,
+	GLASS_TYPE_2 = 5,
+	TAG = 6,
+	GARAGE_DOOR = 7,
+	CRANE = 9,
+	UNKNOWN = 10,
+	BREAKABLE_STATUE = 11,
+};
+
 struct tTimeInfo
 {
 	unsigned char m_nTimeOn;
@@ -36,41 +48,55 @@ public:
 	unsigned char  m_n2dfxCount;
     short          m_w2dfxIndex;
     short          m_wObjectInfoIndex;
-	union{
-		unsigned short m_wFlags;
-		struct{
-			/* https://code.google.com/p/mtasa-blue/source/browse/tags/1.3.4/MTA10/game_sa/CModelInfoSA.h */
-			unsigned char m_bHasBeenPreRendered : 1; // we use this because we need to apply changes only once
-			unsigned char m_bAlphaTransparency: 1;
-			unsigned char m_bIsLod: 1;
-			unsigned char m_bDontCastShadowsOn: 1;
-			unsigned char m_bDontWriteZBuffer: 1;
-			unsigned char m_bDrawAdditive: 1;
-			unsigned char m_bDrawLast: 1;
-			unsigned char m_bDoWeOwnTheColModel: 1;
-			union{
-				struct{
-					unsigned char m_bCarmodIsWheel: 1;
-					unsigned char bUnknownFlag9: 1;
-					unsigned char bUnknownFlag10: 1;
-					unsigned char m_bSwaysInWind: 1;
-					unsigned char m_bCollisionWasStreamedWithModel: 1;
-					unsigned char m_bDontCollideWithFlyer: 1;
-					unsigned char m_bHasComplexHierarchy: 1;
-					unsigned char m_bWetRoadReflection: 1;
+	union {
+		uint16 m_nFlags;
+		struct {
+			uint8 m_nFlagsUpperByte;
+			uint8 m_nFlagsLowerByte;
+		};
+		struct {
+			/* https://github.com/multitheftauto/mtasa-blue/blob/master/Client/game_sa/CModelInfoSA.h */
+			uint8 bHasBeenPreRendered : 1; // we use this because we need to apply changes only once
+			uint8 bDrawLast : 1;
+			uint8 bAdditiveRender : 1;
+			uint8 bDontWriteZBuffer : 1;
+			uint8 bDontCastShadowsOn : 1;
+			uint8 bDoWeOwnTheColModel : 1;
+			uint8 bIsBackfaceCulled : 1;
+			uint8 bIsLod : 1;
+
+			union {
+				struct { // Atomic flags
+					uint8 bIsRoad : 1;
+					uint8 bAtomicFlag0x200 : 1;
+					uint8 bDontCollideWithFlyer : 1;
+					uint8 nSpecialType : 4;
+					uint8 bWetRoadReflection : 1;
 				};
-				struct{
-					unsigned char pad0: 2;
-					unsigned char m_nCarmodId : 5;
-					unsigned char pad1: 1;
+				struct { // Vehicle flags
+					uint8 bUsesVehDummy : 1;
+					uint8 : 1;
+							uint8 nCarmodId : 5;
+							uint8 bUseCommonVehicleDictionary : 1;
+				};
+				struct { // Clump flags
+					uint8 bHasAnimBlend : 1;
+					uint8 bHasComplexHierarchy : 1;
+					uint8 bAnimSomething : 1;
+					uint8 bOwnsCollisionModel : 1;
+					uint8 : 3;
+					uint8 bTagDisabled : 1;
 				};
 			};
-			
 		};
 	};
 	CColModel        *m_pColModel;
 	float             m_fDrawDistance;
-	struct RwObject  *m_pRwObject;
+	union {
+		RwObject* m_pRwObject;
+		RpClump*  m_pRwClump;
+		RpAtomic* m_pRwAtomic;
+	};
 
 	// vtable
 
@@ -88,7 +114,12 @@ public:
 	void SetAnimFile(char *filename);
 	void ConvertAnimFileIndex();
 	signed int GetAnimFileIndex();
-
+	void IncreaseAlpha() {
+		if (m_nAlpha >= 239)
+			m_nAlpha = 255;
+		else
+			m_nAlpha += 16;
+	};
 	//
 	void SetTexDictionary(char *txdName);
 	void ClearTexDictionary();
@@ -103,7 +134,17 @@ public:
 	// index is a number of effect (max number is (m_n2dfxCount - 1))
 	C2dEffect *Get2dEffect(int index);
 	void Add2dEffect(C2dEffect *effect);
+	bool IsSwayInWind1()         const { return nSpecialType == eModelInfoSpecialType::TREE; };    // 0x0800
+	bool IsSwayInWind2()         const { return nSpecialType == eModelInfoSpecialType::PALM; };              // 0x1000
+	bool SwaysInWind()           const { return IsSwayInWind1() || IsSwayInWind2(); };
 
+	bool IsGlassType1()          const { return nSpecialType == eModelInfoSpecialType::GLASS_TYPE_1; };      // 0x2000
+	bool IsGlassType2()          const { return nSpecialType == eModelInfoSpecialType::GLASS_TYPE_2; };     // 0x2800
+	bool IsGlass()               const { return IsGlassType1() || IsGlassType2(); };
+	bool IsTagModel()            const { return nSpecialType == eModelInfoSpecialType::TAG; };              // 0x3000
+	bool IsGarageDoor()          const { return nSpecialType == eModelInfoSpecialType::GARAGE_DOOR; };      // 0x3800
+	bool IsBreakableStatuePart() const { return nSpecialType == eModelInfoSpecialType::BREAKABLE_STATUE; };
+	bool IsCrane()               const { return nSpecialType == eModelInfoSpecialType::CRANE; };           // 0x4800         // 0x4800
     __parent_class_vtable__
 };
 #pragma pack(pop)

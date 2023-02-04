@@ -3,37 +3,55 @@
 #include "plbase/PluginBase_SA.h"
 #include "CVector.h"
 
-#define MAX_POINTLIGHTS 32
+class CEntity;
 
-#pragma pack(push, 4)
-struct tPointLight
+enum ePointLightType : unsigned char
 {
-public:
-	CVector m_vPosn;
-	CVector m_vDirection;
-    float m_fRange;
-    float m_fColorRed;
-    float m_fColorGreen;
-    float m_fColorBlue;
-    class CEntity *m_pEntityToLight;
-    unsigned char m_nType;
-    unsigned char m_nFogType;
-    unsigned char m_bGenerateShadows;
+	PLTYPE_POINTLIGHT = 0,
+	PLTYPE_SPOTLIGHT = 1,
+	PLTYPE_DARKLIGHT = 2,
 };
-#pragma pack(pop)
 
-VALIDATE_SIZE(tPointLight, 0x30);
+class CPointLight {
+public:
+	CVector m_vecPosn;
+	CVector m_vecDirection;
+	float m_fRange;
+	float m_fColorRed;
+	float m_fColorGreen;
+	float m_fColorBlue;
+	CEntity *m_pEntityToLight;
+	ePointLightType m_nType; // see ePointLightType
+	unsigned char m_nFogType;
+	bool m_bGenerateShadows;
+private:
+	char _pad0;
+};
 
-class CPointLights
-{
+VALIDATE_SIZE(CPointLight, 0x30);
+
+class CPointLights {
 public:
 	// static variables
 
 	// num of registered lights in frame
 	static unsigned int& NumLights;
 	// lights array. Count: MAX_POINTLIGHTS (32)
-	static tPointLight *aLights;
+	static CPointLight *aLights;
+
+	static float *aCachedMapReadResults;  // static float aCachedMapReadResults[MAX_POINTLIGHTS];
+	static unsigned int &NextCachedValue; // static int NextCachedValue;
+	static CVector *aCachedMapReads;      // static CVector aCachedMapReads[MAX_POINTLIGHTS];
 
 	// static functions
-	static void AddLight(unsigned char lightType, CVector origin, CVector direction, float radius, float red, float green, float blue, unsigned char fogType, bool generateExtraShadows, CEntity* entityAffected);
+
+	static void Init();
+	static float GenerateLightsAffectingObject(CVector const* point, float* totalLighting, CEntity* entity);
+	static float GetLightMultiplier(CVector const* point);
+	static void RemoveLightsAffectingObject();
+	static bool ProcessVerticalLineUsingCache(CVector point, float* outZ);
+	static void AddLight(unsigned char lightType, CVector point, CVector direction, float radius, float red, float green, float blue, unsigned char fogType, bool generateExtraShadows, CEntity* entityAffected);
+	static void RenderFogEffect();
 };
+
+extern unsigned int MAX_POINTLIGHTS; // default: 32

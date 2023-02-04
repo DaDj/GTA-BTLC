@@ -1502,6 +1502,12 @@ struct RpClumpChunkInfo
 
 #endif /* (!defined(DOXYGEN)) */
 
+#define RpAtomicGetGeometryMacro(_atomic)                               \
+    ((_atomic)->geometry)
+
+#define RpAtomicGetGeometry(_atomic) \
+    RpAtomicGetGeometryMacro(_atomic)
+
 /*
  * World handling.
  * World give objects scope, and provide a mechanism for
