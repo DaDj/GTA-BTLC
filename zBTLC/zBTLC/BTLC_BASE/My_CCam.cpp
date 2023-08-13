@@ -52,9 +52,9 @@ namespace My_CCam
 			offset.x = 0.34f;
 		offset.z = -0.00f;
 
-
-		plugin::CallMethod<0x521500, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5);
-	//	plugin::CallMethod<0x511B50, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5, HeatSeekingflag);
+		plugin::CallMethod<0x511B50, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5, HeatSeekingflag); //run original first, beauce heatseeking
+		plugin::CallMethod<0x521500, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5); //run 3rd person cam
+		
 	}
 
 
@@ -111,12 +111,15 @@ namespace My_CCam
 	void INIT()
 	{
 	MemoryVP::InjectHook(0x527A95, Process_AimWeapon, PATCH_CALL);
-	//MemoryVP::InjectHook(0x5279E5, Process_FollowPedWithMouse, PATCH_CALL);
+//	MemoryVP::InjectHook(0x5279E5, Process_FollowPedWithMouse, PATCH_CALL);
 	MemoryVP::InjectHook(0x527A09, Process_FollowPed, PATCH_CALL);
 	MemoryVP::InjectHook(0x527A2D, Process_Rocket, PATCH_CALL);
+	MemoryVP::InjectHook(0x527A51, Process_Rocket, PATCH_CALL);
+
+	//MemoryVP::Patch<BYTE>(0x685B7B, MODE_AIMWEAPON); //patch hs rocketlauncher
 
 	float AIMWEAPON_RIFLE1_ZOOM = 45.0f;
-	float AIMWEAPON_RIFLE2_ZOOM = 30.0f;
+	float AIMWEAPON_RIFLE2_ZOOM = 40.0f;
 	float AIMWEAPON_DEFAULT_ZOOM = 45.0f;
 	float AIMWEAPON_DRIVE_CLOSE_ENOUGH = 0.04453f;
 	float AIMWEAPON_DRIVE_SENS_MULT = 0.02f;

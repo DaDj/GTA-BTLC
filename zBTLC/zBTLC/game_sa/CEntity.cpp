@@ -12,7 +12,7 @@
 #include "CWaterlevel.h"
 #include "CGeneral.h"
 #include "CMotionBlurStreaks.h"
-
+#include "common.h"
 
 
 
@@ -23,8 +23,8 @@ void CEntity::My_Init()
 	//MemoryVP::InjectHook(0x536977,0x536A67,PATCH_JUMP);
 //	MemoryVP::InjectHook(0x536A68, &MyPreRender_Shadow, PATCH_CALL);
 	MemoryVP::InjectHook(0x535FA0, &CEntity::PreRender, PATCH_JUMP);
-	MemoryVP::Patch(0x858614, &SetupLighting);
-	MemoryVP::Nop(0x553A3A, 5); //deactivate
+	//MemoryVP::Patch(0x858614, &SetupLighting);
+	//MemoryVP::Nop(0x553A3A, 5); //deactivate
 }
 
 void CEntity::PreRender()
@@ -252,7 +252,7 @@ void CEntity::PreRender()
 				}
 			}
 		}
-		else if (m_wModelIndex == ModelIndices::MI_BEACHBALL) {
+		else if (m_wModelIndex == MODEL_BEACHBALL) {
 			if (DistanceBetweenPoints(GetPosition(), TheCamera.GetPosition()) < 50.0F) {
 				auto ucShadowStrength = 0.8; //static_cast<uint8>(CTimeCycle::m_CurrentColours.m_nShadowStrength);
 				CShadows::StoreShadowToBeRendered(
@@ -478,9 +478,10 @@ bool CEntity::SetupLighting()
 	this->m_bIsBIGBuilding = false;
 	this->m_bLightObject = true;
 	if (!m_bLightObject)
-		return false;
-	((void(__cdecl *)())0x735C80)(); //	ActivateDirectional();
 
+		return false;
+
+	ActivateDirectional();
 	const auto& vecPos = GetPosition();
 	auto fLight = CPointLights::GenerateLightsAffectingObject(&vecPos, nullptr, this) * 0.5F;
 	SetLightColoursForPedsCarsAndObjects(fLight);

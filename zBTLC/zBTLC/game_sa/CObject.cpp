@@ -198,7 +198,6 @@ bool IsObjectPointerValid(CObject* object) {
 void CObject::SetObjectdata(int modelindex, CObject* object)
 {
 	static  structObject_masspoint ChangedObjects[5000];
-
 	//Call standard Object data function
 	((void(__cdecl *)(int, CObject*))0x5A2D00)(modelindex, object);
 
@@ -228,6 +227,8 @@ void CObject::SetObjectdata(int modelindex, CObject* object)
 			}
 		}
 	}
+
+
 
 	if (flag != 0)
 	{

@@ -917,7 +917,7 @@ void CHud::DrawCrosshairs()
 				}
 			}
 		}
-	}
+	} 
 	if (bDrawCrosshair || bSimpleAim || CTheScripts::bDrawCrossHair)// IF AIM
 	{
 		RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
@@ -1002,10 +1002,10 @@ void CHud::DrawCrosshairs()
 					int R = 255;
 					int G = 255;
 					int B = 255;
-						//if (playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskFighting()
-						//	|| playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskUseGun()
-						//	|| FindPlayerPed()->m_pPlayerTargettedPed->m_nPedType == PED_TYPE_COP)
-						//	R = 255;	G = 220;	B = 220;
+					//if (playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskFighting()
+					//	|| playerPed->m_pPlayerTargettedPed->m_pIntelligence->GetTaskUseGun()
+					//	|| FindPlayerPed()->m_pPlayerTargettedPed->m_nPedType == PED_TYPE_COP)
+					//	R = 255;	G = 220;	B = 220;
 
 					CSprite::RenderOneXLUSprite(posx, posy, 1.0f, Halfwidth, HalfHeight, R, G, B, 180, 1.0f, 180, 0, 0);
 					posx = widthfac + Halfwidth;
@@ -1025,7 +1025,7 @@ void CHud::DrawCrosshairs()
 				Rect = CRect(widthfac - x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);	//left top
 				Sprites[1].Draw(Rect, Color);
 				Rect = CRect(widthfac + x_fac(TargetSize), heightfac - y_fac(TargetSize), widthfac, heightfac);	//Right top
-				Sprites[1].Draw(Rect, Color);				
+				Sprites[1].Draw(Rect, Color);
 				Rect = CRect(widthfac - x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);//Left bottom
 				Sprites[1].Draw(Rect, Color);
 				Rect = CRect(widthfac + x_fac(TargetSize), heightfac + y_fac(TargetSize), widthfac, heightfac);//Right bottomm
@@ -1080,18 +1080,23 @@ void CHud::DrawCrosshairs()
 
 	if (CurrentWeapon == WEAPON_CAMERA || CurrentWeapon == WEAPON_SNIPERRIFLE || CurrentWeapon == WEAPON_COUNTRYRIFLE || CTheScripts::bDrawCrossHair == 2)
 	{
-	//		if ( CurrentWeapon == WEAPON_COUNTRYRIFLE)
-	//{
-	//	TheCamera.m_PlayerWeaponMode.m_wMode = MODE_SNIPER   ;
-	//	TheCamera.m_PlayerWeaponMode.m_MaxZoom = 10;
-	//	TheCamera.m_PlayerWeaponMode.m_MinZoom = 30;
-	//	TheCamera.m_PlayerWeaponMode.m_fDuration = 0.0;
-	//	// jumptable offset  
-	//MemoryVP::Patch<BYTE>(0x742A30 + 33 - 16, 3);
+	
+		//Activate Sniper abilites for countryrifles
+		if (CurrentWeapon == WEAPON_COUNTRYRIFLE)
+		{
+			MemoryVP::Patch<BYTE>(0x685B80, 33); //ProcessPlayerweapon
+			MemoryVP::Patch<BYTE>(0x53E31D, 33); //Render2dstuff (Blackbars)
+			MemoryVP::Patch<BYTE>(0x742A30 + 33 - 16, 3);
+		}
+		else
+		{
+			MemoryVP::Patch<BYTE>(0x685B80, 34);	//ProcessPlayerweapon
+			MemoryVP::Patch<BYTE>(0x53E31D, 34); //Render2dstuff (Blackbars)
+		}
 
-	//}
 
-		if (mode1 == MODE_SNIPER || mode1 == MODE_1STPERSON || mode1 == MODE_CAMERA)
+
+		if (mode1 == MODE_SNIPER || mode1 == MODE_1STPERSON || mode1 == MODE_CAMERA || mode1 == MODE_M16_1STPERSON)
 		{
 			RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
 			int weapModel = CWeaponInfo::GetWeaponInfo(CurrentWeapon, 1)->m_dwModelId1;

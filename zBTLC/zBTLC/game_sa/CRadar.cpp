@@ -369,7 +369,7 @@ void CRadar::TransformRadarPointToScreenSpace(CVector2D& out, CVector2D& in)
 
 	if (FrontEndMenuManager.drawRadarOrMap)
 	{
-		out.x = FrontEndMenuManager.m_fMapZoom * in.x + FrontEndMenuManager.m_fMapBaseX;
+		out.x =  FrontEndMenuManager.m_fMapZoom * in.x + FrontEndMenuManager.m_fMapBaseX;
 		out.y = FrontEndMenuManager.m_fMapBaseY - FrontEndMenuManager.m_fMapZoom * in.y;
 	}
 	else

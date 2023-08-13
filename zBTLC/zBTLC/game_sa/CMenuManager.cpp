@@ -980,8 +980,8 @@ char CMenuManager::PrintMap()
 	float x2 = MainMenuMapRect.m_fRight =   RsGlobal.maximumWidth ;
 	float y1 = MainMenuMapRect.m_fTop =  StretchY(0.0f);
 	float y2 = MainMenuMapRect.m_fBottom = RsGlobal.maximumHeight - StretchY(0.0f);
-	float TmpMapBasezoomX = RsGlobal.maximumWidth* 0.0015625 *( m_fMapBaseX - m_fMapZoom );
-	float TmpMapBasezoomY = RsGlobal.maximumHeight*  0.002232143 *(m_fMapBaseY - m_fMapZoom);
+	float TmpMapBasezoomX =  RsGlobal.maximumWidth* 0.0015625 *(m_fMapBaseX - m_fMapZoom);// StretchX(m_fMapBaseX - m_fMapZoom); /
+	float TmpMapBasezoomY = RsGlobal.maximumHeight*  0.002232143 *(m_fMapBaseY - m_fMapZoom); // StretchY(m_fMapBaseY - m_fMapZoom); //
 
 
 
