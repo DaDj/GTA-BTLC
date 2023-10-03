@@ -14,7 +14,10 @@ public:
 	CPed          *m_apCriminalsToKill[5];
 	char field_7C0;
 
-    // we can use modelIds as copType too!
+	static void My_Init();
+	CCopPed* MySetCopWeapons(eCopType copType);
+
+	// we can use modelIds as copType too!
     CCopPed(eCopType copType);
 
 	void SetPartner(CCopPed* partner);

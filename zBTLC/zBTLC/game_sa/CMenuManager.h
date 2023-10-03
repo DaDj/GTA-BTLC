@@ -457,7 +457,7 @@ public:
 	static bool&  byte_8CDFFA;
 	static int&  dword_B6B988;
 	static int(*Slotvalidation)[9];
-
+	public:
 	static float StretchX(float x);
 	static float StretchY(float y);
 	void Initialise();
@@ -490,6 +490,7 @@ public:
 	int DisplaySlider(float x, float y, float Height, float Height2, float Width, float progress, signed int rgbaColor);
 	void DefinedState2d();
 	bool CheckHover(int left, int right, int bottom, int top);
+	void SaveSettings();
 	static  MyDisplayoptions CustomOptions;
 	static MainMenuStrip MyMainMenu;
 	static void MyInit();

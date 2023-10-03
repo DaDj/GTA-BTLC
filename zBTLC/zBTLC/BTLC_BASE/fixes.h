@@ -8,5 +8,7 @@ namespace BUGFIX
 	void init();
 	void various();
 	void Set_Zonesvisited();
+	//Y Sensitivity Fix while aiming
+	void YSensitivityFix();
 }
 

@@ -1646,6 +1646,11 @@ char CMenuManager::PrintBriefs()
 }
 
 
+void CMenuManager::SaveSettings() {
+    plugin::CallMethod<0x57C660, CMenuManager *>(this);
+}
+
+
 
 void CMenuManager::MyInit()
 {

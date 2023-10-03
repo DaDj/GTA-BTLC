@@ -13,6 +13,7 @@
 #include "../Patch/injector.hpp"
 #include "../game_sa/CVector2D.h"
 #include <math.h>
+
 namespace visuals
 {
 	void pickup_appearence()
@@ -49,7 +50,7 @@ namespace visuals
 
 		MemoryVP::Patch<float>(0x872744, DD_HLightSdw*0.75);//Headlightsahdow distance
 		MemoryVP::Patch<float>(0x872748, DD_HLightSdw *DD_HLightSdw);//Headlightshadowdistance 
-		MemoryVP::Patch<float>(0x872740, ( 1 / (DD_HLightSdw * 0, 33)));//Headlightshadowdistance
+		MemoryVP::Patch<float>(0x872740, (1 / (DD_HLightSdw * 0, 33)));//Headlightshadowdistance
 		MemoryVP::Patch<void*>(0x70C5FE, &DD_HLightSdw2); //Headlightshadowdistance
 	}
 
@@ -74,20 +75,20 @@ namespace visuals
 		MemoryVP::Patch<uint8>(0x8D5104, 199);
 
 		//Corona shadow distance
-		MemoryVP::Patch<float>(0x6FD3A6, 95.0); 
+		MemoryVP::Patch<float>(0x6FD3A6, 95.0);
 		//ground distance
 		//MemoryVP::Patch<float>(0x6FD368 + 4, 7.5);
 
 		//Not Health triangle
 		MemoryVP::Patch<BYTE>(0x53E1EC, 0xEB);
-			
+
 		//Traffic/Lampost ground distance
 		//MemoryVP::Patch<float>(0x70C89B +1, 5.0);
 
 		//No LOD on Flying
 		MemoryVP::Nop(0x5557CF, 7);
-	
-	
+
+
 
 		//Traffic/Lampost shadow distance
 		MemoryVP::Patch<float>(0x70C89C, 80.0);
@@ -96,7 +97,7 @@ namespace visuals
 		//Shadow distances////////////////////////////
 		static float
 			DD_shdw_veh = 200.0,
-			DD_shdw_veh_quad = DD_shdw_veh*DD_shdw_veh,
+			DD_shdw_veh_quad = DD_shdw_veh * DD_shdw_veh,
 			DD_shdw_ped = 150.0,
 			DD_shdw_ped_quad = DD_shdw_ped * DD_shdw_ped;
 
@@ -125,13 +126,13 @@ namespace visuals
 		MemoryVP::Patch<void*>(0x4250F0, &DESD_Veh_onscr);
 		MemoryVP::Patch<float>(0x42510F, DESD_veh_offscr);
 		MemoryVP::Patch<float>(0x4250E2, DESD_veh_offscr_2);
-		
+
 		MemoryVP::Patch<float>(0x86C850, SD_ped_onscr);
 		MemoryVP::Patch<float>(0x86D284, SD_ped_offscr);
 		MemoryVP::Patch<void*>(0x6120FF, &DESD_ped_onscr);
 		MemoryVP::Patch<void*>(0x612128, &DESD_ped_offscr);
 		MemoryVP::Patch<void*>(0x73295E, &DD_ped);
-	
+
 		//MemoryVP::Patch<void*>(0x612142, &drawD_Ped3);//0x612142 org. 25.0f
 		//MemoryVP::Patch<void*>(0x431A24, &drawD_vehicle5);//0x431A24 org. 150.0f 
 		//MemoryVP::Patch<float>(0x871008, drawD_Ped5);//0x871008 org. 10.0f patched 150

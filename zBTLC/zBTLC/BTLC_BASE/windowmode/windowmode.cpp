@@ -219,6 +219,9 @@ int  psSelectDevice()
 	if (CMenuManager::CustomOptions.isWndwmode)
 		*GcurSelVM = 0;
 
+	if(*GcurSelVM == 0)
+		CMenuManager::CustomOptions.isWndwmode = 1;
+
 	CVideomodemanager::GetVideoModeInfo(&modeinfo, *GcurSelVM);
 	FrontEndMenuManager.m_dwSelectedMenuItem = 0;
 
@@ -250,7 +253,13 @@ int  psSelectDevice()
 			 CMenuManager::CustomOptions.Wndwmode_width,
 			 CMenuManager::CustomOptions.Wndwmode_height
 		};
-		SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW); //with frame
+
+		if (!CMenuManager::CustomOptions.Borderless)
+			SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW); //with frame
+		else
+			SetWindowLong(RsGlobal.ps->window, GWL_STYLE, WS_VISIBLE); //without frame
+	
+
 		SetWindowPos(RsGlobal.ps->window, HWND_NOTOPMOST, 0, 0,
 			(rect.right - rect.left),
 			(rect.bottom - rect.top), 0);

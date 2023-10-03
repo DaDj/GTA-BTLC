@@ -169,31 +169,31 @@ public:
 	RwObject           *m_pGogglesObject;
 	unsigned char    *m_pGogglesState;
 	short             m_wWeaponGunflashAlphaMP1;
-	short field_506;
+	short m_nWeaponGunFlashAlphaProgMP1;
 	short             m_wWeaponGunflashAlphaMP2;
-	short field_50A;
+	short m_nWeaponGunFlashAlphaProgMP2;
 	CPedIK              m_PedIK;
 	int field_52C;
 	ePedState           m_pedState; // see ePedState
 	int             m_dwMoveState;
-	int field_538;
+	int m_nSwimmingMoveState;
 	int field_53C;
 	float               m_fHealth;
 	float               m_fMaxHealth;
 	float               m_fArmour;
-	int field_54C;
+	int m_nTimeTillWeNeedThisPed;
 	CVector2D           m_vAnimMovingShift;
 	float               m_fCurrentRotation;
 	float               m_fAimingRotation;
 	float               m_fHeadingChangeRate;
-	int field_564;
-	int field_568;
+	int m_fMoveAnim;
+	int m_standingOnEntity;
 	CVector field_56C;
 	CVector field_578;
 	CEntity            *m_pContactEntity;
 	float field_588;
 	class CVehicle    *m_pVehicle;
-	int field_590;
+	CVehicle *m_VehDeadInFrontOf; // Set if `bDeadPedInFrontOfCar` 
 	int field_594;
 	int             m_nPedType;
 	void               *m_pStats; // CPedStat *
@@ -213,12 +213,12 @@ public:
 	char              m_nAllowedAttackMoves;
 	char field_72F;
 	void               *m_pFire; // CFire *
-	int field_734;
-	int field_738;
-	int field_73C;
+	float m_fireDmgMult;
+	CEntity*            m_pLookTarget;
+	float               m_fLookDirection; // In RAD
 	int             m_dwWeaponModelId;
 	int field_744;
-	int field_748;
+	int m_nLookTime;
 	int field_74C;
 	int             m_dwDeathTime;
 	char              m_nBodypartToRemove;

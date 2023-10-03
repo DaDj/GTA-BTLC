@@ -938,6 +938,7 @@ void CHud::DrawCrosshairs()
 			{
 				if (playerPed->m_pPlayerTargettedPed->m_fHealth > 0)
 				{
+					//playerPed->m_pPlayerTargettedPed->m_fArmour  --> we could add armor ring too l
 					TargetSize = 15.0f;
 					float TargetSizeHealth = TargetSize * 0.85;
 					percentage_health = 1 - (playerPed->m_pPlayerTargettedPed->m_fHealth / playerPed->m_pPlayerTargettedPed->m_fMaxHealth);

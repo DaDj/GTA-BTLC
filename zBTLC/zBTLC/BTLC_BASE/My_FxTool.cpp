@@ -31,7 +31,7 @@ namespace My_FxTool
 		{
 			CPed* Player = FindPlayerPed();
 
-			if (KeyPressed('R'))
+			if (KeyPressed('T'))
 			{
 				char string[40];
 				Player->m_pIntelligence->m_TaskMgr.SetTaskSecondary(new CTaskComplexPlayHandSignalAnim(320, 4.0f), 4);

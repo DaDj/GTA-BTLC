@@ -44,13 +44,13 @@ namespace My_CCam
 		else if (TheCamera.m_fPedZoomBase > 1.0)
 			offset.y = 0.0;*/
 
-		offset.y = 0.0;
+		offset.y = 0.3;
 
 		if (Switch_side())
-			offset.x = -0.44f;
+			offset.x = -0.54f;
 		else
-			offset.x = 0.34f;
-		offset.z = -0.00f;
+			offset.x = 0.54f;
+		offset.z = 0.00f;
 
 		plugin::CallMethod<0x511B50, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5, HeatSeekingflag); //run original first, beauce heatseeking
 		plugin::CallMethod<0x521500, CCam *, CVector const&>(_camthis, Player->TransformFromObjectSpace(offset), a3, a4, a5); //run 3rd person cam

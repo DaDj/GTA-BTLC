@@ -14,8 +14,10 @@
 #include "fixes.h"
 #include "../game_sa/RenderWare.h"
 #include "d3d9.h"
-
-
+#include <math.h>
+#include "../game_sa/CCamera.h"
+#include "../game_sa/CMenuManager.h"
+#include "../Events_SA/Events_SA.h"
 
 namespace BUGFIX
 {
@@ -26,6 +28,11 @@ namespace BUGFIX
 	{
 		various();
 		Set_Zonesvisited();
+
+		plugin::Events::gameProcessEvent += []()
+		{
+			YSensitivityFix();
+		};
 	}
 
 
@@ -119,6 +126,12 @@ namespace BUGFIX
 		float* Float_001 = (float*)(0x858C14); //0.000009 float number
 		MemoryVP::Patch<void*>(0x5381DC, &Float_001);
 		MemoryVP::Patch<void*>(0x5381F2, &Float_001);
+
+
+		//Longer Livetime time for broken stuff
+		MemoryVP::Patch<int>(0x59D8BC, 1000);
+		MemoryVP::Patch<int>(0x59E020, 250);
+
 	}
 
 
@@ -132,6 +145,48 @@ namespace BUGFIX
 		MemoryVP::Nop(0x53C590, 14);
 		MemoryVP::Nop(0x5726B5, 14);
 		MemoryVP::Nop(0x572111, 14);
+	}
+
+	void YSensitivityFix()
+	{
+		static float
+			_flt_2_4 = 2.4f,
+			_flt_1_8 = 1.8f;
+
+		MemoryVP::Patch<void*>(0x0050FB06, &_flt_2_4);
+		MemoryVP::Patch<void*>(0x00510BBB, &_flt_1_8);
+		MemoryVP::Patch<void*>(0x00511DE4, &_flt_2_4);
+		MemoryVP::Patch<void*>(0x0052227F, &_flt_2_4);
+		MemoryVP::Patch<void*>(0x0050F022, &_flt_2_4);
+		if ((float*)0x50F048 == &CCamera::m_fMouseAccelHorzntl)
+		{
+			MemoryVP::Patch<void*>(0x0050F048, &CCamera::m_fMouseAccelVertical);
+			MemoryVP::Patch<void*>(0x0050FB28, &CCamera::m_fMouseAccelVertical);
+			MemoryVP::Patch<void*>(0x00510C28, &CCamera::m_fMouseAccelVertical);
+			MemoryVP::Patch<void*>(0x00511E0A, &CCamera::m_fMouseAccelVertical);
+			MemoryVP::Patch<void*>(0x0052228E, &CCamera::m_fMouseAccelVertical);
+		}
+
+		MemoryVP::Patch<uint32_t>(0x005735E0, 0x00865450);
+
+		MemoryVP::Patch<uint32_t>(0x005BC7B4, 0x1F0F6666);
+		MemoryVP::Patch<uint32_t>(0x005BC7B8, 0x84);
+		MemoryVP::Patch<uint16_t>(0x005BC7BC, 0x0);
+
+		float hor = 0.0003125f + 0.0003125f / 2.0f;
+		while (hor <= CCamera::m_fMouseAccelHorzntl)
+		{
+			hor += (0.005f / 16.0f);
+		}
+		hor -= 0.0003125f / 2.0f;
+		if (hor != CCamera::m_fMouseAccelHorzntl)
+		{
+			CCamera::m_fMouseAccelHorzntl = hor;
+
+			FrontEndMenuManager.SaveSettings();
+		}
+		hor *= (0.0015f / 0.0025f);
+		CCamera::m_fMouseAccelVertical = hor;
 	}
 }
 

@@ -52,6 +52,10 @@ float VERSION = 0.5f;
 #include "game_sa/CCarFxRender.h"
 #include "game_sa/CVehicle.h"
 #include "game_sa/CAEStreamingChannel.h"
+#include "game_sa/CCopPed.h"
+
+
+
 
 void btlc_init(); //BTLC INIT
 void check_gameversion();
@@ -105,12 +109,14 @@ void Function_starter()
 	CHud::My_Init();					//New HuD
 	CRadar::My_Init();					//New Radar
 	CStreaming::My_Init();				//New COP stream functions - ALL cops&copcars in all cities 
-	CAnimationStyleDescriptor::My_init(); //Armed running for Peds
+	CAnimationStyleDescriptor::My_init(); //Armed running for Peds/player
 	CEntity::My_Init();					//static shadows for all new traffic lights and Lamps
 	CPed::My_Init();					//Armed Animations for Peds
 	CCarFxRender::MyInit();				//New Dirt on Cars and lights mechanics
 	CVehicle::MyInit();					//Support for IVF Lights
 	CAEStreamingChannel::MyInit();	//Disable BassEQ stuff for now(crashes with dsound)
+
+	CCopPed::My_Init();
 
 	CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
 	CTrafficlights::Set_Trafficlight_models();	//Trafficlight changes
@@ -128,6 +134,7 @@ void Function_starter()
 	MemoryVP::InjectHook(0x57A05A, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x57CFA7, &FIND_VIDEOMODES);
 	MemoryVP::InjectHook(0x746190, &psSelectDevice, PATCH_JUMP);
+	MemoryVP::InjectHook(0x748995, &SetupWindowStyle, PATCH_CALL);
 	//MemoryVP::InjectHook(0x619BA6, &psSelectDevice, PATCH_CALL);
 	//MemoryVP::InjectHook(0x619D10, &psSelectDevice, PATCH_CALL);
 	
@@ -258,7 +265,7 @@ void ParseCommandlineArgument(int thing, char* pArg)
 		//settings for windowed mode
 		if (!_stricmp(pArg, "-windowed"))
 		{
-			MemoryVP::InjectHook(0x748995, &SetupWindowStyle, PATCH_CALL);
+			
 		}
 		////DEV enables the debug_consoles and outputs
 		//if (!_stricmp(pArg, "-DEV"))
