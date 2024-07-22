@@ -15,6 +15,8 @@
 #include "CFileMgr.h"
 #include "CPcSave.h"
 #include "CMenuSystem.h"
+#include "../BTLC_BASE/My_GPS.h"
+#include "CStreaming.h"
 //#include "CAudioEngine.h"
 
 MyDisplayoptions  CMenuManager::CustomOptions = { 0,800,600,0 };
@@ -70,7 +72,7 @@ void CMenuManager::Initialise()
 	}
 	CentreMousePointer();
 	field_8 = 3;
-	m_fMapZoom = 270.0f;
+	
 	float temp = m_fMapBaseX - 1100.0f;
 	if (temp > 0.0f)
 		m_fMapBaseX = m_fMapBaseX - temp;
@@ -87,7 +89,18 @@ void CMenuManager::Initialise()
 	if (temp > 0.0f)
 		m_fMapBaseY = 448.0f - temp + m_fMapBaseY;
 
-	CRadar::SetMapCentreToCoords(-10.0f, 550.0f);
+
+	//CRadar::SetMapCentreToPlayerCoords();
+
+	CRadar::SetMapCentreToCoords(-440.0f, 550.0f);
+
+	if (!m_bMainMenuSwitch)
+	{
+		CMenuManager::ProcessStreaming(1);
+	}
+
+	m_fMapZoom = 260.0f;
+
 	if (!field_F4)
 	{
 		m_nCurrentMenuPage = MENUPAGE_QUIT_GAME_2;
@@ -107,7 +120,27 @@ void CMenuManager::Initialise()
 
 void CMenuManager::ProcessStreaming(char bImmediately)
 {
-	((void(__thiscall *)(CMenuManager*, char))0x573CF0)(this, bImmediately);
+	if (!m_bMainMenuSwitch)
+	{
+		for (int i = 0; i < 12; i++)
+			for (int i2 = 0; i2 < 12; i2++)
+			{
+				if (m_bMenuActive)
+					CRadar::RequestMapSection(i, i2);
+				else
+					CRadar::RemoveMapSection(i, i2);
+				
+			}
+				
+
+		if (bImmediately)
+			CStreaming::LoadAllRequestedModels(0);
+		else
+			CStreaming::LoadRequestedModels();
+		
+	}
+
+//	((void(__thiscall *)(CMenuManager*, char))0x573CF0)(this, bImmediately);
 }
 
 void CMenuManager::UserInput()
@@ -905,103 +938,51 @@ char CMenuManager::PrintMap()
 {
 	//return	((char(__thiscall *)(CMenuManager*))0x575130)(this);
 
-	//Check if Overvbiewmap should be displayed
-	//CPad::GetPad(m_nPlayerNumber);
-	//if (CPad::NewKeyState.standardKeys[90]	|| (CPad::GetPad(m_nPlayerNumber),CPad::NewKeyState.standardKeys[122]))
-	//{
-	//	DrawNormalRadarMap = false;
-	//	m_bDrawMouse = false;
-	//	
-	//}
-
 	drawRadarOrMap = true;
 	CRadar::InitFrontEndMap();
 
 
-	// Display Overview map
-	//if (!DrawNormalRadarMap)
-	//{
-	//	if (PanelID >= 0)
-	//	{
-	//		CMenuSystem::SwitchOffMenu(PanelID);
-	//		PanelID = 157;
-	//	}
-	//	m_fMapBaseX = 320.0f;
-	//	m_fMapBaseY = 206.0f;
-	//	m_fMapZoom = 140.0f;
-	//	CVector WorldPos = FindPlayerCentreOfWorld_NoSniperShift(0);
-	//	CVector2D Pos_in;
-	//	Pos_in.x = WorldPos.x;
-	//	Pos_in.y = WorldPos.y;
-	//	CVector2D MapRecPos;
-	//	CRadar::TransformRealWorldPointToRadarSpace(MapRecPos, Pos_in);
-	//	CRadar::LimitRadarPoint(MapRecPos);
-	//	Pos_in = MapRecPos;
-	//	CRadar::TransformRadarPointToScreenSpace(MapRecPos, Pos_in);
+//Loading Fade
+	float fProgress = min(1.0f, (CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer) / 250.0f);
+	int MyFadeAlpha = max(((pow(2, 8 * fProgress) - 1) / 255) * 255, 0);
 
-	//	//calculate the mapzoom depending on the current pos somehow?
-	//	float Tmp_Posx = m_fMapBaseX + 140.0f;
-	//	float Tmp_posy = m_fMapBaseY + 140.0f;
-	//	if (MapRecPos.x <= Tmp_Posx)
-	//	{
-	//		if (MapRecPos.y <= Tmp_posy)
-	//		{
-	//			Tmp_Posx = m_fMapBaseX - 140.0f;
-	//			if (MapRecPos.x >= Tmp_Posx)
-	//			{
-	//				Tmp_posy = m_fMapBaseY - 140.0f;
-	//				if (MapRecPos.y < Tmp_posy)
-	//					m_fMapZoom = m_fMapZoom - (Tmp_posy - MapRecPos.y);
-	//			}
-	//			else
-	//			{
-	//				m_fMapZoom = m_fMapZoom - (Tmp_Posx - MapRecPos.x);
-	//			}
-	//		}
-	//		else
-	//			m_fMapZoom = m_fMapZoom - (Tmp_posy - MapRecPos.y);
-	//	}
-	//	else
-	//	m_fMapZoom = m_fMapZoom - (Tmp_Posx - MapRecPos.x);
-
-
-	//	//Limit minimal zoom to 70.0f ist limited to 270.0f in other fucntions anyway...
-	//	if (m_fMapZoom < 70.0f)
-	//		m_fMapZoom = 70.0f;
-	//}
-
-
-
-	float MapzoomMultiplierX = RsGlobal.maximumWidth*m_fMapZoom  * 0.16666* 0.0015625;
-	float MapzoomMultiplierY = m_fMapZoom * 0.16666 *RsGlobal.maximumHeight  * 0.00223214;
-
-
-	float x1 = MainMenuMapRect.m_fLeft = 0;
-	float x2 = MainMenuMapRect.m_fRight =   RsGlobal.maximumWidth ;
-	float y1 = MainMenuMapRect.m_fTop =  StretchY(0.0f);
-	float y2 = MainMenuMapRect.m_fBottom = RsGlobal.maximumHeight - StretchY(0.0f);
-	float TmpMapBasezoomX =  RsGlobal.maximumWidth* 0.0015625 *(m_fMapBaseX - m_fMapZoom);// StretchX(m_fMapBaseX - m_fMapZoom); /
-	float TmpMapBasezoomY = RsGlobal.maximumHeight*  0.002232143 *(m_fMapBaseY - m_fMapZoom); // StretchY(m_fMapBaseY - m_fMapZoom); //
-
-
+	float timedepZoom = m_fMapZoom;
 
 	if (m_bMapLoaded)
 	{
 		if (field_5A && !m_bAllStreamingStuffLoaded)
 		{
 			m_nMapTimer = CTimer::m_snTimeInMillisecondsPauseMode;
-			m_bUpdateMap = 0;
+			m_bUpdateMap = 1;
 		}
 
-		if (CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer > 150)
+		if (CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer > 50)
 			m_bUpdateMap = 1;
 
 	}
 	else
 	{
 		m_nMapTimer = CTimer::m_snTimeInMillisecondsPauseMode;
-		m_bUpdateMap = 0;
+		m_bUpdateMap = 1;
 	}
+
+
+	m_bUpdateMap = 1;
+
+	float MapzoomMultiplierX = RsGlobal.maximumWidth*  timedepZoom  * 0.16666* 0.0015625;
+	float MapzoomMultiplierY = timedepZoom * 0.16666 *RsGlobal.maximumHeight  * 0.00223214;
+
+
+	float x1 = MainMenuMapRect.m_fLeft = 0;
+	float x2 = MainMenuMapRect.m_fRight =   RsGlobal.maximumWidth ;
+	float y1 = MainMenuMapRect.m_fTop =  StretchY(0.0f);
+	float y2 = MainMenuMapRect.m_fBottom = RsGlobal.maximumHeight - StretchY(0.0f);
+	float TmpMapBasezoomX =  RsGlobal.maximumWidth* 0.0015625 *(m_fMapBaseX - timedepZoom);// StretchX(m_fMapBaseX - m_fMapZoom); /
+	float TmpMapBasezoomY = RsGlobal.maximumHeight*  0.002232143 *(m_fMapBaseY - timedepZoom); // StretchY(m_fMapBaseY - m_fMapZoom); //
+
+
+
+
 
 	//BLue Background
 	CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, 255));
@@ -1038,32 +1019,21 @@ char CMenuManager::PrintMap()
 						}
 					}
 				}
-
-			
 			}
-		
-		
-			
-			//CSprite2d::DrawRect(CRect::CRect(StretchX(60.0f), RsGlobal.maximumHeight - StretchY(60.0f), RsGlobal.maximumWidth- StretchX(60.0f) , RsGlobal.maximumHeight), CRGBA::CRGBA(0, 0, 0, 100));
-			//CSprite2d::DrawRect(CRect::CRect(0, StretchY(60.0f), StretchX(60.0f), RsGlobal.maximumHeight), CRGBA::CRGBA(0, 0, 0, 100));
-
-
-			
 		}
 	}
-	
 
 
 
+	My_GPS::GPS_DRAW();
 	CRadar::DrawBlips();
 	m_bMapLoaded = true;
 
+	if ((CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer) < 100)
+		CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, (255)));
 
-	//Loading Fade
-	float fProgress = min(1.0f,(CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer)/400.0f);
-	int MyFadeAlpha = max(((pow(2, 8 * fProgress) - 1) / 255)*255,0);
 	if (MyFadeAlpha > 0)
-		CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, (255 -MyFadeAlpha)));
+		CSprite2d::DrawRect(CRect::CRect(0, 0, RsGlobal.maximumWidth, RsGlobal.maximumHeight), CRGBA::CRGBA(95, 125, 148, (255 - MyFadeAlpha)));
 
 
 	if (m_bMapLegend)
@@ -1663,7 +1633,7 @@ void CMenuManager::MyInit()
 	//Patch Call because the old one still exists and is called inside the fucntion.
 	MemoryVP::InjectHook(0x57B457, &CMenuManager::UserInput, PATCH_CALL);
 	MemoryVP::Patch<char>(0x57FE9C, 0x14); //Distance between Menubuttons in Userinput
-
+	MemoryVP::InjectHook(0x573CF0, &CMenuManager::ProcessStreaming, PATCH_JUMP);
 
 	//Initial Mapzoom on Menu opening.
 	MemoryVP::Patch<float>(0x57453A + 3, 270.0f);

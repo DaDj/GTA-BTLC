@@ -29,7 +29,7 @@ namespace My_FxTool
 
 		Events::gameProcessEvent += []()
 		{
-			CPed* Player = FindPlayerPed();
+		/*	CPed* Player = FindPlayerPed();
 
 			if (KeyPressed('T'))
 			{
@@ -42,7 +42,7 @@ namespace My_FxTool
 				CFont::SetOutlinePosition(1);
 				CFont::SetScale(CHud::x_fac(0.25f), CHud::y_fac(0.5f));
 				CFont::PrintString(CHud::x_fac(15.0f), CHud::y_fac(5.0f), string);
-			}
+			}*/
 		};
 
 		Events::drawRadarOverlayEvent += []()

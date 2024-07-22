@@ -12,7 +12,7 @@ void CCopPed::My_Init()
 	MemoryVP::InjectHook(0x491CF5, &CCopPed::MySetCopWeapons, PATCH_CALL);
 	MemoryVP::InjectHook(0x49973F, &CCopPed::MySetCopWeapons, PATCH_CALL);
 	MemoryVP::InjectHook(0x61282F, &CCopPed::MySetCopWeapons, PATCH_CALL);
-	MemoryVP::InjectHook(0x613830, &CCopPed::MySetCopWeapons, PATCH_CALL);
+	MemoryVP::InjectHook(0x613830, &CCopPed::MySetCopWeapons, PATCH_CALL);	
 }
 
 CCopPed* CCopPed::MySetCopWeapons(eCopType copType)

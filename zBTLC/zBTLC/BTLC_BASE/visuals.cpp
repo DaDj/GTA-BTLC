@@ -67,6 +67,24 @@ namespace visuals
 		// Render the static shadow at every fxquality
 		//MemoryVP::Patch<BYTE>(0x70BDAC, 0x84);
 
+		//MemoryVP::Patch<char>(0x71162C, 100); //stencilopacity
+
+		//static float
+		//	DD_StencilShadow = 800.0f,
+		//	DD_StencilShadow2 = 60.0f;
+
+		//MemoryVP::Patch<void*>(0x711943, &DD_StencilShadow);
+		//MemoryVP::Patch<void*>(0x711954, &DD_StencilShadow);
+		//MemoryVP::Patch<void*>(0x711969, &DD_StencilShadow);
+		//MemoryVP::Patch<void*>(0x711977, &DD_StencilShadow);
+
+
+
+		//MemoryVP::Patch<void*>(0x711985 + 2, &DD_StencilShadow2); //org. 60.0f
+		//MemoryVP::Patch<void*>(0x7119DB + 2, &DD_StencilShadow2); //org. 60.0f
+		//MemoryVP::Patch<void*>(0x711A23 + 2, &DD_StencilShadow2); //org. 60.0f
+		//MemoryVP::Patch<void*>(0x711A74 + 2, &DD_StencilShadow2); //org. 60.0f
+
 		//no Motion Blur
 		//MemoryVP::Patch<char>(0x704DBC + 1, 0xDB);//(DB)
 		//MemoryVP::Patch<char>(0x704DBC, 0x30);//(XOR)

@@ -2,6 +2,7 @@
 #include "plbase/PluginBase_SA.h"
 #include "CompressedVector.h"
 #include "CVector.h"
+#include "CPlayerPed.h"
 
 enum ePickupType {
     PICKUP_NONE = 0,
@@ -37,7 +38,7 @@ enum ePickupPropertyText {
 
 class CObject;
 class CVehicle;
-class CPlayerPed;
+//class CPlayerPed;
 
 class CPickup {
 public:

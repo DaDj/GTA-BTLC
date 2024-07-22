@@ -7,8 +7,6 @@
 #include "CPlayerInfo.h"
 #include "eSprintType.h"
 
-
-
 class CEventDamage;
 
 class CPlayerPed : public CPed {

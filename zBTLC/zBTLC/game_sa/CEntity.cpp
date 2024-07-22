@@ -21,7 +21,7 @@
 void CEntity::My_Init()
 {
 	//MemoryVP::InjectHook(0x536977,0x536A67,PATCH_JUMP);
-//	MemoryVP::InjectHook(0x536A68, &MyPreRender_Shadow, PATCH_CALL);
+	//MemoryVP::InjectHook(0x536A68, &MyPreRender_Shadow, PATCH_CALL);
 	MemoryVP::InjectHook(0x535FA0, &CEntity::PreRender, PATCH_JUMP);
 	//MemoryVP::Patch(0x858614, &SetupLighting);
 	//MemoryVP::Nop(0x553A3A, 5); //deactivate

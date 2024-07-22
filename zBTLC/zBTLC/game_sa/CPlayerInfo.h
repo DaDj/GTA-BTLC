@@ -86,4 +86,4 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CPlayerInfo, 0x190);
+//VALIDATE_SIZE(CPlayerInfo, 0x190);

@@ -21,6 +21,7 @@
 #include "../game_sa/FxManager_c.h"
 #include "../game_sa/CAEStaticChannel.h"
 #include "../game_sa/CWeather.h"
+#include "../game_sa/CPlayerPed.h"
 #pragma once
 DebugMenuAPI gDebugMenuAPI;
 void(*DebugMenuProcess)(void);

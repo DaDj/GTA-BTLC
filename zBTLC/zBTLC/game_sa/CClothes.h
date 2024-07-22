@@ -1,16 +1,28 @@
+
+
+
+
+
 #pragma once
+#include "plbase\PluginBase_SA.h"
 
-#include "plbase/PluginBase_SA.h"
+#include "CPedClothesDesc.h"
 
-#pragma pack(push, 4)
-class CClothes
+class CPlayerPed;
+
+class  CClothes
 {
 public:
-	unsigned int m_adwModelKeys[10];
-	unsigned int m_adwTextureKeys[18];
-	float m_fFatStat;
-	float m_fMuscleStat;
+	//funcs
+	static void ConstructPedModel(unsigned int modelid, CPedClothesDesc& newclothes, CPedClothesDesc const* oldclothes, bool bCutscenePlayer);
+	static void RequestMotionGroupAnims();
+	static void RebuildPlayerIfNeeded(CPlayerPed* player);
+	static void RebuildPlayer(CPlayerPed* player, bool bIgnoreFatAndMuscle);
+	static void RebuildCutscenePlayer(CPlayerPed* player, int modelid);
+	static void LoadClothesFile();
+	static void Init();
+	static eClothesModelPart GetTextureDependency(int eClothesTexturePart);
+	static int GetPlayerMotionGroupToLoad();
+	static eClothesTexturePart GetDependentTexture(int eClothesModelPart);
+	static int GetDefaultPlayerMotionGroup();
 };
-#pragma pack(pop)
-
-VALIDATE_SIZE(CClothes, 0x78);

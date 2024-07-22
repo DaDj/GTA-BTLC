@@ -21,8 +21,8 @@ namespace limits
 {
 	void Init()
 	{
-		limits::IMG_LIMIT();	//Limit adjusting
-		Water_limit::init(); //waterlimit
+	//	limits::IMG_LIMIT();	//Limit adjusting
+	//	Water_limit::init(); //waterlimit
 		vehicleColourTable();
 	}
 

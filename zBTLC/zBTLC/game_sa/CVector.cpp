@@ -89,3 +89,13 @@ void CVector::FromMultiply3x3(CMatrix  const& matrix, CVector const& vector)
 {
 	((void(__thiscall *)(CVector *, CMatrix  const&, CVector const&))0x59C6D0)(this, matrix, vector);
 }
+
+float DotProduct(CVector* v1, CVector* v2)
+{
+	return v1->z * v2->z + v1->y * v2->y + v1->x * v2->x;
+}
+
+float DotProduct(const CVector& v1, const CVector& v2)
+{
+	return v1.z * v2.z + v1.y * v2.y + v1.x * v2.x;
+}

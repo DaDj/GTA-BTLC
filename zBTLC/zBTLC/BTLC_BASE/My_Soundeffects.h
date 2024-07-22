@@ -9,5 +9,7 @@ public:
 	static void __fastcall SetChannelAdditionalFX(CAEStaticChannel * channel, int, bool compressed);
 	static void Init();
 	static int SetReverbEnv();
+	static float CMySoundeffects::GetDirectionalMikeAttenuation(const CVector& soundDir);
+	static void CMySoundeffects::GetPositionRelativeToCamera(CVector* vecOut, const CVector* vecPos);
 	CMySoundeffects();
 };

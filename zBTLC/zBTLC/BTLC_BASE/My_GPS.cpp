@@ -12,7 +12,7 @@
 #include "../game_sa/CHud.h"
 
 #define MAX_NODE_POINTS 3000
-#define GPS_LINE_WIDTH  4.5f
+#define GPS_LINE_WIDTH  9.5f
 #define GPS_LINE_R  10
 #define GPS_LINE_G  110
 #define GPS_LINE_B  10

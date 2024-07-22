@@ -12,7 +12,7 @@ unsigned int &CStreaming::ms_streamingBufferSize = *(unsigned int *)0x8E4CA8;
 unsigned int &CStreaming::ms_memoryUsed = *(unsigned int *)0x8E4CB4;
 unsigned int &CStreaming::ms_numModelsRequested = *(unsigned int *)0x8E4CB8;
 bool &CStreaming::ms_disableStreaming = *(bool *)0x9654B0;
-CStreamingInfo *CStreaming::ms_aInfoForModel = (CStreamingInfo *)0x8E4CC0;
+CStreamingInfo *CStreaming::ms_aInfoForModel =  *(CStreamingInfo **)(0x408835 + 2);     //0x8E4CC0;
 
 
 bool* CStreaming::bCopBikeLoaded = (bool*)0x9654BE;

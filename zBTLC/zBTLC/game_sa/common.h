@@ -6,7 +6,7 @@
 #include "CVehicle.h"
 #include "CWeaponInfo.h"
 #include "CAnimBlendClumpData.h"
-#include"CPlayerPed.h"
+#include "CPlayerPed.h"
 
 extern char *gString; // char gString[200]
 extern char *gta_empty_string;

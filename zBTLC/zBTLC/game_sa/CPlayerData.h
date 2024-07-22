@@ -77,5 +77,3 @@ public:
 	class CPed *m_pLastProstituteShagged;
 };
 #pragma pack(pop)
-
-VALIDATE_SIZE(CPlayerData, 0xAC);

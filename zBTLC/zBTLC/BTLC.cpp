@@ -80,7 +80,7 @@ void Main()
 	//COMMANDLINE READER
 	MemoryVP::InjectHook(0x74879A, &ParseCommandlineArgument, PATCH_CALL);
 	MemoryVP::Patch(0x74877D, 0);
-	check_gameversion();	//check game version
+	//check_gameversion();	//check game version
 	Function_starter();		//START BTLC STUFF
 }
 
@@ -102,7 +102,7 @@ void Function_starter()
 
 
 #ifdef ModdingTools
-	My_FxTool::init();		//FX Tool.
+	//My_FxTool::init();		//FX Tool.
 	My_SkinSelector::Init();
 #endif // ModdingTools
 
@@ -110,16 +110,16 @@ void Function_starter()
 	CRadar::My_Init();					//New Radar
 	CStreaming::My_Init();				//New COP stream functions - ALL cops&copcars in all cities 
 	CAnimationStyleDescriptor::My_init(); //Armed running for Peds/player
-	CEntity::My_Init();					//static shadows for all new traffic lights and Lamps
 	CPed::My_Init();					//Armed Animations for Peds
+	CEntity::My_Init();					//static shadows for all new traffic lights and Lamps
 	CCarFxRender::MyInit();				//New Dirt on Cars and lights mechanics
 	CVehicle::MyInit();					//Support for IVF Lights
 	CAEStreamingChannel::MyInit();	//Disable BassEQ stuff for now(crashes with dsound)
 
-	CCopPed::My_Init();
+	CCopPed::My_Init();	//Different Weapons for cops
 
-	CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
-	CTrafficlights::Set_Trafficlight_models();	//Trafficlight changes
+	//CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
+//	CTrafficlights::Set_Trafficlight_models();	//Trafficlight changes
 	CMenuManager::MyInit();
 
 	MemoryVP::Nop(0x53C1C6, 5); //Disable Roadblock as long as I don't have any.
@@ -158,8 +158,8 @@ void btlc_init()
 	//MemoryVP::Patch<BYTE>(0x5A3353, 0xFF);
 	//MemoryVP::Nop(0x5A332A, 2);
 	//MemoryVP::Nop(0x5A3355, 2);
-	MemoryVP::Patch<int>(0x5A3327, 5000);
-	MemoryVP::Patch<int>(0x5A335D + 1, 8000);
+	//MemoryVP::Patch<int>(0x5A3327, 5000);
+	//MemoryVP::Patch<int>(0x5A335D + 1, 8000);
 	//MemoryVP::Patch<int>(0x5A3EB2  + 1, 2000);
 }
 
@@ -189,7 +189,7 @@ void check_gameversion()
 		if (*test == (char)0xe9)
 		{
 			failtext = "GTA SA 1.0 US Hoodlum not supported. \nPlease use GTA SA 1.0 US Compact";
-			fail = 1;
+			fail = 0;
 			break;
 		}
 		std::cout << "EXE VERSION: COMPACT detected. -> start game" << std::endl;

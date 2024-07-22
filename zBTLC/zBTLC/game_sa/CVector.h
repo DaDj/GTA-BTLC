@@ -61,6 +61,9 @@ public:
 	}
 };
 
+float DotProduct(const CVector& v1, const CVector& v2);
+float DotProduct(CVector* v1, CVector* v2);
+
 inline CVector operator-(const CVector& vecOne, const CVector& vecTwo) {
 	return CVector(vecOne.x - vecTwo.x, vecOne.y - vecTwo.y, vecOne.z - vecTwo.z);
 }
