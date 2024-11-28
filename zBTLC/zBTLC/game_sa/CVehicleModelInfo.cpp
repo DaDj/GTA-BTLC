@@ -160,6 +160,7 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 	int LightID = -1;
 	int MaterialColor = *(int*)&material->color & 0xFFFFFF;
 	int LighttextureType = 0;
+	bool IsBroken = false;
 
 	if (ms_pRemapTexture && material && RpMaterialGetTexture(material) && material->texture->name[0] == '#')
 	{
@@ -182,46 +183,71 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 		{
 		case 0xAFFF: //Left Headlight 
 			LightID = LightStatus.bHeadlight_Left;
+			if (LightStatus.bDamagedFrontLeft)
+				IsBroken = true;
 			break;
 		case 0xC8FF00: //Right Headlight
 			LightID = LightStatus.bHeadlight_Right;
+			if (LightStatus.bDamagedFrontRight)
+				IsBroken = true;
 			break;
 		case 0xFFB9: //Left taillight
 			if (LighttextureType == 1)
 				LightID = max(LightStatus.bTaillight_Left, LightStatus.bBrakelight_Left);
 			else
 				LightID = LightStatus.bTaillight_Left;
+
+			if (LightStatus.bDamagedRearLeft)
+				IsBroken = true;
 			break;
 		case 0x3CFF: //Right Taillight
 			if (LighttextureType == 1)
 				LightID = max(LightStatus.bTaillight_Right, LightStatus.bBrakelight_Right);
 			else
 				LightID = LightStatus.bTaillight_Right;
+			if (LightStatus.bDamagedRearRight)
+				IsBroken = true;
 			break;
 		case 0xFFB8: //Left Brake Light
 			LightID = LightStatus.bBrakelight_Left;
+			if (LightStatus.bDamagedRearLeft)
+				IsBroken = true;
 			break;
 		case 0x3BFF: //Right Brake Light
 			LightID = LightStatus.bBrakelight_Right;
+			if (LightStatus.bDamagedRearRight)
+				IsBroken = true;
 			break;
 		case 0xC6FF00: //Right Reverse Light
 			LightID = LightStatus.bReverselight_Right;
+			if (LightStatus.bDamagedRearRight)
+				IsBroken = true;
 			break;
 		case 0xADFF: //Left Reverse Light
 			LightID = LightStatus.bReverselight_Left;
+			if (LightStatus.bDamagedRearLeft)
+				IsBroken = true;
 			break;
 		
 		case 0xFFB7: //Front Left Indicator Light
 			LightID = LightStatus.bIndicator_FrontLeft;
+			if (LightStatus.bDamagedFrontLeft)
+				IsBroken = true;
 			break;
 		case 0x3AFF: //Front Right Indicator Light
 			LightID = LightStatus.bIndicator_FrontRight;
+			if (LightStatus.bDamagedFrontRight)
+				IsBroken = true;
 			break;
 		case 0xFFB5: //Back Left Indicator Light
 			LightID = LightStatus.bIndicator_RearLeft;
+			if (LightStatus.bDamagedRearLeft)
+				IsBroken = true;
 			break;
 		case 0x38FF: //Back Right Indicator Light
 			LightID = LightStatus.bIndicator_RearRight;
+			if (LightStatus.bDamagedRearRight)
+				IsBroken = true;
 			break;
 		default:
 			LightID = -1;
@@ -232,6 +258,8 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 		material->color.red = 255;
 		material->color.blue = 255;
 		material->color.green = 255;
+		if(IsBroken && material->color.alpha < 255)
+		material->color.alpha = 0;
 
 		if (LightID > 0)
 		{
@@ -259,6 +287,7 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 			material->surfaceProps.ambient = 16.0;
 			material->surfaceProps.specular = 0;
 			material->surfaceProps.diffuse = 0;
+			
 		}
 	}
 	else

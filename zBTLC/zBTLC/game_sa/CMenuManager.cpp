@@ -943,7 +943,7 @@ char CMenuManager::PrintMap()
 
 
 //Loading Fade
-	float fProgress = min(1.0f, (CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer) / 250.0f);
+	float fProgress = min(1.0f, (CTimer::m_snTimeInMillisecondsPauseMode - m_nMapTimer) / 100.0f);
 	int MyFadeAlpha = max(((pow(2, 8 * fProgress) - 1) / 255) * 255, 0);
 
 	float timedepZoom = m_fMapZoom;
@@ -969,16 +969,18 @@ char CMenuManager::PrintMap()
 
 	m_bUpdateMap = 1;
 
-	float MapzoomMultiplierX = RsGlobal.maximumWidth*  timedepZoom  * 0.16666* 0.0015625;
-	float MapzoomMultiplierY = timedepZoom * 0.16666 *RsGlobal.maximumHeight  * 0.00223214;
+	float MapzoomMultiplierX = RsGlobal.maximumWidth *  timedepZoom  * 0.16666 * 0.0015625;
+	float MapzoomMultiplierY = RsGlobal.maximumHeight  * timedepZoom * 0.16666  * 0.00223214;
 
 
 	float x1 = MainMenuMapRect.m_fLeft = 0;
 	float x2 = MainMenuMapRect.m_fRight =   RsGlobal.maximumWidth ;
 	float y1 = MainMenuMapRect.m_fTop =  StretchY(0.0f);
 	float y2 = MainMenuMapRect.m_fBottom = RsGlobal.maximumHeight - StretchY(0.0f);
-	float TmpMapBasezoomX =  RsGlobal.maximumWidth* 0.0015625 *(m_fMapBaseX - timedepZoom);// StretchX(m_fMapBaseX - m_fMapZoom); /
-	float TmpMapBasezoomY = RsGlobal.maximumHeight*  0.002232143 *(m_fMapBaseY - timedepZoom); // StretchY(m_fMapBaseY - m_fMapZoom); //
+
+
+	float TmpMapBasezoomX =  RsGlobal.maximumWidth* 0.0015625 * (m_fMapBaseX - timedepZoom);// StretchX(m_fMapBaseX - m_fMapZoom); /
+	float TmpMapBasezoomY = RsGlobal.maximumHeight*  0.002232143 * (m_fMapBaseY - timedepZoom); // StretchY(m_fMapBaseY - m_fMapZoom); //
 
 
 
@@ -1009,7 +1011,7 @@ char CMenuManager::PrintMap()
 								if (y2 + MapzoomMultiplierY > (iB + 1) * MapzoomMultiplierY + TmpMapBasezoomY)
 								{
 									CRect MyRadarRect = CRect::CRect();
-									MyRadarRect.m_fLeft = MapzoomMultiplierX * (iA) +  TmpMapBasezoomX;
+									MyRadarRect.m_fLeft =  MapzoomMultiplierX * (iA) +  TmpMapBasezoomX;
 									MyRadarRect.m_fRight = MapzoomMultiplierX * (iA+1) +  TmpMapBasezoomX;
 									MyRadarRect.m_fTop = MapzoomMultiplierY * (iB) +  TmpMapBasezoomY;
 									MyRadarRect.m_fBottom = MapzoomMultiplierY * (iB+1) +  TmpMapBasezoomY;

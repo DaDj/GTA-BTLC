@@ -53,7 +53,7 @@ float VERSION = 0.5f;
 #include "game_sa/CVehicle.h"
 #include "game_sa/CAEStreamingChannel.h"
 #include "game_sa/CCopPed.h"
-
+#include "game_sa/CTrain.h"
 
 
 
@@ -98,7 +98,7 @@ void Function_starter()
 	My_PlayerWallhitreactions::init();	//Wallhitanimations for player
 	My_GPS::init();						//GPS for cars like in IV
 	My_CCam::INIT();					//IV Styled AIM CAM
-	CMySoundeffects::Init();			//Sound effects for examplereverb in tunnels
+	CMySoundeffects::Init();			//Sound effects for example reverb in tunnels
 
 
 #ifdef ModdingTools
@@ -116,6 +116,8 @@ void Function_starter()
 	CVehicle::MyInit();					//Support for IVF Lights
 	CAEStreamingChannel::MyInit();	//Disable BassEQ stuff for now(crashes with dsound)
 
+	CTrain::MyInit(); //Support more tracks
+
 	CCopPed::My_Init();	//Different Weapons for cops
 
 	//CTrafficlights::Set_polygon_size(13);		//Trafficlight changes
@@ -126,6 +128,8 @@ void Function_starter()
 	MemoryVP::InjectHook(0x536541, &CPickups::DoPickUpEffects, PATCH_CALL);				//Test new Pickup
 	MemoryVP::InjectHook(0x609CD0, &CPlayerPed::GetWeaponRadiusOnScreen, PATCH_JUMP);	//static Crosshair Hook
 	MemoryVP::InjectHook(0x59F8A1, &CObject::SetObjectdata, PATCH_CALL);				//New Masspoints for dynamic Objects
+
+
 
 	//set numMonitor to only give back one
 	MemoryVP::InjectHook(0x7461AA, &CVideomodemanager::GetNumSubSystems);

@@ -200,6 +200,8 @@
     <ClCompile Include="game_sa\CPtrNodeSingleLink.cpp" />
     <ClCompile Include="game_sa\CRegisteredMotionBlurStreak.cpp" />
     <ClCompile Include="game_sa\CTaskUtilityLineUpPedWithCar.cpp" />
+    <ClCompile Include="game_sa\CTrain.cpp" />
+    <ClCompile Include="game_sa\CTrainNode.cpp" />
     <ClCompile Include="game_sa\CUtrax.cpp" />
     <ClCompile Include="game_sa\CVideomodemanager.cpp" />
     <ClCompile Include="BTLC_BASE\debug.cpp" />
@@ -731,6 +733,8 @@
     <ClInclude Include="game_sa\CPtrNodeSingleLink.h" />
     <ClInclude Include="game_sa\CRegisteredMotionBlurStreak.h" />
     <ClInclude Include="game_sa\CTaskUtilityLineUpPedWithCar.h" />
+    <ClInclude Include="game_sa\CTrain.h" />
+    <ClInclude Include="game_sa\CTrainNode.h" />
     <ClInclude Include="game_sa\CUtrax.h" />
     <ClInclude Include="game_sa\CVideomodemanager.h" />
     <ClInclude Include="BTLC_BASE\debug.h" />

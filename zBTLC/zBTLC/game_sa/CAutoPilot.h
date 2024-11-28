@@ -34,7 +34,7 @@ public:
 	int8_t field_36[2];
 	float field_38;
 	float           m_fMaxTrafficSpeed;
-	int8_t field_40;
+	int8_t m_nCruiseSpeed;
 	int8_t field_41;
 	int8_t field_42[2];
 	float field_44;

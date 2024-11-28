@@ -1540,6 +1540,12 @@
     <ClCompile Include="game_sa\CClothes.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
+    <ClCompile Include="game_sa\CTrain.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CTrainNode.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Patch\MemoryMgr.h">
@@ -3368,6 +3374,12 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CRegisteredMotionBlurStreak.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CTrain.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CTrainNode.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>
