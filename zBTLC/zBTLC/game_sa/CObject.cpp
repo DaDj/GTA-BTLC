@@ -209,6 +209,7 @@ void CObject::SetObjectdata(int modelindex, CObject* object)
 		CObject::ReadMasspoints(ChangedObjects);
 	}
 
+
 	//check if the object is in the new masspoint array
 	int flag = 0;
 	float x, y, z;
@@ -295,11 +296,19 @@ void CObject::ReadMasspoints(structObject_masspoint Result[])
 		strcpy(line2, Line.c_str());
 		if (line2[0] != ';')
 		{
+
+			char* aName = "";
 			sscanf(line2, "%d, %s %d, %f, %f, %f", &Result[i].Modelindex, &Result[i].Modelname, &Result[i].Flag, &Result[i].x, &Result[i].y, &Result[i].z);
 			//std::cout << i << "  " << Result[i].Modelindex << " " << Result[i].Modelname << "  " << Result[i].Flag << Result[i].x << Result[i].y << Result[i].z << std::endl;
+
+
+		/*	CBaseModelInfo* MyModel;
+			MyModel = CModelInfo::GetModelInfo(Result[i].Modelname,0);*/
+	
 		}
 		i++;
 	}
+
 	myfile.close();
 	return;
 }

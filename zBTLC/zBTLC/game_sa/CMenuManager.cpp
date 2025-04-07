@@ -970,7 +970,7 @@ char CMenuManager::PrintMap()
 	m_bUpdateMap = 1;
 
 	float MapzoomMultiplierX = RsGlobal.maximumWidth *  timedepZoom  * 0.16666 * 0.0015625;
-	float MapzoomMultiplierY = RsGlobal.maximumHeight  * timedepZoom * 0.16666  * 0.00223214;
+	float MapzoomMultiplierY = RsGlobal.maximumHeight  * timedepZoom * 0.16666  * 0.00223214; //StretchY(0.00223214/3.5); //weird shit here. I have no idea wh 3.5. Im lost now
 
 
 	float x1 = MainMenuMapRect.m_fLeft = 0;
@@ -1011,10 +1011,10 @@ char CMenuManager::PrintMap()
 								if (y2 + MapzoomMultiplierY > (iB + 1) * MapzoomMultiplierY + TmpMapBasezoomY)
 								{
 									CRect MyRadarRect = CRect::CRect();
-									MyRadarRect.m_fLeft =  MapzoomMultiplierX * (iA) +  TmpMapBasezoomX;
+									MyRadarRect.m_fLeft = MapzoomMultiplierX * (iA) +  TmpMapBasezoomX;
 									MyRadarRect.m_fRight = MapzoomMultiplierX * (iA+1) +  TmpMapBasezoomX;
 									MyRadarRect.m_fTop = MapzoomMultiplierY * (iB) +  TmpMapBasezoomY;
-									MyRadarRect.m_fBottom = MapzoomMultiplierY * (iB+1) +  TmpMapBasezoomY;
+									MyRadarRect.m_fBottom =MapzoomMultiplierY * (iB+1) +  TmpMapBasezoomY;
 									CRadar::DrawRadarSectionMap(iA, iB, MyRadarRect);
 								}
 							}

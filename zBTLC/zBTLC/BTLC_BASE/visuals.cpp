@@ -13,6 +13,9 @@
 #include "../Patch/injector.hpp"
 #include "../game_sa/CVector2D.h"
 #include <math.h>
+#include "../Patch/assembly.hpp"
+#include "../game_sa/CCamera.h"
+#include "../game_sa/CGame.h"
 
 namespace visuals
 {
@@ -154,5 +157,33 @@ namespace visuals
 		//MemoryVP::Patch<void*>(0x612142, &drawD_Ped3);//0x612142 org. 25.0f
 		//MemoryVP::Patch<void*>(0x431A24, &drawD_vehicle5);//0x431A24 org. 150.0f 
 		//MemoryVP::Patch<float>(0x871008, drawD_Ped5);//0x871008 org. 10.0f patched 150
+
+
+		static float G_WaveLightingCamHei, G_WaveLightingMult;
+
+		G_WaveLightingMult = 40.1;
+		G_WaveLightingCamHei = 0.01;
+
+		if (G_WaveLightingCamHei != -1.0f || G_WaveLightingMult != -1.0f) {
+			if (G_WaveLightingCamHei == -1.0f) G_WaveLightingCamHei = 0.0f;
+			if (G_WaveLightingMult == -1.0f) G_WaveLightingMult = 1.0f;
+			injector::MakeInline<0x6E7141, 0x6E7141 + 5>([](injector::reg_pack& regs)
+			{
+				reinterpret_cast<CVector*>(regs.ecx)->Normalise(); // original code
+				if (CGame::currArea == 0)
+				{
+					float camHeight = TheCamera.GetPosition().z;
+					if (camHeight < 0.0f) camHeight = 0.0f;
+					*(float*)(regs.esi + 0x0) /= 1.0f + (camHeight * G_WaveLightingCamHei);
+					*(float*)(regs.esi + 0x4) /= 1.0f + (camHeight * G_WaveLightingCamHei);
+					*(float*)(regs.esi + 0x0) *= G_WaveLightingMult;
+					*(float*)(regs.esi + 0x4) *= G_WaveLightingMult;
+					if (*(float*)(regs.esi + 0x0) > 0.2f) *(float*)(regs.esi + 0x0) = 0.2f;
+					if (*(float*)(regs.esi + 0x4) > 0.2f) *(float*)(regs.esi + 0x4) = 0.2f;
+					if (*(float*)(regs.esi + 0x0) < -0.2f) *(float*)(regs.esi + 0x0) = -0.2f;
+					if (*(float*)(regs.esi + 0x4) < -0.2f) *(float*)(regs.esi + 0x4) = -0.2f;
+				}
+			});
+		}
 	}
 }

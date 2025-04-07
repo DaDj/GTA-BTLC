@@ -28,7 +28,7 @@ float VERSION = 0.5f;
 #include "BTLC_BASE\limits.h"
 #include "BTLC_BASE\windowmode\windowmode.h"
 #include "BTLC_BASE\fast_load.h"
-#include "BTLC_BASE\CTrafficlights.h"
+//#include "BTLC_BASE\CTrafficlights.h"
 #include "BTLC_BASE\My_PlayerWeaponReload.h"
 #include "BTLC_BASE\My_PlayerWallHitreaction.h"
 #include "BTLC_BASE\My_GPS.h"

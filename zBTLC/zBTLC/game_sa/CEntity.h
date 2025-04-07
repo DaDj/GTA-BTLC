@@ -35,7 +35,7 @@ protected:
 public:
 
 	static void My_Init();
-	static void MyPreRender_Shadow(CEntity *Entity);
+	
 	union {
 		struct RwObject *m_pRwObject;
 		struct RpClump *m_pRwClump;

@@ -1357,9 +1357,6 @@
     <ClCompile Include="game_sa\CMemMgr.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
-    <ClCompile Include="BTLC_BASE\CTrafficlights.cpp">
-      <Filter>BTLC_BASE</Filter>
-    </ClCompile>
     <ClCompile Include="BTLC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1544,6 +1541,9 @@
       <Filter>game_sa</Filter>
     </ClCompile>
     <ClCompile Include="game_sa\CTrainNode.cpp">
+      <Filter>game_sa</Filter>
+    </ClCompile>
+    <ClCompile Include="game_sa\CTrafficlights.cpp">
       <Filter>game_sa</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3060,9 +3060,6 @@
     <ClInclude Include="game_sa\CMemMgr.h">
       <Filter>game_sa</Filter>
     </ClInclude>
-    <ClInclude Include="BTLC_BASE\CTrafficlights.h">
-      <Filter>BTLC_BASE</Filter>
-    </ClInclude>
     <ClInclude Include="BTLC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -3380,6 +3377,9 @@
       <Filter>game_sa</Filter>
     </ClInclude>
     <ClInclude Include="game_sa\CTrainNode.h">
+      <Filter>game_sa</Filter>
+    </ClInclude>
+    <ClInclude Include="game_sa\CTrafficlights.h">
       <Filter>game_sa</Filter>
     </ClInclude>
   </ItemGroup>

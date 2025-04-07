@@ -17,7 +17,7 @@ namespace debug {
 	void draw_current_Modelname();
 	void draw_FPS();
 	void draw_graphics_info();
-
+	void WriteFreeIds();
 	void DebugMenuInit(void);
 
 	void DebugMenuSetup();

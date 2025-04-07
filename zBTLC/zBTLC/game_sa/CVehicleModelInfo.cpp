@@ -162,6 +162,17 @@ RpMaterial* CVehicleModelInfo::SetEditableMaterialsCBb(RpMaterial* material, voi
 	int LighttextureType = 0;
 	bool IsBroken = false;
 
+	bool MAtEffect = false;
+	
+
+	/*if (strcmp(material->texture->name, "vehicle_generic_detail") == 0)
+	{
+		 MAtEffect = RpMatFXMaterialGetEffects(material) == rpMATFXEFFECTENVMAP;
+
+	//	 if(MAtEffect) 
+		//	 RpMatFXMaterialSetEnvMapCoefficient(material, 0.0);
+	}*/
+
 	if (ms_pRemapTexture && material && RpMaterialGetTexture(material) && material->texture->name[0] == '#')
 	{
 		(*pEntries)->address = &material->texture;

@@ -34,6 +34,16 @@ enum eTrainPassengersGenerationState {
     TRAIN_PASSENGERS_GENERATION_FINISHED = 4
 };
 
+
+struct TrainTackinfo 
+{
+	int TrainType;
+	CVector StationCoors[32];
+	float StationDist[32];
+	int TimeLastGen = 0;
+
+};
+
 class CTrain : public CVehicle {
 protected:
     CTrain(plugin::dummy_func_t) : CVehicle(plugin::dummy) {}

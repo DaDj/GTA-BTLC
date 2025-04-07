@@ -4,6 +4,7 @@
 #include "../Patch/MemoryMgr.h"
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include "../Events_SA/Events_SA.h"
 #include "../game_sa/RenderWare.h"
 #include "../game_sa/CFileLoader.h"
@@ -35,12 +36,10 @@ namespace debug
 	
 	void init()
 	{
-	
-
 		//debug_console();
-		MemoryVP::InjectHook(0x405E0A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
-		MemoryVP::InjectHook(0x4062F2, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
-		MemoryVP::InjectHook(0x5B892A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
+		//MemoryVP::InjectHook(0x405E0A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
+		//MemoryVP::InjectHook(0x4062F2, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
+		//MemoryVP::InjectHook(0x5B892A, &CFileLoader::LoadObjectInstance_a, PATCH_CALL);
 
 		//plugin::Events::drawMenuBackgroundEvent += []
 		//{
@@ -67,6 +66,11 @@ namespace debug
 		//	//float thing = *(float*)0x865438;
 
 		//};
+		plugin::Events::initGameEvent += []
+		{
+			WriteFreeIds();
+		};
+
 
 		plugin::Events::gameProcessEvent += []
 		{
@@ -77,7 +81,7 @@ namespace debug
 
 		plugin::Events::drawHudEvent += []
 		{
-			draw_current_Modelname();
+			//draw_current_Modelname();
 			draw_FPS();
 			//draw_graphics_info();
 
@@ -110,6 +114,39 @@ namespace debug
 			//		std::cout<< speed << '\r';
 			//	}
 		};
+	}
+
+	void WriteFreeIds()
+	{
+		int FreeStart = 0;
+		bool FreeFlag = 0;
+		int count = 0;
+		int maxId = 29999;
+		std::ofstream myfile;
+		myfile.open("FreeID.info");
+		for (int i = 0; i < maxId; i++)
+		{
+			if (!CModelInfo::ms_modelInfoPtrs[i] && !FreeFlag)
+			{
+				FreeStart = i;
+				FreeFlag = 1;
+
+			}
+			if (CModelInfo::ms_modelInfoPtrs[i] && FreeFlag)
+			{
+				count = (i) - FreeStart;
+				myfile << FreeStart << ", " << (i-1) << ",  "<< count << std::endl;
+				FreeFlag = 0;
+			}
+			if (i == (maxId -1) && FreeFlag)
+			{
+				FreeFlag = 0;
+				count = (i) - FreeStart;
+				myfile << FreeStart << ", " << (i ) << ",  " << count << std::endl;
+			}
+
+		}
+		myfile.close();
 	}
 
 	void debug_console()
@@ -209,6 +246,7 @@ namespace debug
 		if (DebugMenuLoad()) {
 			DebugMenuInit();
 		}
+		DebugMenuAddCmd("BTLC", "GenFreeID", WriteFreeIds);
 	}
 }
 

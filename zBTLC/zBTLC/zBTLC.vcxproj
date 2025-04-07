@@ -172,7 +172,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BTLC_BASE\CTrafficlights.cpp" />
     <ClCompile Include="BTLC_BASE\My_FxTool.cpp" />
     <ClCompile Include="BTLC_BASE\My_SkinSelector.cpp" />
     <ClCompile Include="BTLC_BASE\My_Soundeffects.cpp" />
@@ -200,6 +199,7 @@
     <ClCompile Include="game_sa\CPtrNodeSingleLink.cpp" />
     <ClCompile Include="game_sa\CRegisteredMotionBlurStreak.cpp" />
     <ClCompile Include="game_sa\CTaskUtilityLineUpPedWithCar.cpp" />
+    <ClCompile Include="game_sa\CTrafficlights.cpp" />
     <ClCompile Include="game_sa\CTrain.cpp" />
     <ClCompile Include="game_sa\CTrainNode.cpp" />
     <ClCompile Include="game_sa\CUtrax.cpp" />
@@ -685,7 +685,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BTLC_BASE\CTrafficlights.h" />
     <ClInclude Include="BTLC_BASE\debugmenu_public.h" />
     <ClInclude Include="BTLC_BASE\IniReader.h" />
     <ClInclude Include="BTLC_BASE\ini_parser.hpp" />
@@ -733,6 +732,7 @@
     <ClInclude Include="game_sa\CPtrNodeSingleLink.h" />
     <ClInclude Include="game_sa\CRegisteredMotionBlurStreak.h" />
     <ClInclude Include="game_sa\CTaskUtilityLineUpPedWithCar.h" />
+    <ClInclude Include="game_sa\CTrafficlights.h" />
     <ClInclude Include="game_sa\CTrain.h" />
     <ClInclude Include="game_sa\CTrainNode.h" />
     <ClInclude Include="game_sa\CUtrax.h" />

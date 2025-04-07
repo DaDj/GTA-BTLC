@@ -1,5 +1,6 @@
 #include "CTrafficlights.h"
 #include "../Patch/MemoryMgr.h"
+#include "..\game_sa\CTrafficlights.h"
 
 CTrafficlights::CTrafficlights()
 {
@@ -44,4 +45,9 @@ void CTrafficlights::Set_Trafficlight_PED_COORD()
 	MemoryVP::Patch<float>(0x49E13B, 0.111f); //ybottom
 	MemoryVP::Patch<float>(0x49E145, 2.753f); //xbottom
 
+}
+
+bool CTrafficLights::ShouldCarStopForLight(CVehicle * vehicle, bool bUnkn)
+{
+	return false;
 }
